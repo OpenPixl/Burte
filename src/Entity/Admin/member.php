@@ -4,11 +4,13 @@ namespace App\Entity\Admin;
 
 use App\Repository\Admin\memberRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=memberRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class member implements UserInterface
 {
@@ -84,6 +86,11 @@ class member implements UserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
 
     public function getId(): ?int
     {
@@ -288,6 +295,18 @@ class member implements UserInterface
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
         return $this;
     }
 }

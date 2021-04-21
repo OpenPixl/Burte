@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=memberRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class member implements UserInterface
 {
@@ -77,12 +78,12 @@ class member implements UserInterface
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updateAt;
+    private $updatedAt;
 
     public function getId(): ?int
     {
@@ -261,27 +262,32 @@ class member implements UserInterface
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->createAt;
+        return $this->createdAt;
     }
 
-    public function setCreateAt(\DateTimeInterface $createAt): self
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
     {
-        $this->createAt = $createAt;
-
+        $this->createdAt = new \DateTime('now');
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdateAt(?\DateTimeInterface $updateAt): self
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
     {
-        $this->updateAt = $updateAt;
-
+        $this->updatedAt = new \DateTime('now');
         return $this;
     }
 }

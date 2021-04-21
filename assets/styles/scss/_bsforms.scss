@@ -1,0 +1,10 @@
+.pl-lg-6, .px-lg-6 {
+  padding-left: 4.5rem !important;
+  padding-right: 4.5rem !important;
+}
+
+.form-control {
+  border: 1px solid;
+  border-image-source: $admin-color;
+  border-image-slice: 1;
+}

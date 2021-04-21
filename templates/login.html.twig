@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}name of site | login{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('login') }}
+        {% endblock %}
+    </head>
+    <body class="d-flex align-items-center bg-auth" style="display: block;">
+        <div class="container-fluid">
+            <main class="row justify-content-center" id="content">
+                {% block content %}
+                {% endblock %}
+            </main>
+        </div>
+    </body>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('login') }}
+    {% endblock %}
+</html>

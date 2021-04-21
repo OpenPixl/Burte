@@ -1,0 +1,13 @@
+$op-primary: darken(#428bca, 20%);
+$background-image: url('../images/covers/auth-side-cover.jpg');
+
+//*** ------------- Import Variables of bootstrap ---------------- ***//
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/variables";
+//*** ------------- Import Variables of my theme ---------------- ***//
+@import "scss/login";
+//*** ------------- Import Variables of icons ---------------- ***//
+@import '~@fortawesome/fontawesome-free/css/all.css';
+//*** ------------- Import mixins ---------------- ***//
+@import "scss/mixins/fontface";
+@include fontface('CerebriSans-light', '../../fonts/CerebriSans-Light', 300, normal);

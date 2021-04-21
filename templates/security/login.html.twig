@@ -1,42 +1,68 @@
-{% extends 'base.html.twig' %}
+{% extends 'login.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}OpenGAIA | Login {% endblock %}
 
-{% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+{% block content %}
+    <div class="col12" id="bandeau"></div>
+    <div class="col-12 col-md-5 col-lg-6 col-xl-4 align-self-center px-lg-6 my-5">
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+        <!-- Heading -->
+        <h2 class="display-4 text-center mb-3">
+            Se connecter
+        </h2>
+
+        {% for flashError in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
+
+        <!-- Subheading -->
+        <p class="text-muted text-center mb-5">
+            Accéder à votre espace personnel.
+        </p>
+
+        <!-- Form -->
+        <form method="post" autocomplete="false">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="name@example.com" value="{{ last_username }}">
+                        <label for="floatingInput"><i class="fas fa-user-circle"></i>  Login</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-floating">
+                        <input type="password"  class="form-control" id="password" name="password" placeholder="Password">
+                        <label for="floatingPassword"><i class="fas fa-key"></i>  Password</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-block btn-primary mb-3">
+                        Sign in
+                    </button>
+                </div>
+            </div>
+            <!-- Submit -->
+
+
+            <!-- Link -->
+            <p class="text-center">
+                <small class="text-muted text-center">
+                    Vous n'êtes pas membre ? <a href="{{ path('op_admin_security_register') }}">Créer votre compte</a>.
+                </small>
+            </p>
+
+        </form>
+
+    </div>
+    <div class="col-12 col-md-7 col-lg-6 col-xl-8 d-none d-lg-block">
+
+        <!-- Image -->
+        <div id="block_login_image" class="bg-cover h-100 min-vh-100 mt-n1 mr-n3">
+
         </div>
-    {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    </div>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
 {% endblock %}

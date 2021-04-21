@@ -20,9 +20,10 @@ class MemberFixtures extends Fixture
     {
         $member = new Member();
         $member->setRoles(array('ROLE_ADMIN'));
+        $member->setPassword($this->passwordEncoder->encodePassword($member,'admin123'));
+        $member->setEmail('contact@openpixl.fr');
         $member->setFirstName('admin');
         $member->setLastName('Dév');
-        $member->setPassword($this->passwordEncoder->encodePassword($member,'admin123'));
         $member->setAdress1('Maison des association');
         $member->setAdress2('40 impasse Georges SABDE');
         $member->setZipcode('40280');
@@ -33,9 +34,10 @@ class MemberFixtures extends Fixture
 
         $member = new Member();
         $member->setRoles(array('ROLE_ADMIN'));
+        $member->setPassword($this->passwordEncoder->encodePassword($member,'test123'));
+        $member->setEmail('postmaster@openpixl.fr');
         $member->setFirstName('utilisateur 1');
         $member->setLastName(' testeur 1');
-        $member->setPassword($this->passwordEncoder->encodePassword($member,'test123'));
         $member->setAdress1('Maison des association');
         $member->setAdress2('40 impasse Georges SABDE');
         $member->setZipcode('40280');

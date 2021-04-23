@@ -4,9 +4,13 @@ namespace App\Entity\Webapp;
 
 use App\Entity\Admin\member;
 use App\Repository\Webapp\PageRepository;
+use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass=PageRepository::class)
  */
 class Page
@@ -19,7 +23,14 @@ class Page
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * Déclare le nom de la page
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $name;
+
+    /**
+     * SEO : balise Title
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
 
@@ -32,12 +43,6 @@ class Page
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $state;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isMenu;
-
     /**
      * @ORM\Column(type="array", nullable=true)
      */
@@ -69,14 +74,14 @@ class Page
     private $publishAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="boolean")
      */
-    private $unpublishAt;
+    private $isPublish;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPublish;
+    private $isMenu;
 
     /**
      * @ORM\Column(type="datetime")
@@ -87,6 +92,49 @@ class Page
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Section::class, inversedBy="pages")
+     */
+    private $section;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isTitle;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDescription;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dispublishAt;
+
+    public function __construct()
+    {
+        $this->section = new ArrayCollection();
+    }
+
+    /**
+     * Permet d'initialiser le slug !
+     * Utilisation de slugify pour transformer une chaine de caractères en slug
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeSlug() {
+        if(empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->name);
+        }
+    }
 
     public function getId(): ?int
     {
@@ -213,17 +261,6 @@ class Page
         return $this;
     }
 
-    public function getUnpublishAt(): ?\DateTimeInterface
-    {
-        return $this->unpublishAt;
-    }
-
-    public function setUnpublishAt(\DateTimeInterface $unpublishAt): self
-    {
-        $this->unpublishAt = $unpublishAt;
-
-        return $this;
-    }
 
     public function getIsPublish(): ?bool
     {
@@ -242,10 +279,12 @@ class Page
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
     {
-        $this->createdAt = $createdAt;
-
+        $this->createdAt = new \DateTime('now');
         return $this;
     }
 
@@ -254,9 +293,96 @@ class Page
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime('now');
+        return $this;
+    }
+
+    /**
+     * @return Collection|Section[]
+     */
+    public function getSection(): Collection
+    {
+        return $this->section;
+    }
+
+    public function addSection(Section $section): self
+    {
+        if (!$this->section->contains($section)) {
+            $this->section[] = $section;
+        }
+
+        return $this;
+    }
+
+    public function removeSection(Section $section): self
+    {
+        $this->section->removeElement($section);
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getIsTitle(): ?bool
+    {
+        return $this->isTitle;
+    }
+
+    public function setIsTitle(bool $isTitle): self
+    {
+        $this->isTitle = $isTitle;
+
+        return $this;
+    }
+
+    public function getIsDescription(): ?bool
+    {
+        return $this->isDescription;
+    }
+
+    public function setIsDescription(bool $isDescription): self
+    {
+        $this->isDescription = $isDescription;
+
+        return $this;
+    }
+
+    public function getDispublishAt(): ?\DateTimeInterface
+    {
+        return $this->dispublishAt;
+    }
+
+    public function setDispublishAt(?\DateTimeInterface $dispublishAt): self
+    {
+        $this->dispublishAt = $dispublishAt;
 
         return $this;
     }

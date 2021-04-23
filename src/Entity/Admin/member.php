@@ -352,4 +352,9 @@ class member implements UserInterface
 
         return $this;
     }
+
+    public function __ToString()
+    {
+        return $this->firstName;
+    }
 }

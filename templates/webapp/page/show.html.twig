@@ -1,0 +1,81 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}OpenGaia | {{ page.title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('webapp/page/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('webapp/page/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Id</th>
+                                        <td>{{ page.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Title</th>
+                                        <td>{{ page.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Slug</th>
+                                        <td>{{ page.slug }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>State</th>
+                                        <td>{{ page.state }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>IsMenu</th>
+                                        <td>{{ page.isMenu ? '<p class="text-success"><i class="far fa-check-circle"></i></p>' : '<p class="text-danger"><i class="far fa-times-circle"></i></p>' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>MetaKeywords</th>
+                                        <td>{{ page.metaKeywords ? page.metaKeywords|join(', ') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>MetaDescription</th>
+                                        <td>{{ page.metaDescription }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tags</th>
+                                        <td>{{ page.tags ? page.tags|join(', ') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>PublishAt</th>
+                                        <td>{{ page.publishAt ? page.publishAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>PublishEnd</th>
+                                        <td>{{ page.dispublishAt ? page.dispublishAt|date('Y-m-d') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>CreateAt</th>
+                                        <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>UpdateAt</th>
+                                        <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-8">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

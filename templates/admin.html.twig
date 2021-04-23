@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="300">
+        <title>{% block title %}OpenGaia | Administration{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('admin') }}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                {% block header %}
+                    {{ include('include/header_admin.html.twig') }}
+                    {{ include('include/navbar_admin.html.twig') }}
+                {% endblock %}
+            </header>
+
+            <main id="content">
+                {% block content_title %}
+                {% endblock %}
+
+                {% block content %}
+                {% endblock %}
+
+                {% block modal %}
+                {% endblock %}
+            </main>
+            {% block footer %}
+                {{ include('include/footer_admin.html.twig') }}
+            {% endblock %}
+        </div>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('admin') }}
+            <script src="{{ asset('bundles/ckeditor5/build/ckeditor.js') }}"></script>
+            <script src="{{ asset('bundles/ckfinder/ckfinder.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

@@ -4,6 +4,7 @@ namespace App\Controller\Webapp;
 
 use App\Entity\Admin\Parameter;
 use App\Entity\Webapp\Page;
+use App\Repository\Webapp\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PublicController extends AbstractController
 {
     /**
-     * @Route("/", name="op_webapp_public_index")
+     * @Route("/", name="index")
      */
     public function index(): RedirectResponse
     {
@@ -52,7 +53,7 @@ class PublicController extends AbstractController
     }
 
     /**
-     * @Route("/homepage/", name="op_webapp_public_homepage")
+     * @Route("/page/", name="homepage")
      */
     public function homepage() : Response
     {
@@ -63,7 +64,7 @@ class PublicController extends AbstractController
     }
 
     /**
-     * @route("/offline", name="op_webapp_public_offline")
+     * @route("/offline", name="offline")
      */
     public function Offline() : Response
     {
@@ -76,9 +77,9 @@ class PublicController extends AbstractController
     /**
      * @Route ("/menus", name="listmenus")
      */
-    public function BlocMenu(): Response
+    public function BlocMenu(PageRepository $pageRepository): Response
     {
-        $menus = $this->getDoctrine()->getRepository(Page::class)->listMenu();
+        $menus = $pageRepository->listMenu();
 
         return $this->render('include/navbar_webapp.html.twig', [
             'menus' => $menus

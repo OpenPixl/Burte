@@ -2,7 +2,7 @@
 
 namespace App\Repository\Admin;
 
-use App\Entity\Admin\member;
+use App\Entity\Admin\Member;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -10,16 +10,16 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @method member|null find($id, $lockMode = null, $lockVersion = null)
- * @method member|null findOneBy(array $criteria, array $orderBy = null)
- * @method member[]    findAll()
- * @method member[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Member|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Member|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Member[]    findAll()
+ * @method Member[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class memberRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class MemberRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, member::class);
+        parent::__construct($registry, Member::class);
     }
 
     /**
@@ -27,7 +27,7 @@ class memberRepository extends ServiceEntityRepository implements PasswordUpgrad
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
     {
-        if (!$user instanceof member) {
+        if (!$user instanceof Member) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 

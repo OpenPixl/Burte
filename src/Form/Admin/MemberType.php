@@ -2,18 +2,17 @@
 
 namespace App\Form\Admin;
 
-use App\Entity\Admin\member;
+use App\Entity\Admin\Member;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class memberType extends AbstractType
+class MemberType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('email')
-            ->add('roles')
             ->add('password')
             ->add('firstName')
             ->add('lastName')
@@ -32,7 +31,7 @@ class memberType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => member::class,
+            'data_class' => Member::class,
         ]);
     }
 }

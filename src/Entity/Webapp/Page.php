@@ -2,7 +2,7 @@
 
 namespace App\Entity\Webapp;
 
-use App\Entity\Admin\member;
+use App\Entity\Admin\Member;
 use App\Repository\Webapp\PageRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -59,7 +59,7 @@ class Page
     private $tags = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity=member::class, inversedBy="pages")
+     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="pages")
      */
     private $author;
 
@@ -225,12 +225,12 @@ class Page
         return $this;
     }
 
-    public function getAuthor(): ?member
+    public function getAuthor(): ?Member
     {
         return $this->author;
     }
 
-    public function setAuthor(?member $author): self
+    public function setAuthor(?Member $author): self
     {
         $this->author = $author;
 

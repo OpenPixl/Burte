@@ -8,7 +8,7 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Entity\Admin\member
+                class: App\Entity\Admin\Member
                 property: email
     firewalls:
         dev:

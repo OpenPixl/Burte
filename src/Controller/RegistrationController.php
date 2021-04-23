@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Admin\member;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
-use App\Repository\Admin\memberRepository;
+use App\Repository\Admin\MemberRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

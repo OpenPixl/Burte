@@ -100,6 +100,11 @@ class Member implements UserInterface
      */
     private $pages;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $username;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -356,5 +361,12 @@ class Member implements UserInterface
     public function __ToString()
     {
         return $this->firstName;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 }

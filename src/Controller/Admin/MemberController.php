@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Admin\Member;
+use App\Form\Admin\Member2Type;
 use App\Form\Admin\MemberType;
 use App\Repository\Admin\MemberRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +40,7 @@ class MemberController extends AbstractController
             $entityManager->persist($member);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_member_index');
+            return $this->redirectToRoute('op_admin_member_index');
         }
 
         return $this->render('admin/member/new.html.twig', [
@@ -49,7 +50,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_member_show", methods={"GET"})
+     * @Route("/{id}", name="op_admin_member_show", methods={"GET"})
      */
     public function show(Member $member): Response
     {
@@ -59,17 +60,17 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_member_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="op_admin_member_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Member $member): Response
     {
-        $form = $this->createForm(MemberType::class, $member);
+        $form = $this->createForm(Member2Type::class, $member);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_member_index');
+            return $this->redirectToRoute('op_admin_member_index');
         }
 
         return $this->render('admin/member/edit.html.twig', [

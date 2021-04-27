@@ -16,24 +16,23 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>nom</th>
                                     <th>Slug</th>
                                     <th>State</th>
                                     <th>Tags</th>
                                     <th>PublishAt</th>
                                     <th>PublishEnd</th>
-                                    <th>IsPublish</th>
                                     <th>IsMenu</th>
+                                    <th>IsPublish</th>
                                     <th>CreateAt</th>
                                     <th>UpdateAt</th>
                                     <th>actions</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                             {% for page in pages %}
                                 <tr>
-                                    <td>{{ page.id }}</td>
                                     <td>{{ page.name }}</td>
                                     <td>{{ page.slug }}</td>
                                     <td>{{ page.state }}</td>
@@ -41,10 +40,18 @@
                                     <td>{{ page.publishAt ? page.publishAt|date('Y-m-d H:i:s') : '' }}</td>
                                     <td>{{ page.dispublishAt ? page.dispublishAt|date('Y-m-d') : '' }}</td>
                                     <td>
-                                        {{ page.isMenu ? '<p class="text-success"><i class="far fa-check-circle"></i></p>' : '<p class="text-danger"><i class="far fa-times-circle"></i></p>' }}
+                                        {% if page.ismenu == 1 %}
+                                            <a class="text-success js-menu" href="#"><i class="far fa-check-circle"></i></a>
+                                        {% else %}
+                                            <a class="text-danger js-menu" href="#"><i class="far fa-times-circle"></i></a>
+                                        {% endif %}
                                     </td>
                                     <td>
-                                        {{ page.isPublish ? '<p class="text-success"><i class="far fa-check-circle"></i></p>' : '<p class="text-danger"><i class="far fa-times-circle"></i></p>' }}
+                                        {% if page.isPublish == 1 %}
+                                            <a class="text-success js-publish" href="#"><i class="far fa-check-circle"></i></a>
+                                        {% else %}
+                                            <a class="text-danger js-publish" href="#"><i class="far fa-times-circle"></i></a>
+                                        {% endif %}
                                     </td>
                                     <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                                     <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
@@ -52,6 +59,10 @@
                                         <a href="{{ path('op_webapp_page_show', {'id': page.id}) }}">show</a>
                                         <a href="{{ path('op_webapp_page_edit', {'id': page.id}) }}">edit</a>
                                     </td>
+
+                                    <th>
+                                        <a href="#" class="text-primary"><i class="fas fa-long-arrow-alt-up"></i></a>  <a href="#" class="text-primary"><i class="fas fa-long-arrow-alt-down"></i></a>
+                                    </th>
                                 </tr>
                             {% else %}
                                 <tr>

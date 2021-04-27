@@ -5,6 +5,7 @@ namespace App\Controller\Webapp;
 use App\Entity\Webapp\Page;
 use App\Form\Webapp\PageType;
 use App\Repository\Webapp\PageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -92,10 +93,12 @@ class PageController extends AbstractController
     }
 
     /**
+     * Affiche une page du site par son slug
+     *
      * @param PageRepository $pageRepository
      * @param $slug
      * @return Response
-     * @Route("/page/{slug}", name="")
+     * @Route("/page/{slug}", name="op_webapp_page_slug")
      */
     public function pagebyslug(PageRepository $pageRepository, $slug): Response
     {
@@ -104,5 +107,39 @@ class PageController extends AbstractController
         return $this->render('webapp/page/page.html.twig', [
             'page' => $page,
         ]);
+    }
+
+    /**
+     * Permet d'activer ou de désactiver la publication
+     * @Route("/webapp/page/publish/{id}/json", name="op_webapp_page_publish")
+     */
+    public function jspublish(Page $page, EntityManagerInterface $manager) : Response
+    {
+        return $this->json(['code'=> 200, 'message' => 'réponse json propre'], 200);
+    }
+
+    /**
+     * Permet de mettre en menu la poge ou non
+     * @Route("/webapp/page/menu/{id}/json", name="op_webapp_page_menu")
+     */
+    public function jsMenu(Page $page, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $ismenu = $page->getIsMenu();
+
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vopus n'êtes pas connecté"
+        ], 403);
+
+        if($ismenu == true){
+            $page->setIsMenu(0);
+            $em->flush();
+            return $this->json(['code'=> 200, 'message' => 'La page est dépublié des menus'], 200);
+        }
+
+        $page->setIsMenu(1);
+        $em->flush();
+        return $this->json(['code'=> 200, 'message' => 'La page est publié dans les menus'], 200);
     }
 }

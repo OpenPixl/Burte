@@ -33,6 +33,7 @@
         </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('admin') }}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
             <script src="{{ asset('bundles/ckeditor5/build/ckeditor.js') }}"></script>
             <script src="{{ asset('bundles/ckfinder/ckfinder.js') }}"></script>
         {% endblock %}

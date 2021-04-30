@@ -113,9 +113,31 @@ class PageController extends AbstractController
      * Permet d'activer ou de désactiver la publication
      * @Route("/webapp/page/publish/{id}/json", name="op_webapp_page_publish")
      */
-    public function jspublish(Page $page, EntityManagerInterface $manager) : Response
+    public function jspublish(Page $page, EntityManagerInterface $em) : Response
     {
-        return $this->json(['code'=> 200, 'message' => 'réponse json propre'], 200);
+        $user = $this->getUser();
+        $ispublish = $page->getIsPublish();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // Si la page est déja publiée, alors on dépublie
+        if($ispublish == true){
+            $page->setIsPublish(0);
+            $em->flush();
+            return $this->json([
+                'code'      => 200,
+                'message'   => 'La page est dépubliée'
+            ], 200);
+        }
+        // Si la page est déja dépubliée, alors on publie
+        $page->setIsPublish(1);
+        $em->flush();
+        return $this->json([
+            'code'          => 200,
+            'message'       => 'La page est publiée'
+        ], 200);
     }
 
     /**
@@ -126,20 +148,50 @@ class PageController extends AbstractController
     {
         $user = $this->getUser();
         $ismenu = $page->getIsMenu();
-
+        // renvoie une erreur car l'utilisateur n'est pas connecté
         if(!$user) return $this->json([
             'code' => 403,
-            'message'=> "Vopus n'êtes pas connecté"
+            'message'=> "Vous n'êtes pas connecté"
         ], 403);
-
+        // Si la page est déja publiée, alors on dépublie
         if($ismenu == true){
             $page->setIsMenu(0);
             $em->flush();
             return $this->json(['code'=> 200, 'message' => 'La page est dépublié des menus'], 200);
         }
-
+        // Si la page est déja dépubliée, alors on publie
         $page->setIsMenu(1);
         $em->flush();
         return $this->json(['code'=> 200, 'message' => 'La page est publié dans les menus'], 200);
+    }
+
+    /**
+     * Permet de up la position de la page
+     * @Route("/webapp/page/upposition/{id}/json", name="op_webapp_page_position_up")
+     */
+    public function upPosition(Page $page, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $position = $page->getIsMenu();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+    }
+
+    /**
+     * Permet de down la position de la page
+     * @Route("/webapp/page/downposition/{id}", name="op_webapp_page_menuposition_down")
+     */
+    public function downPosition(Page $page, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $ismenu = $page->getIsMenu();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vopus n'êtes pas connecté"
+        ], 403);
     }
 }

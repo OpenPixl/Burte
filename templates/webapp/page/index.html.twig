@@ -31,7 +31,7 @@
                             <tbody>
                             {% for page in pages %}
                                 <tr>
-                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox" value="{{ page.id }}"></td>
                                     <td>{{ page.name }} (<small class="text-dark">{{ page.slug }}</small>)</td>
                                     <td>{{ page.state }}</td>
                                     <td>{{ page.section|length }}</td>

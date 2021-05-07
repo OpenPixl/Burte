@@ -46,6 +46,20 @@ class MemberFixtures extends Fixture
         $member->setPhoneGsm('00.00.00.00.00');
         $manager->persist($member);
 
+        $member = new Member();
+        $member->setRoles(array('ROLE_USER'));
+        $member->setPassword($this->passwordEncoder->encodePassword($member,'12345678'));
+        $member->setEmail('philippe.favero@gmail.com');
+        $member->setFirstName('Philippe');
+        $member->setLastName('FAVERO');
+        $member->setAdress1('Maison des associations');
+        $member->setAdress2('40 impasse Georges SABDE');
+        $member->setZipcode('40280');
+        $member->setCity('Saint Pierre du Mont');
+        $member->setPhoneDesk('00.00.00.00.00');
+        $member->setPhoneGsm('00.00.00.00.00');
+        $manager->persist($member);
+
         $manager->flush();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Admin\member;
+use App\Entity\Admin\Member;
 use App\Repository\ResetPasswordRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
@@ -23,7 +23,7 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=member::class)
+     * @ORM\ManyToOne(targetEntity=Member::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

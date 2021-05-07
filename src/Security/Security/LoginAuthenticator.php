@@ -67,7 +67,12 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(Member::class)->findOneBy(['email' => $credentials['email']]);
+        // J'ai rajouté à la requete findOneBy
+        $user = $this->entityManager->getRepository(Member::class)->findOneBy([
+            // je peux ajouter autant de champs de l'entité User
+            'email' => $credentials['email'],
+            'isVerified' => 1
+        ]);
 
         if (!$user) {
             // fail authentication with a custom error

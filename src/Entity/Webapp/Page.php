@@ -94,11 +94,6 @@ class Page
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Section::class, inversedBy="pages")
-     */
-    private $section;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -118,9 +113,15 @@ class Page
      */
     private $dispublishAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="page")
+     */
+    private $sections;
+
     public function __construct()
     {
         $this->section = new ArrayCollection();
+        $this->sections = new ArrayCollection();
     }
 
     /**
@@ -261,7 +262,6 @@ class Page
         return $this;
     }
 
-
     public function getIsPublish(): ?bool
     {
         return $this->isPublish;
@@ -300,30 +300,6 @@ class Page
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTime('now');
-        return $this;
-    }
-
-    /**
-     * @return Collection|Section[]
-     */
-    public function getSection(): Collection
-    {
-        return $this->section;
-    }
-
-    public function addSection(Section $section): self
-    {
-        if (!$this->section->contains($section)) {
-            $this->section[] = $section;
-        }
-
-        return $this;
-    }
-
-    public function removeSection(Section $section): self
-    {
-        $this->section->removeElement($section);
-
         return $this;
     }
 
@@ -385,5 +361,18 @@ class Page
         $this->dispublishAt = $dispublishAt;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return Collection|Section[]
+     */
+    public function getSections(): Collection
+    {
+        return $this->sections;
     }
 }

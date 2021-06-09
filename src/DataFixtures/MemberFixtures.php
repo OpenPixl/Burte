@@ -30,6 +30,7 @@ class MemberFixtures extends Fixture
         $member->setCity('Saint Pierre du Mont');
         $member->setPhoneDesk('00.00.00.00.00');
         $member->setPhoneGsm('00.00.00.00.00');
+        $member->setIsVerified(1);
         $manager->persist($member);
 
         $member = new Member();
@@ -44,6 +45,7 @@ class MemberFixtures extends Fixture
         $member->setCity('Saint Pierre du Mont');
         $member->setPhoneDesk('00.00.00.00.00');
         $member->setPhoneGsm('00.00.00.00.00');
+        $member->setIsVerified(0);
         $manager->persist($member);
 
         $member = new Member();
@@ -58,6 +60,7 @@ class MemberFixtures extends Fixture
         $member->setCity('Saint Pierre du Mont');
         $member->setPhoneDesk('00.00.00.00.00');
         $member->setPhoneGsm('00.00.00.00.00');
+        $member->setIsVerified(1);
         $manager->persist($member);
 
         $manager->flush();

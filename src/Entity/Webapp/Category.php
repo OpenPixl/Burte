@@ -28,15 +28,15 @@ class Category
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $upadateAt;
+    private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="category")
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="Category")
      */
     private $articles;
 
@@ -62,30 +62,9 @@ class Category
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreateAt(): self
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        $this->createAt = new \DateTime();
-
-        return $this;
-    }
-
-    public function getUpdateAt(): ?\DateTimeInterface
-    {
-        return $this->updateAt;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function setUpdateAt(): self
-    {
-        $this->updateAt = new \DateTime();
-
-        return $this;
+        return $this->createdAt;
     }
 
     /**
@@ -111,7 +90,36 @@ class Category
         if ($this->articles->removeElement($article)) {
             $article->removeCategory($this);
         }
-
         return $this;
     }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
+    {
+        $this->createdAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
+    {
+        $this->updatedAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 }

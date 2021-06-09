@@ -1,6 +1,6 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}OpenGaia | Administration{% endblock %}
+{% block title %}OpenGaia | Administration - site{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -13,7 +13,7 @@
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table">
+                        <table class="table align-middle">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -34,7 +34,7 @@
                                     <td><input type="checkbox" value="{{ page.id }}"></td>
                                     <td>{{ page.name }} (<small class="text-dark">{{ page.slug }}</small>)</td>
                                     <td>{{ page.state }}</td>
-                                    <td>{{ page.section|length }}</td>
+                                    <td>{{ page.sections|length }}</td>
                                     <td>
                                         {% if page.ismenu == 1 %}
                                             <a class="js-menu" href="{{path('op_webapp_page_menu', {'id' : page.id})}}"><i class="far fa-check-circle text-success"></i></a>
@@ -112,6 +112,11 @@
                         icone2.classList.replace('text-danger', 'text-success');
                     };
                 });
+        }
+
+        function OnAddSection(event){
+            event.preventDefault();
+            console.log('ok');
         }
 
         // Appel de la fonction lors du clic sur le bouton Ismenu

@@ -46,7 +46,7 @@ class PageType extends AbstractType
             ->add('isMenu')
             ->add('isTitle')
             ->add('isDescription')
-            ->add('section')
+            ->add('sections')
         ;
     }
 

@@ -1,0 +1,58 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        {{ form_start(form) }}
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajout d'une section à la page</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.title, 'title', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.title, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.description, 'Description', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm', 'row': '10'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.attrId, 'attr Id', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.attrId, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.attrName, 'attr name', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.attrName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.attrClass, 'attr class', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.attrClass, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="{{ path('op_webapp_section_add', {'page': page}) }}" id="btnAddSection" class="btn btn-sm btn-primary js-addsection">Ajouter</a>
+            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

@@ -8,6 +8,5 @@
 // any CSS you import will output into a single css file (app.scss in this case)
 import './styles/admin.scss';
 require('bootstrap');
-const axios = require('axios');
 // start the Stimulus application
 import './bootstrap';

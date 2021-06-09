@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Parameter{% endblock %}
+
+{% block body %}
+    <h1>Create new Parameter</h1>
+
+    {{ include('admin_parameter/_form.html.twig') }}
+
+    <a href="{{ path('admin_parameter_index') }}">back to list</a>
+{% endblock %}

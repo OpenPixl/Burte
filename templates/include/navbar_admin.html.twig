@@ -12,9 +12,11 @@
                     <a class="nav-link dropdown-toggle" href="#" id="userpanel" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-desktop"></i> Site
                     </a>
+
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
-                        <li><a class="dropdown-item" href="{{ path('op_webapp_page_index') }}"><i class="far fa-file-alt"></i></i> Pages</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="far fa-file-alt"></i></i> Articles</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_webapp_page_index') }}"><i class="fas fa-pager"></i> Pages</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_webapp_section_index') }}"><i class="fas fa-puzzle-piece"></i> Sections</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_webapp_article_index') }}"><i class="far fa-file-alt"></i> Articles</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -28,10 +30,10 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userpanel" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-tools"></i></i> outils
+                        <i class="fas fa-tools"></i></i> Outils
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
-                        <li><a class="dropdown-item" href="#"><i class="far fa-building"></i> Informations générales</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_admin_parameter_index') }}"><i class="fas fa-cog"></i> Paramètres</a></li>
                         <li><a class="dropdown-item" href="{{ path('op_admin_member_index') }}"><i class="fas fa-users-cog"></i> Gestion des utilisateurs</a></li>
                     </ul>
                 </li>

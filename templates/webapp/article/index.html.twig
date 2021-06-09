@@ -1,0 +1,57 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}OpenGaia | Administration - site{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('webapp/article/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('webapp/article/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Liste des articles</h4>
+                        <p><p>Créer, Modifier ou supprimer des articles du site</p></p>
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>CreateAt</th>
+                                    <th>UpdateAt</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for article in articles %}
+                                <tr>
+                                    <td>{{ article.id }}</td>
+                                    <td><strong>{{ article.title }}</strong><br><small>{{ article.slug }}</small></td>
+                                    <td>{{ article.description }}</td>
+                                    <td>{{ article.category }}</td>
+                                    <td>{{ article.createdAt ? article.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    <td>{{ article.updatedAt ? article.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    <td>
+                                        <a href="{{ path('op_webapp_section_new', {'id': article.id}) }}">show</a>
+                                        <a href="{{ path('op_webapp_article_edit', {'id': article.id}) }}">edit</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -3,12 +3,14 @@
 namespace App\Entity\Webapp;
 
 use App\Repository\Webapp\ArticleRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Article
 {
@@ -45,25 +47,37 @@ class Article
     private $section;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="articles")
+     * @ORM\Column(type="datetime")
      */
-    private $category;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createAt;
+    private $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
      */
-    private $updateAt;
+    private $Category;
 
     public function __construct()
     {
         $this->category = new ArrayCollection();
     }
 
+    /**
+     * Permet d'initialiser le slug !
+     * Utilisation de slugify pour transformer une chaine de caractères en slug
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeSlug() {
+        if(empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title);
+        }
+    }
 
     public function getId(): ?int
     {
@@ -130,50 +144,43 @@ class Article
         return $this;
     }
 
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
     /**
-     * @return Collection|Category[]
+     * @ORM\PrePersist()
      */
-    public function getCategory(): Collection
+    public function setCreatedAt(): self
     {
-        return $this->category;
-    }
-
-    public function addCategory(Category $category): self
-    {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
-        }
-
+        $this->createdAt = new \DateTime('now');
         return $this;
     }
 
-    public function removeCategory(Category $category): self
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        $this->category->removeElement($category);
+        return $this->updatedAt;
+    }
 
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
+    {
+        $this->updatedAt = new \DateTime('now');
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeInterface
+    public function getCategory(): ?Category
     {
-        return $this->createAt;
+        return $this->Category;
     }
 
-    public function setCreateAt(\DateTimeInterface $createAt): self
+    public function setCategory(?Category $Category): self
     {
-        $this->createAt = $createAt;
-
-        return $this;
-    }
-
-    public function getUpdateAt(): ?\DateTimeInterface
-    {
-        return $this->updateAt;
-    }
-
-    public function setUpdateAt(\DateTimeInterface $updateAt): self
-    {
-        $this->updateAt = $updateAt;
+        $this->Category = $Category;
 
         return $this;
     }

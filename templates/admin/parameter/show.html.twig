@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parameter{% endblock %}
+
+{% block body %}
+    <h1>Parameter</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ parameter.id }}</td>
+            </tr>
+            <tr>
+                <th>NameSite</th>
+                <td>{{ parameter.nameSite }}</td>
+            </tr>
+            <tr>
+                <th>SloganSite</th>
+                <td>{{ parameter.sloganSite }}</td>
+            </tr>
+            <tr>
+                <th>DescrSite</th>
+                <td>{{ parameter.descrSite }}</td>
+            </tr>
+            <tr>
+                <th>IsOnline</th>
+                <td>{{ parameter.isOnline ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ parameter.createdAt ? parameter.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ parameter.updatedAt ? parameter.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>AdminEmail</th>
+                <td>{{ parameter.adminEmail }}</td>
+            </tr>
+            <tr>
+                <th>AdminWebmaster</th>
+                <td>{{ parameter.adminWebmaster }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_parameter_index') }}">back to list</a>
+
+    <a href="{{ path('admin_parameter_edit', {'id': parameter.id}) }}">edit</a>
+
+    {{ include('admin_parameter/_delete_form.html.twig') }}
+{% endblock %}

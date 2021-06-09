@@ -13,12 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class PublicController
  * @package App\Controller\Webapp
- * @Route("", name="op_webapp_public_")
  */
 class PublicController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/webapp/public/", name="op_webapp_public_index")
      */
     public function index(): RedirectResponse
     {
@@ -53,7 +52,7 @@ class PublicController extends AbstractController
     }
 
     /**
-     * @Route("/page/", name="homepage")
+     * @Route("/webapp/public/page/", name="op_webapp_public_homepage")
      */
     public function homepage() : Response
     {
@@ -64,18 +63,18 @@ class PublicController extends AbstractController
     }
 
     /**
-     * @route("/offline", name="offline")
+     * @route("/webapp/public/offline", name="op_webapp_public_offline")
      */
     public function Offline() : Response
     {
-        $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+        $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
         return $this->render('webapp/public/Offline.html.twig', [
             'parameter' => $parameter
         ]);
     }
 
     /**
-     * @Route ("/menus", name="listmenus")
+     * @Route ("/webapp/public/menus", name="op_webapp_public_listmenus")
      */
     public function BlocMenu(PageRepository $pageRepository): Response
     {

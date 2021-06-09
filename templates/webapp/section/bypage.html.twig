@@ -1,0 +1,40 @@
+    <h4>Liste des sections de la page {{ element.slug }}</h4>
+    <p>Dans cet espace, vous pouvez ajouter/supprimer les différentes sections composants cette dernière.</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Description</th>
+                <th>IdName</th>
+                <th>NameName</th>
+                <th>CreateAt</th>
+                <th>UpdateAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for section in sections %}
+            <tr>
+                <td>{{ section.id }}</td>
+                <td>{{ section.title }}</td>
+                <td>{{ section.slug }}</td>
+                <td>{{ section.description }}</td>
+                <td>{{ section.attrName }}</td>
+                <td>{{ section.attrClass }}</td>
+                <td>{{ section.createdAt ? section.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ section.updatedAt ? section.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('op_webapp_section_show', {'id': section.id}) }}">show</a>
+                    <a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+

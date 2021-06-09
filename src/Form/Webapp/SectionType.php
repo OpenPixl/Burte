@@ -2,8 +2,10 @@
 
 namespace App\Form\Webapp;
 
+use App\Entity\Webapp\Page;
 use App\Entity\Webapp\Section;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,14 +15,11 @@ class SectionType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('slug')
             ->add('description')
-            ->add('idName')
-            ->add('nameName')
-            ->add('createAt')
-            ->add('updateAt')
+            ->add('attrId')
+            ->add('attrName')
+            ->add('attrClass')
             ->add('page')
-            ->add('pages')
         ;
     }
 

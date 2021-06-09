@@ -48,6 +48,16 @@ class Parameter
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $adminEmail;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $adminWebmaster;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -127,6 +137,30 @@ class Parameter
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function getAdminEmail(): ?string
+    {
+        return $this->adminEmail;
+    }
+
+    public function setAdminEmail(?string $adminEmail): self
+    {
+        $this->adminEmail = $adminEmail;
+
+        return $this;
+    }
+
+    public function getAdminWebmaster(): ?string
+    {
+        return $this->adminWebmaster;
+    }
+
+    public function setAdminWebmaster(?string $adminWebmaster): self
+    {
+        $this->adminWebmaster = $adminWebmaster;
+
         return $this;
     }
 }

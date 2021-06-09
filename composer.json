@@ -45,7 +45,8 @@
         "symfonycasts/verify-email-bundle": "^1.4",
         "twig/extra-bundle": "^3.0",
         "twig/intl-extra": "^3.3",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",

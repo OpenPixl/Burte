@@ -19,7 +19,7 @@
                                     <tbody>
                                     <tr>
                                         <th>Id</th>
-                                        <td>{{ page.id }}</td>
+                                        <td>{{ page.id }}<input id="page" type="hidden" value="{{ page.id }}"></td>
                                     </tr>
                                     <tr>
                                         <th>Title</th>
@@ -69,14 +69,35 @@
                                 </table>
                             </div>
                             <div class="col-8">
-                                {{ render(controller('App\\Controller\\Webapp\\SectionController::index')) }}
+                                {{ render(controller('App\\Controller\\Webapp\\SectionController::byPage', {'page': page.id})) }}
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Appel de la fonction d'ajout d'une section
+        document.getElementById('btnAddSection').onclick = function(event){
+            event.preventDefault();
+            const title = document.getElementById('section2_title').value;
+            const description = document.getElementById('section2_description').value;
+            const attrId = document.getElementById('section2_attrId').value;
+            const attrName = document.getElementById('section2_attrName').value;
+            const attrClass = document.getElementById('section2_attrClass').value;
+            const pages = document.getElementById('page').value;
+            const url = this.href;
+            console.log(title, description, attrId, attrName, attrClass, pages, url )
+            axios
+                .post(url, {title:title, description:description, attrId:attrId, attrName:attrName, attrClass:attrClass, pages:pages})
+                .then(function (response){
+                    console.log(response)
+                })
+        }
+    </script>
 {% endblock %}

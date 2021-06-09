@@ -1,0 +1,10 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Parameter index{% endblock %}
+
+{% block content %}
+{% for parameter in parameters%}
+{{ render(controller('App\\Controller\\Admin\\ParameterController::edit', {'id': parameter.id})) }}
+{% endif %}
+{% endfor %}
+{% endblock %}

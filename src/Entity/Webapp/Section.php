@@ -3,6 +3,7 @@
 namespace App\Entity\Webapp;
 
 use App\Repository\Webapp\SectionRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -31,24 +32,24 @@ class Section
     private $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Page::class, mappedBy="sections")
-     */
-    private $page;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $idName;
+    private $attrId;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $nameName;
+    private $attrName;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $attrClass;
 
     /**
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="section")
@@ -58,48 +59,18 @@ class Section
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updateAt;
+    private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Page::class, mappedBy="section")
+     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="sections")
      */
-    private $pages;
+    private $page;
 
-    public function getCreateAt(): ?\DateTimeInterface
-    {
-        return $this->createAt;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreateAt(): self
-    {
-        $this->createAt = new \DateTime();
-
-        return $this;
-    }
-
-    public function getUpdateAt(): ?\DateTimeInterface
-    {
-        return $this->updateAt;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function setUpdateAt(): self
-    {
-        $this->updateAt = new \DateTime();
-
-        return $this;
-    }
 
 
     public function __construct()
@@ -107,6 +78,19 @@ class Section
         $this->page = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->pages = new ArrayCollection();
+    }
+
+    /**
+     * Permet d'initialiser le slug !
+     * Utilisation de slugify pour transformer une chaine de caractères en slug
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeSlug() {
+        if(empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title);
+        }
     }
 
     public function getId(): ?int
@@ -138,30 +122,6 @@ class Section
         return $this;
     }
 
-    /**
-     * @return Collection|Page[]
-     */
-    public function getPage(): Collection
-    {
-        return $this->page;
-    }
-
-    public function addPage(Page $page): self
-    {
-        if (!$this->page->contains($page)) {
-            $this->page[] = $page;
-        }
-
-        return $this;
-    }
-
-    public function removePage(Page $page): self
-    {
-        $this->page->removeElement($page);
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -174,27 +134,37 @@ class Section
         return $this;
     }
 
-    public function getIdName(): ?string
+    public function getAttrId(): ?string
     {
-        return $this->idName;
+        return $this->attrId;
     }
 
-    public function setIdName(string $idName): self
+    public function setAttrId(string $attrId): self
     {
-        $this->idName = $idName;
+        $this->attrId = $attrId;
 
         return $this;
     }
 
-    public function getNameName(): ?string
+    public function getAttrName(): ?string
     {
-        return $this->nameName;
+        return $this->attrName;
     }
 
-    public function setNameName(?string $nameName): self
+    public function setAttrName(?string $attrName): self
     {
-        $this->nameName = $nameName;
+        $this->attrName = $attrName;
+        return $this;
+    }
 
+    public function getAttrClass(): ?string
+    {
+        return $this->attrClass;
+    }
+
+    public function setAttrClass(?string $attrClass): self
+    {
+        $this->attrClass = $attrClass;
         return $this;
     }
 
@@ -228,13 +198,51 @@ class Section
         return $this;
     }
 
-    /**
-     * @return Collection|Page[]
-     */
-    public function getPages(): Collection
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->pages;
+        return $this->createdAt;
     }
 
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
+    {
+        $this->createdAt = new \DateTime();
 
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
+    {
+        $this->updatedAt = new \DateTime();
+
+        return $this;
+    }
+
+    public function getPage(): ?Page
+    {
+        return $this->page;
+    }
+
+    public function setPage(?Page $page): self
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

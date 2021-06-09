@@ -1,4 +1,62 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="card-body">
+    <div class="row">
+        <div class="col-4">
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.title, 'Title', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.title, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.description, 'Description', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'description'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.page, 'Page', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.page, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.attrId, 'Attr Id', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.attrId, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.attrName, 'Attr name', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.attrName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.attrClass, 'Attr class', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.attrClass, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-footer">
+    <a class="btn btn-secondary btn-sm" href="{{ path('op_webapp_section_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a> <button class="btn btn-sm btn-primary">{{ button_label|default('Enregistrer') }}</button>
+</div>
 {{ form_end(form) }}

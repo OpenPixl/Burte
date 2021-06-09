@@ -89,7 +89,7 @@ class PageController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('webapp_page_index');
+        return $this->redirectToRoute('op_webapp_page_index');
     }
 
     /**

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block meta %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}{% if parameter is null %}OpenGaia | Hors-ligne{% else %}{{ parameter.nameSite }} | Hors-ligne{% endif%}{% endblock %}
+
+{% block content %}
+<div class="section">
+    <div class="row">
+        <div class="col-12">
+
+            <h1>{% if parameter is null %}OpenGaia{% else %}{{ parameter.nameSite }}{% endif%} </h1>
+            <h4></h4>
+            <hr>
+            <p>Notre site est actuellement en cours de développement.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -52,9 +52,10 @@ class Section
     private $attrClass;
 
     /**
-     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="section")
+     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="sections")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $articles;
+    private $page;
 
     /**
      * @ORM\Column(type="datetime")
@@ -67,17 +68,13 @@ class Section
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="sections")
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $page;
-
-
+    private $contentType;
 
     public function __construct()
     {
-        $this->page = new ArrayCollection();
         $this->articles = new ArrayCollection();
-        $this->pages = new ArrayCollection();
     }
 
     /**
@@ -168,32 +165,14 @@ class Section
         return $this;
     }
 
-    /**
-     * @return Collection|Article[]
-     */
-    public function getArticles(): Collection
+    public function getPage(): ?Page
     {
-        return $this->articles;
+        return $this->page;
     }
 
-    public function addArticle(Article $article): self
+    public function setPage(?Page $page): self
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setSection($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getSection() === $this) {
-                $article->setSection(null);
-            }
-        }
+        $this->page = $page;
 
         return $this;
     }
@@ -229,20 +208,20 @@ class Section
         return $this;
     }
 
-    public function getPage(): ?Page
-    {
-        return $this->page;
-    }
-
-    public function setPage(?Page $page): self
-    {
-        $this->page = $page;
-
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->title;
+    }
+
+    public function getContentType(): ?string
+    {
+        return $this->contentType;
+    }
+
+    public function setContentType(?string $contentType): self
+    {
+        $this->contentType = $contentType;
+
+        return $this;
     }
 }

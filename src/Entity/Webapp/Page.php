@@ -114,13 +114,12 @@ class Page
     private $dispublishAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="page")
+     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="page", orphanRemoval=true)
      */
     private $sections;
 
     public function __construct()
     {
-        $this->section = new ArrayCollection();
         $this->sections = new ArrayCollection();
     }
 
@@ -374,5 +373,27 @@ class Page
     public function getSections(): Collection
     {
         return $this->sections;
+    }
+
+    public function addSection(Section $section): self
+    {
+        if (!$this->sections->contains($section)) {
+            $this->sections[] = $section;
+            $section->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSection(Section $section): self
+    {
+        if ($this->sections->removeElement($section)) {
+            // set the owning side to null (unless already changed)
+            if ($section->getPage() === $this) {
+                $section->setPage(null);
+            }
+        }
+
+        return $this;
     }
 }

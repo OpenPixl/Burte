@@ -2,10 +2,12 @@
 
 namespace App\Form\Webapp;
 
-use App\Entity\Webapp\Page;
+use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Section;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,7 +22,17 @@ class SectionType extends AbstractType
             ->add('attrName')
             ->add('attrClass')
             ->add('page')
-        ;
+            ->add('contentType', ChoiceType::class, [
+                'choices'  => [
+                    'Un article' => 'One_article',
+                    'Plusieurs articles' => 'More_article',
+                    'Une categorie' => 'category',
+                    'Un évènement' => 'One_event',
+                    'les évènements' => 'Events',
+                    'Autres' => 'Others'
+                ],
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PublicController extends AbstractController
 {
     /**
-     * @Route("/webapp/public/", name="op_webapp_public_index")
+     * @Route("/", name="op_webapp_public_index")
      */
     public function index(): RedirectResponse
     {

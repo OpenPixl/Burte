@@ -7,8 +7,7 @@
                 <th>Title</th>
                 <th>Slug</th>
                 <th>Description</th>
-                <th>IdName</th>
-                <th>NameName</th>
+                <th>Favorites</th>
                 <th>CreateAt</th>
                 <th>UpdateAt</th>
                 <th>actions</th>
@@ -21,10 +20,9 @@
                 <td>{{ section.title }}</td>
                 <td>{{ section.slug }}</td>
                 <td>{{ section.description }}</td>
-                <td>{{ section.attrName }}</td>
-                <td>{{ section.attrClass }}</td>
-                <td>{{ section.createdAt ? section.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ section.updatedAt ? section.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ section.favorites }}</td>
+                <td>{{ section.createdAt ? section.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                <td>{{ section.updatedAt ? section.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                 <td>
                     <a href="{{ path('op_webapp_section_show', {'id': section.id}) }}">show</a>
                     <a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}">edit</a>

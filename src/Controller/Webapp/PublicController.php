@@ -57,6 +57,7 @@ class PublicController extends AbstractController
     public function homepage() : Response
     {
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+        // integration du code sélectionnant les sections classées comme favorites
         return $this->render('webapp/public/index.html.twig',[
             'parameter' => $parameter
         ]);
@@ -68,6 +69,7 @@ class PublicController extends AbstractController
     public function Offline() : Response
     {
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
+
         return $this->render('webapp/public/Offline.html.twig', [
             'parameter' => $parameter
         ]);

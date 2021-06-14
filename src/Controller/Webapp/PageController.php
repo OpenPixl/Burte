@@ -3,6 +3,7 @@
 namespace App\Controller\Webapp;
 
 use App\Entity\Webapp\Page;
+use App\Entity\Webapp\Section;
 use App\Form\Webapp\PageType;
 use App\Repository\Webapp\PageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,6 +38,14 @@ class PageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($page);
+            $entityManager->flush();
+
+            $section = new Section();
+            $section->setTitle('nouvelle section');
+            $section->setDescription('Espace présentant sur le dashboard, le role de la section créée das la page.');
+            $section->setPage($page);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($section);
             $entityManager->flush();
 
             return $this->redirectToRoute('op_webapp_page_index');

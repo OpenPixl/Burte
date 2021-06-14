@@ -32,6 +32,8 @@ class SectionType extends AbstractType
                     'Autres' => 'Others'
                 ],
             ])
+            ->add('oneArticle')
+            ->add('favorites')
             ;
     }
 

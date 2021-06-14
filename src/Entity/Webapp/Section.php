@@ -68,14 +68,20 @@ class Section
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=30)
      */
     private $contentType;
 
-    public function __construct()
-    {
-        $this->articles = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="sections")
+     */
+    private $oneArticle;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $favorites = false;
+
 
     /**
      * Permet d'initialiser le slug !
@@ -221,6 +227,30 @@ class Section
     public function setContentType(?string $contentType): self
     {
         $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    public function getOneArticle(): ?Article
+    {
+        return $this->oneArticle;
+    }
+
+    public function setOneArticle(?Article $oneArticle): self
+    {
+        $this->oneArticle = $oneArticle;
+
+        return $this;
+    }
+
+    public function getFavorites(): ?bool
+    {
+        return $this->favorites;
+    }
+
+    public function setFavorites(bool $favorites): self
+    {
+        $this->favorites = $favorites;
 
         return $this;
     }

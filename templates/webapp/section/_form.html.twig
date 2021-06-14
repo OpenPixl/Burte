@@ -43,11 +43,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-4">
+                        <div class="row mb-1 mt-1 g-1">
+                            <fieldset>
+                                <div class="form-check form-switch">
+                                    {{ form_widget(form.favorites, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(form.favorites, 'Favorites', {'label_attr': {'class':'form-check-label'}}) }}
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="tab-pane" id="Contenu" role="tabpanel" aria-labelledby="contenu-tab">
                 <div class="row">
-                    <dic class="col-4">
+                    <div class="col-4">
                         <div class="row mb-1 mt-1 g-1">
                             <div class="col-3">
                                 <b>{{ form_label(form.contentType, 'Content type', {'label_attr': {'class':'form-label'}}) }}</b>
@@ -56,7 +66,19 @@
                                 {{ form_widget(form.contentType, {'attr': {'class': 'form-select form-select-sm'}}) }}
                             </div>
                         </div>
-                    </dic>
+                    </div>
+                </div>
+                <div class="row" id="one_Article">
+                    <div class="col-4">
+                        <div class="row mb-1 mt-1 g-1">
+                            <div class="col-3">
+                                <b>{{ form_label(form.oneArticle, 'One Article', {'label_attr': {'class':'form-label'}}) }}</b>
+                            </div>
+                            <div class="col-9">
+                                {{ form_widget(form.oneArticle, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="tab-pane" id="Adaptation" role="tabpanel" aria-labelledby="adaptation-tab">

@@ -1,50 +1,66 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
-{% block title %}Section{% endblock %}
+{% block title %}OpenGaia | {{ section.title }}{% endblock %}
 
-{% block body %}
-    <h1>Section</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ section.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ section.title }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ section.slug }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ section.description }}</td>
-            </tr>
-            <tr>
-                <th>IdName</th>
-                <td>{{ section.idName }}</td>
-            </tr>
-            <tr>
-                <th>NameName</th>
-                <td>{{ section.nameName }}</td>
-            </tr>
-            <tr>
-                <th>CreateAt</th>
-                <td>{{ section.createAt ? section.createAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdateAt</th>
-                <td>{{ section.updateAt ? section.updateAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('webapp_section_index') }}">back to list</a>
-
-    <a href="{{ path('webapp_section_edit', {'id': section.id}) }}">edit</a>
-
-    {{ include('webapp_section/_delete_form.html.twig') }}
+{% block content %}
+<div class="container-fluid">
+    {{ include('webapp/section/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('webapp/section/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Id</th>
+                                            <td>{{ section.id }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Title</th>
+                                            <td>{{ section.title }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Slug</th>
+                                            <td>{{ section.slug }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Description</th>
+                                            <td>{{ section.description }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Attr Id</th>
+                                            <td>{{ section.attrId }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Attr Name</th>
+                                            <td>{{ section.attrName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Attr Name</th>
+                                            <td>{{ section.attrClass }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>CreateAt</th>
+                                            <td>{{ section.createdAt ? section.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>UpdateAt</th>
+                                            <td>{{ section.updatedAt ? section.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {{ include('webapp/section/_delete_form.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

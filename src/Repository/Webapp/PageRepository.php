@@ -38,6 +38,22 @@ class PageRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * Liste la page qui s'affichera selon son slug.
+     */
+    public function findbyslug($slug)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id, p.name, p.slug, p.state, p.isMenu, p.isPublish, p.position')
+            ->andWhere('p.slug = :slug')
+            ->andWhere('p.isMenu = :isMenu')
+            ->andWhere('p.isPublish = :isPublish')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Page[] Returns an array of Page objects
     //  */

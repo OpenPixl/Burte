@@ -18,6 +18,7 @@ class ParameterType extends AbstractType
             ->add('isOnline')
             ->add('adminEmail')
             ->add('adminWebmaster')
+            ->add('isBlocMenuFluid')
         ;
     }
 

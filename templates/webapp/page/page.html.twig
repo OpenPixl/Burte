@@ -1,7 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ page.title}}{% endblock %}
+{% block title %}
+    {% if not page.title %}
+        {{ page.name }}
+    {% else %}
+        {{ page.title }}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
-    hello . {{ page.name }}
+    {% if page is empty %}
+    {% else %}
+    <header id="page-title">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="title">{{ page.name }}</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+    {{ render(controller('App\\Controller\\Webapp\\SectionController::frontbypage', {'page' : page.id})) }}
+    {% endif %}
 {% endblock %}

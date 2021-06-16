@@ -2,6 +2,7 @@
 
 namespace App\Entity\Webapp;
 
+use App\Entity\Admin\Member;
 use App\Repository\Webapp\ArticleRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -86,6 +87,32 @@ class Article
      * @ORM\OneToMany(targetEntity=Section::class, mappedBy="oneArticle")
      */
     private $sections;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Author;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $state;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isReadMore = false;
+
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $articleFrontPosition;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isArticleFrontFluid = false;
 
     public function __construct()
     {
@@ -204,34 +231,7 @@ class Article
         return $this->articleFrontSize;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
 
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedAt(): self
-    {
-        $this->createdAt = new \DateTime('now');
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function setUpdatedAt(): self
-    {
-        $this->updatedAt = new \DateTime('now');
-        return $this;
-    }
 
     public function getCategory(): ?Category
     {
@@ -243,11 +243,6 @@ class Article
         $this->Category = $Category;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->title;
     }
 
     /**
@@ -277,6 +272,100 @@ class Article
             }
         }
 
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+    public function getAuthor(): ?Member
+    {
+        return $this->Author;
+    }
+
+    public function setAuthor(?Member $Author): self
+    {
+        $this->Author = $Author;
+
+        return $this;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function getIsReadMore(): ?bool
+    {
+        return $this->isReadMore;
+    }
+
+    public function setIsReadMore(bool $isReadMore): self
+    {
+        $this->isReadMore = $isReadMore;
+
+        return $this;
+    }
+
+    public function getArticleFrontPosition(): ?string
+    {
+        return $this->articleFrontPosition;
+    }
+
+    public function setArticleFrontPosition(string $articleFrontPosition): self
+    {
+        $this->articleFrontPosition = $articleFrontPosition;
+
+        return $this;
+    }
+
+    public function getIsArticleFrontFluid(): ?bool
+    {
+        return $this->isArticleFrontFluid;
+    }
+
+    public function setIsArticleFrontFluid(bool $isArticleFrontFluid): self
+    {
+        $this->isArticleFrontFluid = $isArticleFrontFluid;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
+    {
+        $this->createdAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
+    {
+        $this->updatedAt = new \DateTime('now');
         return $this;
     }
 }

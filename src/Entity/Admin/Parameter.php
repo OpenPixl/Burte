@@ -58,6 +58,11 @@ class Parameter
      */
     private $adminWebmaster;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isBlocMenuFluid = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -160,6 +165,18 @@ class Parameter
     public function setAdminWebmaster(?string $adminWebmaster): self
     {
         $this->adminWebmaster = $adminWebmaster;
+
+        return $this;
+    }
+
+    public function getIsBlocMenuFluid(): ?bool
+    {
+        return $this->isBlocMenuFluid;
+    }
+
+    public function setIsBlocMenuFluid(bool $isBlocMenuFluid): self
+    {
+        $this->isBlocMenuFluid = $isBlocMenuFluid;
 
         return $this;
     }

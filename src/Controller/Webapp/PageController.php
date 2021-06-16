@@ -43,6 +43,7 @@ class PageController extends AbstractController
             $section = new Section();
             $section->setTitle('nouvelle section');
             $section->setDescription('Espace présentant sur le dashboard, le role de la section créée das la page.');
+            $section->setContentType('One_article');
             $section->setPage($page);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($section);
@@ -55,6 +56,17 @@ class PageController extends AbstractController
             'page' => $page,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * affiche la page en front office selon le slug
+     * @Route("/webapp/page/{slug}", name="op_webapp_page_slug", methods={"GET"})
+     */
+    public function page($slug) : response
+    {
+        $page = $this->getDoctrine()->getRepository(Page::class)->findbyslug($slug);
+
+        return $this->render('webapp/page/page.html.twig');
     }
 
     /**

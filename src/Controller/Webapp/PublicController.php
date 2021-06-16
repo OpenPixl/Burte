@@ -80,9 +80,11 @@ class PublicController extends AbstractController
      */
     public function BlocMenu(PageRepository $pageRepository): Response
     {
+        $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
         $menus = $pageRepository->listMenu();
 
         return $this->render('include/navbar_webapp.html.twig', [
+            'parameter' => $parameter,
             'menus' => $menus
         ]);
     }

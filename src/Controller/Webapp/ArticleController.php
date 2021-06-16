@@ -29,7 +29,9 @@ class ArticleController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $member = $this->getUser();
         $article = new Article();
+        $article->setAuthor($member);
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
@@ -88,6 +90,17 @@ class ArticleController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('webapp_article_index');
+        return $this->redirectToRoute('op_webapp_article_index');
+    }
+
+    /**
+     * Affiche un seul article en Front
+     * @Route("/webapp/article/one/{id}", name="op_webapp_article_one")
+     */
+    public function oneArticle(Article $article) : Response
+    {
+        return $this->render('webapp/article/one.html.twig', [
+            'article' => $article,
+        ]);
     }
 }

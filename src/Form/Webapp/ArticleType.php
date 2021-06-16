@@ -7,6 +7,7 @@ use App\Entity\Webapp\Category;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -32,7 +33,20 @@ class ArticleType extends AbstractType
             'allow_delete' => true,
             'delete_label' => 'Supprimer',
             'download_label' => 'Télecharger',
-        ])
+            ])
+            ->add('state', ChoiceType::class, [
+                'choices'  => [
+                    'Brouillon' => 'draft',
+                    'Publiée' => 'publish',
+                ],
+            ])
+            ->add('articleFrontPosition', ChoiceType::class, [
+                'choices'  => [
+                    'à droite du contenu' => 'right',
+                    'à gauche du contenu' => 'left',
+                ],
+            ])
+            ->add('isReadMore')
         ;
     }
 

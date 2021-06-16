@@ -5,7 +5,7 @@
             <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Contenu" type="button" role="tab" aria-controls="Contenu" aria-selected="true"><h5>Contenu</h5></button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Options" type="button" role="tab" aria-controls="Options" aria-selected="true"><h5>Options</h5></button>
+            <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Medias" type="button" role="tab" aria-controls="Options" aria-selected="true"><h5>Medias</h5></button>
         </li>
     </ul>
 
@@ -48,18 +48,44 @@
                             {{ form_widget(form.category, {'attr': {'class': 'form-control form-control-sm'}}) }}
                         </div>
                     </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-4">
+                            <b>{{ form_label(form.state, 'State', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(form.state, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                        </div>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.isReadMore, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.isReadMore, 'Is read more', {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="tab-pane" id="Options" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane" id="Medias" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-3">
                             <b>{{ form_label(form.articleFrontFile, 'Article front file', {'label_attr': {'class':'form-label'}}) }}</b>
                         </div>
                         <div class="col-9">
                             {{ form_widget(form.articleFrontFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-4">
+                            <b>{{ form_label(form.articleFrontPosition, 'Article front position', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(form.articleFrontPosition, {'attr': {'class': 'form-select form-select-sm'}}) }}
                         </div>
                     </div>
                 </div>

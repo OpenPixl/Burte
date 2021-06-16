@@ -34,6 +34,7 @@ class SectionType extends AbstractType
             ])
             ->add('oneArticle')
             ->add('favorites')
+            ->add('isSectionFluid')
             ;
     }
 

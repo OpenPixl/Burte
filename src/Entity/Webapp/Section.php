@@ -82,6 +82,11 @@ class Section
      */
     private $favorites = false;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isSectionFluid = false;
+
 
     /**
      * Permet d'initialiser le slug !
@@ -251,6 +256,18 @@ class Section
     public function setFavorites(bool $favorites): self
     {
         $this->favorites = $favorites;
+
+        return $this;
+    }
+
+    public function getIsSectionFluid(): ?bool
+    {
+        return $this->isSectionFluid;
+    }
+
+    public function setIsSectionFluid(bool $isSectionFluid): self
+    {
+        $this->isSectionFluid = $isSectionFluid;
 
         return $this;
     }

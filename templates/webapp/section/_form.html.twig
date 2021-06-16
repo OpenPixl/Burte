@@ -109,6 +109,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-4">
+                        <div class="row mb-1 mt-1 g-1">
+                            <fieldset>
+                                <div class="form-check form-switch">
+                                    {{ form_widget(form.isSectionFluid, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(form.isSectionFluid, 'Is section fluid', {'label_attr': {'class':'form-check-label'}}) }}
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

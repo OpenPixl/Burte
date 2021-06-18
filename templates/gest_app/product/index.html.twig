@@ -2,6 +2,73 @@
 
 {% block title %}OpenGaia | Administration - site{% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+    <script type="text/javascript">
+        window.onload = function(){
+            // Construction de la fonction OnClickBtnMenu
+            function onClickBtnOnLine(event){
+                event.preventDefault();
+                const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
+                const icone = this.querySelector('i');                          // variable qui sélectionne l'élément balise <i></i>
+                axios
+                    .post(url)
+                    .then(function(response) {
+                        if(icone.classList.contains('fa-toggle-off')) {
+                            icone.classList.replace('fa-toggle-off', 'fa-toggle-on');
+                            icone.classList.replace('text-danger', 'text-success');
+                        }
+                        else {
+                            icone.classList.replace('fa-toggle-on', 'fa-toggle-off');
+                            icone.classList.replace('text-success', 'text-danger');
+                        }
+                    });
+            }
+
+            // Construction de la fonction OnClickBtnMenu
+            function onClickBtnStar(event){
+                event.preventDefault();
+                const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
+                const icone = this.querySelector('i');                          // variable qui sélectionne l'élément balise <i></i>
+                axios
+                    .post(url)
+                    .then(function(response) {
+                        if(icone.classList.contains('far')) {
+                            icone.classList.replace('far', 'fas');
+                            icone.classList.replace('text-danger', 'text-success');
+                        }
+                        else {
+                            icone.classList.replace('fas', 'far');
+                            icone.classList.replace('text-success', 'text-danger');
+                        }
+                        Toast();
+                    });
+            }
+            // partie de code pour afficher le toast d'alerte
+            var option = {
+                animation : true,
+                autohide: true,
+                delay : 2000,
+            };
+            function Toast(){
+                var toastHTMLElement = document.getElementById("toaster");
+                var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                toastElement.show();
+            }
+
+            // Appel de la fonction de mise en ligne du produit lors d'un clic
+            document.querySelectorAll('a.js-online').forEach(function (link){
+                link.addEventListener('click', onClickBtnOnLine);
+            })
+
+            // Appel de la fonction de mise en vedette du produit lors d'un clic
+            document.querySelectorAll('a.js-star').forEach(function (link){
+                link.addEventListener('click', onClickBtnStar);
+            })
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     {{ include('gest_app/product/include/_section_content_header.html.twig') }}
@@ -13,24 +80,40 @@
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Liste des produits</h4>
+                        <h4>Catalogue des produits</h4>
                         <p>Créer, Modifier ou supprimer des articles du site</p>
                         <div class="row">
                             {% for product in products %}
                                 <div class="col-2">
                                     <div class="card">
+                                        {% if product.productName is null %}
+                                        <img src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
+                                        {% else %}
                                         <img src="{{ vich_uploader_asset(product)|imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                                        {% endif %}
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ product.name }}</h5>
+                                            <h5 class="card-title"><a href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}">{{ product.name }}</a></h5>
                                             <p class="card-text">{{ product.description|raw }}</p>
-                                            <a href="{{ path('op_gestapp_product_edit', {'id': product.id }) }}" class="btn btn-primary">Go somewhere</a>
+                                            <p class="card-subtitle">{{ product.price }} € / {{ product.typo }}</p>
                                         </div>
                                         <div class="card-footer">
-                                            <p class="card-text">{{ product.price }} €/ {{ product.typo }}</p>
-                                            <p class="card-text">
-                                                <a class="js-edit-product" href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}"><i class="far fa-edit"></i></a>
-                                                <a class="js-delete-product" href="#"><i class="fa fa-trash"></i></a>
-                                            </p>
+                                            <div class="d-flex flex-row justify-content-between">
+                                                {% if product.isOnLine == 0 %}
+                                                <p class="card-text"><a class="js-online" href="{{ path('op_gestapp_product_online', {'id':product.id}) }}"><i class="fas fa-toggle-off text-danger"></i></a></p>
+                                                {% else %}
+                                                <p class="card-text"><a class="js-online" href="{{ path('op_gestapp_product_online', {'id':product.id}) }}"><i class="fas fa-toggle-on text-success"></i></a></p>
+                                                {% endif %}
+                                                {% if product.isStar == 0 %}
+                                                <p class="card-text"><a class="js-star" href="{{ path('op_gestapp_product_star', {'id': product.id }) }}"><i class="far fa-star text-warning"></i></a></p>
+                                                {% else %}
+                                                <p class="card-text"><a class="js-star" href="{{ path('op_gestapp_product_star', {'id': product.id }) }}"><i class="fas fa-star text-warning"></i></a></p>
+                                                {% endif %}
+                                                <p class="card-text">
+                                                    <a class="js-edit-product" href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}"><i class="far fa-edit"></i></a>&nbsp;&nbsp;
+                                                    <a class="js-delete-product" href="#"><i class="fa fa-trash"></i></a>
+                                                </p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -50,6 +133,19 @@
                 </div>
             </div>
         </div>
+        <!-- TOAST Bootstrap 5-->
+        <div id="toaster" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
     </section>
+
 </div>
 {% endblock %}

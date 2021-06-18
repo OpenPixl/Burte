@@ -5,6 +5,12 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <h4><a href="{{ path('op_webapp_article_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a></h4>
+        <h4>
+            {% if app.request.get('_route') == 'op_webapp_article_index'%}
+            <a href="{{ path('op_admin_dashboard_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
+            {% else %}
+            <a href="{{ path('op_webapp_article_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
+            {% endif %}
+        </h4>
     </div>
 </div>

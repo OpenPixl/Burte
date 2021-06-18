@@ -36,7 +36,7 @@ class Category
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="Category")
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="ProductCategory")
      */
     private $articles;
 

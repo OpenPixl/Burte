@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Repository\Webapp;
+namespace App\Repository\GestApp;
 
-use App\Entity\Webapp\Category;
+use App\Entity\GestApp\ProductCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Category|null find($id, $lockMode = null, $lockVersion = null)
- * @method Category|null findOneBy(array $criteria, array $orderBy = null)
- * @method Category[]    findAll()
- * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ProductCategory|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ProductCategory|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ProductCategory[]    findAll()
+ * @method ProductCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CategoryRepository extends ServiceEntityRepository
+class ProductCategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Category::class);
+        parent::__construct($registry, ProductCategory::class);
     }
 
     // /**

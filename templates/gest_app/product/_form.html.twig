@@ -1,0 +1,92 @@
+{{ form_start(form) }}
+<div class="card-body">
+    <div class="row">
+        <div class="col-6">
+            <h5>Description</h5>
+            <hr>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-2">
+                    <b>{{ form_label(form.name, 'Name', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom du produit'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-2">
+                    <b>{{ form_label(form.nature, 'Nature', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.nature, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                </div>
+                <div class="col-2"></div>
+                <div class="col-2">
+                    <b>{{ form_label(form.category, 'Category', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.category, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-2">
+                    <b>{{ form_label(form.description, 'Description', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-10">
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-2">
+                    <b>{{ form_label(form.price, 'Price', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-2">
+                    {{ form_widget(form.price, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Identifiant'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.typo, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-2">
+                    <b>{{ form_label(form.producer, 'Producer', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-6">
+                    {{ form_widget(form.producer, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <fieldset>
+                    <div class="form-check form-switch">
+                        {{ form_widget(form.isDisponible, {'attr': {'class': 'form-check-input'}}) }}
+                        {{ form_label(form.isDisponible, 'Is disponible', {'label_attr': {'class':'form-check-label'}}) }}
+                    </div>
+                </fieldset>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-2">
+                    <b>{{ form_label(form.quantity, 'Quantity', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.quantity, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom du produit'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h5>Visuel</h5>
+            <hr>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.productFile, 'Product file', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.productFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="card-footer">
+    <a class="btn btn-sm btn-secondary" href="{{ path('op_admin_member_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a></a> <button class="btn btn-sm btn-primary">{{ button_label|default('Save') }}</button>
+</div>
+{{ form_end(form) }}

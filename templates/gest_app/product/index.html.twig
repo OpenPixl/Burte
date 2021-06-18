@@ -1,0 +1,55 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}OpenGaia | Administration - site{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('gest_app/product/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('gest_app/product/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Liste des produits</h4>
+                        <p>Créer, Modifier ou supprimer des articles du site</p>
+                        <div class="row">
+                            {% for product in products %}
+                                <div class="col-2">
+                                    <div class="card">
+                                        <img src="{{ vich_uploader_asset(product)|imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ product.name }}</h5>
+                                            <p class="card-text">{{ product.description|raw }}</p>
+                                            <a href="{{ path('op_gestapp_product_edit', {'id': product.id }) }}" class="btn btn-primary">Go somewhere</a>
+                                        </div>
+                                        <div class="card-footer">
+                                            <p class="card-text">{{ product.price }} €/ {{ product.typo }}</p>
+                                            <p class="card-text">
+                                                <a class="js-edit-product" href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}"><i class="far fa-edit"></i></a>
+                                                <a class="js-delete-product" href="#"><i class="fa fa-trash"></i></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <p class="card-text">Pas de produits dans notre boutique actuellement.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

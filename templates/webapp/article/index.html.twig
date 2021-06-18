@@ -37,7 +37,7 @@
                                     <td>{{ article.createdAt ? article.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                     <td>{{ article.updatedAt ? article.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                     <td>
-                                        <a href="{{ path('op_webapp_section_new', {'id': article.id}) }}">show</a>
+                                        <a href="{{ path('op_webapp_article_show', {'id': article.id}) }}">show</a>
                                         <a href="{{ path('op_webapp_article_edit', {'id': article.id}) }}">edit</a>
                                     </td>
                                 </tr>

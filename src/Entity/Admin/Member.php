@@ -2,6 +2,7 @@
 
 namespace App\Entity\Admin;
 
+use App\Entity\GestApp\Product;
 use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Page;
 use App\Repository\Admin\MemberRepository;
@@ -111,10 +112,21 @@ class Member implements UserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="producer")
+     */
+    private $products;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -401,6 +413,48 @@ class Member implements UserInterface
             // set the owning side to null (unless already changed)
             if ($article->getAuthor() === $this) {
                 $article->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setProducer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getProducer() === $this) {
+                $product->setProducer(null);
             }
         }
 

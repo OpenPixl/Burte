@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Admin\member;
+use App\Entity\Admin\Member;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Repository\Admin\MemberRepository;

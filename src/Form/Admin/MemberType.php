@@ -4,6 +4,7 @@ namespace App\Form\Admin;
 
 use App\Entity\Admin\Member;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,6 +51,13 @@ class MemberType extends AbstractType
             ->add('city')
             ->add('phoneDesk')
             ->add('phoneGsm')
+            ->add('type', ChoiceType::class, [
+                'choices'  => [
+                    'administrateur' => 'administrateur',
+                    'producteur' => 'producteur',
+                    'consommateur' => 'consommateur',
+                ],
+            ])
         ;
     }
 

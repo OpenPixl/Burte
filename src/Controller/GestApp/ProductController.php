@@ -5,6 +5,7 @@ namespace App\Controller\GestApp;
 use App\Entity\GestApp\Product;
 use App\Form\GestApp\ProductType;
 use App\Repository\GestApp\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/Gestapp/product/", name="op_gestapp_product_index", methods={"GET"})
+     * @Route("/gestapp/product/", name="op_gestapp_product_index", methods={"GET"})
      */
     public function index(ProductRepository $productRepository): Response
     {
@@ -26,7 +27,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/Gestapp/product/new", name="op_gestapp_product_new", methods={"GET","POST"})
+     * @Route("/gestapp/product/new", name="op_gestapp_product_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +50,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/Gestapp/product/{id}", name="op_gestapp_product_show", methods={"GET"})
+     * @Route("/gestapp/product/{id}", name="op_gestapp_product_show", methods={"GET"})
      */
     public function show(Product $product): Response
     {
@@ -59,7 +60,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/Gestapp/product/{id}/edit", name="op_gestapp_product_edit", methods={"GET","POST"})
+     * @Route("/gestapp/product/{id}/edit", name="op_gestapp_product_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Product $product): Response
     {
@@ -79,7 +80,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/Gestapp/product/{id}", name="op_gestapp_product_delete", methods={"POST"})
+     * @Route("/gestapp/product/{id}", name="op_gestapp_product_delete", methods={"POST"})
      */
     public function delete(Request $request, Product $product): Response
     {
@@ -90,5 +91,67 @@ class ProductController extends AbstractController
         }
 
         return $this->redirectToRoute('gest_app_product_index');
+    }
+
+    /**
+     * Permet d'activer ou de désactiver la mise en ligne d'un produit
+     * @Route("/gestapp/product/online/{id}/json", name="op_gestapp_product_online")
+     */
+    public function jsonline(Product $product, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $isonline = $product->getIsOnLine();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // Si la page est déja publiée, alors on dépublie
+        if($isonline == true){
+            $product->setIsOnLine(0);
+            $em->flush();
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Le produit est n'est plus publié en ligne."
+            ], 200);
+        }
+        // Si la page est déja dépubliée, alors on publie
+        $product->setIsOnLine(1);
+        $em->flush();
+        return $this->json([
+            'code'          => 200,
+            'message'       => 'Le produit est mis en ligne.'
+        ], 200);
+    }
+
+    /**
+     * Permet d'activer ou de désactiver la mise en ligne d'un produit
+     * @Route("/gestapp/product/jsstar/{id}/json", name="op_gestapp_product_star")
+     */
+    public function jsstar(Product $product, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $isstar = $product->getIsStar();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // Si la page est déja publiée, alors on dépublie
+        if($isstar == true){
+            $product->setIsStar(0);
+            $em->flush();
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Le produit est n'est plus publié en vedette."
+            ], 200);
+        }
+        // Si la page est déja dépubliée, alors on publie
+        $product->setIsStar(1);
+        $em->flush();
+        return $this->json([
+            'code'          => 200,
+            'message'       => 'Le produit est publié en vedette.'
+        ], 200);
     }
 }

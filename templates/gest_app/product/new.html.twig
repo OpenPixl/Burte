@@ -5,14 +5,16 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        ClassicEditor
-            .create(document.querySelector('#article_content'), {
-                toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
-                height: 50
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        window.onload = function(){
+            ClassicEditor
+                .create(document.querySelector('#product_description'), {
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
+                    height: 50
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     </script>
 {%  endblock %}
 

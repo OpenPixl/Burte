@@ -107,6 +107,16 @@ class Product
     private $nature;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isOnLine = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isStar = false;
+
+    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist
@@ -314,6 +324,30 @@ class Product
     public function setNature(string $nature): self
     {
         $this->nature = $nature;
+
+        return $this;
+    }
+
+    public function getIsOnLine(): ?bool
+    {
+        return $this->isOnLine;
+    }
+
+    public function setIsOnLine(bool $isOnLine): self
+    {
+        $this->isOnLine = $isOnLine;
+
+        return $this;
+    }
+
+    public function getIsStar(): ?bool
+    {
+        return $this->isStar;
+    }
+
+    public function setIsStar(bool $isStar): self
+    {
+        $this->isStar = $isStar;
 
         return $this;
     }

@@ -1,0 +1,21 @@
+body {
+    background-color: #222222;
+    border: 4px solid #c8b15d;
+    height: 100vh;
+    padding: 0.5rem;
+    color: #c8b15d;
+}
+
+.wrapper {
+    height: 100%;
+    border: 2px solid #c8b15d;
+    display: flex;
+  	align-items: center;
+}
+
+#content {
+    width: 100%;
+  	max-width: 330px;
+  	padding: 15px;
+  	margin: auto;
+}

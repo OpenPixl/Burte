@@ -13,14 +13,14 @@ class MemberFixtures extends Fixture
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
-         $this->passwordEncoder = $passwordEncoder;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function load(ObjectManager $manager)
     {
         $member = new Member();
         $member->setRoles(array('ROLE_ADMIN'));
-        $member->setPassword($this->passwordEncoder->encodePassword($member,'admin123'));
+        $member->setPassword($this->passwordEncoder->encodePassword($member, 'admin123'));
         $member->setEmail('contact@openpixl.fr');
         $member->setFirstName('admin');
         $member->setLastName('Dév');
@@ -31,11 +31,12 @@ class MemberFixtures extends Fixture
         $member->setPhoneDesk('00.00.00.00.00');
         $member->setPhoneGsm('00.00.00.00.00');
         $member->setIsVerified(1);
+        $member->setType('administrateur');
         $manager->persist($member);
 
         $member = new Member();
         $member->setRoles(array('ROLE_ADMIN'));
-        $member->setPassword($this->passwordEncoder->encodePassword($member,'test123'));
+        $member->setPassword($this->passwordEncoder->encodePassword($member, 'test123'));
         $member->setEmail('postmaster@openpixl.fr');
         $member->setFirstName('utilisateur 1');
         $member->setLastName(' testeur 1');
@@ -46,11 +47,13 @@ class MemberFixtures extends Fixture
         $member->setPhoneDesk('00.00.00.00.00');
         $member->setPhoneGsm('00.00.00.00.00');
         $member->setIsVerified(0);
+        $member->setType('consommateur');
+
         $manager->persist($member);
 
         $member = new Member();
         $member->setRoles(array('ROLE_USER'));
-        $member->setPassword($this->passwordEncoder->encodePassword($member,'12345678'));
+        $member->setPassword($this->passwordEncoder->encodePassword($member, '12345678'));
         $member->setEmail('philippe.favero@gmail.com');
         $member->setFirstName('Philippe');
         $member->setLastName('FAVERO');
@@ -61,6 +64,7 @@ class MemberFixtures extends Fixture
         $member->setPhoneDesk('00.00.00.00.00');
         $member->setPhoneGsm('00.00.00.00.00');
         $member->setIsVerified(1);
+        $member->setType('producteur');
         $manager->persist($member);
 
         $manager->flush();

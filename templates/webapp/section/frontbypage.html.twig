@@ -1,24 +1,5 @@
 {% for section in sections %}
-<section id="" class="container" >
-    <div id="section_title" class="row">
-        <div class="col">
-            <h2>{{ section.title }}</h2>
-        </div>
-    </div>
-    <div id="section_content">
-        <div class="row">
-            <div class="col">
-                {% if section.oneArticle is null %}
-                    <article>
-                        <p>exemple de titre d'article</p>
-                    </article>
-                {% else %}
-                    {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle})) }}
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
+{% include('webapp/section/include/_onesection.html.twig') %}
 {% else %}
 <section class="container">
     <div class="row">

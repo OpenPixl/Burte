@@ -1,6 +1,149 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-<div class="card-footer">
-    <button class="btn btn-sm btn-primary">{{ button_label|default('Save') }}</button>
+<div class="card-body">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#General" type="button" role="tab" aria-controls="General" aria-selected="true"><h5>Général</h5></button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Accueil" type="button" role="tab" aria-controls="Accueil" aria-selected="true"><h5>Page d'accueil</h5></button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Hors-ligne" type="button" role="tab" aria-controls="Hors-ligne" aria-selected="true"><h5>Hors-ligne</h5></button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Administrateur" type="button" role="tab" aria-controls="Administrateur" aria-selected="true"><h5>Administrateur</h5></button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="General" role="tabpanel" aria-labelledby="General-tab">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.nameSite, 'Name site', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.nameSite, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre du site'}}) }}
+                        </div>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.sloganSite, 'Slogan site', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.sloganSite, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre du site'}}) }}
+                        </div>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.descrSite, 'Descr site', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.descrSite, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'description'}}) }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.logoFile, 'Logo file', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-2">
+                            {{ form_widget(form.logoFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+                        </div>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.faviconFile, 'Favicon file', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-2">
+                            {{ form_widget(form.faviconFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-1 mt-1 g-1">
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.isOnline, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.isOnline, 'Mettre le site est en ligne ?', {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="Accueil" role="tabpanel" aria-labelledby="Accueil-tab">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row mb-1 mt-1 g-1">
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.isBlocMenuFluid, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.isBlocMenuFluid, "Rendre le menu d'acceuil fluide ?", {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="Hors-ligne" role="tabpanel" aria-labelledby="Hors-ligne-tab">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.offlMessage, 'Message hors ligne', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.offlMessage, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                        </div>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.isShowOfflineLogo, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.isShowOfflineLogo, "Afficher le Logo sur la page 'Hors-ligne' ?", {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.isShowOfflineMessage, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.isShowOfflineMessage, "Afficher le message de description sur la page 'Hors-ligne' ?", {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="Administrateur" role="tabpanel" aria-labelledby="Administrateur-tab">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.adminWebmaster, 'Admin webmaster', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.adminWebmaster, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom & prénom'}}) }}
+                        </div>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.adminEmail, 'Admin email', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.adminEmail, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Email'}}) }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+<div class="card-footer">
+    <button class="btn btn-sm btn-success">{{ button_label|default('Enregistrer') }}</button>
+</div>
+{{ form_rest(form) }}
 {{ form_end(form) }}

@@ -148,6 +148,11 @@ class Member implements UserInterface
      */
     private $products;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Society::class, inversedBy="member")
+     */
+    private $society;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -529,6 +534,18 @@ class Member implements UserInterface
                 $product->setProducer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSociety(): ?Society
+    {
+        return $this->society;
+    }
+
+    public function setSociety(?Society $society): self
+    {
+        $this->society = $society;
 
         return $this;
     }

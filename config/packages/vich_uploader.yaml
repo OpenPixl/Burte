@@ -23,3 +23,17 @@ vich_uploader:
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true avatar_image
+        logosite_front:
+            uri_prefix: /images/logosite_front
+            upload_destination: '%kernel.project_dir%/public/images/logosite_front'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true avatar_image
+        favicon_front:
+            uri_prefix: /images/favicon_front
+            upload_destination: '%kernel.project_dir%/public/images/favicon_front'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true avatar_image

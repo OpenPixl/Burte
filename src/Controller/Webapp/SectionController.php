@@ -8,6 +8,7 @@ use App\Form\Webapp\SectionType;
 use App\Form\Webapp\Section2Type;
 use App\Repository\Webapp\SectionRepository;
 use CKSource\CKFinder\Response\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -165,5 +166,36 @@ class SectionController extends AbstractController
         }
 
         return $this->redirectToRoute('op_webapp_section_index');
+    }
+
+    /**
+     * Permet d'activer ou de désactiver la mise en vedette d'une section sur la page d'accueil
+     * @Route("/webapp/section/jsstar/{id}/json", name="op_webapp_section_star")
+     */
+    public function jsstar(Section $section, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $isstar = $section->getFavorites();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // Si la page est déja publiée, alors on dépublie
+        if($isstar == true){
+            $section->setfavorites(0);
+            $em->flush();
+            return $this->json([
+                'code'      => 200,
+                'message'   => "La section n'est plus publiée sur la page d'acccueil."
+            ], 200);
+        }
+        // Si la page est déja dépubliée, alors on publie
+        $section->setFavorites(1);
+        $em->flush();
+        return $this->json([
+            'code'          => 200,
+            'message'       => "La section est publiée sur la page d'acccueil."
+        ], 200);
     }
 }

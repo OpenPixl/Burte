@@ -1,0 +1,71 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Adhesion index{% endblock %}
+
+{% block body %}
+    <h1>Adhesion index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Society</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Address</th>
+                <th>Zipcode</th>
+                <th>City</th>
+                <th>Email</th>
+                <th>Siret</th>
+                <th>Gerant</th>
+                <th>UrlWeb</th>
+                <th>UrlFacebook</th>
+                <th>UrlInstagram</th>
+                <th>UrlLinkedin</th>
+                <th>IsGroupeEntreprendre</th>
+                <th>FirstActivity</th>
+                <th>SecondActivity</th>
+                <th>ProjectDev</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adhesion in adhesions %}
+            <tr>
+                <td>{{ adhesion.id }}</td>
+                <td>{{ adhesion.society }}</td>
+                <td>{{ adhesion.firstName }}</td>
+                <td>{{ adhesion.lastName }}</td>
+                <td>{{ adhesion.address }}</td>
+                <td>{{ adhesion.zipcode }}</td>
+                <td>{{ adhesion.city }}</td>
+                <td>{{ adhesion.email }}</td>
+                <td>{{ adhesion.siret }}</td>
+                <td>{{ adhesion.gerant }}</td>
+                <td>{{ adhesion.urlWeb }}</td>
+                <td>{{ adhesion.urlFacebook }}</td>
+                <td>{{ adhesion.urlInstagram }}</td>
+                <td>{{ adhesion.urlLinkedin }}</td>
+                <td>{{ adhesion.isGroupeEntreprendre ? 'Yes' : 'No' }}</td>
+                <td>{{ adhesion.firstActivity }}</td>
+                <td>{{ adhesion.secondActivity }}</td>
+                <td>{{ adhesion.projectDev }}</td>
+                <td>{{ adhesion.createdAt ? adhesion.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ adhesion.updatedAt ? adhesion.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('gest_app_adhesion_show', {'id': adhesion.id}) }}">show</a>
+                    <a href="{{ path('gest_app_adhesion_edit', {'id': adhesion.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="21">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('gest_app_adhesion_new') }}">Create new</a>
+{% endblock %}

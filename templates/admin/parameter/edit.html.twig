@@ -4,18 +4,18 @@
 
 {% block content %}
 <div class="container-fluid">
-    {{ include('admin/member/include/_section_content_header.html.twig') }}
+    {{ include('admin/parameter/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
             <div class="col-2">
-                {{ include('admin/member/include/_section_content_aside.html.twig') }}
+                {{ include('admin/parameter/include/_section_content_aside.html.twig') }}
             </div>
             <div class="col-10">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Modifier un membre</h3>
+                        <h3>Paramètres du site</h3>
                     </div>
-                    {{ include('admin/parameter/_form.html.twig', {'button_label': 'Update'}) }}
+                    {{ include('admin/parameter/_form.html.twig', {'button_label': 'Enregistrer'}) }}
                 </div>
             </div>
         </div>

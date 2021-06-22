@@ -3,5 +3,33 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-
+{% if not sections %}
+    <header id="page-title">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="title">{{ parameter.nameSite }}</h1>
+                    <p>Bienvenue sur notre site.<br>Ce dernier est propulsé par le CMS OpenGAIA, développé par OpenPixl sous Symfony.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section>
+        <p>pas de sections favorites</p>
+    </section>
+{% else %}
+    {% for section in sections %}
+    <header id="page-title">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="title">{{ parameter.nameSite }}</h1>
+                    <p>Bienvenue sur notre site.<br>Ce dernier est propulsé par le CMS OpenGAIA, développé par OpenPixl sous Symfony.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% include('webapp/section/include/_onesection.html.twig') %}
+    {% endfor %}
+{% endif %}
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller\Webapp;
 
 use App\Entity\Admin\Parameter;
 use App\Entity\Webapp\Page;
+use App\Entity\Webapp\Section;
 use App\Repository\Webapp\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -57,9 +58,12 @@ class PublicController extends AbstractController
     public function homepage() : Response
     {
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+        $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1));
+
         // integration du code sélectionnant les sections classées comme favorites
         return $this->render('webapp/public/index.html.twig',[
-            'parameter' => $parameter
+            'parameter' => $parameter,
+            'sections' => $sections,
         ]);
     }
 

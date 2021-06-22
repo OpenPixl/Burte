@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParameterController extends AbstractController
 {
     /**
-     * @Route("/admin/parameter/", name="op_admin_parameter_index", methods={"GET"})
+     * @Route("/op_admin/parameter/", name="op_admin_parameter_index", methods={"GET"})
      */
     public function index(ParameterRepository $parameterRepository): RedirectResponse
     {
@@ -31,7 +31,7 @@ class ParameterController extends AbstractController
     }
 
     /**
-     * @Route("/admin/parameter/new", name="op_admin_parameter_new", methods={"GET","POST"})
+     * @Route("/op_admin/parameter/new", name="op_admin_parameter_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -54,7 +54,7 @@ class ParameterController extends AbstractController
     }
 
     /**
-     * @Route("/admin/parameter/{id}", name="op_admin_parameter_show", methods={"GET"})
+     * @Route("/op_admin/parameter/{id}", name="op_admin_parameter_show", methods={"GET"})
      */
     public function show(Parameter $parameter): Response
     {

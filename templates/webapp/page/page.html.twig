@@ -20,6 +20,6 @@
             </div>
         </div>
     </header>
-    {{ render(controller('App\\Controller\\Webapp\\SectionController::frontbypage', {'page' : page.id})) }}
+    {{ render(controller('App\\Controller\\Webapp\\SectionController::frontbypage', {'id' : page.id})) }}
     {% endif %}
 {% endblock %}

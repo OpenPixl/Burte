@@ -43,11 +43,11 @@ class SectionController extends AbstractController
     }
 
     /**
-     * @Route("/webapp/section/frontbypage/{page}", name="op_webapp_section_frontbypage", methods={"GET"})
+     * @Route("/webapp/section/frontbypage/{id}", name="op_webapp_section_frontbypage", methods={"GET"})
      */
-    public function frontByPage($page): Response
+    public function frontByPage(Page $page): Response
     {
-        $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
+        $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('page' => $page));
 
         return $this->render('webapp/section/frontbypage.html.twig', [
             'sections' => $sections,

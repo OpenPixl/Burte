@@ -49,6 +49,29 @@ class AdhesionController extends AbstractController
     }
 
     /**
+     * @Route("/gestapp/adhesion/add", name="op_gestapp_adhesion_add", methods={"GET","POST"})
+     */
+    public function addAdhesion(Request $request): Response
+    {
+        $adhesion = new Adhesion();
+        $form = $this->createForm(AdhesionType::class, $adhesion);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($adhesion);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_webapp_public_index');
+        }
+
+        return $this->render('gest_app/adhesion/add.html.twig', [
+            'adhesion' => $adhesion,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/gestapp/adhesion/{id}", name="op_gestapp_adhesion_show", methods={"GET"})
      */
     public function show(Adhesion $adhesion): Response

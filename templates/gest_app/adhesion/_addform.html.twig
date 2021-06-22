@@ -1,0 +1,165 @@
+{{ form_start(form) }}
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <h5>La société</h5>
+                <hr>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.society, 'Nom', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.society, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom de la société'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.firstName, 'Adhérant', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-4">
+                        {{ form_widget(form.firstName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom'}}) }}
+                    </div>
+                    <div class="col-5">
+                        {{ form_widget(form.lastName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.address, 'Adresse', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.address, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'adresse de la société'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.zipcode, 'Code postal / Ville', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-2">
+                        {{ form_widget(form.zipcode, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'CP'}}) }}
+                    </div>
+                    <div class="col-7">
+                        {{ form_widget(form.city, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Ville'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.gerant, 'Gérant', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.gerant, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom du gérant'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.siret, 'SIRET', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.siret, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'SIRET'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <h5>Contacts</h5>
+                <hr>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.phoneDesk, 'Teléphone', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.phoneDesk, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Fixe'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.phoneGsm, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Mobile'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.email, 'Société', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Email de la société'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.urlWeb, 'Site web', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.urlWeb, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'https://...'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.urlFacebook, 'Réseaux', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.urlFacebook, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Facebook'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.urlInstagram, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Instagram'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.urlLinkedin, {'attr': {'class': 'form-control form-control-sm', 'placeholder':"Linked'in"}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <fieldset>
+                        <div class="form-check form-switch">
+                            {{ form_widget(form.isGroupeEntreprendre, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isGroupeEntreprendre, 'Est-vous dans un réseau professionnel ?', {'label_attr': {'class':'form-check-label'}}) }}
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <h5>Activités</h5>
+                <hr>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.firstActivity, 'Activité principale', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.firstActivity, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Activité principale'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.secondActivity, 'Activité secondaire', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.secondActivity, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Activité secondaire'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.projectDev, 'Projet de développement', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.projectDev, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="row mb-1 mt-1 g-1">
+                    <fieldset>
+                        <div class="form-check form-switch">
+                            {{ form_widget(form.isConsentRgpd, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isConsentRgpd, "En soumettant ce formulaire, j'accepte que les données saisies soient exploitées dans le cadre de la demande d'adhésion et de la relation commerciale qui peut en découler.", {'label_attr': {'class':'form-check-label'}}) }}
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-sm btn-outline-primary">{{ button_label|default('Envoyer') }}</button>
+    </div>
+</div>
+
+
+{{ form_rest(form) }}
+{{ form_end(form) }}

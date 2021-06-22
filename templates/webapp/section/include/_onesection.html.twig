@@ -6,13 +6,24 @@
 </div>
 <div id="section_content">
     <div class="row">
+        <div class="col-12">
+
+        </div>
+    </div>
+    <div class="row">
         <div class="col">
-            {% if section.oneArticle is null %}
-                <article>
-                    <p>exemple de titre d'article</p>
-                </article>
+            {% if section.contentType == 'One_article' %}
+            {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle})) }}
+            {% elseif section.contentType == 'More_article'%}
+            {% elseif section.contentType == 'Category'%}
+            {% elseif section.contentType == 'One_event'%}
+            {% elseif section.contentType == 'Events'%}
+            {% elseif section.contentType == 'Adhesion'%}
+                {{ render(controller('App\\Controller\\GestApp\\AdhesionController::addAdhesion')) }}
             {% else %}
-                {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle})) }}
+            <article>
+                <p>exemple de titre d'article</p>
+            </article>
             {% endif %}
         </div>
     </div>

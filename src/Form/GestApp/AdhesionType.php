@@ -29,8 +29,9 @@ class AdhesionType extends AbstractType
             ->add('firstActivity')
             ->add('secondActivity')
             ->add('projectDev')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('phoneDesk')
+            ->add('phoneGsm')
+            ->add('isConsentRgpd')
         ;
     }
 

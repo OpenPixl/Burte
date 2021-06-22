@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=AdhesionRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Adhesion
 {
@@ -111,6 +112,21 @@ class Adhesion
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", length=14, nullable=true)
+     */
+    private $phoneDesk;
+
+    /**
+     * @ORM\Column(type="string", length=14, nullable=true)
+     */
+    private $phoneGsm;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isConsentRgpd;
 
     public function getId(): ?int
     {
@@ -326,10 +342,12 @@ class Adhesion
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
     {
-        $this->createdAt = $createdAt;
-
+        $this->createdAt = new \DateTime('now');
         return $this;
     }
 
@@ -338,9 +356,48 @@ class Adhesion
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function getPhoneDesk(): ?string
+    {
+        return $this->phoneDesk;
+    }
+
+    public function setPhoneDesk(?string $phoneDesk): self
+    {
+        $this->phoneDesk = $phoneDesk;
+
+        return $this;
+    }
+
+    public function getPhoneGsm(): ?string
+    {
+        return $this->phoneGsm;
+    }
+
+    public function setPhoneGsm(?string $phoneGsm): self
+    {
+        $this->phoneGsm = $phoneGsm;
+
+        return $this;
+    }
+
+    public function getIsConsentRgpd(): ?bool
+    {
+        return $this->isConsentRgpd;
+    }
+
+    public function setIsConsentRgpd(bool $isConsentRgpd): self
+    {
+        $this->isConsentRgpd = $isConsentRgpd;
 
         return $this;
     }

@@ -10,12 +10,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=MemberRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @Vich\Uploadable()
  */
 class Member implements UserInterface
 {
@@ -51,6 +54,29 @@ class Member implements UserInterface
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $lastName;
+
+    /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="avatar_image", fileNameProperty="avatarName", size="avatarSize")
+     * @var File|null
+     */
+    private $avatarFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $avatarName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $avatarSize;
 
     /**
      * @ORM\Column(type="string", length=150)
@@ -233,6 +259,52 @@ class Member implements UserInterface
 
         return $this;
     }
+
+
+    /**
+     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
+     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
+     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
+     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $avatarFile
+     */
+    public function setAvatarFile(?File $avatarFile = null): void
+    {
+        $this->avatarFile = $avatarFile;
+
+        if (null !== $avatarFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getAvatarFile(): ?File
+    {
+        return $this->avatarFile;
+    }
+
+    public function setAvatarName(?string $avatarName): void
+    {
+        $this->avatarName = $avatarName;
+    }
+
+    public function getAvatarName(): ?string
+    {
+        return $this->avatarName;
+    }
+
+    public function setAvatarSize(?int $avatarSize): void
+    {
+        $this->avatarSize = $avatarSize;
+    }
+
+    public function getAvatarSize(): ?int
+    {
+        return $this->avatarSize;
+    }
+    
 
     public function getAdress1(): ?string
     {

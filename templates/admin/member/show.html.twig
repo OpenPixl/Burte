@@ -4,19 +4,28 @@
 
 {% block content %}
 <div class="container-fluid">
-    {{ include('webapp/page/include/_section_content_header.html.twig') }}
+    {{ include('admin/member/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
             <div class="col-2">
-                {{ include('webapp/page/include/_section_content_aside.html.twig') }}
+                {{ include('admin/member/include/_section_content_aside.html.twig') }}
             </div>
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
+                        <h4>Profil de : {{ member.firstName }} {{ member.lastName }}</h4>
+                        <p>Sur cette page vous pouvez voir et modifier les informations vous concernant.</p>
                         <div class="row">
+                            <div class="col-2">
+                                {% if member.avatarName is null %}
+                                <img class="img-fluid" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar">
+                                {% else %}
+                                <img class="img-fluid" src="{{ vich_uploader_asset(member) }}" alt="{{ member.avatarName }}">
+                                {% endif %}
+                            </div>
                             <div class="col-4">
                                 <table class="table">
-                                    <tbody>
+                                    <tbody class="align-middle">
                                     <tr>
                                         <th>Identifiant</th>
                                         <td>{{ member.username }}</td>
@@ -36,7 +45,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <table class="table">
                                     <tbody>
                                     <tr>
@@ -52,7 +61,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <table class="table">
                                     <tbody>
                                     <tr>
@@ -74,9 +83,8 @@
 
                     </div>
                     <div class="card-footer">
-                        <a href="{{ path('op_admin_member_index') }}">back to list</a>
-                        <a href="{{ path('op_admin_member_edit', {'id': member.id}) }}">edit</a>
-                        {{ include('admin/member/_delete_form.html.twig') }}
+                        <a class="btn btn-secondary btn-sm" href="{{ path('op_admin_member_index') }}">Retour à la liste</a>
+                        <a class="btn btn-primary btn-sm" href="{{ path('op_admin_member_edit', {'id': member.id}) }}">Modifier la fiche</a>
                     </div>
                 </div>
             </div>

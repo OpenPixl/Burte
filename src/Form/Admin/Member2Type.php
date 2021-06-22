@@ -4,12 +4,14 @@ namespace App\Form\Admin;
 
 use App\Entity\Admin\Member;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class Member2Type extends AbstractType
 {
@@ -26,6 +28,19 @@ class Member2Type extends AbstractType
             ->add('city')
             ->add('phoneDesk')
             ->add('phoneGsm')
+            ->add('type', ChoiceType::class, [
+                'choices'  => [
+                    'administrateur' => 'administrateur',
+                    'producteur' => 'producteur',
+                    'consommateur' => 'consommateur',
+                ],
+            ])
+            ->add('avatarFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
+            ])
         ;
     }
 

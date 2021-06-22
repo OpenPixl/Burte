@@ -64,6 +64,8 @@ class MemberController extends AbstractController
      */
     public function edit(Request $request, Member $member): Response
     {
+        $password = $member->getPassword();
+        $member->setPassword($password);
         $form = $this->createForm(Member2Type::class, $member);
         $form->handleRequest($request);
 

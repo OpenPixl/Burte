@@ -79,11 +79,6 @@ class Article
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
-     */
-    private $Category;
-
-    /**
      * @ORM\OneToMany(targetEntity=Section::class, mappedBy="oneArticle")
      */
     private $sections;
@@ -113,6 +108,11 @@ class Article
      * @ORM\Column(type="boolean")
      */
     private $isArticleFrontFluid = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     */
+    private $category;
 
     public function __construct()
     {
@@ -229,20 +229,6 @@ class Article
     public function getArticleFrontSize(): ?int
     {
         return $this->articleFrontSize;
-    }
-
-
-
-    public function getCategory(): ?Category
-    {
-        return $this->Category;
-    }
-
-    public function setCategory(?Category $Category): self
-    {
-        $this->Category = $Category;
-
-        return $this;
     }
 
     /**
@@ -366,6 +352,18 @@ class Article
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
         return $this;
     }
 }

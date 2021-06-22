@@ -120,12 +120,12 @@ class Parameter
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isShowOfflineMessage;
+    private $isShowOfflineMessage = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isShowOfflineLogo;
+    private $isShowOfflineLogo = false;
 
     public function getId(): ?int
     {

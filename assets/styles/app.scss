@@ -4,5 +4,6 @@ $admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap/scss/variables";
 //*** ------------- Import Variables of my theme ---------------- ***//
+@import "scss/custom";
 //*** ------------- Import Variables of icons ---------------- ***//
 @import '~@fortawesome/fontawesome-free/css/all.css';

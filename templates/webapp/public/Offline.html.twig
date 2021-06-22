@@ -1,4 +1,4 @@
-{% extends 'offline.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block meta %}
 	{{ parent() }}
@@ -7,27 +7,26 @@
 {% block title %}
 	{% if parameter is null %}OpenGaia | Hors-ligne
 	{% else %}
-		{{ parameter.nameSite }}
-		| Hors-ligne{% endif%}
-	{% endblock %}
+	{{ parameter.nameSite }} | Hors-ligne{% endif%}
+{% endblock %}
 
-	{% block header %}{% endblock %}
+{% block header %}{% endblock %}
 
-	{% block content %}
-		<section class="container-fluid">
-			<div class="row">
-				<div class="col-12">
-					<h1>
-						{% if parameter is null %}OpenGaia
-						{% else %}
-							{{ parameter.nameSite }}{% endif%}
-						</h1>
-						<h4></h4>
-						<hr>
-						<p>Notre site est actuellement en cours de développement.</p>
-					</div>
-				</div>
-			</div>
-		{% endblock %}
+{% block content %}
+<section class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<h1>
+				{% if parameter is null %}OpenGaia
+				{% else %}
+					{{ parameter.nameSite }}{% endif%}
+			</h1>
+			<h4></h4>
+			<hr>
+			<p>Notre site est actuellement en cours de développement.</p>
+		</div>
+	</div>
+</section>
+{% endblock %}
 
-		{% block footer %}{% endblock %}
+{% block footer %}{% endblock %}

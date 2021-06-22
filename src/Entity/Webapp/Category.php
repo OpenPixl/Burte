@@ -36,7 +36,7 @@ class Category
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="ProductCategory")
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="category")
      */
     private $articles;
 
@@ -68,32 +68,6 @@ class Category
     }
 
     /**
-     * @return Collection|Article[]
-     */
-    public function getArticles(): Collection
-    {
-        return $this->articles;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->addCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->removeElement($article)) {
-            $article->removeCategory($this);
-        }
-        return $this;
-    }
-
-    /**
      * @ORM\PrePersist()
      */
     public function setCreatedAt(): self
@@ -120,6 +94,36 @@ class Category
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getCategory() === $this) {
+                $article->setCategory(null);
+            }
+        }
+
+        return $this;
     }
 
 }

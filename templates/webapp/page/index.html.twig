@@ -2,6 +2,66 @@
 
 {% block title %}OpenGaia | Administration - site{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        window.onload = function(){
+            // Construction de la fonction OnClickBtnMenu
+            function onClickBtnMenu(event){
+                event.preventDefault();
+                const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
+                const icone = this.querySelector('i');                          // variable qui sélectionne l'élément balise <i></i>
+                axios
+                    .get(url)
+                    .then(function(response) {
+                        if(icone.classList.contains('fa-check-circle')) {
+                            icone.classList.replace('fa-check-circle', 'fa-times-circle');
+                            icone.classList.replace('text-success', 'text-danger');
+                        }
+                        else {
+                            icone.classList.replace('fa-times-circle', 'fa-check-circle');
+                            icone.classList.replace('text-danger', 'text-success');
+                        };
+                    });
+            }
+
+            function onClickBtnPublish(event){
+                event.preventDefault();
+                const url2 = this.href;                                          // variable qui récupère l'url inclus dans le "this"
+                const icone2 = this.querySelector('i');
+                axios
+                    .get(url2)
+                    .then(function(response) {
+                        if(icone2.classList.contains('fa-check-circle')) {
+                            icone2.classList.replace('fa-check-circle', 'fa-times-circle');
+                            icone2.classList.replace('text-success', 'text-danger');
+                        }
+                        else {
+                            icone2.classList.replace('fa-times-circle', 'fa-check-circle');
+                            icone2.classList.replace('text-danger', 'text-success');
+                        };
+                    });
+            }
+
+            function OnAddSection(event){
+                event.preventDefault();
+                console.log('ok');
+            }
+
+            // Appel de la fonction lors du clic sur le bouton Ismenu
+            document.querySelectorAll('a.js-menu').forEach(function (link){
+                link.addEventListener('click', onClickBtnMenu);
+            })
+
+            // Appel de la fonction lors du clic sur le bouton Ismenu
+            document.querySelectorAll('a.js-publish').forEach(function (link){
+                link.addEventListener('click', onClickBtnPublish);
+            })
+        }
+    </script>
+
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     {{ include('webapp/page/include/_section_content_header.html.twig') }}
@@ -74,60 +134,4 @@
     </section>
 </div>
 {% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        // Construction de la fonction OnClickBtnMenu
-        function onClickBtnMenu(event){
-            event.preventDefault();
-            const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
-            const icone = this.querySelector('i');                          // variable qui sélectionne l'élément balise <i></i>
-            axios
-                .get(url)
-                .then(function(response) {
-                    if(icone.classList.contains('fa-check-circle')) {
-                        icone.classList.replace('fa-check-circle', 'fa-times-circle');
-                        icone.classList.replace('text-success', 'text-danger');
-                    }
-                    else {
-                        icone.classList.replace('fa-times-circle', 'fa-check-circle');
-                        icone.classList.replace('text-danger', 'text-success');
-                    };
-                });
-            }
 
-        function onClickBtnPublish(event){
-            event.preventDefault();
-            const url2 = this.href;                                          // variable qui récupère l'url inclus dans le "this"
-            const icone2 = this.querySelector('i');
-            axios
-                .get(url2)
-                .then(function(response) {
-                    if(icone2.classList.contains('fa-check-circle')) {
-                        icone2.classList.replace('fa-check-circle', 'fa-times-circle');
-                        icone2.classList.replace('text-success', 'text-danger');
-                    }
-                    else {
-                        icone2.classList.replace('fa-times-circle', 'fa-check-circle');
-                        icone2.classList.replace('text-danger', 'text-success');
-                    };
-                });
-        }
-
-        function OnAddSection(event){
-            event.preventDefault();
-            console.log('ok');
-        }
-
-        // Appel de la fonction lors du clic sur le bouton Ismenu
-        document.querySelectorAll('a.js-menu').forEach(function (link){
-            link.addEventListener('click', onClickBtnMenu);
-        })
-
-        // Appel de la fonction lors du clic sur le bouton Ismenu
-        document.querySelectorAll('a.js-publish').forEach(function (link){
-            link.addEventListener('click', onClickBtnPublish);
-        })
-    </script>
-
-{% endblock %}

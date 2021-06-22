@@ -26,9 +26,10 @@ class SectionType extends AbstractType
                 'choices'  => [
                     'Un article' => 'One_article',
                     'Plusieurs articles' => 'More_article',
-                    'Une categorie' => 'category',
+                    'Une categorie' => 'Category',
                     'Un évènement' => 'One_event',
                     'les évènements' => 'Events',
+                    "bulletin d'adhésion" => "Adhesion",
                     'Autres' => 'Others'
                 ],
             ])

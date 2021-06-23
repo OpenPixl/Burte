@@ -1,0 +1,46 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}MediaOne index{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('webapp/media_one/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('webapp/media_one/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            {% for media_one in media_ones %}
+                                <div class="col-2">
+                                    <div class="card">
+                                        <img src="{{ vich_uploader_asset(media_one) }}" alt="{{ media_one.alt }}" class="card-img-top" >
+                                        <div class="card-body">
+                                            <p>{{ media_one.name }}</p>
+                                            <p>{{ media_one.alt }}<br>{{ media_one.description }}</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="{{ path('op_webapp_media_one_show', {'id': media_one.id}) }}">show</a>
+                                            <a href="{{ path('op_webapp_media_one_edit', {'id': media_one.id}) }}">edit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="col-12">
+                                    <p>Pas d'image</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ path('op_webapp_media_one_new') }}">Ajouter une nouvelle image</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

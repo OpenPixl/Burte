@@ -20,6 +20,7 @@
             {% elseif section.contentType == 'Events'%}
             {% elseif section.contentType == 'Adhesion'%}
                 {{ render(controller('App\\Controller\\GestApp\\AdhesionController::addAdhesion')) }}
+            {% elseif section.contentType == 'Media_one'%}
             {% else %}
             <article>
                 <p>exemple de titre d'article</p>

@@ -30,12 +30,14 @@ class SectionType extends AbstractType
                     'Un évènement' => 'One_event',
                     'les évènements' => 'Events',
                     "bulletin d'adhésion" => "Adhesion",
+                    "image seule" => "Media_one",
                     'Autres' => 'Others'
                 ],
             ])
             ->add('oneArticle')
             ->add('favorites')
             ->add('isSectionFluid')
+            ->add('UniqImage')
             ;
     }
 

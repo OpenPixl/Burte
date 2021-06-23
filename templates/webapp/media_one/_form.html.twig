@@ -1,0 +1,42 @@
+{{ form_start(form) }}
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.name, 'Nom', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom ...'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.alt, 'Balise Alt', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.alt, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Alt ...'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.description, 'Description', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Description ...'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-12">
+                        {{ form_widget(form.mediaFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="card-footer">
+    <a class="btn btn-secondary btn-sm" href="{{ path('op_webapp_media_one_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a> <button class="btn btn-sm btn-primary">{{ button_label|default('Ajouter') }}</button>
+</div>
+{{ form_end(form) }}

@@ -16,14 +16,22 @@
 <section class="container-fluid">
 	<div class="row">
 		<div class="col-12">
-			<h1>
-				{% if parameter is null %}OpenGaia
+			<h1 class="text-center">
+				{% if parameter is null %}
+					OpenGaia
 				{% else %}
-					{{ parameter.nameSite }}{% endif%}
+					{{ parameter.nameSite }}
+				{% endif%}
+				{% if parameter.logoName is null %}
+				{% else %}
+					<img class="img-fluid" src="{{ vich_uploader_asset(parameter, 'logoFile') }}" alt="{{ parameter.logoName }}">
+				{% endif %}
 			</h1>
 			<h4></h4>
 			<hr>
-			<p>Notre site est actuellement en cours de développement.</p>
+			<p class="text-center">{{parameter.offlMessage|raw}}</p>
+
+			<h2 class="text-center signature">Blandine & Pauline</h2>
 		</div>
 	</div>
 </section>

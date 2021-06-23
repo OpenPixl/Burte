@@ -87,6 +87,16 @@ class Section
      */
     private $isSectionFluid = false;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $position;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=MediaOne::class, inversedBy="sections")
+     */
+    private $UniqImage;
+
 
     /**
      * Permet d'initialiser le slug !
@@ -268,6 +278,30 @@ class Section
     public function setIsSectionFluid(bool $isSectionFluid): self
     {
         $this->isSectionFluid = $isSectionFluid;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function getUniqImage(): ?MediaOne
+    {
+        return $this->UniqImage;
+    }
+
+    public function setUniqImage(?MediaOne $UniqImage): self
+    {
+        $this->UniqImage = $UniqImage;
 
         return $this;
     }

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MediaOne{% endblock %}
+
+{% block body %}
+    <h1>MediaOne</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ media_one.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ media_one.name }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ media_one.slug }}</td>
+            </tr>
+            <tr>
+                <th>Alt</th>
+                <td>{{ media_one.alt }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ media_one.description }}</td>
+            </tr>
+            <tr>
+                <th>MediaName</th>
+                <td>{{ media_one.mediaName }}</td>
+            </tr>
+            <tr>
+                <th>MediaSize</th>
+                <td>{{ media_one.mediaSize }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ media_one.createdAt ? media_one.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ media_one.updatedAt ? media_one.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('webapp_media_one_index') }}">back to list</a>
+
+    <a href="{{ path('webapp_media_one_edit', {'id': media_one.id}) }}">edit</a>
+
+    {{ include('webapp_media_one/_delete_form.html.twig') }}
+{% endblock %}

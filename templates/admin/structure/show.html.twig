@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Structure{% endblock %}
+
+{% block body %}
+    <h1>Structure</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ structure.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ structure.name }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ structure.slug }}</td>
+            </tr>
+            <tr>
+                <th>RespFirstName</th>
+                <td>{{ structure.respFirstName }}</td>
+            </tr>
+            <tr>
+                <th>RespLastName</th>
+                <td>{{ structure.respLastName }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ structure.address }}</td>
+            </tr>
+            <tr>
+                <th>Complement</th>
+                <td>{{ structure.complement }}</td>
+            </tr>
+            <tr>
+                <th>Zipcode</th>
+                <td>{{ structure.zipcode }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ structure.city }}</td>
+            </tr>
+            <tr>
+                <th>Siret</th>
+                <td>{{ structure.siret }}</td>
+            </tr>
+            <tr>
+                <th>Ape</th>
+                <td>{{ structure.ape }}</td>
+            </tr>
+            <tr>
+                <th>TvaNumber</th>
+                <td>{{ structure.tvaNumber }}</td>
+            </tr>
+            <tr>
+                <th>UrlWeb</th>
+                <td>{{ structure.urlWeb }}</td>
+            </tr>
+            <tr>
+                <th>UrlFacebook</th>
+                <td>{{ structure.urlFacebook }}</td>
+            </tr>
+            <tr>
+                <th>UrlInstagram</th>
+                <td>{{ structure.urlInstagram }}</td>
+            </tr>
+            <tr>
+                <th>UrlLinkedin</th>
+                <td>{{ structure.urlLinkedin }}</td>
+            </tr>
+            <tr>
+                <th>EmailStruct</th>
+                <td>{{ structure.EmailStruct }}</td>
+            </tr>
+            <tr>
+                <th>PhoneDesk</th>
+                <td>{{ structure.phoneDesk }}</td>
+            </tr>
+            <tr>
+                <th>PhoneGsm</th>
+                <td>{{ structure.phoneGsm }}</td>
+            </tr>
+            <tr>
+                <th>FirstActivity</th>
+                <td>{{ structure.FirstActivity }}</td>
+            </tr>
+            <tr>
+                <th>SecondActivity</th>
+                <td>{{ structure.secondActivity }}</td>
+            </tr>
+            <tr>
+                <th>ProjectDev</th>
+                <td>{{ structure.projectDev }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ structure.createdAt ? structure.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ structure.updatedAt ? structure.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_structure_index') }}">back to list</a>
+
+    <a href="{{ path('admin_structure_edit', {'id': structure.id}) }}">edit</a>
+
+    {{ include('admin_structure/_delete_form.html.twig') }}
+{% endblock %}

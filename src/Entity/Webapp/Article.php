@@ -114,9 +114,18 @@ class Article
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShowtitle = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShowdate = false;
+
     public function __construct()
     {
-        $this->category = new ArrayCollection();
         $this->sections = new ArrayCollection();
     }
 
@@ -363,6 +372,30 @@ class Article
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getIsShowtitle(): ?bool
+    {
+        return $this->isShowtitle;
+    }
+
+    public function setIsShowtitle(bool $isShowtitle): self
+    {
+        $this->isShowtitle = $isShowtitle;
+
+        return $this;
+    }
+
+    public function getIsShowdate(): ?bool
+    {
+        return $this->isShowdate;
+    }
+
+    public function setIsShowdate(bool $isShowdate): self
+    {
+        $this->isShowdate = $isShowdate;
 
         return $this;
     }

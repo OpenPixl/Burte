@@ -44,9 +44,12 @@ class ArticleType extends AbstractType
                 'choices'  => [
                     'à droite du contenu' => 'right',
                     'à gauche du contenu' => 'left',
+                    'sans texte' => 'none'
                 ],
             ])
             ->add('isReadMore')
+            ->add('isShowtitle')
+            ->add('isShowdate')
         ;
     }
 

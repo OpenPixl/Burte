@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container{% if parameter.isBlocMenuFluid == 1 %}-fluid{% else %}{% endif %}">
         <a class="navbar-brand" href="{{ path('op_webapp_public_homepage')}}">
             {% if parameter.logoName %}
-            <img class="img-fluid" src="{{ vich_uploader_asset(parameter, 'logoFile') }}" alt="{{ parameter.logoName }}">
+            <img class="img-fluid" src="{{ vich_uploader_asset(parameter, 'logoFile') }}" alt="{{ parameter.logoName }}" style="height: 45px;">
             {% else %}
             <img class="img-fluid" src="{{ asset('images/svg/user.svg') }}" alt="logo_OpenGaia" style="height: 45px;">
             {% endif %}

@@ -74,7 +74,14 @@ class PublicController extends AbstractController
     public function Offline() : Response
     {
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
-
+        $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1));
+        $isOnline = $parameter->getIsOnline();
+        if ($isOnline == 1){
+            return $this->render('webapp/public/index.html.twig', [
+                'parameter' => $parameter,
+                'sections' => $sections,
+            ]);
+        }
         return $this->render('webapp/public/Offline.html.twig', [
             'parameter' => $parameter
         ]);

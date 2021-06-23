@@ -2,25 +2,25 @@
 
 namespace App\Repository\Admin;
 
-use App\Entity\Admin\Society;
+use App\Entity\Admin\Structure;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Society|null find($id, $lockMode = null, $lockVersion = null)
- * @method Society|null findOneBy(array $criteria, array $orderBy = null)
- * @method Society[]    findAll()
- * @method Society[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Structure|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Structure|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Structure[]    findAll()
+ * @method Structure[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SocietyRepository extends ServiceEntityRepository
+class StructureRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Society::class);
+        parent::__construct($registry, Structure::class);
     }
 
     // /**
-    //  * @return Society[] Returns an array of Society objects
+    //  * @return Structure[] Returns an array of Structure objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class SocietyRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Society
+    public function findOneBySomeField($value): ?Structure
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

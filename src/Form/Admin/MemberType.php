@@ -54,7 +54,8 @@ class MemberType extends AbstractType
             ->add('phoneGsm')
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'membre' => 'membre',
+                    'administrateur' => "administrator",
+                    'membre' => 'member',
                 ],
             ])
             ->add('avatarFile', VichImageType::class, [

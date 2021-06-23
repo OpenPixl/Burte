@@ -60,6 +60,7 @@ class PublicController extends AbstractController
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
         $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1));
 
+
         // integration du code sélectionnant les sections classées comme favorites
         return $this->render('webapp/public/index.html.twig',[
             'parameter' => $parameter,

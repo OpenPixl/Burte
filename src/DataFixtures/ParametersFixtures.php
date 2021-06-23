@@ -16,6 +16,7 @@ class ParametersFixtures extends Fixture
             ->setSloganSite('OpenGaia')
             ->setIsOnline(1)
             ->setDescrSite('Application de gestion')
+            ->setAdminEmail('contact@openpixl.fr')
         ;
         $manager->persist($parameter);
 

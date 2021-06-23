@@ -149,9 +149,9 @@ class Member implements UserInterface
     private $products;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Society::class, inversedBy="member")
+     * @ORM\ManyToOne(targetEntity=Structure::class, inversedBy="members")
      */
-    private $society;
+    private $structure;
 
     public function __construct()
     {
@@ -538,14 +538,14 @@ class Member implements UserInterface
         return $this;
     }
 
-    public function getSociety(): ?Society
+    public function getStructure(): ?Structure
     {
-        return $this->society;
+        return $this->structure;
     }
 
-    public function setSociety(?Society $society): self
+    public function setStructure(?Structure $structure): self
     {
-        $this->society = $society;
+        $this->structure = $structure;
 
         return $this;
     }

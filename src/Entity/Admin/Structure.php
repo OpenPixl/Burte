@@ -2,16 +2,17 @@
 
 namespace App\Entity\Admin;
 
-use App\Repository\Admin\SocietyRepository;
+use App\Repository\Admin\StructureRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=SocietyRepository::class)
- *
+ * @ORM\Entity(repositoryClass=StructureRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
-class Society
+class Structure
 {
     /**
      * @ORM\Id
@@ -31,17 +32,12 @@ class Society
     private $slug;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", length=100)
      */
-    private $description;
+    private $respFirstName;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $respFirstname;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100)
      */
     private $respLastName;
 
@@ -61,7 +57,7 @@ class Society
     private $zipcode;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $city;
 
@@ -71,19 +67,19 @@ class Society
     private $siret;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $ape;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $urlweb;
+    private $tvaNumber;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $isRs = false;
+    private $urlWeb;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -101,29 +97,34 @@ class Society
     private $urlLinkedin;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=255)
      */
-    private $isGroupeEntreprise = false;
+    private $EmailStruct;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", length=14, nullable=true)
+     */
+    private $phoneDesk;
+
+    /**
+     * @ORM\Column(type="string", length=14, nullable=true)
+     */
+    private $phoneGsm;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $FirstActivity;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $secondActivity;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $projectDev;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Member::class, mappedBy="society")
-     */
-    private $member;
 
     /**
      * @ORM\Column(type="datetime")
@@ -135,9 +136,27 @@ class Society
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Member::class, mappedBy="structure")
+     */
+    private $members;
+
     public function __construct()
     {
-        $this->member = new ArrayCollection();
+        $this->members = new ArrayCollection();
+    }
+
+    /**
+     * Permet d'initialiser le slug !
+     * Utilisation de slugify pour transformer une chaine de caractères en slug
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeSlug() {
+        if(empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->name);
+        }
     }
 
     public function getId(): ?int
@@ -169,26 +188,14 @@ class Society
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getRespFirstName(): ?string
     {
-        return $this->description;
+        return $this->respFirstName;
     }
 
-    public function setDescription(?string $description): self
+    public function setRespFirstName(string $respFirstName): self
     {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getRespFirstname(): ?string
-    {
-        return $this->respFirstname;
-    }
-
-    public function setRespFirstname(?string $respFirstname): self
-    {
-        $this->respFirstname = $respFirstname;
+        $this->respFirstName = $respFirstName;
 
         return $this;
     }
@@ -198,7 +205,7 @@ class Society
         return $this->respLastName;
     }
 
-    public function setRespLastName(?string $respLastName): self
+    public function setRespLastName(string $respLastName): self
     {
         $this->respLastName = $respLastName;
 
@@ -277,26 +284,26 @@ class Society
         return $this;
     }
 
-    public function getUrlweb(): ?string
+    public function getTvaNumber(): ?string
     {
-        return $this->urlweb;
+        return $this->tvaNumber;
     }
 
-    public function setUrlweb(?string $urlweb): self
+    public function setTvaNumber(?string $tvaNumber): self
     {
-        $this->urlweb = $urlweb;
+        $this->tvaNumber = $tvaNumber;
 
         return $this;
     }
 
-    public function getIsRs(): ?bool
+    public function getUrlWeb(): ?string
     {
-        return $this->isRs;
+        return $this->urlWeb;
     }
 
-    public function setIsRs(bool $isRs): self
+    public function setUrlWeb(?string $urlWeb): self
     {
-        $this->isRs = $isRs;
+        $this->urlWeb = $urlWeb;
 
         return $this;
     }
@@ -337,14 +344,38 @@ class Society
         return $this;
     }
 
-    public function getIsGroupeEntreprise(): ?bool
+    public function getEmailStruct(): ?string
     {
-        return $this->isGroupeEntreprise;
+        return $this->EmailStruct;
     }
 
-    public function setIsGroupeEntreprise(bool $isGroupeEntreprise): self
+    public function setEmailStruct(string $EmailStruct): self
     {
-        $this->isGroupeEntreprise = $isGroupeEntreprise;
+        $this->EmailStruct = $EmailStruct;
+
+        return $this;
+    }
+
+    public function getPhoneDesk(): ?string
+    {
+        return $this->phoneDesk;
+    }
+
+    public function setPhoneDesk(?string $phoneDesk): self
+    {
+        $this->phoneDesk = $phoneDesk;
+
+        return $this;
+    }
+
+    public function getPhoneGsm(): ?string
+    {
+        return $this->phoneGsm;
+    }
+
+    public function setPhoneGsm(?string $phoneGsm): self
+    {
+        $this->phoneGsm = $phoneGsm;
 
         return $this;
     }
@@ -385,45 +416,17 @@ class Society
         return $this;
     }
 
-    /**
-     * @return Collection|Member[]
-     */
-    public function getMember(): Collection
-    {
-        return $this->member;
-    }
-
-    public function addMember(Member $member): self
-    {
-        if (!$this->member->contains($member)) {
-            $this->member[] = $member;
-            $member->setSociety($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMember(Member $member): self
-    {
-        if ($this->member->removeElement($member)) {
-            // set the owning side to null (unless already changed)
-            if ($member->getSociety() === $this) {
-                $member->setSociety(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
     {
-        $this->createdAt = $createdAt;
-
+        $this->createdAt = new \DateTime('now');
         return $this;
     }
 
@@ -432,9 +435,42 @@ class Society
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime('now');
+        return $this;
+    }
+
+    /**
+     * @return Collection|Member[]
+     */
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function addMember(Member $member): self
+    {
+        if (!$this->members->contains($member)) {
+            $this->members[] = $member;
+            $member->setStructure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(Member $member): self
+    {
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getStructure() === $this) {
+                $member->setStructure(null);
+            }
+        }
 
         return $this;
     }

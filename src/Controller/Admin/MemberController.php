@@ -40,6 +40,7 @@ class MemberController extends AbstractController
             $entityManager->persist($member);
             $entityManager->flush();
 
+
             return $this->redirectToRoute('op_admin_member_index');
         }
 

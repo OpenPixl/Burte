@@ -42,8 +42,8 @@ class PageController extends AbstractController
 
             $section = new Section();
             $section->setTitle('nouvelle section');
-            $section->setDescription('Espace présentant sur le dashboard, le role de la section créée das la page.');
-            $section->setContentType('One_article');
+            $section->setDescription('Espace présentant sur le dashboard, le role de la section créée dans la page.');
+            $section->setContentType('none');
             $section->setPage($page);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($section);

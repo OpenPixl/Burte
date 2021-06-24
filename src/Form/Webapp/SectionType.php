@@ -24,6 +24,7 @@ class SectionType extends AbstractType
             ->add('page')
             ->add('contentType', ChoiceType::class, [
                 'choices'  => [
+                    'aucun' => 'none',
                     'Un article' => 'One_article',
                     'Plusieurs articles' => 'More_article',
                     'Une categorie' => 'Category',
@@ -38,6 +39,8 @@ class SectionType extends AbstractType
             ->add('favorites')
             ->add('isSectionFluid')
             ->add('UniqImage')
+            ->add('position')
+            ->add('isShowtitle')
             ;
     }
 

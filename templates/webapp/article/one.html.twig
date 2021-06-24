@@ -3,7 +3,7 @@
     <header id="article_header">
         <div class="row">
             <div class="col-12">
-                <h3>{{ article.title }}</h3>
+                <h3 class="text-center">{{ article.title }}</h3>
             </div>
         </div>
     </header>
@@ -15,10 +15,10 @@
             <div class="row">
                 <div class="col-12">
                     {% if article.isReadMore == 1 %}
-                    <p>{{ article.content|u.truncate(600, ' ...')|markdown_to_html }}</p>
-                    <p><a href="">Lire la suite ...</a></p>
+                    <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
+                    <p class="text-center"><a href="">Lire la suite ...</a></p>
                     {% else %}
-                    <p>{{ article.content|markdown_to_html }}</p>
+                    <p class="text-center">{{ article.content|raw }}</p>
                     {% endif %}
                 </div>
             </div>
@@ -26,9 +26,9 @@
         <div class="row">
             <div class="col-8">
                 {% if article.isReadMore == 1 %}
-                <p>{{ article.content|u.truncate(600, ' ...')|markdown_to_html }}</p>
+                <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
                 {% else %}
-                <p>{{ article.content|markdown_to_html }}</p>
+                <p class="text-center">{{ article.content|raw }}</p>
                 {% endif %}
             </div>
             <div class="col-4">
@@ -42,16 +42,18 @@
             </div>
             <div class="col-8">
                 {% if article.isReadMore == 1 %}
-                <p>{{ article.content|u.truncate(600, ' ...')|markdown_to_html }}</p>
+                <p>{{ article.content|u.truncate(600, ' ...')|raw }}</p>
                 {% else %}
-                <p>{{ article.content|markdown_to_html }}</p>
+                <p>{{ article.content|raw }}</p>
                 {% endif %}
             </div>
         </div>
         {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'none' %}
             <div class="row">
                 <div class="col-12">
-                    <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}">
+                    <p class="text-center">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}" style="width:75%">
+                    </p>
                 </div>
             </div>
         {% endif %}

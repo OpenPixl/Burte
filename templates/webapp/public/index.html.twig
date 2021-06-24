@@ -15,7 +15,15 @@
         </div>
     </header>
     <section class="container">
-        <p>pas de sections favorites</p>
+        <div class="row">
+            <div class="col-6">
+                <p class="text-center">
+                    <img class="img-fluid" src="{{ asset('images/png/carte_de_visite_recto.png') }}">
+                </p>
+            </div>
+            <div class="col-6"></div>
+
+        </div>
     </section>
 {% else %}
     {% for section in sections %}

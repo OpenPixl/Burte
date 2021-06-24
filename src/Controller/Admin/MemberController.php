@@ -27,6 +27,18 @@ class MemberController extends AbstractController
     }
 
     /**
+     * @Route("/vue", name="op_admin_member_vuefront", methods={"GET"})
+     */
+    public function vueFront(MemberRepository $memberRepository): Response
+    {
+        $members = $this->getDoctrine()->getRepository(Member::class)->vueFront();
+
+        return $this->render('admin/member/index.html.twig', [
+            'members' => $members,
+        ]);
+    }
+
+    /**
      * @Route("/new", name="op_admin_member_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response

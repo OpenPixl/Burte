@@ -23,8 +23,10 @@ class SectionController extends AbstractController
      */
     public function index(SectionRepository $sectionRepository): Response
     {
+        $sections = $this->getDoctrine()->getRepository(Section::class)->findWithPage();
+
         return $this->render('webapp/section/index.html.twig', [
-            'sections' => $sectionRepository->findAll(),
+            'sections' => $sections,
         ]);
     }
 

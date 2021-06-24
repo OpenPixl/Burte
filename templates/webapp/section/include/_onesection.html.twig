@@ -1,32 +1,37 @@
-<section id="{% if section.attrId is null %}{% else %}id="{{ section.attrId }}"{% endif %}" class="container" >
-<div id="section_title" class="row">
-    <div class="col">
-        <h2>{{ section.title }}</h2>
-    </div>
-</div>
-<div id="section_content">
-    <div class="row">
-        <div class="col-12">
-
-        </div>
-    </div>
-    <div class="row">
+<section {% if section.attrId is null %}id=""{% else %}id="{{ section.attrId }}"{% endif %} class="container" >
+    <div id="section_title" class="row">
+        {% if section.isShowtitle == 1 %}
         <div class="col">
-            {% if section.contentType == 'One_article' %}
-            {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle})) }}
-            {% elseif section.contentType == 'More_article'%}
-            {% elseif section.contentType == 'Category'%}
-            {% elseif section.contentType == 'One_event'%}
-            {% elseif section.contentType == 'Events'%}
-            {% elseif section.contentType == 'Adhesion'%}
-                {{ render(controller('App\\Controller\\GestApp\\AdhesionController::addAdhesion')) }}
-            {% elseif section.contentType == 'Media_one'%}
-            {% else %}
-            <article>
-                <p>exemple de titre d'article</p>
-            </article>
-            {% endif %}
+            <h2>{{ section.title }}</h2>
+        </div>
+        {% else %}
+        {% endif %}
+    </div>
+    <div id="section_content">
+        <div class="row">
+            <div class="col-12">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% if section.contentType == 'One_article' %}
+                {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle})) }}
+                {% elseif section.contentType == 'More_article'%}
+                {% elseif section.contentType == 'Category'%}
+                {% elseif section.contentType == 'One_event'%}
+                {% elseif section.contentType == 'Events'%}
+                {% elseif section.contentType == 'membre'%}
+                    {{ render(controller('App\\Controller\\Admin\\MemberController::vueFront')) }}
+                {% elseif section.contentType == 'Adhesion'%}
+                    {{ render(controller('App\\Controller\\GestApp\\AdhesionController::addAdhesion')) }}
+                {% elseif section.contentType == 'Media_one'%}
+                {% else %}
+                <article>
+                    <p>exemple de titre d'article</p>
+                </article>
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
 </section>

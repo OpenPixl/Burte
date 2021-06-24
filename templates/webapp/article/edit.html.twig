@@ -8,7 +8,7 @@
         window.onload = function(){
             ClassicEditor
                 .create(document.querySelector('#article_content'), {
-                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'alignment' ],
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment' ],
                     height: 50
                 })
                 .catch(error => {
@@ -29,7 +29,7 @@
             <div class="col-10">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Modifier page</h3>
+                        <h3>Modifier article</h3>
                     </div>
                     {{ include('webapp/article/_form.html.twig', {'button_label': 'Update'}) }}
                 </div>

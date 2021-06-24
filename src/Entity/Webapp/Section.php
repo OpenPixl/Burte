@@ -97,6 +97,11 @@ class Section
      */
     private $UniqImage;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShowtitle = false;
+
 
     /**
      * Permet d'initialiser le slug !
@@ -302,6 +307,18 @@ class Section
     public function setUniqImage(?MediaOne $UniqImage): self
     {
         $this->UniqImage = $UniqImage;
+
+        return $this;
+    }
+
+    public function getIsShowtitle(): ?bool
+    {
+        return $this->isShowtitle;
+    }
+
+    public function setIsShowtitle(bool $isShowtitle): self
+    {
+        $this->isShowtitle = $isShowtitle;
 
         return $this;
     }

@@ -21,12 +21,22 @@ class SectionRepository extends ServiceEntityRepository
 
     public function findbypage($page){
         return $this->createQueryBuilder('s')
-            ->select('s.id, s.title, s.slug, s.description,s.favorites, s.contentType, s.attrId, s.attrName, s.attrClass, s.createdAt, s.updatedAt, p.id, a.id As oneArticle')
+            ->select('s.id, s.title, s.slug, s.description,s.favorites, s.contentType, s.attrId, s.attrName, s.attrClass, s.createdAt, s.updatedAt, s.position ,p.id, a.id As oneArticle')
             ->join('s.page', 'p')
             ->join('s.oneArticle', 'a')
             ->Where('p.id = :page')
             ->setParameter('page', $page)
-            ->orderBy('s.id', 'ASC')
+            ->orderBy('s.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findWithPage()
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.id, s.title, s.slug, s.description,s.favorites, s.contentType, s.attrId, s.attrName, s.attrClass, s.createdAt, s.updatedAt, s.position, p.name as page')
+            ->join('s.page', 'p')
+            ->orderBy('s.page', 'ASC')
             ->getQuery()
             ->getResult();
     }

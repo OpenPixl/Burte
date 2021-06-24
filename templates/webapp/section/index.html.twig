@@ -49,22 +49,17 @@
                         <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Favorites</th>
-                                        <th>AttrId</th>
-                                        <th>AttrName</th>
-                                        <th>AttrClass</th>
-                                        <th>CreateAt</th>
-                                        <th>UpdateAt</th>
+                                        <th>Page</th>
+                                        <th>Position</th>
                                         <th>actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {% for section in sections %}
                                     <tr class="align-middle">
-                                        <td>{{ section.id }}</td>
                                         <td>{{ section.title }}<br><small>{{ section.slug }}</small></td>
                                         <td>{{ section.description }}</td>
                                         <td>
@@ -74,12 +69,8 @@
                                             <p class="card-text"><a class="js-star" href="{{ path('op_webapp_section_star', {'id': section.id}) }}"><i class="fas fa-star text-warning"></i></a></p>
                                             {% endif %}
                                         </td>
-                                        <td>{{ section.attrId }}</td>
-                                        <td>{{ section.attrName }}</td>
-                                        <td>{{ section.attrClass }}</td>
-                                        <td>{{ section.createdAt ? section.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-                                        <td>{{ section.updatedAt ? section.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-                                        <td>
+                                        <td>{{ section.page }}</td>
+                                        <td>{{ section.position }}</td><td>
                                             <a href="{{ path('op_webapp_section_show', {'id': section.id}) }}">show</a>
                                             <a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}">edit</a>
                                         </td>

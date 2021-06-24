@@ -26,7 +26,17 @@ nav{
 }
 
 .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .nav-link.active {
-  color: rgba(255, 255, 255, 0.9);
+  color: #cdb55f;
+  text-transform:uppercase;
+}
+
+.nav-link{
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-transform:uppercase;
+}
+
+.nav-link:hover{
+  color: #cdb55f !important;
   text-transform:uppercase;
 }
 
@@ -49,6 +59,11 @@ section{
   font-size: 0.8rem;
 }
 
+#jaf-footer-bottom{
+  border-top:1px solid #cdb55f;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
 
 #jaf-footer-bottom a{
   color: #ffffff;

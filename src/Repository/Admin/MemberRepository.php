@@ -36,6 +36,17 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
         $this->_em->flush();
     }
 
+    public function vueFront()
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.type = :type')
+            ->setParameter('val', 'membre')
+            ->orderBy('m.lastName', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return member[] Returns an array of member objects
     //  */

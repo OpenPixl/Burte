@@ -1,0 +1,29 @@
+<div class="row" id="member_content">
+    {% for member in members %}
+        <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <p class="text-center">
+                            {% if member.avatarName is null %}
+                                <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar">
+                            {% else %}
+                                <img class="img-fluid img-rounded" src="{{ vich_uploader_asset(member, 'avatarFile', 'App\\Entity\\Admin\\Member')|imagine_filter('avatar_image') }}" alt="{{ member.avatarName }}">
+                            {% endif %}
+                        </p>
+                        <h2 class="text-center">{{ member.structure }}</h2>
+                        <p class="text-center ">
+                            <span class="text-strong">{{ member.firstName }} {{ member.lastName }}</span><br>
+                            {{ member.FirstActivity }}<br>
+                            {{ member.email }}
+                        </p>
+                        <p class="text-center"><span class="text-strong">{{ member.city }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+    {% endfor %}
+</div>
+
+

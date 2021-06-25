@@ -47,6 +47,17 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
             ;
     }
 
+    public function listMemberOnFront()
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.id as id, m.firstName as firstName, m.lastName as lastName, m.avatarName, m.email, s.name as structure, s.FirstActivity as FirstActivity, s.city as city')
+            ->join('m.structure', 's')
+            ->orderBy('m.lastName', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return member[] Returns an array of member objects
     //  */

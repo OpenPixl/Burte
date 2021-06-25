@@ -1,4 +1,162 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <h5>La société</h5>
+                <hr>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.name, 'Nom', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom de la société'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.respFirstName, 'Responsable', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-4">
+                        {{ form_widget(form.respFirstName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom'}}) }}
+                    </div>
+                    <div class="col-5">
+                        {{ form_widget(form.respLastName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.address, 'Adresse', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.address, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'adresse de la société'}}) }}
+                    </div>
+                    <div class="col-3">
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.complement, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'complément'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.zipcode, 'Code postal / Ville', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-2">
+                        {{ form_widget(form.zipcode, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'CP'}}) }}
+                    </div>
+                    <div class="col-7">
+                        {{ form_widget(form.city, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Ville'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.siret, 'SIRET', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.siret, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'SIRET'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.ape, 'APE / NAF', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-4">
+                        {{ form_widget(form.ape, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.tvaNumber, 'Numero de TVA', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-4">
+                        {{ form_widget(form.tvaNumber, {'attr': {'class': 'form-control form-control-sm', 'placeholder':''}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <h5>Contacts</h5>
+                <hr>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.phoneDesk, 'Teléphone', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.phoneDesk, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Fixe'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.phoneGsm, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Mobile'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.EmailStruct, 'Email de la structure', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.EmailStruct, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'https://...'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.urlWeb, 'Site web', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.urlWeb, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'https://...'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.urlFacebook, 'Réseaux', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.urlFacebook, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Facebook'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.urlInstagram, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Instagram'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(form.urlLinkedin, {'attr': {'class': 'form-control form-control-sm', 'placeholder':"Linked'in"}}) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <h5>Activités</h5>
+                <hr>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.FirstActivity, 'Activité principale', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.FirstActivity, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Activité principale'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.secondActivity, 'Activité secondaire', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.secondActivity, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Activité secondaire'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.projectDev, 'Projet de développement', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.projectDev, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+
+            </div>
+        </div>
+        <button class="btn btn-sm btn-outline-primary">{{ button_label|default('Envoyer') }}</button>
+    </div>
+</div>
 {{ form_end(form) }}

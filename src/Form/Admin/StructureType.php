@@ -13,7 +13,6 @@ class StructureType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('slug')
             ->add('respFirstName')
             ->add('respLastName')
             ->add('address')
@@ -33,8 +32,6 @@ class StructureType extends AbstractType
             ->add('FirstActivity')
             ->add('secondActivity')
             ->add('projectDev')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 

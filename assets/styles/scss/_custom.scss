@@ -6,27 +6,36 @@ h1, h2, h3, h4, h5, h6{
   margin-top: 0.5rem;
   font-family: "Selima";
   text-transform: uppercase;
-  color: #cdb55f;
+  color: $jaf-color-first;
 }
 
 p{
-  font-family: "voga";
-  font-size:1.6rem;
+  font-family: "CerebriSans-light";
+  font-size:1rem;
   color: #ffffff;
 }
 
+strong{
+  color: $jaf-color-first;
+}
+
+.text-strong{
+  font-family: "voga";
+  font-size: 1.6rem;
+}
+
 a{
-  color:#cdb55f;
+  color: $jaf-color-first;
   text-decoration: none;
 }
 
 nav{
   background-color: #222222 !important;
-  border-bottom: 2px solid #cdb55f;
+  border-bottom: 2px solid $jaf-color-first;
 }
 
 .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .nav-link.active {
-  color: #cdb55f;
+  color: $jaf-color-first;
   text-transform:uppercase;
 }
 
@@ -35,9 +44,25 @@ nav{
   text-transform:uppercase;
 }
 
+.img-rounded{
+  border-radius: 50%;
+}
+
 .nav-link:hover{
-  color: #cdb55f !important;
+  color: $jaf-color-first !important;
   text-transform:uppercase;
+}
+main{
+  margin-top: 5rem;
+}
+
+hr{
+  color:$jaf-color-first;
+  margin: 0.5rem 0;
+}
+
+#article_content ul>li{
+  color:#ffffff;
 }
 
 section{
@@ -46,7 +71,7 @@ section{
 }
 
 #jaf-footer{
-  border-top: 4px solid #cdb55f;
+  border-top: 4px solid $jaf-color-first;
 }
 
 #jaf-footer-bottom p{
@@ -60,7 +85,7 @@ section{
 }
 
 #jaf-footer-bottom{
-  border-top:1px solid #cdb55f;
+  border-top:1px solid $jaf-color-first;
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
 }
@@ -71,6 +96,57 @@ section{
 }
 
 #jaf-footer-bottom a:hover, #jaf-footer-bottom a:active{
-  color: #cdb55f;
+  color: $jaf-color-first;
 }
 
+
+#member_content .card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: rgba(0, 0, 0, 0);
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+@media (max-width: 767.98px) {
+  footer h4, h5,{
+    margin-top: 0.2rem;
+    font-family: "Selima";
+    text-transform: uppercase;
+    color: $jaf-color-first;
+    font-size: 0.8rem;
+  }
+
+  .form-label{
+    font-size: 0.8rem;
+  }
+
+  .form-check-label{
+    font-size: 0.8rem;
+  }
+
+  p{
+    font-family: "voga";
+    font-size:1.3rem;
+    color: #ffffff;
+  }
+
+  #jaf-footer-bottom p{
+    font-family: 'CerebriSans-light';
+    font-size: 0.8rem;
+  }
+
+  #jaf-footer-bottom p{
+    font-family: 'CerebriSans-light';
+    font-size: 0.6rem;
+  }
+
+  footer a{
+    font-size: 0.8rem;
+  }
+
+}

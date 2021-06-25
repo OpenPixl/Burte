@@ -30,6 +30,7 @@ class SectionType extends AbstractType
                     'Une categorie' => 'Category',
                     'Un évènement' => 'One_event',
                     'les évènements' => 'Events',
+                    'membre' => 'Member',
                     "bulletin d'adhésion" => "Adhesion",
                     "image seule" => "Media_one",
                     'Autres' => 'Others'

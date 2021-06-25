@@ -12,12 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/member")
  */
 class MemberController extends AbstractController
 {
     /**
-     * @Route("/", name="op_admin_member_index", methods={"GET"})
+     * @Route("/admin/member/", name="op_admin_member_index", methods={"GET"})
      */
     public function index(MemberRepository $memberRepository): Response
     {
@@ -27,7 +26,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/vue", name="op_admin_member_vuefront", methods={"GET"})
+     * @Route("/admin/member/vue", name="op_admin_member_vuefront", methods={"GET"})
      */
     public function vueFront(MemberRepository $memberRepository): Response
     {
@@ -39,7 +38,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="op_admin_member_new", methods={"GET","POST"})
+     * @Route("/admin/member/new", name="op_admin_member_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -63,7 +62,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="op_admin_member_show", methods={"GET"})
+     * @Route("/admin/member/{id}", name="op_admin_member_show", methods={"GET"})
      */
     public function show(Member $member): Response
     {
@@ -73,7 +72,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="op_admin_member_edit", methods={"GET","POST"})
+     * @Route("/admin/member/{id}/edit", name="op_admin_member_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Member $member): Response
     {
@@ -95,7 +94,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_member_delete", methods={"POST"})
+     * @Route("/admin/member/{id}", name="admin_member_delete", methods={"POST"})
      */
     public function delete(Request $request, Member $member): Response
     {
@@ -105,6 +104,15 @@ class MemberController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_member_index');
+        return $this->redirectToRoute('op_admin_member_index');
     }
+
+    /**
+     * @Route("/webapp/member", name="op_admin_member_front_member", methods={"GET"})
+     */
+    public function Member(MemberRepository $memberRepository)
+    {
+        return $this->render('admin/member/members.html.twig', [
+            'members' => $memberRepository->listMemberOnFront(),
+        ]);    }
 }

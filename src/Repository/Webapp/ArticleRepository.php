@@ -19,6 +19,18 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function carousel()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.id, a.title')
+            ->join('a.category', 'c')
+            ->orderBy('a.id', 'ASC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

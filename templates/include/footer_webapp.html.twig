@@ -1,18 +1,53 @@
 <footer id="jaf-footer">
     <div class="container-fluid" id="jaf-footer-top">
-        <div class="row">
-            <div class="col-3">
-                <img src="{{ asset('images/svg/') }}" alt="logo_justafaire">
+        <div class="d-none d-lg-block">
+            <div class="row">
+                <div class="col-3">
+                    <p class="text-center">
+                        <img class="img-fluid" src="{{ asset('images/png/logojafcarré.png') }}" alt="logo_justafaire" style="width: 50%">
+                    </p>
+                </div>
+                <div class="col-3">
+                    <h5>Plan du site</h5>
+                    <hr>
+                    <ul>
+                        <li><a href="{{ path('op_webapp_page_slug', {'slug': 'op_webapp_public_homepage'}) }}">Accueil</a></li>
+                        <li><a href="{{ path('op_webapp_page_slug', {'slug': 'presentation'}) }}">Présentation</a></li>
+                        <li><a href="{{ path('op_webapp_page_slug', {'slug': 'adherents'}) }}">Adherents</a></li>
+                        <li><a href="{{ path('op_webapp_page_slug', {'slug': 'evenements'}) }}">Evènement</a></li>
+                        <li><a href="{{ path('op_webapp_page_slug', {'slug': 'tarifs'}) }}">Tarifs</a></li>
+                        <li><a href="{{ path('op_admin_dashboard_index') }}">Mon espace</a></li>
+                        <li><a href="{{ path('op_webapp_page_slug', {'slug': 'mentions-legales'}) }}">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <h5>Nous contacter</h5>
+                    <hr>
+                    <h6>
+                        Just à Faire
+                    </h6>
+                    <p>
+                        11 rue Maréchal Foch<br>
+                        64000 PAU <br>
+                        Email : contact@justafaire.fr
+                    </p>
+                </div>
             </div>
-            <div class="col-3"></div>
-            <div class="col-3"></div>
-            <div class="col-3">
-                <h6>Nous contacter</h6>
+        </div>
+        <div class="row d-lg-none">
+            <div class="col-12">
+                <p class="text-center">
+                    <img class="img-fluid" src="{{ asset('images/png/logojafcarré.png') }}" alt="logo_justafaire" style="width: 30%">
+                </p>
+            </div>
+            <div class="col-12">
+                <h5 class="text-center">Nous contacter</h5>
                 <hr>
-                <h6>
+                <h6 class="text-center">
                     Just à Faire
                 </h6>
-                <p>
+                <p class="text-center">
                     11 rue Maréchal Foch<br>
                     64000 PAU <br>
                     Email : contact@justafaire.fr

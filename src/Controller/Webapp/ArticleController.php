@@ -103,4 +103,15 @@ class ArticleController extends AbstractController
             'article' => $article,
         ]);
     }
+
+    /**
+     * @Route("/webapp/carousel/", name="op_webapp_article_carousel", methods={"GET"})
+     */
+    public function carousel(ArticleRepository $articleRepository): Response
+    {
+        $articles = $this->getDoctrine()->getRepository(Article::class)->carousel();
+        return $this->render('webapp/article/carousel.html.twig', [
+            'articles' => $articles
+        ]);
+    }
 }

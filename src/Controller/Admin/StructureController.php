@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Admin\Member;
 use App\Entity\Admin\Structure;
 use App\Form\Admin\StructureType;
 use App\Repository\Admin\StructureRepository;
@@ -11,12 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/structure")
  */
 class StructureController extends AbstractController
 {
     /**
-     * @Route("/", name="admin_structure_index", methods={"GET"})
+     * @Route("/admin/structure/", name="op_admin_structure_index", methods={"GET"})
      */
     public function index(StructureRepository $structureRepository): Response
     {
@@ -26,9 +26,35 @@ class StructureController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="admin_structure_new", methods={"GET","POST"})
+     * @Route("/admin/structure/new/{idmembre}", name="op_admin_structure_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $idmembre): Response
+    {
+        $membre = $this->getDoctrine()->getRepository(Member::class)->find($idmembre);
+        $structure = new Structure();
+        $form = $this->createForm(StructureType::class, $structure);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($structure);
+            $entityManager->flush();
+
+            $membre->setStructure($structure);
+
+            return $this->redirectToRoute('op_admin_member_index');
+        }
+
+        return $this->render('admin/structure/new.html.twig', [
+            'structure' => $structure,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/structure/new2", name="op_admin_structure_new2", methods={"GET","POST"})
+     */
+    public function new2(Request $request): Response
     {
         $structure = new Structure();
         $form = $this->createForm(StructureType::class, $structure);
@@ -39,17 +65,17 @@ class StructureController extends AbstractController
             $entityManager->persist($structure);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_structure_index');
+            return $this->redirectToRoute('op_admin_structure_index');
         }
 
-        return $this->render('admin/structure/new.html.twig', [
+        return $this->render('admin/structure/new2.html.twig', [
             'structure' => $structure,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="admin_structure_show", methods={"GET"})
+     * @Route("/admin/structure/{id}", name="op_admin_structure_show", methods={"GET"})
      */
     public function show(Structure $structure): Response
     {
@@ -59,7 +85,7 @@ class StructureController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_structure_edit", methods={"GET","POST"})
+     * @Route("/admin/structure/{id}/edit", name="op_admin_structure_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Structure $structure): Response
     {
@@ -79,7 +105,7 @@ class StructureController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_structure_delete", methods={"POST"})
+     * @Route("/admin/structure/{id}", name="op_admin_structure_delete", methods={"POST"})
      */
     public function delete(Request $request, Structure $structure): Response
     {

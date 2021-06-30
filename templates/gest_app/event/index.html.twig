@@ -1,0 +1,61 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Adhesion index{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('gest_app/event/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('gest_app/event/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Liste des Evènements</h4>
+                        <p>Créer, Modifier ou supprimer des adhésions</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
+                                    <th>Description</th>
+                                    <th>IsPublish</th>
+                                    <th>IsValidBy</th>
+                                    <th>CreatedAt</th>
+                                    <th>UpdatedAt</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for event in events %}
+                                <tr>
+                                    <td>{{ event.id }}</td>
+                                    <td>{{ event.name }}</td>
+                                    <td>{{ event.slug }}</td>
+                                    <td>{{ event.description }}</td>
+                                    <td>{{ event.isPublish ? 'Yes' : 'No' }}</td>
+                                    <td>{{ event.isValidBy ? 'Yes' : 'No' }}</td>
+                                    <td>{{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ event.updatedAt ? event.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>
+                                        <a href="{{ path('op_admin_member_show', {'id': event.id}) }}">show</a>
+                                        <a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}">edit</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="9">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

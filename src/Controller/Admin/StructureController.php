@@ -105,6 +105,26 @@ class StructureController extends AbstractController
     }
 
     /**
+     * @Route("/admin/structure/{id}/edit2", name="op_admin_structure_edit2", methods={"GET","POST"})
+     */
+    public function edit2(Request $request, Structure $structure): Response
+    {
+        $form = $this->createForm(StructureType::class, $structure);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('op_admin_structure_edit2', ['id'=> $structure->getId()]);
+        }
+
+        return $this->render('admin/structure/edit2.html.twig', [
+            'structure' => $structure,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/admin/structure/{id}", name="op_admin_structure_delete", methods={"POST"})
      */
     public function delete(Request $request, Structure $structure): Response

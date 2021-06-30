@@ -1,0 +1,40 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}OpenGaia | Administration{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            ClassicEditor
+                .create(document.querySelector('#product_description'), {
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
+                    height: 50
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    </script>
+{%  endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('gest_app/event/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('gest_app/event/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Modifier un évènement</h3>
+                    </div>
+                    {{ include('gest_app/event/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

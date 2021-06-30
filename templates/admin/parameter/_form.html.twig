@@ -18,7 +18,7 @@
     <div class="tab-content">
         <div class="tab-pane active" id="General" role="tabpanel" aria-labelledby="General-tab">
             <div class="row">
-                <div class="col-12">
+                <div class="col-6">
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-3">
                             <b>{{ form_label(form.nameSite, 'Name site', {'label_attr': {'class':'form-label'}}) }}</b>
@@ -68,6 +68,32 @@
                                 {{ form_label(form.isOnline, 'Mettre le site est en ligne ?', {'label_attr': {'class':'form-check-label'}}) }}
                             </div>
                         </fieldset>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            {{ form_label(form.urlFacebook, 'Page Facebook', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.urlFacebook, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre du site'}}) }}
+                        </div>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            {{ form_label(form.urlInstagram, 'Page Instagram', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.urlInstagram, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre du site'}}) }}
+                        </div>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            {{ form_label(form.urlLinkedin, 'Page Linkedin', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.urlLinkedin, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre du site'}}) }}
+                        </div>
                     </div>
                 </div>
             </div>

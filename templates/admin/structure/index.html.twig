@@ -13,21 +13,20 @@
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Liste des strucutre : Entreprise, société, ...</h4>
+                        <h4>Liste des structure : Entreprise, société, ...</h4>
                         <p>Créer, Modifier ou supprimer des membre du site.</p>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>Structure</th>
-                                    <th>RespFirstName</th>
-                                    <th>RespLastName</th>
-                                    <th>Address</th>
-                                    <th>UrlWeb</th>
-                                    <th>EmailStruct</th>
-                                    <th>PhoneDesk</th>
-                                    <th>PhoneGsm</th>
-                                    <th>CreatedAt</th>
-                                    <th>UpdatedAt</th>
+                                    <th>Gérant</th>
+                                    <th>Adressse</th>
+                                    <th>Site web</th>
+                                    <th>Email</th>
+                                    <th>Bureau</th>
+                                    <th>Mobile</th>
+                                    <th>Crée le</th>
+                                    <th>Modifiée le</th>
                                     <th>actions</th>
                                 </tr>
                             </thead>
@@ -35,8 +34,7 @@
                             {% for structure in structures %}
                                 <tr>
                                     <td>{{ structure.name }}</td>
-                                    <td>{{ structure.respFirstName }}</td>
-                                    <td>{{ structure.respLastName }}</td>
+                                    <td>{{ structure.respFirstName }} {{ structure.respLastName }}</td>
                                     <td>
                                         {{ structure.address }}<br>
                                         {{ structure.complement }}<br>
@@ -46,11 +44,11 @@
                                     <td>{{ structure.EmailStruct }}</td>
                                     <td>{{ structure.phoneDesk }}</td>
                                     <td>{{ structure.phoneGsm }}</td>
-                                    <td>{{ structure.createdAt ? structure.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                                    <td>{{ structure.updatedAt ? structure.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ structure.createdAt ? structure.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    <td>{{ structure.updatedAt ? structure.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                     <td>
                                         <a href="{{ path('op_admin_structure_show', {'id': structure.id}) }}">show</a>
-                                        <a href="{{ path('op_admin_structure_edit', {'id': structure.id}) }}">edit</a>
+                                        <a href="{{ path('op_admin_structure_edit2', {'id': structure.id}) }}">edit</a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -62,7 +60,7 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                        <a href="{{ path('op_admin_structure_new2') }}">Create new</a>
+                        <a class="btn btn-sm btn-primary" href="{{ path('op_admin_structure_new2') }}">Ajouter une nouvelle structure</a>
                     </div>
                 </div>
             </div>

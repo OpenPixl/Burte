@@ -36,6 +36,9 @@ class ParameterType extends AbstractType
             ->add('offlMessage')
             ->add('isShowOfflineLogo')
             ->add('isShowOfflineMessage')
+            ->add('urlFacebook')
+            ->add('urlInstagram')
+            ->add('urlLinkedin')
         ;
     }
 

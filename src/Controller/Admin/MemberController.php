@@ -108,11 +108,23 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/webapp/member", name="op_admin_member_front_member", methods={"GET"})
+     * @Route("/webapp/members", name="op_admin_member_front_members", methods={"GET"})
      */
-    public function Member(MemberRepository $memberRepository)
+    public function Members(MemberRepository $memberRepository)
     {
         return $this->render('admin/member/members.html.twig', [
-            'members' => $memberRepository->listMemberOnFront(),
-        ]);    }
+            'members' => $memberRepository->listMembersOnFront(),
+        ]);
+    }
+
+    /**
+     * @Route("/webapp/member/{id}", name="op_admin_member_front_member", methods={"GET"})
+     */
+    public function Member(MemberRepository $memberRepository, $id)
+    {
+
+        return $this->render('admin/member/member.html.twig', [
+            'member' => $memberRepository->MemberOnFront($id),
+        ]);
+    }
 }

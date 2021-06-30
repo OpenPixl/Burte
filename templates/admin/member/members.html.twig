@@ -11,11 +11,24 @@
                                 <img class="img-fluid img-rounded" src="{{ vich_uploader_asset(member, 'avatarFile', 'App\\Entity\\Admin\\Member')|imagine_filter('avatar_image') }}" alt="{{ member.avatarName }}">
                             {% endif %}
                         </p>
-                        <h2 class="text-center">{{ member.structure }}</h2>
+                        <h2 class="text-center"><a href="#">{{ member.structure }}</a></h2>
                         <p class="text-center ">
                             <span class="text-strong">{{ member.firstName }} {{ member.lastName }}</span><br>
+                            {% if member.Facebook is null %}
+                            {% else %}
+                            <a href="{{ member.Facebook }}"><i class="fab fa-facebook"></i></a>&nbsp;&nbsp;
+                            {% endif %}
+                            {% if member.Instagram is null %}
+                            {% else %}
+                            <a href="{{ member.Instagram }}"><i class="fab fa-instagram"></i></a>&nbsp;&nbsp;
+                            {% endif %}
+                            {% if member.Linkedin is null %}
+                            {% else %}
+                            <a href="{{ member.Linkedin }}"><i class="fab fa-linkedin"></i></a><br>
+                            {% endif %}
                             {{ member.FirstActivity }}<br>
-                            {{ member.email }}
+                            {{ member.email }}<br>
+                            <i class="fas fa-globe-europe"></i> {{ member.web }}
                         </p>
                         <p class="text-center"><span class="text-strong">{{ member.city }}</span></p>
                     </div>

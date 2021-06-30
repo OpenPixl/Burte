@@ -5,12 +5,6 @@ body {
     padding: 0.5rem;
     color: #c8b15d;
 }
-h1, h2, h3, h4, h5, h6{
-    font-family: "Selima";
-}
-p{
-  font-family: "CerebriSans-Light";
-}
 
 .wrapper {
     height: 100%;
@@ -24,4 +18,11 @@ p{
   	max-width: 330px;
   	padding: 15px;
   	margin: auto;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: "Selima";
+}
+p{
+  font-family: "CerebriSans-Light";
 }

@@ -4,10 +4,12 @@ namespace App\Entity\GestApp;
 
 use App\Repository\GestApp\AdhesionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=AdhesionRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable()
  */
 class Adhesion
 {

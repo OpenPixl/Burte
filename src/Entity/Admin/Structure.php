@@ -7,10 +7,13 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=StructureRepository::class)
  * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable()
  */
 class Structure
 {
@@ -127,6 +130,29 @@ class Structure
     private $projectDev;
 
     /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="logosite_front", fileNameProperty="logoName", size="logoSize")
+     * @var File|null
+     */
+    private $logoFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $logoName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $logoSize;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -140,6 +166,11 @@ class Structure
      * @ORM\OneToMany(targetEntity=Member::class, mappedBy="structure")
      */
     private $members;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
     public function __construct()
     {
@@ -416,6 +447,50 @@ class Structure
         return $this;
     }
 
+    /**
+     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
+     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
+     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
+     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $logoFile
+     */
+    public function setLogoFile(?File $logoFile = null): void
+    {
+        $this->logoFile = $logoFile;
+
+        if (null !== $logoFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getLogoFile(): ?File
+    {
+        return $this->logoFile;
+    }
+
+    public function setLogoName(?string $logoName): void
+    {
+        $this->logoName = $logoName;
+    }
+
+    public function getLogoName(): ?string
+    {
+        return $this->logoName;
+    }
+
+    public function setLogoSize(?int $logoSize): void
+    {
+        $this->logoSize = $logoSize;
+    }
+
+    public function getLogoSize(): ?int
+    {
+        return $this->logoSize;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -478,5 +553,17 @@ class Structure
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

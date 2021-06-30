@@ -6,6 +6,7 @@ use App\Entity\Admin\Structure;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class StructureType extends AbstractType
 {
@@ -13,6 +14,7 @@ class StructureType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('description')
             ->add('respFirstName')
             ->add('respLastName')
             ->add('address')
@@ -32,6 +34,12 @@ class StructureType extends AbstractType
             ->add('FirstActivity')
             ->add('secondActivity')
             ->add('projectDev')
+            ->add('logoFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
+            ])
         ;
     }
 

@@ -64,13 +64,15 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article): Response
     {
+
         $form = $this->createForm(ArticleType::class, $article);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('op_webapp_article_index');
+            return $this->redirectToRoute('op_webapp_article_edit', ['id' => $article->getId()]);
         }
 
         return $this->render('webapp/article/edit.html.twig', [

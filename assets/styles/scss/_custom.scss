@@ -1,3 +1,10 @@
+/***---------- REGLES CSS DE BASE ----------***/
+
+a{
+  color: $jaf-color-first;
+  text-decoration: none;
+}
+
 body{
   background-color: #222222;
 }
@@ -9,9 +16,14 @@ h1, h2, h3, h4, h5, h6{
   color: $jaf-color-first;
 }
 
+hr{
+  color:$jaf-color-first;
+  margin: 0.5rem 0;
+}
+
 p{
   font-family: "CerebriSans-light";
-  font-size:1rem;
+  font-size:1.1rem;
   color: #ffffff;
 }
 
@@ -19,15 +31,7 @@ strong{
   color: $jaf-color-first;
 }
 
-.text-strong{
-  font-family: "voga";
-  font-size: 1.6rem;
-}
-
-a{
-  color: $jaf-color-first;
-  text-decoration: none;
-}
+/***---------- NAVBAR ----------***/
 
 nav{
   background-color: #222222 !important;
@@ -44,25 +48,81 @@ nav{
   text-transform:uppercase;
 }
 
-.img-rounded{
-  border-radius: 50%;
-}
-
 .nav-link:hover{
   color: $jaf-color-first !important;
   text-transform:uppercase;
 }
+
+/***---------- MAIN ----------***/
+
 main{
-  margin-top: 5rem;
+  margin-top: 7rem;
+  margin-bottom:2rem;
 }
 
-hr{
-  color:$jaf-color-first;
-  margin: 0.5rem 0;
+.text-h1{
+  font-family: "voga";
+  font-size: 2rem;
+}
+
+.text-strong{
+  font-family: "voga";
+  font-size: 1.6rem;
+}
+
+.text-intro{
+  font-family: "Selima";
+  font-size:2rem;
+  color:#ffffff;
+}
+
+/***---------- MAIN : articles ----------***/
+
+.border-large{
+  border: 4px solid #c8b15d;
+  padding: 0.5rem;
+  color: #c8b15d;
+}
+.border-sm{
+  height: 100%;
+  border: 2px solid #c8b15d;
+  display: flex;
+  align-items: center;
+  padding:1rem;
+}
+
+.border-sm p{
+  margin-bottom: 0;
 }
 
 #article_content ul>li{
   color:#ffffff;
+}
+
+#member_content .card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: rgba(0, 0, 0, 0);
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 0.5rem;
+}
+
+.img_gall{
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.img-rounded{
+  border-radius: 50%;
 }
 
 section{
@@ -70,9 +130,38 @@ section{
   margin-bottom: 1rem;
 }
 
+/***---------- FOOTER ----------***/
+footer{
+  background-image: url("./../images/main_pattern.png");
+}
+
+footer h4, h5,{
+  margin-top: 0.2rem;
+  font-family: "Selima";
+  text-transform: uppercase;
+  color: $jaf-color-second;
+  font-size: 1.2rem;
+}
+
 #jaf-footer{
   border-top: 4px solid $jaf-color-first;
 }
+
+/***---------- FOOTER : footer-top ----------***/
+
+#jaf-footer-top a{
+  color: $jaf-color-second;
+}
+
+#jaf-footer-top a:hover, #jaf-footer-top a:active{
+  color: $jaf-color-first;
+}
+
+#jaf-footer-top ul{
+  padding-left: 0;
+}
+
+/***---------- FOOTER : footer-bottom ----------***/
 
 #jaf-footer-bottom p{
   font-family: 'CerebriSans-light';
@@ -99,20 +188,12 @@ section{
   color: $jaf-color-first;
 }
 
-
-#member_content .card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: rgba(0, 0, 0, 0);
-  background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
-}
-
 @media (max-width: 767.98px) {
+
+  .img_gall{
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
   footer h4, h5,{
     margin-top: 0.2rem;
     font-family: "Selima";
@@ -140,9 +221,8 @@ section{
     font-size: 0.8rem;
   }
 
-  #jaf-footer-bottom p{
-    font-family: 'CerebriSans-light';
-    font-size: 0.6rem;
+  #jaf-footer-bottom a{
+    font-size: 0.8rem;
   }
 
   footer a{

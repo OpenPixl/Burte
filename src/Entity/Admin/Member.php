@@ -2,6 +2,8 @@
 
 namespace App\Entity\Admin;
 
+use App\Entity\GestApp\Event;
+use App\Entity\GestApp\Events;
 use App\Entity\GestApp\Product;
 use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Page;
@@ -153,11 +155,17 @@ class Member implements UserInterface
      */
     private $structure;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="author")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -546,6 +554,36 @@ class Member implements UserInterface
     public function setStructure(?Structure $structure): self
     {
         $this->structure = $structure;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getAuthor() === $this) {
+                $event->setAuthor(null);
+            }
+        }
 
         return $this;
     }

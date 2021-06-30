@@ -1,0 +1,50 @@
+{{ form_start(form) }}
+<div class="card-body">
+    <div class="row">
+        <div class="col-6">
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    {{ form_label(form.name, 'Titre', {'label_attr': {'class':'form-label'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    {{ form_label(form.alt, 'balise alt', {'label_attr': {'class':'form-label'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.alt, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    {{ form_label(form.description, 'Description', {'label_attr': {'class':'form-label'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    {{ form_label(form.event, 'State', {'label_attr': {'class':'form-label'}}) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.event, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                </div>
+            </div>
+
+        </div>
+        <div class="col-6">
+            <div class="row mb-1 mt-1 g-1">
+               <div class="col-7">
+                    {{ form_widget(form.imageFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_rest(form) }}
+{{ form_end(form) }}

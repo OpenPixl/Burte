@@ -2,6 +2,42 @@
 
 {% block title %}Member{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+z
+            function onClickBtnAddStructure(event){
+                event.preventDefault();
+                const name = document.getElementById("adhesion_society").value;
+                const firstName = document.getElementById("adhesion_firstName").value;
+                const lastName = document.getElementById("adhesion_lastName").value;
+                const address = document.getElementById("adhesion_address").value;
+                const complement = document.getElementById("adhesion_complement").value;
+                const gerant = document.getElementById("adhesion_gerant").value;
+                const phoneDesk = document.getElementById("adhesion_phoneDesk").value;
+                const phoneGsm = document.getElementById("adhesion_phoneGsm").value;
+                const email = document.getElementById("adhesion_email").value;
+                const urlWeb = document.getElementById("adhesion_urlWeb").value;
+                const urlFacebook = document.getElementById("adhesion_urlFacebook").value;
+                const urlInstagram = document.getElementById("adhesion_urlInstagram").value;
+                const urlLinkedin = document.getElementById("adhesion_urlLinkedin").value;
+                const isGroupeEntreprendre = document.getElementById("adhesion_isGroupeEntreprendre").value;
+                const firstActivity = document.getElementById("adhesion_firstActivity").value;
+                const secondActivity = document.getElementById("adhesion_secondActivity").value;
+                const projectDev = document.getElementById("adhesion_projectDev").value;
+                const isConsentRgpd = document.getElementById("adhesion_isConsentRgpd").value;
+                console.log(firstName, lastName);
+            }
+
+            // appel de la fonction de soumission du formulaire add structure
+            document.querySelectorAll('a.js-add-struct').forEach(function (link){
+                link.addEventListener('click', onClickBtnAddStructure);
+            })
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     {{ include('admin/member/include/_section_content_header.html.twig') }}
@@ -94,10 +130,4 @@
         </div>
     </section>
 </div>
-
-
-
-
-
-
 {% endblock %}

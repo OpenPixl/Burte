@@ -47,14 +47,55 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
             ;
     }
 
-    public function listMemberOnFront()
+    public function listMembersOnFront()
     {
         return $this->createQueryBuilder('m')
-            ->select('m.id as id, m.firstName as firstName, m.lastName as lastName, m.avatarName, m.email, s.name as structure, s.FirstActivity as FirstActivity, s.city as city')
+            ->select('
+                m.id as id, 
+                m.firstName as firstName, 
+                m.lastName as lastName, 
+                m.avatarName AS avatarName, 
+                m.email AS email, 
+                s.name AS structure, 
+                s.FirstActivity AS FirstActivity, 
+                s.city AS city, 
+                s.urlWeb AS web, 
+                s.urlFacebook AS Facebook, 
+                s.urlLinkedin AS Linkedin, 
+                s.urlInstagram AS Instagram
+                ')
             ->join('m.structure', 's')
             ->orderBy('m.lastName', 'ASC')
             ->getQuery()
             ->getResult()
+            ;
+    }
+
+    public function MemberOnFront($id)
+    {
+        return $this->createQueryBuilder('m')
+            ->select('
+                m.id as id,
+                m.firstName as firstName,
+                m.lastName as lastName,
+                s.description AS description,
+                m.avatarName, 
+                m.email,
+                m.phoneDesk,
+                m.phoneGsm,
+                s.name as structure,
+                s.FirstActivity as FirstActivity,
+                s.city as city,
+                s.urlWeb AS urlWeb,
+                s.urlFacebook AS Facebook, 
+                s.urlLinkedin AS Linkedin, 
+                s.urlInstagram AS Instagram')
+            ->join('m.structure', 's')
+            ->where('m.id = :member')
+            ->setParameter('member', $id)
+            ->orderBy('m.lastName', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult()
             ;
     }
 

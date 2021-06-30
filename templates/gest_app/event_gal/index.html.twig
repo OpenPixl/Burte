@@ -1,0 +1,48 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Adhesion index{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('gest_app/event_gal/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('gest_app/event_gal/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Liste des photos</h4>
+                        <p>Créer, Modifier ou supprimer des adhésions</p>
+                        <div class="row">
+                            {% for event_gal in event_gals %}
+                                <div class="col-2">
+                                    <div class="card">
+                                        <img src="{{ vich_uploader_asset(event_gal) }}" alt="{{ event_gal.alt }}" class="card-img-top" >
+                                        <div class="card-body">
+                                            <p>{{ event_gal.name }}</p>
+                                            <p>{{ event_gal.alt }}<br>{{ event_gal.description }}</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="{{ path('op_webapp_media_one_show', {'id': event_gal.id}) }}">show</a>
+                                            <a href="{{ path('op_webapp_media_one_edit', {'id': event_gal.id}) }}">edit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <tr>
+                                    <td colspan="10">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-sm btn-primary" href="{{ path('op_gestapp_eventgal_new') }}">Ajouter une photo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

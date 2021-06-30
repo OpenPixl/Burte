@@ -132,8 +132,8 @@ class Article
     /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
     public function initializeSlug() {
         if(empty($this->slug)) {

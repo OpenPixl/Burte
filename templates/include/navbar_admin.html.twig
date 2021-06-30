@@ -31,6 +31,16 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userpanel" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-book-open"></i> Membres
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
+                        <li><a class="dropdown-item" href="{{ path('op_gestapp_event_index') }}"><i class="fab fa-product-hunt"></i> Evènements</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_gestapp_eventgal_index') }}"><i class="fab fa-product-hunt"></i> Photos</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-shopping-cart"></i> En vente</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userpanel" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-tools"></i></i> Outils
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">

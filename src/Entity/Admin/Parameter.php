@@ -127,6 +127,26 @@ class Parameter
      */
     private $isShowOfflineLogo = false;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $IsShowTitleSiteHome = false;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $urlFacebook;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $urlInstagram;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $urlLinkedin;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -367,6 +387,54 @@ class Parameter
     public function setIsShowOfflineLogo(bool $isShowOfflineLogo): self
     {
         $this->isShowOfflineLogo = $isShowOfflineLogo;
+
+        return $this;
+    }
+
+    public function getIsShowTitleSiteHome(): ?bool
+    {
+        return $this->IsShowTitleSiteHome;
+    }
+
+    public function setIsShowTitleSiteHome(bool $IsShowTitleSiteHome): self
+    {
+        $this->IsShowTitleSiteHome = $IsShowTitleSiteHome;
+
+        return $this;
+    }
+
+    public function getUrlFacebook(): ?string
+    {
+        return $this->urlFacebook;
+    }
+
+    public function setUrlFacebook(string $urlFacebook): self
+    {
+        $this->urlFacebook = $urlFacebook;
+
+        return $this;
+    }
+
+    public function getUrlInstagram(): ?string
+    {
+        return $this->urlInstagram;
+    }
+
+    public function setUrlInstagram(string $urlInstagram): self
+    {
+        $this->urlInstagram = $urlInstagram;
+
+        return $this;
+    }
+
+    public function getUrlLinkedin(): ?string
+    {
+        return $this->urlLinkedin;
+    }
+
+    public function setUrlLinkedin(string $urlLinkedin): self
+    {
+        $this->urlLinkedin = $urlLinkedin;
 
         return $this;
     }

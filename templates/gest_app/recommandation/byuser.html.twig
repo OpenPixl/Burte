@@ -1,0 +1,48 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th colspan="10">Liste des Recommandations</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for recommandation in recommandations %}
+        <tr>
+            <td>{{ recommandation.author }}</td>
+            <td>{{ recommandation.name }}</td>
+            <td>{{ recommandation.clientFirstname }} {{ recommandation.clientLastname }}</td>
+
+            <td>
+                {% if recommandation.clientAddress is null %}
+                {% else %}
+                {{ recommandation.clientAddress }}<br>
+                {{ recommandation.clientComplement }}<br>
+                {{ recommandation.clientZipcode }} {{ recommandation.clientCity }}
+                {% endif %}
+            </td>
+            <td>
+                {{ recommandation.ClientEmail }}<br>
+                {{ recommandation.ClientDesk }}<br>
+                {{ recommandation.clientGsm }}
+            </td>
+            <td>
+                {% if recommandation.recoPrice is null%}
+                    0,00€
+                {% else %}
+                    {{ recommandation.recoPrice }}
+                {% endif %}
+            </td>
+            <td>{{ recommandation.recoState }}</td>
+            <td>{{ recommandation.CreatedAt ? recommandation.CreatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+            <td>{{ recommandation.updatedAt ? recommandation.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+            <td>
+                <a href="{{ path('op_gestapp_recommandation_show', {'id': recommandation.id}) }}">show</a>
+                <a href="{{ path('op_gestapp_recommandation_edit', {'id': recommandation.id}) }}">edit</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="18">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

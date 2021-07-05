@@ -1,14 +1,14 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}OpenGaia | Nouvelle Structure{% endblock %}
+{% block title %}OpenGaia | Administration{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
+    <script>
         window.onload = function(){
             ClassicEditor
-                .create(document.querySelector('#structure_description'), {
-                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment', 'code', 'CodeBlock', 'Underline', 'HtmlEmbed' ],
+                .create(document.querySelector('#product_description'), {
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
                     height: 50
                 })
                 .catch(error => {
@@ -16,28 +16,25 @@
                 });
         }
     </script>
-{% endblock %}
+{%  endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    {{ include('admin/member/include/_section_content_header.html.twig') }}
+    {{ include('gest_app/recommandation/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
             <div class="col-2">
-                {{ include('admin/member/include/_section_content_aside.html.twig') }}
+                {{ include('gest_app/recommandation/include/_section_content_aside.html.twig') }}
             </div>
             <div class="col-10">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Ajouter un nouveau membre</h3>
+                        <h3>Modifier une recommandation</h3>
                     </div>
-                    {{ include('admin/structure/_form2.html.twig') }}
+                    {{ include('gest_app/recommandation/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
                 </div>
             </div>
         </div>
     </section>
 </div>
 {% endblock %}
-
-
-

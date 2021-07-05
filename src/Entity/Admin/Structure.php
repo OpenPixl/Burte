@@ -130,27 +130,28 @@ class Structure
     private $projectDev;
 
     /**
-     * Insertion de l'image mise en avant liée à un article
+     * Insertion de l'logoStructure mise en avant liée à un article
      * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
      *
-     * @Vich\UploadableField(mapping="logosite_front", fileNameProperty="logoName", size="logoSize")
+     * @Vich\UploadableField(mapping="articles_front", fileNameProperty="logoStructureName", size="logoStructureSize")
      * @var File|null
      */
-    private $logoFile;
+    private $logoStructureFile;
 
     /**
      * @ORM\Column(type="string",nullable=true)
      *
      * @var string|null
      */
-    private $logoName;
+    private $logoStructureName;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
      *
      * @var int|null
      */
-    private $logoSize;
+    private $logoStructureSize;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -171,6 +172,11 @@ class Structure
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $jaf;
 
     public function __construct()
     {
@@ -448,48 +454,51 @@ class Structure
     }
 
     /**
-     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
-     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
-     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
-     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $logoFile
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $logoStructureFile
      */
-    public function setLogoFile(?File $logoFile = null): void
+    public function setLogoStructureFile(?File $logoStructureFile = null): void
     {
-        $this->logoFile = $logoFile;
+        $this->logoStructureFile = $logoStructureFile;
 
-        if (null !== $logoFile) {
+        if (null !== $logoStructureFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
-    public function getLogoFile(): ?File
+    public function getLogoStructureFile(): ?File
     {
-        return $this->logoFile;
+        return $this->logoStructureFile;
     }
 
-    public function setLogoName(?string $logoName): void
+    public function setLogoStructureName(?string $logoStructureName): void
     {
-        $this->logoName = $logoName;
+        $this->logoStructureName = $logoStructureName;
     }
 
-    public function getLogoName(): ?string
+    public function getLogoStructureName(): ?string
     {
-        return $this->logoName;
+        return $this->logoStructureName;
     }
 
-    public function setLogoSize(?int $logoSize): void
+    public function setLogoStructureSize(?int $logoStructureSize): void
     {
-        $this->logoSize = $logoSize;
+        $this->logoStructureSize = $logoStructureSize;
     }
 
-    public function getLogoSize(): ?int
+    public function getLogoStructureSize(): ?int
     {
-        return $this->logoSize;
+        return $this->logoStructureSize;
     }
+
+
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -563,6 +572,18 @@ class Structure
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getJaf(): ?string
+    {
+        return $this->jaf;
+    }
+
+    public function setJaf(?string $jaf): self
+    {
+        $this->jaf = $jaf;
 
         return $this;
     }

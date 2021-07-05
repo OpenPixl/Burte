@@ -15,7 +15,10 @@
         </div>
         <div class="row">
             <div class="col">
-                {% if section.contentType == 'One_article' %}
+                {% if section.contentType == 'intro'%}
+                    {{ include('webapp/section/include/_sectionIntro.html.twig') }}
+
+                {% elseif section.contentType == 'One_article' %}
                 {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle})) }}
                 {% elseif section.contentType == 'More_article'%}
                 {% elseif section.contentType == 'Category'%}

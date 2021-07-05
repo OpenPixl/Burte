@@ -1,36 +1,36 @@
 <div class="row" id="member_content">
     {% for member in members %}
         <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-4">
-            <div class="card">
+            <div id="member-card" class="card">
                 <div class="card-body">
+                    <div class="row align-items-center" style="height: 200px;">
+                        {% if member.logoStructureName is null %}
+                            <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar">
+                        {% elseif member.logoStructureName is not null %}
+                            <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(member, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') | imagine_filter('logostruct_image') }}" alt="{{ member.logoStructureName }}">
+                        {% endif %}
+                    </div>
                     <div class="row">
-                        <p class="text-center">
-                            {% if member.avatarName is null %}
-                                <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar">
-                            {% else %}
-                                <img class="img-fluid img-rounded" src="{{ vich_uploader_asset(member, 'avatarFile', 'App\\Entity\\Admin\\Member')|imagine_filter('avatar_image') }}" alt="{{ member.avatarName }}">
-                            {% endif %}
-                        </p>
                         <h2 class="text-center"><a href="#">{{ member.structure }}</a></h2>
                         <p class="text-center ">
-                            <span class="text-strong">{{ member.firstName }} {{ member.lastName }}</span><br>
+                            <span class="text-strong">{{ member.firstName }} {{ member.lastName|upper }}</span><br>
                             {% if member.Facebook is null %}
                             {% else %}
-                            <a href="{{ member.Facebook }}"><i class="fab fa-facebook"></i></a>&nbsp;&nbsp;
+                            <a href="{{ member.Facebook }}" onclick="window.open(this.href); return false;"><i class="fab fa-facebook"></i></a>&nbsp;&nbsp;
                             {% endif %}
                             {% if member.Instagram is null %}
                             {% else %}
-                            <a href="{{ member.Instagram }}"><i class="fab fa-instagram"></i></a>&nbsp;&nbsp;
+                            <a href="{{ member.Instagram }}" onclick="window.open(this.href); return false;"><i class="fab fa-instagram"></i></a>&nbsp;&nbsp;
                             {% endif %}
                             {% if member.Linkedin is null %}
                             {% else %}
-                            <a href="{{ member.Linkedin }}"><i class="fab fa-linkedin"></i></a><br>
+                            <a href="{{ member.Linkedin }}" onclick="window.open(this.href); return false;"><i class="fab fa-linkedin"></i></a><br>
                             {% endif %}
                             {{ member.FirstActivity }}<br>
                             {{ member.email }}<br>
-                            <i class="fas fa-globe-europe"></i> {{ member.web }}
+                            <a href="{{ member.web }}" onclick="window.open(this.href); return false;"><i class="fas fa-globe-europe"></i> {{ member.web }}</a>
                         </p>
-                        <p class="text-center"><span class="text-strong">{{ member.city }}</span></p>
+                        <p class="text-center"><span class="text-strong">{{ member.jaf }}</span></p>
                     </div>
                 </div>
             </div>

@@ -62,7 +62,9 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
                 s.urlWeb AS web, 
                 s.urlFacebook AS Facebook, 
                 s.urlLinkedin AS Linkedin, 
-                s.urlInstagram AS Instagram
+                s.urlInstagram AS Instagram,
+                s.logoStructureName AS logoStructureName,
+                s.jaf AS jaf
                 ')
             ->join('m.structure', 's')
             ->orderBy('m.lastName', 'ASC')

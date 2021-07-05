@@ -6,28 +6,25 @@
     {{ parent() }}
     <script>
         window.onload = function(){
-z
+
             function onClickBtnAddStructure(event){
                 event.preventDefault();
-                const name = document.getElementById("adhesion_society").value;
-                const firstName = document.getElementById("adhesion_firstName").value;
-                const lastName = document.getElementById("adhesion_lastName").value;
-                const address = document.getElementById("adhesion_address").value;
-                const complement = document.getElementById("adhesion_complement").value;
-                const gerant = document.getElementById("adhesion_gerant").value;
-                const phoneDesk = document.getElementById("adhesion_phoneDesk").value;
-                const phoneGsm = document.getElementById("adhesion_phoneGsm").value;
-                const email = document.getElementById("adhesion_email").value;
-                const urlWeb = document.getElementById("adhesion_urlWeb").value;
-                const urlFacebook = document.getElementById("adhesion_urlFacebook").value;
-                const urlInstagram = document.getElementById("adhesion_urlInstagram").value;
-                const urlLinkedin = document.getElementById("adhesion_urlLinkedin").value;
-                const isGroupeEntreprendre = document.getElementById("adhesion_isGroupeEntreprendre").value;
-                const firstActivity = document.getElementById("adhesion_firstActivity").value;
-                const secondActivity = document.getElementById("adhesion_secondActivity").value;
-                const projectDev = document.getElementById("adhesion_projectDev").value;
-                const isConsentRgpd = document.getElementById("adhesion_isConsentRgpd").value;
-                console.log(firstName, lastName);
+                const name = document.getElementById("structure_name").value;
+                const firstName = document.getElementById("structure_respFirstName").value;
+                const lastName = document.getElementById("structure_respLastName").value;
+                const address = document.getElementById("structure_address").value;
+                const complement = document.getElementById("structure_complement").value;
+                const phoneDesk = document.getElementById("structure_phoneDesk").value;
+                const phoneGsm = document.getElementById("structure_phoneGsm").value;
+                const email = document.getElementById("structure_EmailStruct").value;
+                const urlWeb = document.getElementById("structure_urlWeb").value;
+                const urlFacebook = document.getElementById("structure_urlFacebook").value;
+                const urlInstagram = document.getElementById("structure_urlInstagram").value;
+                const urlLinkedin = document.getElementById("structure_urlLinkedin").value;
+                const firstActivity = document.getElementById("structure_FirstActivity").value;
+                const secondActivity = document.getElementById("structure_secondActivity").value;
+                const projectDev = document.getElementById("structure_projectDev").value;
+                console.log(name, firstName, lastName);
             }
 
             // appel de la fonction de soumission du formulaire add structure

@@ -40,8 +40,8 @@
                         <div>
                             <p class="text-center text-strong">contact@justafaire.fr / www.justafaire.fr</p>
                             <p class="text-center">
-                                <a href="https://www.facebook.com/justafaire/"><i class="fab fa-instagram" size="2x"></i></a>&nbsp;
-                                <a href="https://www.instagram.com/justafaire/"><i class="fab fa-facebook-square" size="2x"></i></a>
+                                <a href="https://www.instagram.com/justafaire/" onclick="window.open(this.href); return false;"><i class="fab fa-instagram" size="2x"></i></a>&nbsp;
+                                <a href="https://www.facebook.com/justafaire/" onclick="window.open(this.href); return false;"><i class="fab fa-facebook-square" size="2x"></i></a>
                             </p>
                         </div>
                     </div>
@@ -58,16 +58,7 @@
     </section>
 {% else %}
     {% for section in sections %}
-    <header id="page-title">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h1 class="title">{{ parameter.nameSite }}</h1>
-                    <p>Bienvenue sur notre site.<br>Ce dernier est propulsé par le CMS OpenGAIA, développé par OpenPixl sous Symfony.</p>
-                </div>
-            </div>
-        </div>
-    </header>
+
     {% include('webapp/section/include/_onesection.html.twig') %}
     {% endfor %}
 {% endif %}

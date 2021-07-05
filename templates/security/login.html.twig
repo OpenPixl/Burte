@@ -3,13 +3,19 @@
 {% block title %}OpenGAIA | Login {% endblock %}
 
 {% block content %}
-    <div class="col12" id="bandeau"></div>
-    <div class="col-12 col-md-5 col-lg-6 col-xl-4 align-self-center px-lg-6 my-5">
+    <div class="col-12 mt-6" id="bandeau">
+
+    </div>
+    <div class="clo-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 align-self-center px-lg-6 my-5">
 
         <!-- Heading -->
         <h2 class="display-4 text-center mb-3">
             Se connecter
         </h2>
+
+        <p class="text-center d-lg-none">
+            <img class="img-fluid" src="{{ asset('images/png/Logo_jaf.png') }}" alt="justafaire">
+        </p>
 
         {% if error %}
             <p class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
@@ -55,7 +61,7 @@
         </form>
 
     </div>
-    <div class="col-12 col-md-7 col-lg-6 col-xl-8 d-none d-lg-block">
+    <div class="col-md-6 col-lg-6 col-xl-8 d-none d-lg-block">
 
         <!-- Image -->
         <div id="block_login_image" class="bg-cover h-100 min-vh-100 mt-n1 mr-n3">

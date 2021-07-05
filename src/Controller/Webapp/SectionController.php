@@ -200,4 +200,27 @@ class SectionController extends AbstractController
             'message'       => "La section est publiée sur la page d'acccueil."
         ], 200);
     }
+
+    /**
+     * Supprimer la section
+     * @Route("/webapp/section/jsdel/{id}", name="op_webapp_section_del")
+     */
+    public function jsdel(Section $section, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // code de suppression
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($section);
+        $entityManager->flush();
+        $em->flush();
+        return $this->json([
+            'code'          => 200,
+            'message'       => "La section est correctement supprimée."
+        ], 200);
+    }
+
 }

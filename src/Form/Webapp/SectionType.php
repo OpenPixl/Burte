@@ -25,6 +25,7 @@ class SectionType extends AbstractType
             ->add('contentType', ChoiceType::class, [
                 'choices'  => [
                     'aucun' => 'none',
+                    'introduction' => 'intro',
                     'Un article' => 'One_article',
                     'Plusieurs articles' => 'More_article',
                     'Une categorie' => 'Category',

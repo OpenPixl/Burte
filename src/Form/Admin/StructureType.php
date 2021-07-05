@@ -4,6 +4,7 @@ namespace App\Form\Admin;
 
 use App\Entity\Admin\Structure;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -34,11 +35,19 @@ class StructureType extends AbstractType
             ->add('FirstActivity')
             ->add('secondActivity')
             ->add('projectDev')
-            ->add('logoFile', VichImageType::class, [
+            ->add('logoStructureFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
                 'delete_label' => 'Supprimer',
                 'download_label' => 'Télecharger',
+            ])
+            ->add('jaf', ChoiceType::class, [
+                'choices'  => [
+                    'jaf-lons' => 'JUST à FAIRE - Lons',
+                    'jaf-capbreton' => 'JUST à FAIRE - Capbreton',
+                    'jaf-anglet' => 'JUST à FAIRE - anglet',
+                    'jaf-mdm' => 'JUST à FAIRE - Mont de Marsan',
+                ],
             ])
         ;
     }

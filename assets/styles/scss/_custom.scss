@@ -99,16 +99,23 @@ main{
   color:#ffffff;
 }
 
-#member_content .card {
+#box-logo .card-img-top{
+  background-color: #ffffff;
+}
+#member-card{
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
   background-color: rgba(0, 0, 0, 0);
+  background-image: url("./../images/main_pattern.png");
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+}
+#member_content .card {
+
 }
 .modal-body {
   position: relative;

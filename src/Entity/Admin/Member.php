@@ -5,6 +5,7 @@ namespace App\Entity\Admin;
 use App\Entity\GestApp\Event;
 use App\Entity\GestApp\Events;
 use App\Entity\GestApp\Product;
+use App\Entity\GestApp\Recommandation;
 use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Page;
 use App\Repository\Admin\MemberRepository;
@@ -160,12 +161,24 @@ class Member implements UserInterface
      */
     private $events;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Recommandation::class, mappedBy="member")
+     */
+    private $recommandations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Recommandation::class, mappedBy="author")
+     */
+    private $authorReco;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->recommandations = new ArrayCollection();
+        $this->authorReco = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -582,6 +595,66 @@ class Member implements UserInterface
             // set the owning side to null (unless already changed)
             if ($event->getAuthor() === $this) {
                 $event->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Recommandation[]
+     */
+    public function getRecommandations(): Collection
+    {
+        return $this->recommandations;
+    }
+
+    public function addRecommandation(Recommandation $recommandation): self
+    {
+        if (!$this->recommandations->contains($recommandation)) {
+            $this->recommandations[] = $recommandation;
+            $recommandation->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecommandation(Recommandation $recommandation): self
+    {
+        if ($this->recommandations->removeElement($recommandation)) {
+            // set the owning side to null (unless already changed)
+            if ($recommandation->getMember() === $this) {
+                $recommandation->setMember(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Recommandation[]
+     */
+    public function getAuthorReco(): Collection
+    {
+        return $this->authorReco;
+    }
+
+    public function addAuthorReco(Recommandation $authorReco): self
+    {
+        if (!$this->authorReco->contains($authorReco)) {
+            $this->authorReco[] = $authorReco;
+            $authorReco->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthorReco(Recommandation $authorReco): self
+    {
+        if ($this->authorReco->removeElement($authorReco)) {
+            // set the owning side to null (unless already changed)
+            if ($authorReco->getAuthor() === $this) {
+                $authorReco->setAuthor(null);
             }
         }
 

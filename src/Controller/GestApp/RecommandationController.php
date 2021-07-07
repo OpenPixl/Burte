@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 
 class RecommandationController extends AbstractController
@@ -26,11 +28,12 @@ class RecommandationController extends AbstractController
     /**
      * @Route("/op_admin/gestapp/recommandation/new", name="op_gestapp_recommandation_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer): Response
     {
         $user = $this->getUser();
         $recommandation = new Recommandation();
         $form = $this->createForm(RecommandationType::class, $recommandation);
+        $recommandation->setRecoState('noRead');
         $recommandation->setAuthor($user);
         $form->handleRequest($request);
 
@@ -38,6 +41,18 @@ class RecommandationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recommandation);
             $entityManager->flush();
+            // partie de code pour envoyer un email
+            $email = (new Email())
+                ->from('postmaster@openpixl.fr')
+                ->to($recommandation->getMember())
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('JUSTàFaire - une nouvelle recommandation pour vous')
+                //->text('Sending emails is fun again!')
+                ->html('<p>test</p>');
+            $mailer->send($email);
 
             return $this->redirectToRoute('op_gestapp_recommandation_index');
         }
@@ -63,6 +78,7 @@ class RecommandationController extends AbstractController
      */
     public function edit(Request $request, Recommandation $recommandation): Response
     {
+        $isRead = $recommandation->getIsRead();
         $form = $this->createForm(RecommandationType::class, $recommandation);
         $form->handleRequest($request);
 

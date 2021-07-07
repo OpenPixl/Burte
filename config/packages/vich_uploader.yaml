@@ -15,39 +15,53 @@ vich_uploader:
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             inject_on_load: false
             delete_on_update: true
-            delete_on_remove: true avatar_image
+            delete_on_remove: true
         avatar_image:
             uri_prefix: /images/avatar_image
             upload_destination: '%kernel.project_dir%/public/images/avatar_image'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             inject_on_load: false
             delete_on_update: true
-            delete_on_remove: true avatar_image
+            delete_on_remove: true
         logosite_front:
             uri_prefix: /images/logosite_front
             upload_destination: '%kernel.project_dir%/public/images/logosite_front'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             inject_on_load: false
             delete_on_update: true
-            delete_on_remove: true avatar_image
+            delete_on_remove: true
         favicon_front:
             uri_prefix: /images/favicon_front
             upload_destination: '%kernel.project_dir%/public/images/favicon_front'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             inject_on_load: false
             delete_on_update: true
-            delete_on_remove: true avatar_image
+            delete_on_remove: true
         event_galery:
             uri_prefix: /images/event_galery
             upload_destination: '%kernel.project_dir%/public/images/event_galery'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             inject_on_load: false
             delete_on_update: true
-            delete_on_remove: true avatar_image
+            delete_on_remove: true
         logoStructuresite_front:
             uri_prefix: /images/logoStructuresite_front
             upload_destination: '%kernel.project_dir%/public/images/logoStructuresite_front'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             inject_on_load: false
             delete_on_update: true
-            delete_on_remove: true avatar_image
+            delete_on_remove: true
+        illustration_structure:
+            uri_prefix: /images/illustration_structure
+            upload_destination: '%kernel.project_dir%/public/images/illustration_structure'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+        background-image:
+            uri_prefix: /images/background-image
+            upload_destination: '%kernel.project_dir%/public/images/background-image'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true

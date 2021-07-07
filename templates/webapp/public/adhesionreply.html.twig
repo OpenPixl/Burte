@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block meta %}
+    {{ parent() }}
+    <link rel="icon" href="{{ vich_uploader_asset(parameter, 'faviconFile') }}" />
+
+{% endblock %}
+
+{% block title %}{{ parameter.nameSite }}{% endblock %}
+
+{% block content %}

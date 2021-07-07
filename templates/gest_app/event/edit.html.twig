@@ -7,7 +7,7 @@
     <script>
         window.onload = function(){
             ClassicEditor
-                .create(document.querySelector('#product_description'), {
+                .create(document.querySelector('#event_description'), {
                     toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
                     height: 50
                 })
@@ -31,7 +31,7 @@
                     <div class="card-header">
                         <h3>Modifier un évènement</h3>
                     </div>
-                    {{ include('gest_app/event/_form.html.twig', {'button_label': 'Update'}) }}
+                    {{ include('gest_app/event/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
                 </div>
             </div>
         </div>

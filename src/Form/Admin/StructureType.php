@@ -49,6 +49,25 @@ class StructureType extends AbstractType
                     'jaf-mdm' => 'JUST à FAIRE - Mont de Marsan',
                 ],
             ])
+            ->add('illustrationFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
+            ])
+            ->add('illustrationtwoFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
+            ])
+            ->add('illustrationthirdFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
+            ])
+
         ;
     }
 

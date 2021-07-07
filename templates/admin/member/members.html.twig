@@ -11,7 +11,7 @@
                         {% endif %}
                     </div>
                     <div class="row">
-                        <h2 class="text-center"><a href="#">{{ member.structure }}</a></h2>
+                        <h2 class="text-center"><a href="{{ path('op_admin_member_front_member', {'id': member.id}) }}">{{ member.structure }}</a></h2>
                         <p class="text-center ">
                             <span class="text-strong">{{ member.firstName }} {{ member.lastName|upper }}</span><br>
                             {% if member.Facebook is null %}

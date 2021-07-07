@@ -19,44 +19,39 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Client</th>
-                                        <th>Addresse</th>
                                         <th>Contacts</th>
                                         <th>RecoPrice</th>
-                                        <th>RecoState</th>
-                                        <th>CreatedAt</th>
-                                        <th>UpdatedAt</th>
                                         <th>actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {% for recommandation in recommandations %}
                                     <tr>
-                                        <td>{{ recommandation.id }}</td>
-                                        <td>{{ recommandation.name }}</td>
+                                        <td>
+                                            {{ recommandation.name }}
+                                            {% if recommandation.recostate == 'noRead' %}
+                                                <span class="badge bg-warning">Non lue</span>
+                                            {% elseif recommandation.recostate == 'inProgress'%}
+                                                <span class="badge bg-primary">En cours</span>
+                                            {% elseif recommandation.recostate == 'Valid'%}
+                                                <span class="badge bg-primary">Validée</span>
+                                            {% elseif recommandation.recostate == 'Avort'%}
+                                                <span class="badge bg-danger">Sans suite</span>
+                                            {% endif %}
+                                        </td>
                                         <td>{{ recommandation.description }}</td>
                                         <td>{{ recommandation.clientFirstname }} {{ recommandation.clientLastname }}</td>
                                         <td>
-                                            {{ recommandation.clientAddress }}<br>
-                                            {{ recommandation.clientComplement }}<br>
-                                            {{ recommandation.clientZipcode }} {{ recommandation.clientCity }}
-                                        </td>
-                                        <td>
-                                            {{ recommandation.ClientEmail }}<br>
-                                            {{ recommandation.ClientDesk }}<br>
-                                            {{ recommandation.clientGsm }}
+                                            {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
                                         </td>
                                         <td>
                                             {% if recommandation.recoPrice %}Non déterminé{% else %}{{ recommandation.recoPrice }}{% endif %}</td>
-                                        <td>{{ recommandation.recoState }}</td>
-                                        <td>{{ recommandation.CreatedAt ? recommandation.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                                        <td>{{ recommandation.updatedAt ? recommandation.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                                         <td>
-                                            <a href="{{ path('op_gestapp_recommandation_show', {'id': recommandation.id}) }}">show</a>
-                                            <a href="{{ path('op_gestapp_recommandation_edit', {'id': recommandation.id}) }}">edit</a>
+                                            <a href="{{ path('op_gestapp_recommandation_show', {'id': recommandation.id}) }}">voir</a>
+                                            <a href="{{ path('op_gestapp_recommandation_edit', {'id': recommandation.id}) }}">modifier</a>
                                         </td>
                                     </tr>
                                 {% else %}

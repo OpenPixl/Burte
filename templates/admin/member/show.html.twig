@@ -7,6 +7,15 @@
     <script>
         window.onload = function(){
 
+            ClassicEditor
+                .create(document.querySelector('#structure_description'), {
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment', 'code', 'CodeBlock', 'Underline', 'HtmlEmbed' ],
+                    height: 50
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
             function onClickBtnAddStructure(event){
                 event.preventDefault();
                 const name = document.getElementById("structure_name").value;
@@ -98,16 +107,22 @@
                                 <table class="table">
                                     <tbody>
                                     <tr>
-                                        <th>CreatedAt</th>
-                                        <td>{{ member.createdAt ? member.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                        <th>Créé le</th>
+                                        <td>{{ member.createdAt ? member.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>UpdatedAt</th>
-                                        <td>{{ member.updatedAt ? member.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                        <th>Mise à jour</th>
+                                        <td>{{ member.updatedAt ? member.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>IsVerified</th>
-                                        <td>{{ member.isVerified ? 'Yes' : 'No' }}</td>
+                                        <th>Adresse vérifiée le</th>
+                                        <td>
+                                            {% if member.isVerified == 1  %}
+                                                <i class="far fa-check-circle text-success"></i>
+                                            {% elseif member.isVerified == 0 %}
+                                                <i class="far fa-times-circle text-danger"></i>
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

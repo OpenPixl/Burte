@@ -3,26 +3,42 @@
         <tr>
             <th colspan="10">Liste des Recommandations</th>
         </tr>
+        <tr>
+            <th>Titre</th>
+            <th>Recommandé par</th>
+            <th>Client</th>
+            <th>Contact</th>
+            <th>Estimation</th>
+            <th>Reçu le</th>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
     {% for recommandation in recommandations %}
         <tr>
-            <td>{{ recommandation.author }}</td>
-            <td>{{ recommandation.name }}</td>
-            <td>{{ recommandation.clientFirstname }} {{ recommandation.clientLastname }}</td>
-
-            <td>
-                {% if recommandation.clientAddress is null %}
-                {% else %}
-                {{ recommandation.clientAddress }}<br>
-                {{ recommandation.clientComplement }}<br>
-                {{ recommandation.clientZipcode }} {{ recommandation.clientCity }}
+            <td>{{ recommandation.name }}
+                {% if recommandation.recostate == 'noRead' %}
+                    <span class="badge bg-warning">Non lue</span>
+                {% elseif recommandation.recostate == 'inProgress'%}
+                    <span class="badge bg-primary">En cours</span>
+                {% elseif recommandation.recostate == 'Valid'%}
+                    <span class="badge bg-primary">Validée</span>
+                {% elseif recommandation.recostate == 'Avort'%}
+                    <span class="badge bg-danger">Sans suite</span>
                 {% endif %}
             </td>
+            <td>{{ recommandation.author }}</td>
+            <td>{{ recommandation.clientFirstname }} {{ recommandation.clientLastname }}</td>
             <td>
-                {{ recommandation.ClientEmail }}<br>
-                {{ recommandation.ClientDesk }}<br>
-                {{ recommandation.clientGsm }}
+                {% if recommandation.ClientDesk is not null %}
+                {{ recommandation.ClientDesk }}
+                {% elseif recommandation.ClientDesk is not null and recommandation.ClientEmail is null and recommandation.clientGsm is not null %}
+                {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
+                {% elseif recommandation.ClientDesk is not null and recommandation.ClientEmail is not null and recommandation.clientGsm is null %}
+                {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }}
+                {% else %}
+                {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
+                {% endif %}
             </td>
             <td>
                 {% if recommandation.recoPrice is null%}
@@ -31,9 +47,7 @@
                     {{ recommandation.recoPrice }}
                 {% endif %}
             </td>
-            <td>{{ recommandation.recoState }}</td>
             <td>{{ recommandation.CreatedAt ? recommandation.CreatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-            <td>{{ recommandation.updatedAt ? recommandation.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
             <td>
                 <a href="{{ path('op_gestapp_recommandation_show', {'id': recommandation.id}) }}">show</a>
                 <a href="{{ path('op_gestapp_recommandation_edit', {'id': recommandation.id}) }}">edit</a>

@@ -9,46 +9,166 @@
 {% block content %}
     <section class="container">
         <div id="section_title">
-            <div class="row">
-                 <div class="col-12">
-                     <div class="d-flex justify-content-between">
-                         <div>
-                             <h1>{{ member.structure }}</h1>
-                         </div>
-                         <div class="d-flex flex-row">
-                             {% if member.urlWeb is null %}
-                                 <h1><a href="#" class="isdisabled"><i class="fas fa-globe-europe"></i></a></h1>&nbsp;&nbsp;
-                             {% else %}
-                                 <h1><a href="{{ member.urlWeb }}" onclick="window.open(this.href); return false;"><i class="fas fa-globe-europe"></i></a></h1>&nbsp;&nbsp;
-                             {% endif %}
+            <div class="row mb-4">
+                <div id="member-card" class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h1>{{ member.structure }}</h1>
+                                    </div>
+                                    <div class="d-flex flex-row">
+                                        {% if member.urlWeb is null %}
+                                            <h1><a href="#" class="isdisabled"><i class="fas fa-globe-europe"></i></a></h1>&nbsp;&nbsp;
+                                        {% else %}
+                                            <h1><a href="{{ member.urlWeb }}" onclick="window.open(this.href); return false;"><i class="fas fa-globe-europe"></i></a></h1>&nbsp;&nbsp;
+                                        {% endif %}
 
-                             {% if member.Facebook is null %}
-                                 <h1><a href="#" class="isdisabled"><i class="fab fa-facebook"></i></a></h1>&nbsp;&nbsp;
-                             {% else %}
-                                 <h1><a href="{{ member.Facebook }}" onclick="window.open(this.href); return false;"><i class="fab fa-facebook"></i></a></h1>&nbsp;&nbsp;
-                             {% endif %}
-
-                             {% if member.Instagram is null %}
-                                 <h1><a href="#" class="isdisabled"><i class="fab fa-instagram"></i></a></h1>&nbsp;&nbsp;
-                             {% else %}
-                                 <h1><a href="{{ member.Instagram }}" onclick="window.open(this.href); return false;"><i class="fab fa-instagram"></i></a></h1>&nbsp;&nbsp;
-                             {% endif %}
-
-                             {% if member.Linkedin is null %}
-                                 <h1><a href="#" class="isdisabled"><i class="fab fa-linkedin"></i></a></h1>&nbsp;&nbsp;
-                             {% else %}
-                                 <h1><a href="{{ member.Linkedin }}" onclick="window.open(this.href); return false;"><i class="fab fa-linkedin"></i></a></h1>&nbsp;&nbsp;
-                             {% endif %}
-                         </div>
-                     </div>
-                 </div>
+                                        {% if member.Facebook is null %}
+                                            <h1><a href="#" class="isdisabled"><i class="fab fa-facebook"></i></a></h1>&nbsp;&nbsp;
+                                        {% else %}
+                                            <h1><a href="{{ member.Facebook }}" onclick="window.open(this.href); return false;"><i class="fab fa-facebook"></i></a></h1>&nbsp;&nbsp;
+                                        {% endif %}
+                                        {% if member.Instagram is null %}
+                                            <h1><a href="#" class="isdisabled"><i class="fab fa-instagram"></i></a></h1>&nbsp;&nbsp;
+                                        {% else %}
+                                            <h1><a href="{{ member.Instagram }}" onclick="window.open(this.href); return false;"><i class="fab fa-instagram"></i></a></h1>&nbsp;&nbsp;
+                                        {% endif %}
+                                        {% if member.Linkedin is null %}
+                                            <h1><a href="#" class="isdisabled"><i class="fab fa-linkedin"></i></a></h1>&nbsp;&nbsp;
+                                        {% else %}
+                                            <h1><a href="{{ member.Linkedin }}" onclick="window.open(this.href); return false;"><i class="fab fa-linkedin"></i></a></h1>&nbsp;&nbsp;
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
         <div id="section_content">
-            <div class="row">
-                <div class="col-12">
-                    <p>{{ member.description|raw }}</p>
+            <div class="row mb-4">
+                <div id="member-card" class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
+                                <p class="text-center">
+                                    {% if member.logoStructureName is null %}
+                                        <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar">
+                                    {% elseif member.logoStructureName is not null %}
+                                        <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(member, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') | imagine_filter('logostruct_image') }}" alt="{{ member.logoStructureName }}">
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="col-xs-12 clo-sm-12 col-md-12 col-lg-8 col-xl-8">
+                                <p class="text-end">
+                                    <span class="text-h1">{{ member.FirstActivity }}</span><br>
+                                    <span class="text-h1">{{ member.secondActivity }}</span><br>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>{{ member.description|raw }}</p>
+                            </div>
+                        </div>
+                        {% if member.illustrationName is not null and member.illustrationtwoName is not null and member.illustrationthirdName is not null%}
+                        <div class="row justify-content-center">
+                            <div class="col-6">
+                                <p class="text-center">
+                                    <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
+                                </p>
+                            </div>
+                        </div>
+
+                        {% else %}
+                        {% endif %}
+                        <div class="row">
+                            {% if member.illustrationName is not null %}
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                                <p class="text-center">
+                                    <img class="img-fluid" src="{{ vich_uploader_asset(member, 'illustrationFile', 'App\\Entity\\Admin\\Structure')|imagine_filter('illustration_structure') }}" alt="{{ member.illustrationName }}">
+                                </p>
+                            </div>
+                            {% else %}
+                            {% endif %}
+                            {% if member.illustrationtwoName is not null %}
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                                <p class="text-center">
+                                    <img class="img-fluid" src="{{ vich_uploader_asset(member, 'illustrationtwoFile', 'App\\Entity\\Admin\\Structure')|imagine_filter('illustration_structure') }}" alt="{{ member.illustrationtwoName }}">
+                                </p>
+                            </div>
+                            {% else %}
+                            {% endif %}
+                            {% if member.illustrationthirdName is not null %}
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                                <p class="text-center">
+                                    <img class="img-fluid" src="{{ vich_uploader_asset(member, 'illustrationthirdFile', 'App\\Entity\\Admin\\Structure')|imagine_filter('illustration_structure') }}" alt="{{ member.illustrationtwoName }}">
+                                </p>
+                            </div>
+                            {% else %}
+                            {% endif %}
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-6">
+                                <p class="text-center">
+                                    <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 clo-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <h3 class="text-start">L'adhérent au Just à Faire :</h3>
+                                <div class="row justify-content-center">
+                                    <div class="col-8">
+                                        <p class="text-start">
+                                            {{ member.firstName }}  {{ member.lastName }}<br>
+                                            <a href="mailto:{{ member.adherent_email }}"><i class="fas fa-envelope-open-text"></i> {{ member.adherent_email }}</a><br>
+                                            {% if member.adherent_desk is null and member.adherent_gsm is null %}
+                                            {% elseif member.adherent_desk is null and member.adherent_gsm is not null %}
+                                            <i class="fas fa-mobile-alt"></i> : {{ member.adherent_gsm }}
+                                            {% elseif member.adherent_desk is not null and member.adherent_gsm is null %}
+                                            <i class="fas fa-phone-square-alt"></i> : {{ member.adherent_desk }}
+                                            {% else %}
+                                            <i class="fas fa-phone-square-alt"></i> : {{ member.adherent_desk }} / <i class="fas fa-mobile-alt"></i> : {{ member.adherent_gsm }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p class="text-end">
+                                            <img class="img-fluid img-rounded" src="{{ vich_uploader_asset(member, 'avatarFile', 'App\\Entity\\Admin\\Member')| imagine_filter('avatar_image')}}" alt="{{ member.avatarName }}" style="width: 120px; height: 120px">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 clo-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <h3 class="text-center">Siège de l'entreprise :</h3>
+                                <p class="text-center">
+                                    {{ member.address }}<br>
+                                    {{ member.complement }}<br>
+                                    {{ member.zipcode }} {{ member.city }}
+                                </p>
+                            </div>
+                            <div class="col-xs-12 clo-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <h3 class="text-end">Coordonnées & Responsable</h3>
+                                <p class="text-end">
+                                    Gérant : {{ member.respFirstName }} {{ member.respLastName }}<br>
+                                    <a href="mailto:{{ member.EmailStruct }}"><i class="fas fa-envelope-open-text"></i> {{ member.EmailStruct }}</a><br>
+                                    {% if member.phoneDesk is null and member.phoneGsm is null %}
+                                        Pas de coordonnées transmises.
+                                    {% elseif member.phoneDesk is null and member.phoneGsm is not null %}
+                                    <i class="fas fa-mobile-alt"></i> : {{ member.phoneGsm }}
+                                    {% elseif member.phoneDesk is not null and member.phoneGsm is null %}
+                                    <i class="fas fa-phone-square-alt"></i> : {{ member.phoneDesk }}
+                                    {% else  %}
+                                    <i class="fas fa-phone-square-alt"></i> : {{ member.phoneDesk }} / <i class="fas fa-mobile-alt"></i> : {{ member.phoneGsm }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

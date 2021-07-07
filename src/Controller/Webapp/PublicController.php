@@ -58,13 +58,27 @@ class PublicController extends AbstractController
     public function homepage() : Response
     {
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
-        $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1));
+        $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1), array('position' => 'ASC'));
 
 
         // integration du code sélectionnant les sections classées comme favorites
         return $this->render('webapp/public/index.html.twig',[
             'parameter' => $parameter,
             'sections' => $sections,
+        ]);
+    }
+
+    /**
+     * @Route("/webapp/public/adhesionreply/", name="op_webapp_public_adhesionreply")
+     */
+    public function adhesionreply() : Response
+    {
+        $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+
+
+        // integration du code sélectionnant les sections classées comme favorites
+        return $this->render('webapp/public/adhesionreply.html.twig',[
+            'parameter' => $parameter,
         ]);
     }
 

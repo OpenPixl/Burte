@@ -3,7 +3,6 @@
 namespace App\Entity\Admin;
 
 use App\Entity\GestApp\Event;
-use App\Entity\GestApp\Events;
 use App\Entity\GestApp\Product;
 use App\Entity\GestApp\Recommandation;
 use App\Entity\Webapp\Article;
@@ -15,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -25,6 +25,35 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Member implements UserInterface
 {
+    public function __serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'roles' => $this->roles,
+            'password' => $this->password,
+            'adress1' => $this->adress1,
+            'Adress2' => $this->Adress2,
+            //......
+        ];
+    }
+
+    public function __unserialize(array $serialized): Member
+    {
+        $this->id = $serialized['id'];
+        $this->email = $serialized['email'];
+        $this->roles = $serialized['roles'];
+        $this->password = $serialized['password'];
+        $this->firstName = $serialized['firstName'];
+        $this->lastName = $serialized['lastName'];
+        $this->adress1 = $serialized['adress1'];
+        $this->Adress2 = $serialized['Adress2'];
+        // .....
+        return $this;
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -63,6 +92,7 @@ class Member implements UserInterface
      * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
      *
      * @Vich\UploadableField(mapping="avatar_image", fileNameProperty="avatarName", size="avatarSize")
+     * @Ignore()
      * @var File|null
      */
     private $avatarFile;

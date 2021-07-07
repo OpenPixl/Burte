@@ -60,6 +60,14 @@
                                 {{ form_widget(form.position, {'attr': {'class': 'form-control form-select-sm'}}) }}
                             </div>
                         </div>
+                        <div class="row mb-1 mt-1 g-1">
+                            <fieldset>
+                                <div class="form-check form-switch">
+                                    {{ form_widget(form.isShowtitle, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(form.isShowtitle, 'Afficher le titre sur la page', {'label_attr': {'class':'form-check-label'}}) }}
+                                </div>
+                            </fieldset>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,14 +92,6 @@
                             </div>
                             <div class="col-9">
                                 {{ form_widget(form.oneArticle, {'attr': {'class': 'form-select form-select-sm'}}) }}
-                            </div>
-                        </div>
-                        <div class="row mb-1 mt-1 g-1">
-                            <div class="col-3">
-                                <b>{{ form_label(form.UniqImage, 'Une image', {'label_attr': {'class':'form-label'}}) }}</b>
-                            </div>
-                            <div class="col-9">
-                                {{ form_widget(form.UniqImage, {'attr': {'class': 'form-select form-select-sm'}}) }}
                             </div>
                         </div>
                     </div>

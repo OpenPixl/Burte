@@ -30,7 +30,8 @@
                     {{ render(controller('App\\Controller\\Admin\\MemberController::Members')) }}
                 {% elseif section.contentType == 'Adhesion'%}
                     {{ render(controller('App\\Controller\\GestApp\\AdhesionController::addAdhesion')) }}
-                {% elseif section.contentType == 'Media_one'%}
+                {% elseif section.contentType == 'Avis'%}
+                    {{ render(controller('App\\Controller\\GestApp\\AvisController::view')) }}
                 {% else %}
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">

@@ -82,16 +82,30 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
                 m.lastName as lastName,
                 s.description AS description,
                 m.avatarName, 
-                m.email,
-                m.phoneDesk,
-                m.phoneGsm,
+                m.email AS adherent_email,
+                m.phoneDesk AS adherent_desk,
+                m.phoneGsm AS adherent_gsm,
                 s.name as structure,
+                s.respFirstName AS respFirstName,
+                s.respLastName AS respLastName,
+                s.EmailStruct AS EmailStruct,
+                s.phoneDesk AS phoneDesk,
+                s.phoneGsm AS phoneGsm,
+                s.address AS address,
+                s.complement AS complement,
+                s.zipcode AS zipcode,
                 s.FirstActivity as FirstActivity,
+                s.secondActivity AS secondActivity,
                 s.city as city,
                 s.urlWeb AS urlWeb,
                 s.urlFacebook AS Facebook, 
                 s.urlLinkedin AS Linkedin, 
-                s.urlInstagram AS Instagram')
+                s.urlInstagram AS Instagram,
+                s.logoStructureName AS logoStructureName,
+                s.illustrationName AS illustrationName,
+                s.illustrationtwoName AS illustrationtwoName,
+                s.illustrationthirdName AS illustrationthirdName
+                ')
             ->join('m.structure', 's')
             ->where('m.id = :member')
             ->setParameter('member', $id)

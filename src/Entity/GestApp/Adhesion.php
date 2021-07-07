@@ -61,11 +61,6 @@ class Adhesion
     private $siret;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $gerant;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $urlWeb;
@@ -129,6 +124,16 @@ class Adhesion
      * @ORM\Column(type="boolean")
      */
     private $isConsentRgpd;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gerantFirstname;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gerantLastname;
 
     public function getId(): ?int
     {
@@ -227,18 +232,6 @@ class Adhesion
     public function setSiret(?string $siret): self
     {
         $this->siret = $siret;
-
-        return $this;
-    }
-
-    public function getGerant(): ?string
-    {
-        return $this->gerant;
-    }
-
-    public function setGerant(string $gerant): self
-    {
-        $this->gerant = $gerant;
 
         return $this;
     }
@@ -400,6 +393,30 @@ class Adhesion
     public function setIsConsentRgpd(bool $isConsentRgpd): self
     {
         $this->isConsentRgpd = $isConsentRgpd;
+
+        return $this;
+    }
+
+    public function getGerantFirstname(): ?string
+    {
+        return $this->gerantFirstname;
+    }
+
+    public function setGerantFirstname(?string $gerantFirstname): self
+    {
+        $this->gerantFirstname = $gerantFirstname;
+
+        return $this;
+    }
+
+    public function getGerantLastname(): ?string
+    {
+        return $this->gerantLastname;
+    }
+
+    public function setGerantLastname(?string $gerantLastname): self
+    {
+        $this->gerantLastname = $gerantLastname;
 
         return $this;
     }

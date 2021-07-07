@@ -21,7 +21,7 @@ class PageType extends AbstractType
             ->add('state', ChoiceType::class, [
                 'choices'  => [
                     'Brouillon' => 'draft',
-                    'Publiée' => 'publish',
+                    'Finalisée' => 'Finish',
                 ],
             ])
             ->add('metaKeywords')

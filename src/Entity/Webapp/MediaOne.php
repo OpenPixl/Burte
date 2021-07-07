@@ -2,6 +2,7 @@
 
 namespace App\Entity\Webapp;
 
+use App\Entity\Admin\Structure;
 use App\Repository\Webapp\MediaOneRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -77,14 +78,8 @@ class MediaOne
      */
     private $updatedAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="UniqImage")
-     */
-    private $sections;
-
     public function __construct()
     {
-        $this->sections = new ArrayCollection();
     }
 
     /**
@@ -225,36 +220,6 @@ class MediaOne
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTime('now');
-        return $this;
-    }
-
-    /**
-     * @return Collection|Section[]
-     */
-    public function getSections(): Collection
-    {
-        return $this->sections;
-    }
-
-    public function addSection(Section $section): self
-    {
-        if (!$this->sections->contains($section)) {
-            $this->sections[] = $section;
-            $section->setUniqImage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSection(Section $section): self
-    {
-        if ($this->sections->removeElement($section)) {
-            // set the owning side to null (unless already changed)
-            if ($section->getUniqImage() === $this) {
-                $section->setUniqImage(null);
-            }
-        }
-
         return $this;
     }
 

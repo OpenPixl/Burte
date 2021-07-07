@@ -1,9 +1,9 @@
 {{ form_start(form) }}
-<div class="card">
+<div id="member-card" class="card">
     <div class="card-body">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-lg-6 col-xl-6">
-                <h5>La société</h5>
+                <h5>LA SOCIETE</h5>
                 <hr>
                 <div class="row mb-1 mt-1 g-1">
                     <div class="col-3">
@@ -45,10 +45,13 @@
                 </div>
                 <div class="row mb-1 mt-1 g-1">
                     <div class="col-3">
-                        {{ form_label(form.gerant, 'Gérant', {'label_attr': {'class':'form-label'}}) }}
+                        {{ form_label(form.gerantFirstname, 'Gérant', {'label_attr': {'class':'form-label'}}) }}
                     </div>
-                    <div class="col-9">
-                        {{ form_widget(form.gerant, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom du gérant'}}) }}
+                    <div class="col-4">
+                        {{ form_widget(form.gerantFirstname, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom du gérant'}}) }}
+                    </div>
+                    <div class="col-5">
+                        {{ form_widget(form.gerantLastname, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom du gérant'}}) }}
                     </div>
                 </div>
                 <div class="row mb-1 mt-1 g-1">
@@ -61,7 +64,7 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-lg-6 col-xl-6">
-                <h5>Contacts</h5>
+                <h5>CONTACTS</h5>
                 <hr>
                 <div class="row mb-1 mt-1 g-1">
                     <div class="col-3">
@@ -116,7 +119,7 @@
         </div>
         <div class="row mt-2">
             <div class="col-12">
-                <h5>Activités</h5>
+                <h5>ACTIVITES</h5>
                 <hr>
                 <div class="row mb-1 mt-1 g-1">
                     <div class="col-3">

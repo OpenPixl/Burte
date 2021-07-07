@@ -111,6 +111,11 @@ class Recommandation
     private $author;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isRead = false;
+
+    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist
@@ -346,6 +351,18 @@ class Recommandation
     public function setAuthor(?Member $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getIsRead(): ?bool
+    {
+        return $this->isRead;
+    }
+
+    public function setIsRead(bool $isRead): self
+    {
+        $this->isRead = $isRead;
 
         return $this;
     }

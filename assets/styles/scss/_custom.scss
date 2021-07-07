@@ -76,6 +76,11 @@ main{
   color:#ffffff;
 }
 
+label {
+  display: inline-block;
+  color: #ffffff;
+}
+
 /***---------- MAIN : articles ----------***/
 
 .border-large{
@@ -102,6 +107,18 @@ main{
 #box-logo .card-img-top{
   background-color: #ffffff;
 }
+
+.tarif-rounded{
+  width:200px;
+  height:200px;
+  background-color:#cdb55f;
+  border-radius: 50%;
+}
+
+.tarif-rounded p{
+  margin-bottom: 0;
+}
+
 #member-card{
   position: relative;
   display: flex;
@@ -114,9 +131,7 @@ main{
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
 }
-#member_content .card {
 
-}
 .modal-body {
   position: relative;
   flex: 1 1 auto;
@@ -153,6 +168,9 @@ footer h4, h5,{
 #jaf-footer{
   border-top: 4px solid $jaf-color-first;
 }
+
+/***---------- FOOTER : footer-top ----------***/
+
 
 /***---------- FOOTER : footer-top ----------***/
 
@@ -218,8 +236,8 @@ footer h4, h5,{
   }
 
   p{
-    font-family: "voga";
-    font-size:1.3rem;
+    font-family: "CerebriSans-light";
+    font-size:1rem;
     color: #ffffff;
   }
 
@@ -234,6 +252,17 @@ footer h4, h5,{
 
   footer a{
     font-size: 0.8rem;
+  }
+
+  .carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: -2.25rem;
+    left: 15%;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    color: #fff;
+    text-align: center;
   }
 
 }

@@ -31,7 +31,7 @@
                         {% endif %}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
-                        <li><a class="dropdown-item" href="#"><i class="far fa-id-badge"></i> Mon profil</a></li>
+                        <li><a class="dropdown-item" href="{{path('op_admin_member_show', {'id': app.user.id})}}"><i class="far fa-id-badge"></i> Mon profil</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-key"></i> Changer le mot de passe</a></li>
                         <li><a class="dropdown-item" href="{{ path('op_admin_security_logout') }}"><i class="fas fa-lock-open"></i> Déconnexion</a></li>
                     </ul>

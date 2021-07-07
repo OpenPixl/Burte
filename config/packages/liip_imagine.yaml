@@ -22,9 +22,25 @@ liip_imagine:
                 thumbnail:
                     size: [ 200, 200 ]
                     mode: outbond
+        avatar_front:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [106, 106]
+                    mode: outbond
         logostruct_image:
             quality: 75
             filters:
                 thumbnail:
                     size: [ 286, 180 ]
                     mode: inset
+        illustration_structure:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [ 398, 238 ]
+                    mode: outbond
+                background :
+                    size : [404, 244]
+                    position : center
+                    color : '#cdb55f'

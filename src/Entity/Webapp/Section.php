@@ -7,10 +7,13 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=SectionRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable()
  */
 class Section
 {
@@ -91,11 +94,6 @@ class Section
      * @ORM\Column(type="integer", nullable=true)
      */
     private $position;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=MediaOne::class, inversedBy="sections")
-     */
-    private $UniqImage;
 
     /**
      * @ORM\Column(type="boolean")
@@ -203,6 +201,7 @@ class Section
         return $this;
     }
 
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -295,18 +294,6 @@ class Section
     public function setPosition(?int $position): self
     {
         $this->position = $position;
-
-        return $this;
-    }
-
-    public function getUniqImage(): ?MediaOne
-    {
-        return $this->UniqImage;
-    }
-
-    public function setUniqImage(?MediaOne $UniqImage): self
-    {
-        $this->UniqImage = $UniqImage;
 
         return $this;
     }

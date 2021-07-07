@@ -2,12 +2,14 @@
 
 namespace App\Entity\Admin;
 
+use App\Entity\Webapp\illustrationOne;
 use App\Repository\Admin\StructureRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -134,6 +136,7 @@ class Structure
      * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
      *
      * @Vich\UploadableField(mapping="articles_front", fileNameProperty="logoStructureName", size="logoStructureSize")
+     * @Ignore()
      * @var File|null
      */
     private $logoStructureFile;
@@ -151,7 +154,6 @@ class Structure
      * @var int|null
      */
     private $logoStructureSize;
-
 
     /**
      * @ORM\Column(type="datetime")
@@ -172,6 +174,79 @@ class Structure
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    
+    /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="illustration_structure", fileNameProperty="illustrationName", size="illustrationSize")
+     * @var File|null
+     */
+    private $illustrationFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $illustrationName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $illustrationSize;
+
+
+    /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="illustration_structure", fileNameProperty="illustrationtwoName", size="illustrationtwoSize")
+     * @var File|null
+     */
+    private $illustrationtwoFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $illustrationtwoName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $illustrationtwoSize;
+
+
+    /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="illustration_structure", fileNameProperty="illustrationthirdName", size="illustrationthirdSize")
+     * @var File|null
+     */
+    private $illustrationthirdFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $illustrationthirdName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $illustrationthirdSize;
+    
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -498,8 +573,6 @@ class Structure
         return $this->logoStructureSize;
     }
 
-
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -587,4 +660,137 @@ class Structure
 
         return $this;
     }
+
+    /**
+     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
+     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
+     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
+     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $illustrationFile
+     */
+    public function setIllustrationFile(?File $illustrationFile = null): void
+    {
+        $this->illustrationFile = $illustrationFile;
+
+        if (null !== $illustrationFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getIllustrationFile(): ?File
+    {
+        return $this->illustrationFile;
+    }
+
+    public function setIllustrationName(?string $illustrationName): void
+    {
+        $this->illustrationName = $illustrationName;
+    }
+
+    public function getIllustrationName(): ?string
+    {
+        return $this->illustrationName;
+    }
+
+    public function setIllustrationSize(?int $illustrationSize): void
+    {
+        $this->illustrationSize = $illustrationSize;
+    }
+
+    public function getIllustrationSize(): ?int
+    {
+        return $this->illustrationSize;
+    }
+
+    /**
+     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
+     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
+     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
+     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $illustrationtwoFile
+     */
+    public function setIllustrationtwoFile(?File $illustrationtwoFile = null): void
+    {
+        $this->illustrationtwoFile = $illustrationtwoFile;
+
+        if (null !== $illustrationtwoFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getIllustrationtwoFile(): ?File
+    {
+        return $this->illustrationtwoFile;
+    }
+
+    public function setIllustrationtwoName(?string $illustrationtwoName): void
+    {
+        $this->illustrationtwoName = $illustrationtwoName;
+    }
+
+    public function getIllustrationtwoName(): ?string
+    {
+        return $this->illustrationtwoName;
+    }
+
+    public function setIllustrationtwoSize(?int $illustrationtwoSize): void
+    {
+        $this->illustrationtwoSize = $illustrationtwoSize;
+    }
+
+    public function getIllustrationtwoSize(): ?int
+    {
+        return $this->illustrationtwoSize;
+    }
+
+    /**
+     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
+     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
+     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
+     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $illustrationthirdFile
+     */
+    public function setIllustrationthirdFile(?File $illustrationthirdFile = null): void
+    {
+        $this->illustrationthirdFile = $illustrationthirdFile;
+
+        if (null !== $illustrationthirdFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getIllustrationthirdFile(): ?File
+    {
+        return $this->illustrationthirdFile;
+    }
+
+    public function setIllustrationthirdName(?string $illustrationthirdName): void
+    {
+        $this->illustrationthirdName = $illustrationthirdName;
+    }
+
+    public function getIllustrationthirdName(): ?string
+    {
+        return $this->illustrationthirdName;
+    }
+
+    public function setIllustrationthirdSize(?int $illustrationthirdSize): void
+    {
+        $this->illustrationthirdSize = $illustrationthirdSize;
+    }
+
+    public function getIllustrationthirdSize(): ?int
+    {
+        return $this->illustrationthirdSize;
+    }
+    
 }

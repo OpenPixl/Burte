@@ -1,0 +1,59 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Avis index{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('gest_app/avis/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('gest_app/avis/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Liste des avis</h4>
+                        <p>Créer, Modifier ou supprimer des avis</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Description</th>
+                                    <th>Author</th>
+                                    <th>CreatedAt</th>
+                                    <th>UpdatedAt</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for avi in avis %}
+                                <tr>
+                                    <td>{{ avi.id }}</td>
+                                    <td>{{ avi.description|raw }}</td>
+                                    <td>{{ avi.author }}</td>
+                                    <td>{{ avi.createdAt ? avi.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ avi.updatedAt ? avi.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>
+                                        <a href="{{ path('op_gestapp_avis_show', {'id': avi.id}) }}">show</a>
+                                        <a href="{{ path('op_gestapp_avis_edit', {'id': avi.id}) }}">edit</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-sm btn-primary" href="{{ path('op_gestapp_avis_new') }}">Ajouter un avis</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

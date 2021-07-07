@@ -20,8 +20,8 @@ class EventType extends AbstractType
             ->add('isValidBy')
             ->add('eventGals', CollectionType::class, [
                 'entry_type' => EventGalType::class,
-                'allow_add' => false, // true si tu veux que l'utilisateur puisse en ajouter
-                'allow_delete' => false, // true si tu veux que l'utilisateur puisse en supprimer
+                'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
+                'allow_delete' => true, // true si tu veux que l'utilisateur puisse en supprimer
                 'label' => 'Photos',
                 'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types
             ]);

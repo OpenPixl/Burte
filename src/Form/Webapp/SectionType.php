@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class SectionType extends AbstractType
 {
@@ -34,15 +35,21 @@ class SectionType extends AbstractType
                     'membre' => 'Member',
                     "bulletin d'adhésion" => "Adhesion",
                     "image seule" => "Media_one",
+                    "liste des avis" => "Avis",
                     'Autres' => 'Others'
                 ],
             ])
             ->add('oneArticle')
             ->add('favorites')
             ->add('isSectionFluid')
-            ->add('UniqImage')
             ->add('position')
             ->add('isShowtitle')
+            ->add('backgroundImageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
+            ])
             ;
     }
 

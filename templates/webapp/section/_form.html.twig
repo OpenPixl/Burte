@@ -48,15 +48,15 @@
                             <fieldset>
                                 <div class="form-check form-switch">
                                     {{ form_widget(form.favorites, {'attr': {'class': 'form-check-input'}}) }}
-                                    {{ form_label(form.favorites, 'Favorites', {'label_attr': {'class':'form-check-label'}}) }}
+                                    {{ form_label(form.favorites, "Placer cette section aussi en page d'accueil", {'label_attr': {'class':'form-check-label'}}) }}
                                 </div>
                             </fieldset>
                         </div>
                         <div class="row mb-1 mt-1 g-1">
-                            <div class="col-3">
+                            <div class="col-10">
                                 <b>{{ form_label(form.position, 'Position', {'label_attr': {'class':'form-label'}}) }}</b>
                             </div>
-                            <div class="col-9">
+                            <div class="col-2">
                                 {{ form_widget(form.position, {'attr': {'class': 'form-control form-select-sm'}}) }}
                             </div>
                         </div>
@@ -100,6 +100,7 @@
             <div class="tab-pane" id="Adaptation" role="tabpanel" aria-labelledby="adaptation-tab">
                 <div class="row">
                     <div class="col-4">
+                        <h5 class="mt-3">Ajouter des balises à la section</h5>
                         <div class="row mb-1 mt-1 g-1">
                             <div class="col-3">
                                 <b>{{ form_label(form.attrId, 'Attr Id', {'label_attr': {'class':'form-label'}}) }}</b>
@@ -126,11 +127,12 @@
                         </div>
                     </div>
                     <div class="col-4">
+                        <h5 class="mt-3">Rendre la section adaptée en largeur à l'écran.</h5>
                         <div class="row mb-1 mt-1 g-1">
                             <fieldset>
                                 <div class="form-check form-switch">
                                     {{ form_widget(form.isSectionFluid, {'attr': {'class': 'form-check-input'}}) }}
-                                    {{ form_label(form.isSectionFluid, 'Is section fluid', {'label_attr': {'class':'form-check-label'}}) }}
+                                    {{ form_label(form.isSectionFluid, 'Oui, la section prendra toute la largeur.', {'label_attr': {'class':'form-check-label'}}) }}
                                 </div>
                             </fieldset>
                         </div>

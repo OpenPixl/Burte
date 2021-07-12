@@ -30,6 +30,19 @@ class EventRepository extends ServiceEntityRepository
             ;
     }
 
+    public function ListEventPublishMember($idmember)
+    {
+        return $this->createQueryBuilder('e')
+            ->join('e.author', 'm')
+            ->andWhere('m.id = :idmember')
+            ->setParameter('idmember', $idmember)
+            ->orderBy('e.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

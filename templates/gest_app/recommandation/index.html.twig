@@ -23,7 +23,7 @@
                                         <th>Description</th>
                                         <th>Client</th>
                                         <th>Contacts</th>
-                                        <th>RecoPrice</th>
+                                        <th>Estimation</th>
                                         <th>actions</th>
                                     </tr>
                                 </thead>
@@ -35,9 +35,9 @@
                                             {% if recommandation.recostate == 'noRead' %}
                                                 <span class="badge bg-warning">Non lue</span>
                                             {% elseif recommandation.recostate == 'inProgress'%}
-                                                <span class="badge bg-primary">En cours</span>
+                                                <span class="badge bg-info">En cours</span>
                                             {% elseif recommandation.recostate == 'Valid'%}
-                                                <span class="badge bg-primary">Validée</span>
+                                                <span class="badge bg-info">Validée</span>
                                             {% elseif recommandation.recostate == 'Avort'%}
                                                 <span class="badge bg-danger">Sans suite</span>
                                             {% endif %}
@@ -45,10 +45,18 @@
                                         <td>{{ recommandation.description }}</td>
                                         <td>{{ recommandation.clientFirstname }} {{ recommandation.clientLastname }}</td>
                                         <td>
-                                            {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
+                                            {% if recommandation.ClientDesk is not null %}
+                                                {{ recommandation.ClientDesk }}
+                                            {% elseif recommandation.ClientDesk is not null and recommandation.ClientEmail is null and recommandation.clientGsm is not null %}
+                                                {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
+                                            {% elseif recommandation.ClientDesk is not null and recommandation.ClientEmail is not null and recommandation.clientGsm is null %}
+                                                {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }}
+                                            {% else %}
+                                                {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
+                                            {% endif %}
                                         </td>
                                         <td>
-                                            {% if recommandation.recoPrice %}Non déterminé{% else %}{{ recommandation.recoPrice }}{% endif %}</td>
+                                            {% if recommandation.recoPrice is null %}Non déterminé{% else %}{{ recommandation.recoPrice }}€{% endif %}</td>
                                         <td>
                                             <a href="{{ path('op_gestapp_recommandation_show', {'id': recommandation.id}) }}">voir</a>
                                             <a href="{{ path('op_gestapp_recommandation_edit', {'id': recommandation.id}) }}">modifier</a>

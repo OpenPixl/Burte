@@ -8,7 +8,10 @@ use App\Repository\GestApp\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("")
@@ -20,8 +23,9 @@ class EventController extends AbstractController
      */
     public function index(EventRepository $eventRepository): Response
     {
+        $user = $this->getUser()->getId();
         return $this->render('gest_app/event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
+            'events' => $eventRepository->findBy(array("author"=> $user)),
         ]);
     }
 
@@ -38,13 +42,26 @@ class EventController extends AbstractController
     }
 
     /**
+     * @Route("/gest/app/ListEventPublishByMember/{idmember}", name="op_gestapp_event_ListEventPublishByMember", methods={"GET"})
+     */
+    public function ListEventPublishByMember($idmember): Response
+    {
+        $events = $this->getDoctrine()->getRepository(Event::class)->ListEventPublishMember($idmember);
+
+        return $this->render('gest_app/event/eventsbyuser.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
+    /**
      * @Route("/gest/app/event/new", name="op_gestapp_event_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer): Response
     {
         $member = $this->getUser();
         $event = new Event();
         $event->setAuthor($member);
+        $event->setIsValidBy(1);
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
@@ -52,6 +69,21 @@ class EventController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             $entityManager->flush();
+
+            // partie de code pour envoyer un email au membre recommandé
+            $email = (new Email())
+                ->from('postmaster@openpixl.fr')
+                ->to('xavier.burke@openpixl.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('JUSTàFaire - une nouvelle recommandation a été émise depuis le site')
+                //->text('Sending emails is fun again!')
+                ->html('
+                    <h1>Just à Faire<small> - Nouvelle évenement créer</small></h1>
+                    ');
+            $mailer->send($email);
 
             return $this->redirectToRoute('op_gestapp_event_index');
         }

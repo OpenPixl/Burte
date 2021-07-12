@@ -246,7 +246,6 @@ class Structure
      * @var int|null
      */
     private $illustrationthirdSize;
-    
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

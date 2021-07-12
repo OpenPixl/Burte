@@ -4,10 +4,13 @@ namespace App\Form\GestApp;
 
 use App\Entity\GestApp\Event;
 use App\Entity\GestApp\EventGal;
+use Egulias\EmailValidator\Warning\Warning;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class EventType extends AbstractType
 {
@@ -17,14 +20,50 @@ class EventType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('isPublish')
-            ->add('isValidBy')
-            ->add('eventGals', CollectionType::class, [
-                'entry_type' => EventGalType::class,
-                'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
-                'allow_delete' => true, // true si tu veux que l'utilisateur puisse en supprimer
-                'label' => 'Photos',
-                'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types
-            ]);
+            ->add('placeAddress')
+            ->add('placeComplement')
+            ->add('placeZipcode')
+            ->add('placeCity')
+            ->add('contactEventEmail')
+            ->add('contactEventPhone')
+            ->add('urlFacebookEvent')
+            ->add('urlInstagramEvent')
+            ->add('visuelFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
+            ])
+            ->add('eventAt',DateType::class, [
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'required' => false,
+                'by_reference' => true,
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'js-datepicker']
+            ])
+            ->add('eventStartAt',DateType::class, [
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'required' => false,
+                'by_reference' => true,
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'js-datepicker']
+            ])
+            ->add('eventFinishAt',DateType::class, [
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'required' => false,
+                'by_reference' => true,
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'js-datepicker'],
+            ])
         ;
     }
 

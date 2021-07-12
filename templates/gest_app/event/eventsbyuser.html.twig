@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-12">
+        <h5 class="text-h1">Les évenements proposés</h5>
+    </div>
+
+    {% for event in events %}
+    <div class="col-2">
+        <a class="btn btn-sm btn-outline-secondary"><h6 class="text-h1">{{ event.eventAt|format_datetime('medium', 'none', locale='fr') }}</h6></a>
+    </div>
+    {% endfor %}
+
+</div>
+{% for event in events %}
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <h6 class="text-h1">{{ event.eventAt|format_datetime('medium', 'none', locale='fr') }} | {{ event.name }}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <img class="img-fluid" src="{{ vich_uploader_asset(event) }}" alt="">
+            </div>
+            <div class="col-8">
+                <p class="text-start">{{ event.description|raw }}</p>
+                <p class="text-h1">
+                    {{ event.placeAddress }}<br>
+                    {% if event.placeComplement is not null %}{{ event.placeComplement }}<br>{% endif %}
+                    {{ event.placeZipCode }} {{ event.placeCity}}
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+{% else %}
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <p>Pour l'instant aucun évènempent n'est prévu pour cette société</p>
+            </div>
+        </div>
+    </section>
+{% endfor %}

@@ -1,5 +1,40 @@
-{{ include('admin/structure/_form.html.twig', {'button_label': 'Update'}) }}
+{% extends 'admin.html.twig' %}
 
+{% block title %}Edit Member{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        window.onload = function(){
+            ClassicEditor
+                .create(document.querySelector('#structure_description'), {
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment', 'code', 'CodeBlock', 'Underline', 'HtmlEmbed' ],
+                    height: 50
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    </script>
+{% endblock %}
 
-
+{% block content %}
+    <div class="container-fluid">
+        {{ include('admin/structure/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                <div class="col-2">
+                    {{ include('admin/structure/include/_section_content_aside.html.twig') }}
+                </div>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Modifier votre société, entreprise; ...</h3>
+                        </div>
+                        {{ include('admin/structure/_form2.html.twig', {'button_label': 'Mettre à jour'}) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

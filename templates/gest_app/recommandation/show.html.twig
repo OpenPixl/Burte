@@ -1,86 +1,131 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Recommandation{% endblock %}
+{% block title %}Recommandation index{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            // Ajouter la recommandation en BDD
+            function onClickBtnAddRecoPrice(event){
+                event.preventDefault();
+                const url = this.href;
+                const id = document.getElementById('recoid').value;
+                const recoprice = document.getElementById('recoprice').value;
+                axios
+                    .post(url, {recoprice:recoprice})
+                    .then(function(response) {
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 4000,
+                        };
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                ;
+            }
+
+
+
+            // appel de la fonction pour l'ajout de l'estimation de la recommandation
+            document.querySelectorAll('a.js-add-recoprice').forEach(function (link){
+                link.addEventListener('click', onClickBtnAddRecoPrice);
+            })
+        }
+    </script>
+{% endblock %}
 
 {% block content %}
-    <h1>Recommandation</h1>
+<div class="container-fluid">
+    {{ include('gest_app/recommandation/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('gest_app/recommandation/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Catalogue des recommandations</h4>
+                        <p>Créer, Modifier ou supprimer des recommandations du site.</p>
+                        <div class="row">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Titre de la recommadation</th>
+                                        <td>{{ recommandation.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Besoin.s</th>
+                                        <td>{{ recommandation.description|raw }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nom du client</th>
+                                        <td>{{ recommandation.clientFirstname }} {{ recommandation.clientLastname }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Addresse</th>
+                                        <td>
+                                            {{ recommandation.clientAddress }}<br>
+                                            {{ recommandation.clientComplement }}<br>
+                                            {{ recommandation.clientZipcode }} {{ recommandation.clientCity }}
+                                        </td>
+                                    </tr>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ recommandation.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ recommandation.name }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ recommandation.slug }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ recommandation.description }}</td>
-            </tr>
-            <tr>
-                <th>ClientFirstname</th>
-                <td>{{ recommandation.clientFirstname }}</td>
-            </tr>
-            <tr>
-                <th>ClientLastname</th>
-                <td>{{ recommandation.clientLastname }}</td>
-            </tr>
-            <tr>
-                <th>ClientAddress</th>
-                <td>{{ recommandation.clientAddress }}</td>
-            </tr>
-            <tr>
-                <th>ClientComplement</th>
-                <td>{{ recommandation.clientComplement }}</td>
-            </tr>
-            <tr>
-                <th>ClientZipcode</th>
-                <td>{{ recommandation.clientZipcode }}</td>
-            </tr>
-            <tr>
-                <th>ClientCity</th>
-                <td>{{ recommandation.clientCity }}</td>
-            </tr>
-            <tr>
-                <th>ClientEmail</th>
-                <td>{{ recommandation.ClientEmail }}</td>
-            </tr>
-            <tr>
-                <th>ClientDesk</th>
-                <td>{{ recommandation.ClientDesk }}</td>
-            </tr>
-            <tr>
-                <th>ClientGsm</th>
-                <td>{{ recommandation.clientGsm }}</td>
-            </tr>
-            <tr>
-                <th>RecoPrice</th>
-                <td>{{ recommandation.recoPrice }}</td>
-            </tr>
-            <tr>
-                <th>RecoState</th>
-                <td>{{ recommandation.recoState }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ recommandation.CreatedAt ? recommandation.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ recommandation.updatedAt ? recommandation.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                                    <tr>
+                                        <th>Contact du client</th>
+                                        <td>
+                                            {% if recommandation.ClientDesk is not null %}
+                                                {{ recommandation.ClientDesk }}
+                                            {% elseif recommandation.ClientDesk is not null and recommandation.ClientEmail is null and recommandation.clientGsm is not null %}
+                                                {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
+                                            {% elseif recommandation.ClientDesk is not null and recommandation.ClientEmail is not null and recommandation.clientGsm is null %}
+                                                {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }}
+                                            {% else %}
+                                                {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Estimation</th>
+                                        <td>
+                                                <input id="recoprice" name="recoprice" type="number">
+                                                <input id="recoid" type="hidden" value="{{ recommandation.id }}">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Recommandation émise le</th>
+                                        <td>{{ recommandation.CreatedAt ? recommandation.CreatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mise à jour</th>
+                                        <td>{{ recommandation.updatedAt ? recommandation.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-    <a href="{{ path('op_gestapp_recommandation_index') }}">back to list</a>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-sm btn-secondary" href="{{ path('op_gestapp_recommandation_index') }}">Retour à la liste des recommandations</a>
+                        <a class="btn btn-sm btn-primary js-add-recoprice" href="{{ path('op_gestapp_recommandation_addrecoprice', {'id':recommandation.id}) }}">Mettre à jour la recommandation</a>
+                    </div>
+                </div>
+                <!-- TOAST Bootstrap 5-->
+                <div id="toaster" role="alert" aria-live="assertive" aria-atomic="true" class="toast text-white bg-success" data-bs-autohide="false">
 
-    <a href="{{ path('op_gestapp_recommandation_edit', {'id': recommandation.id}) }}">edit</a>
+                    <div class="toast-body">
+                        Hello, world! This is a toast message.
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    {{ include('gest_app/recommandation/_delete_form.html.twig') }}
+    </section>
+</div>
 {% endblock %}

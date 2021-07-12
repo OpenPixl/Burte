@@ -6,10 +6,15 @@ use App\Entity\Admin\Member;
 use App\Form\Admin\Member2Type;
 use App\Form\Admin\MemberType;
 use App\Repository\Admin\MemberRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  */
@@ -40,16 +45,40 @@ class MemberController extends AbstractController
     /**
      * @Route("/admin/member/new", name="op_admin_member_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request,UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer): Response
     {
         $member = new Member();
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $member->setPassword(
+                $passwordEncoder->encodePassword(
+                    $member,
+                    $form->get('password')->getData()
+                )
+            );
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($member);
             $entityManager->flush();
+
+            // partie de code pour envoyer un email au membre recommandé
+            $email = (new Email())
+                ->from('postmaster@openpixl.fr')
+                ->to('xavier.burke@openpixl.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('JUSTàFaire - Inscription')
+                //->text('Sending emails is fun again!')
+                ->html('
+                    <h1>Just à Faire<small> - Nouvelle inscription</small></h1>
+                    <hr>
+                    <p>Une nouvelle inscription est enregistré dans l\'espace de membre.</p>
+                    <p>Vous devez activer ce membre pour qu\'il puisse se connecter et publier des recommandations , ...</p>
+                    ');
+            $mailer->send($email);
 
 
             return $this->redirectToRoute('op_admin_member_index');
@@ -94,7 +123,29 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin/member/{id}", name="admin_member_delete", methods={"POST"})
+     * @Route("/admin/member/{id}/edit2", name="op_admin_member_edit2", methods={"GET","POST"})
+     */
+    public function edit2(Request $request, Member $member): Response
+    {
+        $password = $member->getPassword();
+        $member->setPassword($password);
+        $form = $this->createForm(Member2Type::class, $member);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('op_admin_member_show', ['id' => $member->getId()]);
+        }
+
+        return $this->render('admin/member/edit.html.twig', [
+            'member' => $member,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/op_admin/member/{id}", name="admin_member_delete", methods={"POST"})
      */
     public function delete(Request $request, Member $member): Response
     {
@@ -126,5 +177,30 @@ class MemberController extends AbstractController
         return $this->render('admin/member/member.html.twig', [
             'member' => $memberRepository->MemberOnFront($id),
         ]);
+    }
+
+    /**
+     * Permet de mettre en menu la poge ou non
+     * @Route("/op_admin/member/verified/{id}", name="op_admin_member_verified")
+     */
+    public function jsMenu(Member $member, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $isVerified = $member->getIsVerified();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // Si la page est déja publiée, alors on dépublie
+        if($isVerified == true){
+            $member->setIsVerified(0);
+            $em->flush();
+            return $this->json(['code'=> 200, 'message' => "L'utilisateur n'accède plus à l'administration"], 200);
+        }
+        // Si la page est déja dépubliée, alors on publie
+        $member->setIsVerified(1);
+        $em->flush();
+        return $this->json(['code'=> 200, 'message' => "L'utilisateur accède à l'administration"], 200);
     }
 }

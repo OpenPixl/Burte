@@ -22,6 +22,7 @@
         "@fortawesome/fontawesome-free": "^5.15.3",
         "@popperjs/core": "^2.9.1",
         "axios": "^0.21.1",
-        "bootstrap": "^5.0.0-beta3"
+        "bootstrap": "^5.0.0-beta3",
+        "vanillajs-datepicker": "^1.1.4"
     }
 }

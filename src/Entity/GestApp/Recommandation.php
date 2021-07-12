@@ -116,6 +116,11 @@ class Recommandation
     private $isRead = false;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isFirstView;
+
+    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist
@@ -363,6 +368,18 @@ class Recommandation
     public function setIsRead(bool $isRead): self
     {
         $this->isRead = $isRead;
+
+        return $this;
+    }
+
+    public function getIsFirstView(): ?bool
+    {
+        return $this->isFirstView;
+    }
+
+    public function setIsFirstView(bool $isFirstView): self
+    {
+        $this->isFirstView = $isFirstView;
 
         return $this;
     }

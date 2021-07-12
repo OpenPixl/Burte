@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Event{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Event</h1>
 
     <table class="table">
@@ -42,9 +42,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('gest_app_event_index') }}">back to list</a>
+    <a href="{{ path('op_gestapp_event_index') }}">Retour à liste</a>
 
-    <a href="{{ path('gest_app_event_edit', {'id': event.id}) }}">edit</a>
+    <a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}">Modifier</a>
 
-    {{ include('gest_app_event/_delete_form.html.twig') }}
+    {{ include('gest_app/event/_delete_form.html.twig') }}
 {% endblock %}

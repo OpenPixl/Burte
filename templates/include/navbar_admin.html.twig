@@ -8,6 +8,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('op_admin_dashboard_index') }}"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userpanel" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-desktop"></i> Site
@@ -20,6 +21,7 @@
                         <li><a class="dropdown-item" href="{{ path('op_gestapp_avis_index') }}"><i class="fas fa-sms"></i> Avis</a></li>
                     </ul>
                 </li>
+                {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userpanel" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -5068,6 +5068,11 @@ v8-compile-cache@^2.2.0:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
+vanillajs-datepicker@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/vanillajs-datepicker/-/vanillajs-datepicker-1.1.4.tgz#247a5969739ca17895ae53e30218293e230e6cad"
+  integrity sha512-XJhvRx+VqtRjqrPlgNCQntLpCntFKPMBd8ahxZhLkvrWX0bNdpP3kz5j13L2Q0xfTAY/QMfQtVZvBvRF0NilcA==
+
 vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"

@@ -44,7 +44,7 @@ class SectionType extends AbstractType
             ->add('isSectionFluid')
             ->add('position')
             ->add('isShowtitle')
-            ->add('backgroundImageFile', VichImageType::class, [
+            ->add('cssBackgroundImageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
                 'delete_label' => 'Supprimer',

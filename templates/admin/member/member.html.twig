@@ -56,7 +56,7 @@
                             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
                                 <p class="text-center">
                                     {% if member.logoStructureName is null %}
-                                        <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar">
+                                        <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar" style="max-height: 240px;max-width: 240px;">
                                     {% elseif member.logoStructureName is not null %}
                                         <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(member, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') | imagine_filter('logostruct_image') }}" alt="{{ member.logoStructureName }}">
                                     {% endif %}
@@ -138,7 +138,11 @@
                                     </div>
                                     <div class="col-4">
                                         <p class="text-end">
-                                            <img class="img-fluid img-rounded" src="{{ vich_uploader_asset(member, 'avatarFile', 'App\\Entity\\Admin\\Member')| imagine_filter('avatar_image')}}" alt="{{ member.avatarName }}" style="width: 120px; height: 120px">
+                                        {% if member.logoStructureName is null %}
+                                            <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar" style="max-height: 120px;max-width: 120px;">
+                                        {% elseif member.logoStructureName is not null %}
+                                            <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(member, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') | imagine_filter('logostruct_image') }}" alt="{{ member.logoStructureName }}"style="max-height: 120px;max-width: 120px;">
+                                        {% endif %}
                                         </p>
                                     </div>
                                 </div>
@@ -168,6 +172,14 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="row justify-content-center">
+                            <div class="col-6">
+                                <p class="text-center">
+                                    <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
+                                </p>
+                            </div>
+                        </div>
+                        {{ render(controller('App\\Controller\\GestApp\\EventController::ListEventPublishByMember', {'idmember':member.id})) }}
                     </div>
                 </div>
             </div>

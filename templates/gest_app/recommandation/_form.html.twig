@@ -1,8 +1,11 @@
 {{ form_start(form) }}
 <div class="card-body">
     <div class="row">
+        <div class="text-start alert alert-info">
+            <p>Tous les champs en gras sont obligatoire.</p>
+        </div>
         <div class="col-6">
-            <h5>A qui s'adresse la reco ?</h5>
+            <h5 class="mt-3">A qui s'adresse la reco ?</h5>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
                     {{ form_label(form.member, 'Membre', {'label_attr': {'class':'form-label'}}) }}
@@ -11,7 +14,7 @@
                     {{ form_widget(form.member, {'attr': {'class': 'form-select form-select-sm'}}) }}
                 </div>
             </div>
-            <h5>Informations sur la reco</h5>
+            <h5 class="mt-3">Informations sur la reco</h5>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
                     {{ form_label(form.name, 'Name', {'label_attr': {'class':'form-label'}}) }}
@@ -30,14 +33,15 @@
             </div>
         </div>
         <div class="col-6">
+            <h5 class="mt-3">Inscrire les coordonnées du client</h5>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
                     {{ form_label(form.clientFirstname, 'Client', {'label_attr': {'class':'form-label'}}) }}
                 </div>
-                <div class="col-1">
+                <div class="col-2">
                     {{ form_widget(form.clientFirstname, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom'}}) }}
                 </div>
-                <div class="col-2">
+                <div class="col-4">
                     {{ form_widget(form.clientLastname, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom'}}) }}
                 </div>
             </div>
@@ -46,14 +50,14 @@
                 <div class="col-2">
                     {{ form_label(form.clientAddress, 'Adresse', {'label_attr': {'class':'form-label'}}) }}
                 </div>
-                <div class="col-3">
+                <div class="col-6">
                     {{ form_widget(form.clientAddress, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Adresse'}}) }}
                 </div>
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
                 </div>
-                <div class="col-3">
+                <div class="col-6">
                     {{ form_widget(form.clientComplement, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Complément'}}) }}
                 </div>
             </div>
@@ -61,10 +65,10 @@
                 <div class="col-2">
                     {{ form_label(form.clientFirstname, 'CP / Ville', {'label_attr': {'class':'form-label'}}) }}
                 </div>
-                <div class="col-1">
+                <div class="col-2">
                     {{ form_widget(form.clientZipcode, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'CP'}}) }}
                 </div>
-                <div class="col-2">
+                <div class="col-4">
                     {{ form_widget(form.clientCity, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Ville'}}) }}
                 </div>
             </div>
@@ -72,7 +76,7 @@
                 <div class="col-2">
                     {{ form_label(form.clientEmail, 'Email', {'label_attr': {'class':'form-label'}}) }}
                 </div>
-                <div class="col-3">
+                <div class="col-6">
                     {{ form_widget(form.clientEmail, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Adresse'}}) }}
                 </div>
             </div>
@@ -80,10 +84,10 @@
                 <div class="col-2">
                     {{ form_label(form.clientDesk, 'Téléphone', {'label_attr': {'class':'form-label'}}) }}
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     {{ form_widget(form.clientDesk, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     {{ form_widget(form.clientGsm, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 </div>
             </div>

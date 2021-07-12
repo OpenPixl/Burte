@@ -65,3 +65,10 @@ vich_uploader:
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true
+        event_visual:
+            uri_prefix: /images/event_visual
+            upload_destination: '%kernel.project_dir%/public/images/event_visual'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true

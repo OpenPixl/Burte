@@ -463,7 +463,7 @@ class Member implements UserInterface
         return $this;
     }
 
-    public function isVerified(): bool
+    public function getIsVerified(): bool
     {
         return $this->isVerified;
     }

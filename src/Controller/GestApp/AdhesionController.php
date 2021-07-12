@@ -62,7 +62,7 @@ class AdhesionController extends AbstractController
             $entityManager->persist($adhesion);
             $entityManager->flush();
 
-            return $this->redirectToRoute('op_webapp_public_adhesionreply');
+            return $this->redirectToRoute('op_webapp_public_index');
         }
 
         return $this->render('gest_app/adhesion/new2.html.twig', [

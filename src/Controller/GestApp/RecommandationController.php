@@ -8,6 +8,7 @@ use App\Repository\GestApp\RecommandationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -20,8 +21,10 @@ class RecommandationController extends AbstractController
      */
     public function index(RecommandationRepository $recommandationRepository): Response
     {
+        $user = $this->getUser();
+        $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUser($user);
         return $this->render('gest_app/recommandation/index.html.twig', [
-            'recommandations' => $recommandationRepository->findAll(),
+            'recommandations' => $recommandations,
         ]);
     }
 
@@ -35,23 +38,42 @@ class RecommandationController extends AbstractController
         $form = $this->createForm(RecommandationType::class, $recommandation);
         $recommandation->setRecoState('noRead');
         $recommandation->setAuthor($user);
+        $recommandation->setIsFirstView(0);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recommandation);
             $entityManager->flush();
-            // partie de code pour envoyer un email
+
+            //récupération de l'adresss mail pour le membre recommandé
+            $membre = $recommandation->getMember();
+            $email = $membre->getEmail();
+
+            // partie de code pour envoyer un email au membre recommandé
             $email = (new Email())
                 ->from('postmaster@openpixl.fr')
-                ->to($recommandation->getMember())
+                ->to($email)
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('JUSTàFaire - une nouvelle recommandation pour vous')
+                ->subject('JUSTàFaire - une nouvelle recommandation vous attends dans votre espace')
                 //->text('Sending emails is fun again!')
                 ->html('<p>test</p>');
+            $mailer->send($email);
+
+            // partie de code pour envoyer un email au membre recommandé
+            $email = (new Email())
+                ->from('postmaster@openpixl.fr')
+                ->to('xavier.burke@openpixl.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('JUSTàFaire - une nouvelle recommandation a été émise depuis le site')
+                //->text('Sending emails is fun again!')
+                ->html('<h1>Just à Faire<small> - Nouvelle Recommandation</small></h1>');
             $mailer->send($email);
 
             return $this->redirectToRoute('op_gestapp_recommandation_index');
@@ -68,6 +90,17 @@ class RecommandationController extends AbstractController
      */
     public function show(Recommandation $recommandation): Response
     {
+        $isread = $recommandation->getIsRead();
+        if($isread == 0) {
+            $recommandation->setIsRead(1);
+            $recommandation->setIsFirstView(1);
+            $recommandation->setRecoState('inProgress');
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->render('gest_app/recommandation/show.html.twig', [
+                'recommandation' => $recommandation,
+            ]);
+        }
         return $this->render('gest_app/recommandation/show.html.twig', [
             'recommandation' => $recommandation,
         ]);
@@ -118,5 +151,26 @@ class RecommandationController extends AbstractController
         return $this->render('gest_app/recommandation/byuser.html.twig', [
             'recommandations' => $recommandations,
         ]);
+    }
+
+    /**
+     * @Route("/op_admin/gestapp/recommandation/reco/{id}", name="op_gestapp_recommandation_addrecoprice",methods={"GET","POST"})
+     */
+    public function addrecoprice(Recommandation $recommandation, Request $request): Response
+    {
+        $user = $this->getUser();
+        $data = json_decode($request->getContent(), true);
+        $recoprice = $data['recoprice'];
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        $recommandation->setRecoPrice($recoprice);
+        $this->getDoctrine()->getManager()->flush();
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'estimation de la recommandation a été ajoutée à la recommandation."
+        ], 200);
     }
 }

@@ -100,6 +100,29 @@ class Section
      */
     private $isShowtitle = false;
 
+    /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="logoStructuresite_front", fileNameProperty="cssBackgroundImageName", size="cssBackgroundImageSize")
+     * @var File|null
+     */
+    private $cssBackgroundImageFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $cssBackgroundImageName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $cssBackgroundImageSize;
+
 
     /**
      * Permet d'initialiser le slug !
@@ -308,5 +331,49 @@ class Section
         $this->isShowtitle = $isShowtitle;
 
         return $this;
+    }
+
+    /**
+     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
+     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
+     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
+     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $cssBackgroundImageFile
+     */
+    public function setCssBackgroundImageFile(?File $cssBackgroundImageFile = null): void
+    {
+        $this->cssBackgroundImageFile = $cssBackgroundImageFile;
+
+        if (null !== $cssBackgroundImageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getCssBackgroundImageFile(): ?File
+    {
+        return $this->cssBackgroundImageFile;
+    }
+
+    public function setCssBackgroundImageName(?string $cssBackgroundImageName): void
+    {
+        $this->cssBackgroundImageName = $cssBackgroundImageName;
+    }
+
+    public function getCssBackgroundImageName(): ?string
+    {
+        return $this->cssBackgroundImageName;
+    }
+
+    public function setCssBackgroundImageSize(?int $cssBackgroundImageSize): void
+    {
+        $this->cssBackgroundImageSize = $cssBackgroundImageSize;
+    }
+
+    public function getCssBackgroundImageSize(): ?int
+    {
+        return $this->cssBackgroundImageSize;
     }
 }

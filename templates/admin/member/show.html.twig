@@ -128,14 +128,14 @@
                                 </table>
                             </div>
                         </div>
-                        {% if member.structure is null %}
-                            {{ render(controller('App\\Controller\\Admin\\StructureController::new', {'idmembre': member.id})) }}
-                        {% else %}
-                            {{ render(controller('App\\Controller\\Admin\\StructureController::edit', {'id': member.structure})) }}
-                        {% endif %}
                     </div>
                     <div class="card-footer">
                         <a class="btn btn-secondary btn-sm" href="{{ path('op_admin_member_index') }}">Retour à la liste</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-sm btn-primary" href="{{ path('op_admin_member_edit', {'id':member.id}) }}">modifier sa fiche</a>
+                        {% else %}
+                        <a class="btn btn-sm btn-primary" href="{{ path('op_admin_member_edit2', {'id':member.id}) }}">modifier sa fiche</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

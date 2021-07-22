@@ -5,6 +5,7 @@ namespace App\Controller\GestApp;
 use App\Entity\GestApp\Event;
 use App\Form\GestApp\EventType;
 use App\Repository\GestApp\EventRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("")
@@ -20,9 +22,23 @@ class EventController extends AbstractController
 {
     /**
      * @Route("/gest/app/event/", name="op_gestapp_event_index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function index(EventRepository $eventRepository): Response
+    public function indexAdmin(EventRepository $eventRepository): Response
     {
+
+        $user = $this->getUser()->getId();
+        return $this->render('gest_app/event/index.html.twig', [
+            'events' => $eventRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/gest/app/event2/", name="op_gestapp_event_index2", methods={"GET"})
+     */
+    public function indexUser(EventRepository $eventRepository): Response
+    {
+
         $user = $this->getUser()->getId();
         return $this->render('gest_app/event/index.html.twig', [
             'events' => $eventRepository->findBy(array("author"=> $user)),
@@ -136,5 +152,46 @@ class EventController extends AbstractController
         }
 
         return $this->redirectToRoute('op_gestapp_event_index');
+    }
+
+    /**
+     * @Route("/gest/app/event/delevent/{id}", name="op_gestapp_event_delevent", methods={"POST"})
+     */
+    public function DelEvent(Request $request, Event $event) : Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($event);
+        $entityManager->flush();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'évènenemt a été supprimé"
+        ], 200);
+    }
+
+    /**
+     * Permet de mettre en menu la poge ou non
+     * @Route("/admin/event/valid/{id}", name="op_gestapp_event_isvalid")
+     */
+    public function jsMenuvalid(Event $event, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $isvalid = $event->getIsValidBy();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // Si la page est déja publiée, alors on dépublie
+        if($isvalid == true){
+            $event->setIsValidBy(0);
+            $em->flush();
+            return $this->json(['code'=> 200, 'message' => "L'évènement est dépublié du site"], 200);
+        }
+        // Si la page est déja dépubliée, alors on publie
+        $event->setIsValidBy(1);
+        $em->flush();
+        return $this->json(['code'=> 200, 'message' => "L'évènement est publié sur le site"], 200);
     }
 }

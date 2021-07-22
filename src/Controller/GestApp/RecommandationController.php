@@ -100,6 +100,10 @@ class RecommandationController extends AbstractController
             return $this->render('gest_app/recommandation/show.html.twig', [
                 'recommandation' => $recommandation,
             ]);
+        }elseif($isread == 1){
+            return $this->render('gest_app/recommandation/show2.html.twig', [
+                'recommandation' => $recommandation,
+            ]);
         }
         return $this->render('gest_app/recommandation/show.html.twig', [
             'recommandation' => $recommandation,
@@ -154,6 +158,18 @@ class RecommandationController extends AbstractController
     }
 
     /**
+     * @Route("/op_admin/gestapp/recommandation/compiluser", name="op_gestapp_recommandation_compiluser", methods={"GET"})
+     */
+    public function compilUser(): Response
+    {
+        $user = $this->getUser();
+        $stats = $this->getDoctrine()->getRepository(Recommandation::class)->statsByUser($user);
+        return $this->render('gest_app/recommandation/compiluser.html.twig', [
+            'stats' => $stats,
+        ]);
+    }
+
+    /**
      * @Route("/op_admin/gestapp/recommandation/reco/{id}", name="op_gestapp_recommandation_addrecoprice",methods={"GET","POST"})
      */
     public function addrecoprice(Recommandation $recommandation, Request $request): Response
@@ -161,12 +177,22 @@ class RecommandationController extends AbstractController
         $user = $this->getUser();
         $data = json_decode($request->getContent(), true);
         $recoprice = $data['recoprice'];
+        $recostate = $data['recostate'];
         // renvoie une erreur car l'utilisateur n'est pas connecté
-        if(!$user) return $this->json([
+        if(!$user) {return $this->json([
             'code' => 403,
             'message'=> "Vous n'êtes pas connecté"
         ], 403);
+        }elseif($recoprice and !$recostate){                            // enregistre seulement si l'estimation de la reco est entrée
+            $recommandation->setRecoPrice($recoprice);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->json([
+                'code'=> 200,
+                'message' => "L'estimation de la recommandation a été ajoutée à la recommandation."
+            ], 200);
+        }
         $recommandation->setRecoPrice($recoprice);
+        $recommandation->setRecoState($recostate);
         $this->getDoctrine()->getManager()->flush();
         return $this->json([
             'code'=> 200,

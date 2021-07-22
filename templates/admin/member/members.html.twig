@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <div class="row align-items-center" style="height: 200px;">
                         {% if member.logoStructureName is null %}
-                            <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar">
+                            <p class="text-center"><img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar" style="width:286px;height:180px;"></p>
                         {% elseif member.logoStructureName is not null %}
                             <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(member, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') | imagine_filter('logostruct_image') }}" alt="{{ member.logoStructureName }}">
                         {% endif %}
@@ -14,21 +14,33 @@
                         <h2 class="text-center"><a href="{{ path('op_admin_member_front_member', {'id': member.id}) }}">{{ member.structure }}</a></h2>
                         <p class="text-center ">
                             <span class="text-strong">{{ member.firstName }} {{ member.lastName|upper }}</span><br>
+
                             {% if member.Facebook is null %}
+                            <i class="fab fa-facebook text-secondary"></i>
                             {% else %}
-                            <a href="{{ member.Facebook }}" onclick="window.open(this.href); return false;"><i class="fab fa-facebook"></i></a>&nbsp;&nbsp;
+                            <a href="{{ member.Facebook }}" onclick="window.open(this.href); return false;"><i class="fab fa-facebook"></i></a>
                             {% endif %}
+
                             {% if member.Instagram is null %}
+                            <i class="fab fa-instagram text-secondary"></i>
                             {% else %}
-                            <a href="{{ member.Instagram }}" onclick="window.open(this.href); return false;"><i class="fab fa-instagram"></i></a>&nbsp;&nbsp;
+                            <a href="{{ member.Instagram }}" onclick="window.open(this.href); return false;"><i class="fab fa-instagram"></i></a>
                             {% endif %}
+
                             {% if member.Linkedin is null %}
+                            <i class="fab fa-linkedin text-secondary"></i><br>
                             {% else %}
                             <a href="{{ member.Linkedin }}" onclick="window.open(this.href); return false;"><i class="fab fa-linkedin"></i></a><br>
-                            {% endif %}
+                            {% endif %}<br>
+
                             {{ member.FirstActivity }}<br>
-                            {{ member.email }}<br>
+
+                            {% if member.email is null %}<i class="bi bi-envelope"></i> Contact mail à venir{% else %}<a href="mailto:{{ member.email }}"><i class="bi bi-envelope"></i>  {{ member.email }}</a>{% endif %}<br>
+                            {% if member.Linkedin is null %}
+                            <i class="fas fa-globe-europe text-secondary"></i> Lien à venir
+                            {% else %}
                             <a href="{{ member.web }}" onclick="window.open(this.href); return false;"><i class="fas fa-globe-europe"></i> {{ member.web }}</a>
+                            {% endif %}
                         </p>
                         <p class="text-center"><span class="text-strong">{{ member.jaf }}</span></p>
                     </div>

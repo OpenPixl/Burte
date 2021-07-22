@@ -5,6 +5,10 @@ a{
   text-decoration: none;
 }
 
+a:active, a:hover{
+  color:#E3D35D;
+  text-decoration: none;
+}
 body{
   background-color: #222222;
 }
@@ -65,6 +69,13 @@ main{
   font-size: 2rem;
 }
 
+.text-capitalize-h{
+  font-family: "voga";
+  text-transform: capitalize;
+  font-size:2rem;
+  color: #fff;
+}
+
 .text-strong{
   font-family: "voga";
   font-size: 1.6rem;
@@ -95,6 +106,8 @@ label {
   align-items: center;
   padding:1rem;
 }
+
+
 
 .border-sm p{
   margin-bottom: 0;
@@ -130,6 +143,27 @@ label {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+}
+
+#SlideEvent .border-sm{
+  height: 100%;
+  border: 2px solid #c8b15d;
+  display: flex;
+  align-items: center;
+  padding:0rem;
+}
+
+#SlideEvent .carousel-caption {
+  position: absolute;
+  right: 0%;
+  top: 0;
+  bottom: 0;
+  left: 0%;
+  padding-top: 0;
+  padding-bottom: 0;
+  color: #fff;
+  text-align: center;
+  background-image: url("../images/png/shadow_event.png");
 }
 
 .modal-body {

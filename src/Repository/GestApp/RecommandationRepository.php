@@ -31,6 +31,25 @@ class RecommandationRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function statsByUser($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->addSelect('
+                SUM(r.recoPrice) AS recoPrice,
+                r.recoState,
+                m.id
+            ')
+            ->join('r.member', 'm')
+            ->andWhere('m.id = :id')
+            ->setParameter('id', $user)
+            ->addGroupBy('r.recoState')
+            ->orderBy('r.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Recommandation[] Returns an array of Recommandation objects
     //  */

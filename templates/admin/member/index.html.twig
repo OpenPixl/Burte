@@ -6,7 +6,6 @@
     {{ parent() }}
     <script>
         window.onload = function(){
-
             function onClickBtnVerified(event){
                 event.preventDefault();
                 const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
@@ -25,9 +24,65 @@
                     });
             }
 
-            // lors du clic sur le bouton js-verified
+
+
+            // Evènement sur le bouton js-verified
             document.querySelectorAll('a.js-verified').forEach(function (link){
                 link.addEventListener('click', onClickBtnVerified);
+            })
+
+            // Modal suppr une ligne
+            var Suppr = document.getElementById('Suppr')
+            Suppr.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var a = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                var recipient = a.getAttribute('data-bs-whatever')
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                var modalTitle = Suppr.querySelector('.modal-title')
+                var modalText = Suppr.querySelector('.modal-text')
+                var modalBodyInput = Suppr.querySelector('.modal-body input')
+
+                modalTitle.textContent = "Suppression d'un évènement"
+                modalBodyInput.value = recipient
+                modalText.innerHTML = "Vous êtes sur le point de supprimer le membre sélectionné.<br><b>Etes-vous bien sur de vouloir continuer ?</b>"
+            })
+
+            // function Suppression de la ligne en cours
+            function onClickDelEvent(event){
+                //event.preventDefault()
+                const id = document.getElementById('recipient-name').value
+                axios
+                    .post('/admin/member/del/'+ id)
+                    .then(function(response)
+                    {
+                        const liste = document.getElementById('liste').innerHTML;
+                        console.log(liste);
+
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
+            // Bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelEvent)
             })
         }
     </script>
@@ -50,20 +105,26 @@
                             <thead>
                                 <tr>
                                     <th>Membre</th>
-                                    <th>Rôles</th>
+                                    <th>Structure</th>
                                     <th>Contacts téléphoniques</th>
                                     <th>Email</th>
-                                    <th>CreatedAt</th>
-                                    <th>UpdatedAt</th>
-                                    <th>IsVerified</th>
+                                    <th>Créée le</th>
+                                    <th>Modifiée le</th>
+                                    <th>Actif</th>
                                     <th>actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {% for member in members %}
                                 <tr>
-                                    <td>{{ member.firstName }} {{ member.lastName }}</td>
-                                    <td>{{ member.roles ? member.roles|json_encode : '' }}</td>
+                                    <td><a href="{{ path('op_admin_member_show', {'id': member.id}) }}">{{ member.firstName }} {{ member.lastName }}</a></td>
+                                    <td>
+                                        {% if member.structure|length == 0 %}
+                                        <a href="{{ path('op_admin_structure_addstruct', {'idmembre': member.id}) }}" class="js-addStructure">Créer la structure</a>
+                                        {% else %}
+                                        <b><a href="{{ path('op_admin_structure_edit', {'id':member.structure.id}) }}">{{ member.structure }}</a></b>
+                                        {% endif %}
+                                    </td>
                                     <td>{{ member.phoneDesk }} / {{ member.phoneGsm }}</td>
                                     <td>{{ member.email }}</td>
                                     <td>{{ member.createdAt ? member.createdAt|format_datetime('medium', 'none', locale='fr') }}</td>
@@ -76,8 +137,11 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <a href="{{ path('op_admin_member_show', {'id': member.id}) }}">voir</a>
-                                        <a href="{{ path('op_admin_member_edit', {'id': member.id}) }}">modifier</a>
+                                        <a href="{{ path('op_admin_member_show', {'id': member.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
+                                        <a href="{{ path('op_admin_member_edit', {'id': member.id}) }}"><i class="far fa-edit"></i></a>&nbsp;
+                                        <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ member.id }}">
+                                            <i class="fas fa-eraser"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             {% else %}

@@ -26,7 +26,7 @@ class MemberController extends AbstractController
     public function index(MemberRepository $memberRepository): Response
     {
         return $this->render('admin/member/index.html.twig', [
-            'members' => $memberRepository->findAll(),
+            'members' => $memberRepository->findBy(array("type" => "member")),
         ]);
     }
 
@@ -202,5 +202,23 @@ class MemberController extends AbstractController
         $member->setIsVerified(1);
         $em->flush();
         return $this->json(['code'=> 200, 'message' => "L'utilisateur accède à l'administration"], 200);
+    }
+
+    /**
+     * @Route("/admin/member/del/{id}", name="op_admin_member_del", methods={"POST"})
+     */
+    public function Del(Request $request, Member $member) : Response
+    {
+        $Structure = $member->getStructure();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($member);
+        $entityManager->remove($Structure);
+        $entityManager->flush();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "Le membre a été supprimé"
+        ], 200);
     }
 }

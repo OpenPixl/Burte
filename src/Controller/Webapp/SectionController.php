@@ -40,7 +40,6 @@ class SectionController extends AbstractController
         return $this->render('webapp/section/bypage.html.twig', [
             'sections' => $sectionRepository->findbypage($page),
             'element' => $element,
-            'page' => $page
         ]);
     }
 
@@ -220,6 +219,21 @@ class SectionController extends AbstractController
         return $this->json([
             'code'          => 200,
             'message'       => "La section est correctement supprimée."
+        ], 200);
+    }
+
+    /**
+     * @Route("/webapp/section/del/{id}", name="op_webapp_section_del", methods={"POST"})
+     */
+    public function DelEvent(Request $request, Section $section) : Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($section);
+        $entityManager->flush();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'évènenemt a été supprimé"
         ], 200);
     }
 

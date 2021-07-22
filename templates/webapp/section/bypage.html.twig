@@ -28,7 +28,9 @@
                 <td>
                     <a href="{{ path('op_webapp_section_show', {'id': section.id}) }}"><i class="far fa-eye"></i></a>&nbsp;&nbsp;
                     <a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}"><i class="far fa-edit"></i></a>&nbsp;&nbsp;
-                    <a class="js-del-section text-danger" href="{{ path('op_webapp_section_del', {'id':section.id}) }}"><i class="fas fa-eraser"></i></a>
+                    <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ section.id }}">
+                        <i class="bi bi-eraser text-danger"></i>
+                    </a>
                 </td>
             </tr>
         {% else %}

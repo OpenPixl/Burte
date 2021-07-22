@@ -35,6 +35,38 @@
             {% block footer %}
                 {{ include('include/footer_admin.html.twig') }}
             {% endblock %}
+
+            <div class="modal fade" id="Suppr" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-danger" id="exampleModalLabel">New message</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="modal-text">Vous êtes sur le point de supprimer l'évènement.</p>
+                            <input type="hidden" id="recipient-name">
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" type="button" class="btn btn-danger js-data-suppr" data-bs-dismiss="modal">Supprimer</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="toaster" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="..." class="rounded me-2" alt="...">
+                    <strong class="me-auto">Bootstrap</strong>
+                    <small class="text-muted">11 mins ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Hello, world! This is a toast message.
+                </div>
+            </div>
+
         </div>
 
     </body>

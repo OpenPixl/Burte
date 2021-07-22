@@ -46,20 +46,24 @@
                         <i class="far fa-calendar-alt"></i> Evènements
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li><a class="dropdown-item" href="{{ path('op_gestapp_event_index') }}"><i class="fab fa-product-hunt"></i> Evènements</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{{ path('op_gestapp_event_index2') }}"><i class="fab fa-product-hunt"></i> Evènements</a></li>
+                        {% endif %}
                         <li><a class="dropdown-item" href="{{ path('op_gestapp_eventgal_index') }}"><i class="fab fa-product-hunt"></i> Galerie</a></li>
                     </ul>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userpanel" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-tools"></i></i> Outils
+                        <i class="fas fa-tools"></i></i> Paramètres
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
                         <li><a class="dropdown-item" href="{{ path('op_gestapp_adhesion_index') }}"><i class="fas fa-cog"></i> Adhésions</a></li>
                         <li><a class="dropdown-item" href="{{ path('op_admin_structure_index') }}"><i class="fas fa-cog"></i> Structures</a></li>
                         <li><a class="dropdown-item" href="{{ path('op_admin_parameter_index') }}"><i class="fas fa-cog"></i> Paramètres</a></li>
-                        <li><a class="dropdown-item" href="{{ path('op_admin_member_index') }}"><i class="fas fa-users-cog"></i> Gestion des utilisateurs</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_admin_member_index') }}"><i class="fas fa-users-cog"></i> Membres</a></li>
                     </ul>
                 </li>
                 {% endif %}

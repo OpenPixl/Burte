@@ -66,6 +66,33 @@ class StructureController extends AbstractController
     }
 
     /**
+     * @Route("/admin/structure/addstruct/{idmembre}", name="op_admin_structure_addstruct", methods={"GET","POST"})
+     */
+    public function addstruct(Request $request, $idmembre): Response
+    {
+        $membre = $this->getDoctrine()->getRepository(Member::class)->find($idmembre);
+        $structure = new Structure();
+        $form = $this->createForm(StructureType::class, $structure);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($structure);
+            $entityManager->flush();
+
+            $membre->setStructure($structure);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_admin_member_index');
+        }
+
+        return $this->render('admin/structure/new.html.twig', [
+            'structure' => $structure,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/admin/structure/new2", name="op_admin_structure_new2", methods={"GET","POST"})
      */
     public function new2(Request $request): Response

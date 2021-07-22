@@ -1,11 +1,45 @@
-<div class="row">
+<div id="SlideEvent" class="carousel slide carousel-fade border-large" data-bs-ride="carousel" data-bs-pause="false">
+    <div class="carousel-inner border-sm">
+        <div class="carousel-indicators">
+            {% for event in events %}
+            <button type="button" data-bs-target="#SlideEvent" data-bs-slide-to="{{ loop.index - 1 }}" {% if loop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ loop.index}}"></button>
+            {% endfor %}
+        </div>
+        {% for event in events %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+            {% if event.visuelName is not null %}
+            <img src="{{ vich_uploader_asset(event, 'visuelFile', 'App\\Entity\\GestApp\\Event')|imagine_filter('prez_event') }}" class="d-block" alt="{{ event.name }}" style="height:500px">
+            {% else %}
+            <img src="{{ asset('images/png/Modèle_Evenement.png')}}" alt="..." style="height:500px">
+            {% endif %}
+            <div class="carousel-caption d-none d-md-block">
+                <div class="row">
+                    <div class="col-5"></div>
+                    <div class="col-7">
+                        <h2 class="mt-5">{{ event.name }}</h2>
+                        <p class="text-center">
+                            <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
+                        </p>
+                        <h3 class="text-capitalize-h">le {{ event.eventAt|format_datetime('medium', 'none', locale='fr') }} à partir de 20h30</h3>
+                        <p>{{ event.description|raw }}</p>
+                        <p class="text">{{ event.placeAddress}}<br>{{ event.placeComplement}}<br>{{ event.placeZipcode}} {{ event.placeCity }}</p>
+                        <p class="text-center">
+                            <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
+                        </p>
+                        <div class="follow-event">
+                            <p>Informations & contact :</p>
+                            <p>Nous suivre sur :
+                                <a href="#"><i class="bi bi-facebook text-light"></i></a>
+                                <a href="#"><i class="bi bi-instagram text-light"></i></a>
+                                <a href="#"><i class="bi bi-linkedin text-light"></i></a>
+                            </p>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
 </div>
-{% for event in events %}
-    <div class="col-2">
-        <h5 class="text-center text-strong">{{ event.name }}</h5>
-        <p class="text-center"><a href="{{ path('op_gestapp_eventgal_eventgalpublish', {'idevent' : event.id}) }}"><img src="{{ asset('images/svg/folder_img.svg') }}" alt="" style="width:100px;"></a></p>
-    </div>
-{% else %}
-{% endfor %}
-

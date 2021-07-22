@@ -40,7 +40,7 @@ class Recommandation2Type extends AbstractType
                     'non lue' => 'noRead',
                     'En cours' => 'inProgress',
                     'Validée' => 'Valid',
-                    'sans suite' => 'Avort'
+                    'Sans suite' => 'Avort'
                 ],
             ])
         ;

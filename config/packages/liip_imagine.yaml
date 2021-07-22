@@ -44,3 +44,9 @@ liip_imagine:
                     size : [404, 244]
                     position : center
                     color : '#cdb55f'
+        prez_event:
+            quality: 150
+            filters:
+                thumbnail:
+                    size: [ 800, 500 ]
+                    mode: outbond

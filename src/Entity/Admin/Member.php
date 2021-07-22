@@ -507,7 +507,7 @@ class Member implements UserInterface
 
     public function __ToString()
     {
-        return $this->firstName;
+        return $this->firstName. " " .$this->lastName;
     }
 
     public function setUsername(?string $username): self

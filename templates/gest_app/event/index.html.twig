@@ -2,6 +2,93 @@
 
 {% block title %}Adhesion index{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        window.onload = function (){
+            // Modal suppr une ligne
+            var Suppr = document.getElementById('Suppr')
+            Suppr.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var a = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                var recipient = a.getAttribute('data-bs-whatever')
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                var modalTitle = Suppr.querySelector('.modal-title')
+                var modalText = Suppr.querySelector('.modal-text')
+                var modalBodyInput = Suppr.querySelector('.modal-body input')
+
+                modalTitle.textContent = "Suppression d'un évènement"
+                modalBodyInput.value = recipient
+                modalText.innerHTML = "Vous êtes sur le point de supprimer l'évènement sélectionné.<br>Etes-vous sur de continuer ?"
+            })
+
+            // function Suppression de la ligne en cours
+            function onClickDelEvent(event){
+                //event.preventDefault()
+                const id = document.getElementById('recipient-name').value
+                axios
+                    .post('/gest/app/event/delevent/'+ id)
+                    .then(function(response)
+                    {
+                        const liste = document.getElementById('liste').innerHTML;
+                        console.log(liste);
+
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
+            // Construction de la fonction OnClickBtnMenu
+            function onClickBtnValid(event){
+                event.preventDefault();
+                const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
+                const icone = this.querySelector('i');                          // variable qui sélectionne l'élément balise <i></i>
+                axios
+                    .get(url)
+                    .then(function(response) {
+                        if(icone.classList.contains('fa-check-circle')) {
+                            icone.classList.replace('fa-check-circle', 'fa-times-circle');
+                            icone.classList.replace('text-success', 'text-danger');
+                        }
+                        else {
+                            icone.classList.replace('fa-times-circle', 'fa-check-circle');
+                            icone.classList.replace('text-danger', 'text-success');
+                        };
+                    });
+            }
+
+            // Appel de la fonction lors du clic sur le bouton Ismenu
+            document.querySelectorAll('a.js-valid').forEach(function (link){
+                link.addEventListener('click', onClickBtnValid);
+            })
+
+            // Bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelEvent)
+            })
+
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     {{ include('gest_app/event/include/_section_content_header.html.twig') }}
@@ -14,27 +101,50 @@
                 <div class="card">
                     <div class="card-body">
                         <h4>Liste des Evènements</h4>
-                        <p>Créer, Modifier ou supprimer des adhésions</p>
-                        <table class="table">
+                        <p>Créer, Modifier ou supprimer vos évènements</p>
+                        <table id="liste" class="table">
                             <thead>
                                 <tr>
-                                    <th>titre</th>
+                                    <th>Titre</th>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                    <th>Auteur</th>
+                                    {% endif %}
                                     <th>Description</th>
-                                    <th>IsPublish</th>
-                                    <th>IsValidBy</th>
+                                    <th>Publié</th>
+                                    <th>Validé</th>
                                     <th>actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {% for event in events %}
                                 <tr>
-                                    <td>{{ event.name }}</td>
+                                    <td><a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}">{{ event.name }}</a></td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                    <td>{{ event.author }}</td>
+                                    {% endif %}
                                     <td>{{ event.description|raw }}</td>
                                     <td>{{ event.isPublish ? 'Yes' : 'No' }}</td>
-                                    <td>{{ event.isValidBy ? 'Yes' : 'No' }}</td>
                                     <td>
-                                        <a href="{{ path('op_gestapp_event_show', {'id': event.id}) }}">voir</a> |
-                                        <a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}">modifier</a>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            {% if event.isValidBy == 1 %}
+                                                <a class="js-valid" href="{{path('op_gestapp_event_isvalid', {'id' : event.id})}}"><i class="far fa-check-circle text-success"></i></a>
+                                            {% else %}
+                                                <a class="js-valid" href="{{path('op_gestapp_event_isvalid', {'id' : event.id})}}"><i class="far fa-times-circle text-danger"></i></a>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if event.isValidBy == 1 %}
+                                            <i class="far fa-check-circle text-success"></i>
+                                            {% else %}
+                                            <i class="far fa-times-circle text-danger"></i>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('op_gestapp_event_show', {'id': event.id}) }}"><i class="bi bi-eye"></i> voir</a> |
+                                        <a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}"><i class="bi bi-eye"></i> modifier</a> |
+                                        <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ event.id }}">
+                                        <i class="bi bi-calendar-x text-danger"></i> Supprimer
+                                        </a>
                                     </td>
                                 </tr>
                             {% else %}

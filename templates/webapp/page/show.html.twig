@@ -25,12 +25,49 @@
                     });
             }
 
-            //Contructiuon de la fonction de suppression d'une section
-            function onClickBtnDelSection(event){
-                event.preventDefault();
-                alert('Vous êtes sur le point de supprimer la section.')
-                const url = this.href;
+            // Modal suppr une ligne
+            var Suppr = document.getElementById('Suppr')
+            Suppr.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var a = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                var recipient = a.getAttribute('data-bs-whatever')
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                var modalTitle = Suppr.querySelector('.modal-title')
+                var modalText = Suppr.querySelector('.modal-text')
+                var modalBodyInput = Suppr.querySelector('.modal-body input')
 
+                modalTitle.textContent = "Suppression d'un évènement"
+                modalBodyInput.value = recipient
+                modalText.innerHTML = "Vous êtes sur le point de supprimer la section sélectionnée.<br><b>Etes-vous sur de continuer ?</b>"
+            })
+
+            // function Suppression de la ligne en cours
+            function onClickDelEvent(event){
+                //event.preventDefault()
+                const id = document.getElementById('recipient-name').value
+                axios
+                    .post('/webapp/section/del/'+ id)
+                    .then(function(response)
+                    {
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
             }
 
             // Appel de la fonction de mise en vedette d'une section lors d'un clic
@@ -41,6 +78,11 @@
             // Appel de la fonction de mise en vedette d'une section lors d'un clic
             document.querySelectorAll('a.js-del-section').forEach(function (link){
                 link.addEventListener('click', onClickBtnDelSection);
+            })
+
+            // Bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelEvent)
             })
         }
     </script>

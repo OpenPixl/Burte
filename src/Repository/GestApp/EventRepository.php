@@ -22,8 +22,22 @@ class EventRepository extends ServiceEntityRepository
     public function ListAllEventPublish()
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.isPublish = :isPublish')
+            ->addSelect('
+                e.id, 
+                e.name, 
+                e.description,
+                e.visuelName,
+                e.isPublish,
+                e.eventAt,
+                e.placeAddress,
+                e.placeComplement,
+                e.placeZipcode,
+                e.placeCity,
+                e.isValidBy
+                 ')
+            ->andWhere('e.isPublish = :isPublish AND e.isValidBy = :isValidBy')
             ->setParameter('isPublish', 1)
+            ->setParameter('isValidBy', 1)
             ->orderBy('e.id', 'ASC')
             ->getQuery()
             ->getResult()

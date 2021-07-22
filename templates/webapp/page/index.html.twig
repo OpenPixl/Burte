@@ -92,7 +92,7 @@
                             {% for page in pages %}
                                 <tr>
                                     <td><input type="checkbox" value="{{ page.id }}"></td>
-                                    <td>{{ page.name }} (<small class="text-dark">{{ page.slug }}</small>)</td>
+                                    <td><a href="{{ path('op_webapp_page_show', {'id': page.id}) }}">{{ page.name }}</a> (<small class="text-dark">{{ page.slug }}</small>)</td>
                                     <td>{{ page.state }}</td>
                                     <td>{{ page.sections|length }}</td>
                                     <td>

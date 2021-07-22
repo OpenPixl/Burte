@@ -470,7 +470,7 @@ class Event
         return $this->eventAt;
     }
 
-    public function setEventAt(\DateTimeInterface $eventAt): self
+    public function setEventAt(?\DateTimeInterface $eventAt): self
     {
         $this->eventAt = $eventAt;
 
@@ -482,7 +482,7 @@ class Event
         return $this->eventStartAt;
     }
 
-    public function setEventStartAt(\DateTimeInterface $eventStartAt): self
+    public function setEventStartAt(?\DateTimeInterface $eventStartAt): self
     {
         $this->eventStartAt = $eventStartAt;
 
@@ -494,7 +494,7 @@ class Event
         return $this->eventFinishAt;
     }
 
-    public function setEventFinishAt(\DateTimeInterface $eventFinishAt): self
+    public function setEventFinishAt(?\DateTimeInterface $eventFinishAt): self
     {
         $this->eventFinishAt = $eventFinishAt;
 

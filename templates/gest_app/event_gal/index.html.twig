@@ -13,7 +13,7 @@
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Liste des photos</h4>
+                        <h4>Liste des photos dans la galerie</h4>
                         <p>Créer, Modifier ou supprimer des adhésions</p>
                         <div class="row">
                             {% for event_gal in event_gals %}
@@ -25,8 +25,8 @@
                                             <p>{{ event_gal.alt }}<br>{{ event_gal.description }}</p>
                                         </div>
                                         <div class="card-footer">
-                                            <a href="{{ path('op_webapp_media_one_show', {'id': event_gal.id}) }}">show</a>
-                                            <a href="{{ path('op_webapp_media_one_edit', {'id': event_gal.id}) }}">edit</a>
+                                            <a href="#">Voir</a>
+                                            <a href="#">Modifier</a>
                                         </div>
                                     </div>
                                 </div>

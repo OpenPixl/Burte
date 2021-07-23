@@ -10,6 +10,11 @@
         <li class="nav-item">
             <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Visuel" type="button" role="tab" aria-controls="Visuel" aria-selected="true"><h5>Visuel et réseau</h5></button>
         </li>
+        {% if app.request.get('_route') == 'op_gestapp_event_edit'%}
+        <li class="nav-item">
+            <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Galerie" type="button" role="tab" aria-controls="Visuel" aria-selected="true"><h5>Galerie</h5></button>
+        </li>
+        {% endif %}
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="Details" role="tabpanel" aria-labelledby="home-tab">
@@ -47,23 +52,26 @@
                         <div class="col-2">
                             {{ form_label(form.eventAt, "Indiquez la date", {'label_attr': {'class':'form-label'}}) }}
                         </div>
-                        <div class="col-2">
-                            {{ form_widget(form.eventAt, {'attr': {'class': 'form-control form-control-sm date datepicker-input', 'placeholder':''}}) }}
+                        <div class="col-3">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text" ><i class="bi bi-calendar-event"></i></span>
+                                {{ form_widget(form.eventAt, {'attr': {'class': 'form-control form-control-sm date datepicker-input', 'placeholder':''}}) }}
+                            </div>
                         </div>
                     </div>
                     <h5 class="mt-3">Votre Evenèment est sur plusieurs jours</h5>
                     <div class="row mb-1 mt-1 g-1">
-                        <div class="col-1">
-                            <p class="text-center form-p">Du</p>
+                        <div class="col-3">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text" >Du</span>
+                                {{ form_widget(form.eventStartAt, {'attr': {'class': 'form-control form-control-sm date datepicker-input', 'placeholder':''}}) }}
+                            </div>
                         </div>
-                        <div class="col-2">
-                            {{ form_widget(form.eventStartAt, {'attr': {'class': 'form-control form-control-sm date datepicker-input', 'placeholder':''}}) }}
-                        </div>
-                        <div class="col-1">
-                            <p class="text-center form-p">Au</p>
-                        </div>
-                        <div class="col-2">
-                            {{ form_widget(form.eventFinishAt, {'attr': {'class': 'form-control form-control-sm date datepicker-input', 'placeholder':''}}) }}
+                        <div class="col-3">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text" >Au</span>
+                                {{ form_widget(form.eventFinishAt, {'attr': {'class': 'form-control form-control-sm date datepicker-input', 'placeholder':''}}) }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -155,6 +163,13 @@
                 </div>
             </div>
         </div>
+        {% if app.request.get('_route') == 'op_gestapp_event_edit' %}
+        <div class="tab_pane" id="Galerie" role="tabpanel" aria-labelledby="Galerie">
+            <div class="row">
+
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 <div class="card-footer">

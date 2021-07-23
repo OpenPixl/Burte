@@ -22,10 +22,12 @@
                         </p>
                         <h3 class="text-capitalize-h">le {{ event.eventAt|format_datetime('medium', 'none', locale='fr') }} à partir de 20h30</h3>
                         <p>{{ event.description|raw }}</p>
-                        <p class="text">{{ event.placeAddress}}<br>{{ event.placeComplement}}<br>{{ event.placeZipcode}} {{ event.placeCity }}</p>
-                        <p class="text-center">
-                            <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
-                        </p>
+                        <div class="place-event m-3">
+                            <p class="text-center">{{ event.placeAddress}}<br>{{ event.placeComplement}}<br>{{ event.placeZipcode}} {{ event.placeCity }}</p>
+                            <p class="text-center">
+                                <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
+                            </p>
+                        </div>
                         <div class="follow-event">
                             <p>Informations & contact :</p>
                             <p>Nous suivre sur :
@@ -33,8 +35,7 @@
                                 <a href="#"><i class="bi bi-instagram text-light"></i></a>
                                 <a href="#"><i class="bi bi-linkedin text-light"></i></a>
                             </p>
-
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

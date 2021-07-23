@@ -19,7 +19,7 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    public function ListAllEventPublish()
+    public function ListAllEventPublish($current)
     {
         return $this->createQueryBuilder('e')
             ->addSelect('
@@ -35,10 +35,11 @@ class EventRepository extends ServiceEntityRepository
                 e.placeCity,
                 e.isValidBy
                  ')
-            ->andWhere('e.isPublish = :isPublish AND e.isValidBy = :isValidBy')
+            ->andWhere('e.isPublish = :isPublish AND e.isValidBy = :isValidBy AND e.eventAt > :current')
             ->setParameter('isPublish', 1)
             ->setParameter('isValidBy', 1)
-            ->orderBy('e.id', 'ASC')
+            ->setParameter( 'current', $current)
+            ->orderBy('e.eventAt', 'DESC')
             ->getQuery()
             ->getResult()
             ;

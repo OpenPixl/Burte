@@ -50,7 +50,9 @@ class EventController extends AbstractController
      */
     public function ListAllEventPublish(): Response
     {
-        $events = $this->getDoctrine()->getRepository(Event::class)->ListAllEventPublish();
+        $date = new \DateTimeImmutable();
+        $current = $date->format('Y-m-d');
+        $events = $this->getDoctrine()->getRepository(Event::class)->ListAllEventPublish($current);
 
         return $this->render('gest_app/event/event.html.twig', [
             'events' => $events,

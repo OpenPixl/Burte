@@ -12,10 +12,11 @@
             {% else %}
             <img src="{{ asset('images/png/Modèle_Evenement.png')}}" alt="..." style="height:500px">
             {% endif %}
-            <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-caption d-md-block">
                 <div class="row">
-                    <div class="col-5"></div>
-                    <div class="col-7">
+                    <div class="col-5 d-none d-lg-block">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 ">
                         <h2 class="mt-5">{{ event.name }}</h2>
                         <p class="text-center">
                             <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
@@ -33,7 +34,6 @@
                             <p>Nous suivre sur :
                                 <a href="#"><i class="bi bi-facebook text-light"></i></a>
                                 <a href="#"><i class="bi bi-instagram text-light"></i></a>
-                                <a href="#"><i class="bi bi-linkedin text-light"></i></a>
                             </p>
                         </div>
                     </div>

@@ -1,23 +1,29 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th colspan="2">Statistiques</th>
+            <th colspan="2">Statistique personnelle</th>
         </tr>
         <tr>
-            <th></th>
-            <th></th>
+            <th>Statut</th>
+            <th>Cumul</th>
+            <th>Recommandant</th>
         </tr>
     </thead>
     <tbody>
     {% for stat in stats %}
         <tr>
             <td>
-                {% if stat.recoState == 'inProgress' %}
-                    En cours
-                {% elseif stat.recoState == 'noRead' %}
+                {% if stat.recoState == 'noRead' %}
                     Non lue
+                {% elseif stat.recoState == 'inProgress' %}
+                    En cours
+                {% elseif stat.recoState == 'Valid' %}
+                    validée
+                {% elseif stat.recoState == 'Valid' %}
+                    Sans suite
                 {% endif %}</td>
-            <td>{{ stat.recoPrice }}</td>
+            <td>{% if stat.recoPrice is not null %}{{ stat.recoPrice }} €{% else %}0.00 €{% endif %}</td>
+            <td></td>
         </tr>
     {% else %}
         <tr>

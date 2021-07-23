@@ -1,4 +1,8 @@
-<section {% if section.attrId is null %}id=""{% else %}id="{{ section.attrId }}"{% endif %} class="container" >
+<section
+        {% if section.attrId is null %}id=""{% else %}id="{{ section.attrId }}"{% endif %}
+        class="container"
+        style=""
+>
     <div id="section_title" class="row">
         {% if section.isShowtitle == 1 %}
         <div class="col">

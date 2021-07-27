@@ -157,6 +157,7 @@ class EventController extends AbstractController
     }
 
     /**
+     * Suppression d'une ligne index.php
      * @Route("/gest/app/event/delevent/{id}", name="op_gestapp_event_delevent", methods={"POST"})
      */
     public function DelEvent(Request $request, Event $event) : Response

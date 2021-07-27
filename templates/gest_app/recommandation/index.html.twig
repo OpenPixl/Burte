@@ -2,6 +2,68 @@
 
 {% block title %}Recommandation index{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+
+            // Modal suppr une ligne
+            var Suppr = document.getElementById('Suppr')
+            Suppr.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var a = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                var recipient = a.getAttribute('data-bs-whatever')
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                var modalTitle = Suppr.querySelector('.modal-title')
+                var modalText = Suppr.querySelector('.modal-text')
+                var modalBodyInput = Suppr.querySelector('.modal-body input')
+
+                modalTitle.textContent = "Suppression d'une recommandation"
+                modalBodyInput.value = recipient
+                modalText.innerHTML = "Vous êtes sur le point de supprimer la recommandation sélectionnée.<br><b>Etes-vous sur de continuer ?</b>"
+            })
+
+            // function Suppression de la ligne en cours
+            function onClickDelEvent(event){
+                //event.preventDefault()
+                const id = document.getElementById('recipient-name').value
+                axios
+                    .post('/gest/app/recommandation/del/'+ id)
+                    .then(function(response)
+                    {
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                        // rafraichissement du tableau
+                        const liste = document.getElementById('liste');
+                        console.log(liste, response.data);
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
+            // Bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelEvent)
+            })
+        }
+    </script>
+{% endblock %}
 {% block content %}
 <div class="container-fluid">
     {{ include('gest_app/recommandation/include/_section_content_header.html.twig') }}
@@ -27,7 +89,7 @@
                                         <th>actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="liste">
                                 {% for recommandation in recommandations %}
                                     <tr>
                                         <td>
@@ -60,6 +122,9 @@
                                         <td>
                                             <a href="{{ path('op_gestapp_recommandation_show', {'id': recommandation.id}) }}">voir</a>
                                             <a href="{{ path('op_gestapp_recommandation_edit', {'id': recommandation.id}) }}">modifier</a>
+                                            <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ recommandation.id }}">
+                                                <i class="bi bi-eraser text-danger"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 {% else %}

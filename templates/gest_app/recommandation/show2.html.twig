@@ -11,10 +11,12 @@
                 event.preventDefault();
                 const url = this.href;
                 const id = document.getElementById('recoid').value;
+                const name = document.getElementById('name').value;
+                const description = document.getElementById('description').value;
                 const recoprice = document.getElementById('recoprice').value;
                 const recostate = document.getElementById('recostate').value;
                 axios
-                    .post(url, {recoprice:recoprice, recostate:recostate})
+                    .post(url, {name:name, description:description, recoprice:recoprice, recostate:recostate})
                     .then(function(response) {
                         var option = {
                             animation : true,
@@ -54,28 +56,57 @@
                     <div class="card-body">
                         <h4>Catalogue des recommandations</h4>
                         <p>Créer, Modifier ou supprimer des recommandations du site.</p>
-                        <div class="row">
+                        <div class="row form-edit">
+                            <div class="col-6">
+                                <h5 class="mb-3">Informations générales</h5>
+                                <div class="row g-1">
+                                    <div class="col-3">
+                                        <p>Titre de la recommandation</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <input id="name" class="form-control form-control-sm" name="name" type="text" value="{{ recommandation.name }}">
+                                    </div>
+                                </div>
+                                <div class="row g-1">
+                                    <div class="col-3">
+                                        <p>Besoins</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <input id="description" class="form-control form-control-sm" name="description" type="text" value="{{ recommandation.description|raw }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <h5 class="mb-3">Le client</h5>
+                                <div class="row g-1">
+                                    <div class="col-3">
+                                        <p>Adresse</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <input id="clientAddress" class="form-control form-control-sm" name="clientAddress" type="text" value="{{ recommandation.clientAddress }}">
+                                    </div>
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-9">
+                                        <input id="clientComplement" class="form-control form-control-sm" name="clientComplement" type="text" value="{{ recommandation.clientComplement }}">
+                                    </div>
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-3">
+                                        <input id="clientZipcode" class="form-control form-control-sm" name="clientZipcode" type="text" value="{{ recommandation.clientZipcode }}">
+                                    </div>
+                                    <div class="col-6">
+                                        <input id="clientZipcode" class="form-control form-control-sm" name="clientZipcode" type="text" value="{{ recommandation.clientZipcode }}">
+                                    </div>
+                                </div>
+                            </div>
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th>Titre de la recommadation</th>
-                                        <td>{{ recommandation.name }}</td>
+
                                     </tr>
                                     <tr>
-                                        <th>Besoin.s</th>
-                                        <td>{{ recommandation.description|raw }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Nom du client</th>
-                                        <td>{{ recommandation.clientFirstname }} {{ recommandation.clientLastname }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Addresse</th>
-                                        <td>
-                                            {{ recommandation.clientAddress }}<br>
-                                            {{ recommandation.clientComplement }}<br>
-                                            {{ recommandation.clientZipcode }} {{ recommandation.clientCity }}
-                                        </td>
+
                                     </tr>
 
                                     <tr>
@@ -95,7 +126,7 @@
                                     <tr>
                                         <th>Estimation</th>
                                         <td>
-                                                <input id="recoprice" name="recoprice" type="number" value="{{ recommandation.recoprice }}">
+                                                <input id="recoprice" class="form-control form-control-sm"name="recoprice" type="number" value="{{ recommandation.recoprice }}">
                                                 <input id="recoid" type="hidden" value="{{ recommandation.id }}">
                                         </td>
                                     </tr>

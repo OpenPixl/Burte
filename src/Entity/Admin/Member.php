@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -58,11 +59,13 @@ class Member implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user"})
      */
     private $email;
 
@@ -79,11 +82,13 @@ class Member implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"user"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"user"})
      */
     private $lastName;
 

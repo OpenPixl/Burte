@@ -12,6 +12,7 @@ use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
 class RecommandationController extends AbstractController
@@ -24,6 +25,18 @@ class RecommandationController extends AbstractController
         $user = $this->getUser();
         $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUser($user);
         return $this->render('gest_app/recommandation/index.html.twig', [
+            'recommandations' => $recommandations,
+        ]);
+    }
+
+    /**
+     * @Route("/op_admin/gestapp/recommandation/reload", name="op_gestapp_recommandation_indexreload", methods={"GET"})
+     */
+    public function indexReload(RecommandationRepository $recommandationRepository): Response
+    {
+        $user = $this->getUser();
+        $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUser($user);
+        return $this->render('gest_app/recommandation/reload.html.twig', [
             'recommandations' => $recommandations,
         ]);
     }
@@ -176,6 +189,8 @@ class RecommandationController extends AbstractController
     {
         $user = $this->getUser();
         $data = json_decode($request->getContent(), true);
+        $name = $data['name'];
+        $description = $data['description'];
         $recoprice = $data['recoprice'];
         $recostate = $data['recostate'];
         // renvoie une erreur car l'utilisateur n'est pas connecté
@@ -191,12 +206,31 @@ class RecommandationController extends AbstractController
                 'message' => "L'estimation de la recommandation a été ajoutée à la recommandation."
             ], 200);
         }
+        $recommandation->setName($name);
+        $recommandation->setDescription($description);
         $recommandation->setRecoPrice($recoprice);
         $recommandation->setRecoState($recostate);
         $this->getDoctrine()->getManager()->flush();
         return $this->json([
             'code'=> 200,
             'message' => "L'estimation de la recommandation a été ajoutée à la recommandation."
+        ], 200);
+    }
+
+    /**
+     * Suppression d'une ligne index.php
+     * @Route("/gest/app/recommandation/del/{id}", name="op_gestapp_recommandation_del", methods={"POST"})
+     */
+    public function DelEvent(Request $request, Recommandation $recommandation, SerializerInterface $serializer) : Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($recommandation);
+        $entityManager->flush();
+
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'évènenemt a été supprimé",
         ], 200);
     }
 }

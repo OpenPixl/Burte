@@ -6,6 +6,7 @@ use App\Entity\Admin\Member;
 use App\Repository\GestApp\RecommandationRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=RecommandationRepository::class)
@@ -17,26 +18,31 @@ class Recommandation
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"recommandation_list"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"recommandation_list"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"recommandation_list"})
      */
     private $slug;
 
     /**
      * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="recommandations")
+     * @Groups({"recommandation_list"})
      */
     private $member;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"recommandation_list"})
      */
     private $description;
 

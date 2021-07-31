@@ -48,9 +48,10 @@
                         toastBody.textContent = message;
                         var toastElement = new bootstrap.Toast(toastHTMLElement, option);
                         toastElement.show();
+
                         // rafraichissement du tableau
                         const liste = document.getElementById('liste');
-                        console.log(liste, response.data);
+
                     })
                     .catch(function(error){
                         console.log(error);
@@ -77,11 +78,11 @@
                     <div class="card-body">
                         <h4>Catalogue des recommandations</h4>
                         <p>Créer, Modifier ou supprimer des recommandations du site.</p>
-                        <div class="row">
+                        <div class="row" id="liste">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
+                                        <th>Recommandation</th>
                                         <th>Description</th>
                                         <th>Client</th>
                                         <th>Contacts</th>
@@ -89,7 +90,7 @@
                                         <th>actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="liste">
+                                <tbody>
                                 {% for recommandation in recommandations %}
                                     <tr>
                                         <td>

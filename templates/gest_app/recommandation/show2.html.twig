@@ -63,21 +63,19 @@
                                     <div class="col-3">
                                         <p>Titre de la recommandation</p>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-9">
                                         <input id="name" class="form-control form-control-sm" name="name" type="text" value="{{ recommandation.name }}">
                                     </div>
-                                </div>
-                                <div class="row g-1">
                                     <div class="col-3">
                                         <p>Besoins</p>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-9">
                                         <input id="description" class="form-control form-control-sm" name="description" type="text" value="{{ recommandation.description|raw }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <h5 class="mb-3">Le client</h5>
+                                <h5 class="mb-3">Coordonnées du client</h5>
                                 <div class="row g-1">
                                     <div class="col-3">
                                         <p>Adresse</p>
@@ -98,17 +96,28 @@
                                     <div class="col-6">
                                         <input id="clientZipcode" class="form-control form-control-sm" name="clientZipcode" type="text" value="{{ recommandation.clientZipcode }}">
                                     </div>
+                                    <div class="col-3">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone"></i></span>
+                                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value=" {{ recommandation.ClientDesk }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-phone"></i></span>
+                                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="{{ recommandation.clientGsm }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope"></i></span>
+                                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="{{ recommandation.clientEmail }}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <table class="table">
                                 <tbody>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-
                                     <tr>
                                         <th>Contact du client</th>
                                         <td>

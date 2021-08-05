@@ -1,11 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+{% block title %}OpenGaia | Renouvellement du mot de passe{% endblock %}
 
-{% block body %}
-    <p>
-        An email has been sent that contains a link that you can click to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mt-3 mb-3">Renouvellement du mot de passe :</h1>
+                <p class="mt-3 mb-3">
+                    Un email contenant le lien de renouvellement vous a été envoyé.
+                    Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                </p>
+                <p class="mt-3 mb-3">
+                    Si vous n'avez pas reçu ce mail, pensez à vérifiez dans les spams de votre boite aux lettres où cliquez sur le lien suivant :
+                    <br>
+                    <a class="btn btn-sm btn-primary" href="{{ path('op_security_forgot_password_request') }}">essayez à nouveau</a></p>
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -20,7 +20,7 @@ class PageController extends AbstractController
     public function index(PageRepository $pageRepository): Response
     {
         return $this->render('webapp/page/index.html.twig', [
-            'pages' => $pageRepository->findAll(),
+            'pages' => $pageRepository->sortPosition(),
         ]);
     }
 
@@ -183,36 +183,56 @@ class PageController extends AbstractController
         // Si la page est déja dépubliée, alors on publie
         $page->setIsMenu(1);
         $em->flush();
-        return $this->json(['code'=> 200, 'message' => 'La page est publié dans les menus'], 200);
-    }
-
-    /**
-     * Permet de up la position de la page
-     * @Route("/webapp/page/upposition/{id}/json", name="op_webapp_page_position_up")
-     */
-    public function upPosition(Page $page, EntityManagerInterface $em) : Response
-    {
-        $user = $this->getUser();
-        $position = $page->getIsMenu();
-        // renvoie une erreur car l'utilisateur n'est pas connecté
-        if(!$user) return $this->json([
-            'code' => 403,
-            'message'=> "Vous n'êtes pas connecté"
-        ], 403);
+        return $this->json([
+            'code'=> 200,
+            'message' => 'La page est publié dans les menus'
+        ], 200);
     }
 
     /**
      * Permet de down la position de la page
-     * @Route("/webapp/page/downposition/{id}", name="op_webapp_page_menuposition_down")
+     * @Route("/webapp/page/position/{id}/{level}", name="op_webapp_page_position_down")
      */
-    public function downPosition(Page $page, EntityManagerInterface $em) : Response
+    public function Position(Page $page, $level, EntityManagerInterface $em) : Response
     {
         $user = $this->getUser();
-        $ismenu = $page->getIsMenu();
-        // renvoie une erreur car l'utilisateur n'est pas connecté
-        if(!$user) return $this->json([
-            'code' => 403,
-            'message'=> "Vopus n'êtes pas connecté"
-        ], 403);
+        $id = $page->getId();
+
+        // On récupére la position de la page actuelle et on prépare des les futures positions +1 et -1.
+        $position = $page->getPosition();
+        $nextPos = $page->getPosition()+1;
+        $previousPos = $page->getPosition()-1;
+
+        if($level == 'up')
+        {
+            $previousItem = $em->getRepository(Page::class)->findOneBy(array('position' => $previousPos));
+            $page->setPosition($previousPos);
+            $previousItem->setPosition($position);
+            $em->flush();
+            // on récupère la liste des pages ordonnée par position
+            $pages = $this->getDoctrine()->getRepository(Page::class)->sortPosition();
+            return $this->json([
+                'code'=> 200,
+                'message' => "La page est montée d'un niveau",
+                'liste' => $this->renderView('webapp/page/include/_liste.html.twig', [
+                    'pages' => $pages
+                ])
+            ], 200);
+        }elseif($level == 'down'){
+            $nextItem = $em->getRepository(Page::class)->findOneBy(array('position' => $nextPos));
+            $page->setPosition($nextPos);
+            $nextItem->setPosition($position);
+            $em->flush();
+            // on récupère la liste des pages ordonnée par position
+            $pages = $this->getDoctrine()->getRepository(Page::class)->sortPosition();
+            return $this->json([
+                'code'=> 200,
+                'message' => "La page est descendu d'un niveau",
+                'liste' => $this->renderView('webapp/page/include/_liste.html.twig', [
+                    'pages' => $pages
+                ])
+            ], 200);
+        };
+
     }
 }

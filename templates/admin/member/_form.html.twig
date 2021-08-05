@@ -123,5 +123,6 @@
 </div>
 <div class="card-footer">
     <a class="btn btn-sm btn-secondary" href="{{ path('op_admin_member_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a></a> <button class="btn btn-sm btn-primary">{{ button_label|default('Save') }}</button>
+    <a class="btn btn-sm btn-warning" href="{{ path('op_security_forgot_password_request') }}">Réinitialiser le mot de passe</a>
 </div>
 {{ form_end(form) }}

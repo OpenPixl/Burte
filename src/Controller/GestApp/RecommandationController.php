@@ -223,14 +223,20 @@ class RecommandationController extends AbstractController
      */
     public function DelEvent(Request $request, Recommandation $recommandation, SerializerInterface $serializer) : Response
     {
+        $author = $recommandation->getAuthor();
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($recommandation);
         $entityManager->flush();
 
+        $RefreshRecommandation = $this->getDoctrine()->getRepository(Recommandation::class)->findByUser($author);
 
         return $this->json([
             'code'=> 200,
             'message' => "L'évènenemt a été supprimé",
+            'liste' => $this->renderView('gest_app/recommandation/include/_liste.html.twig', [
+                'recommandations' => $RefreshRecommandation
+            ])
         ], 200);
     }
 }

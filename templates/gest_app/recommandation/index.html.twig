@@ -50,7 +50,7 @@
                         toastElement.show();
 
                         // rafraichissement du tableau
-                        const liste = document.getElementById('liste');
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
 
                     })
                     .catch(function(error){
@@ -79,80 +79,13 @@
                         <h4>Catalogue des recommandations</h4>
                         <p>Créer, Modifier ou supprimer des recommandations du site.</p>
                         <div class="row" id="liste">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Recommandation</th>
-                                        <th>Description</th>
-                                        <th>Client</th>
-                                        <th>Contacts</th>
-                                        <th>Estimation</th>
-                                        <th>actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {% for recommandation in recommandations %}
-                                    <tr>
-                                        <td>
-                                            {{ recommandation.name }}
-                                            {% if recommandation.recostate == 'noRead' %}
-                                                <span class="badge bg-warning">Non lue</span>
-                                            {% elseif recommandation.recostate == 'inProgress'%}
-                                                <span class="badge bg-info">En cours</span>
-                                            {% elseif recommandation.recostate == 'Valid'%}
-                                                <span class="badge bg-success">Validée</span>
-                                            {% elseif recommandation.recostate == 'Avort'%}
-                                                <span class="badge bg-danger">Sans suite</span>
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ recommandation.description }}</td>
-                                        <td>{{ recommandation.clientFirstname }} {{ recommandation.clientLastname }}</td>
-                                        <td>
-                                            {% if recommandation.ClientDesk is not null %}
-                                                {{ recommandation.ClientDesk }}
-                                            {% elseif recommandation.ClientDesk is not null and recommandation.ClientEmail is null and recommandation.clientGsm is not null %}
-                                                {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
-                                            {% elseif recommandation.ClientDesk is not null and recommandation.ClientEmail is not null and recommandation.clientGsm is null %}
-                                                {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }}
-                                            {% else %}
-                                                {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
-                                            {% endif %}
-                                        </td>
-                                        <td>
-                                            {% if recommandation.recoPrice is null %}Non déterminé{% else %}{{ recommandation.recoPrice }}€{% endif %}</td>
-                                        <td>
-                                            <a href="{{ path('op_gestapp_recommandation_show', {'id': recommandation.id}) }}">voir</a>
-                                            <a href="{{ path('op_gestapp_recommandation_edit', {'id': recommandation.id}) }}">modifier</a>
-                                            <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ recommandation.id }}">
-                                                <i class="bi bi-eraser text-danger"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% else %}
-                                    <tr>
-                                        <td colspan="18">no records found</td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                            {{ include('gest_app/recommandation/include/_liste.html.twig') }}
                         </div>
                     </div>
                     <div class="card-footer">
                         <a class="btn btn-sm btn-secondary" href="{{ path('op_gestapp_recommandation_index') }}">Retour à la liste des recommandations</a>
                         <a class="btn btn-sm btn-primary" href="{{ path('op_gestapp_recommandation_new') }}">Ajouter une recommandation</a>
                     </div>
-                </div>
-            </div>
-            <!-- TOAST Bootstrap 5-->
-            <div id="toaster" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false">
-                <div class="toast-header">
-                    <img src="..." class="rounded me-2" alt="...">
-                    <strong class="me-auto">Bootstrap</strong>
-                    <small>11 mins ago</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    Hello, world! This is a toast message.
                 </div>
             </div>
         </div>

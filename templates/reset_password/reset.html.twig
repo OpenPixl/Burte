@@ -1,12 +1,27 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Reset your password{% endblock %}
 
-{% block body %}
-    <h1>Reset your password</h1>
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mt-3 mb-3">Renouveller votre mot de passe :</h1>
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+                <p class="mt-3 mb-3">
+                    <strong>Vous êtes sur le point de renouveller votre mot de passe.</strong><br>Afin de gagner en sécurité, votre mot de passe doit être composé:
+                    <br> -d'un minimum de 8 caractères,
+                    <br> - au moin une majuscule,
+                    <br> - au moins un chiffre,
+                    <br> - au moins un caractère spécial,
+                </p>
+
+                {{ form_start(resetForm) }}
+                {{ form_row(resetForm.plainPassword) }}
+                <button class="btn btn-primary">Enregistrez le nouveau mot de passe</button>
+                {{ form_end(resetForm) }}
+            </div>
+        </div>
+    </section>
+
 {% endblock %}

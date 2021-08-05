@@ -31,7 +31,7 @@
                 const icone2 = this.querySelector('i');
                 axios
                     .get(url2)
-                    .then(function(response) {
+                    .then(function(response){
                         if(icone2.classList.contains('fa-check-circle')) {
                             icone2.classList.replace('fa-check-circle', 'fa-times-circle');
                             icone2.classList.replace('text-success', 'text-danger');
@@ -43,9 +43,101 @@
                     });
             }
 
-            function OnAddSection(event){
+            function onClickBtnUp(event){
                 event.preventDefault();
-                console.log('ok');
+                const url = this.href;
+                axios
+                    .get(url)
+                    .then(function(response){
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        // on réinitie les Events
+                        document.querySelectorAll('a.jsUp').forEach(function (link){
+                            link.addEventListener('click', onClickBtnUp);
+                        })
+                        document.querySelectorAll('a.jsDown').forEach(function (link){
+                            link.addEventListener('click', onClickBtnDown);
+                        })
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+            }
+
+            function onClickBtnDown(event){
+                //event.preventDefault();
+                const url = this.href;
+                axios
+                    .get(url)
+                    .then(function(response){
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        // on réinitie les Events
+                        document.querySelectorAll('a.jsUp').forEach(function (link){
+                            link.addEventListener('click', onClickBtnUp);
+                        })
+                        document.querySelectorAll('a.jsDown').forEach(function (link){
+                            link.addEventListener('click', onClickBtnDown);
+                        })
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+            }
+
+            function onClickBtnPosition(event)
+            {
+                event.preventDefault();
+                const id = this.id;
+                const icone = this.querySelector('i');
+                let level;
+                if(icone.classList.contains('fa-long-arrow-alt-up')) {
+                    level = 'up';
+                }else{
+                    level = 'down';
+                }
+                const url = '/webapp/page/position/' + id + '/' + level;
+                axios
+                    .get(url)
+                    .then(function(response){
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        // on réinitie les Events
+                        // on réinitie l'appel de l'évènement
+                        document.querySelectorAll('a.jsPosition').forEach(function (link){
+                            link.addEventListener('click', onClickBtnPosition);
+                        })
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
             }
 
             // Appel de la fonction lors du clic sur le bouton Ismenu
@@ -53,10 +145,16 @@
                 link.addEventListener('click', onClickBtnMenu);
             })
 
-            // Appel de la fonction lors du clic sur le bouton Ismenu
+            // Appel de la fonction lors du clic sur le bouton IsPublish
             document.querySelectorAll('a.js-publish').forEach(function (link){
                 link.addEventListener('click', onClickBtnPublish);
             })
+
+            // Appel de la fonction lors du clic sur la flèche DOWN
+            document.querySelectorAll('a.jsPosition').forEach(function (link){
+                link.addEventListener('click', onClickBtnPosition);
+            })
+
         }
     </script>
 
@@ -73,60 +171,18 @@
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table align-middle">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Titre</th>
-                                    <th>Etat</th>
-                                    <th>Sections</th>
-                                    <th>menu</th>
-                                    <th>Publié</th>
-                                    <th>Créer le</th>
-                                    <th>Mise à jour</th>
-                                    <th>actions</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for page in pages %}
-                                <tr>
-                                    <td><input type="checkbox" value="{{ page.id }}"></td>
-                                    <td><a href="{{ path('op_webapp_page_show', {'id': page.id}) }}">{{ page.name }}</a> (<small class="text-dark">{{ page.slug }}</small>)</td>
-                                    <td>{{ page.state }}</td>
-                                    <td>{{ page.sections|length }}</td>
-                                    <td>
-                                        {% if page.ismenu == 1 %}
-                                            <a class="js-menu" href="{{path('op_webapp_page_menu', {'id' : page.id})}}"><i class="far fa-check-circle text-success"></i></a>
-                                        {% else %}
-                                            <a class="js-menu" href="{{path('op_webapp_page_menu', {'id' : page.id})}}"><i class="far fa-times-circle text-danger"></i></a>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if page.isPublish == 1 %}
-                                            <a class="js-publish" href="{{ path('op_webapp_page_publish', {'id': page.id}) }}"><i class="far fa-check-circle text-success"></i></a>
-                                        {% else %}
-                                            <a class="js-publish" href="{{ path('op_webapp_page_publish', {'id': page.id}) }}"><i class="far fa-times-circle text-danger"></i></a>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ page.createdAt ? page.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-                                    <td>{{ page.updatedAt ? page.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-                                    <td>
-                                        <a href="{{ path('op_webapp_page_show', {'id': page.id}) }}">voir</a>
-                                        <a href="{{ path('op_webapp_page_edit', {'id': page.id}) }}">Modifier</a>
-                                    </td>
-
-                                    <th>
-                                        <a href="#" class="text-primary"><i class="fas fa-long-arrow-alt-up"></i></a>  <a href="#" class="text-primary"><i class="fas fa-long-arrow-alt-down"></i></a>
-                                    </th>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="13">no records found</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h4>Liste des pages du site</h4>
+                                <p>Créer, Modifier ou supprimer des pages du site.</p>
+                            </div>
+                            <div id="op_actions">
+                                <button class="btn btn-sm btn-outline-secondary">Supprimer</button>
+                            </div>
+                        </div>
+                        <div id="liste">
+                            {{ include('webapp/page/include/_liste.html.twig') }}
+                        </div>
                     </div>
                 </div>
             </div>

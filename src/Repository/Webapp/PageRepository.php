@@ -39,6 +39,17 @@ class PageRepository extends ServiceEntityRepository
     }
 
     /**
+     * liste les pages par position ascendante
+     */
+    public function sortPosition(){
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.position', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
      * Liste la page qui s'affichera selon son slug.
      */
     public function findbyslug($slug)
@@ -49,6 +60,36 @@ class PageRepository extends ServiceEntityRepository
             ->andWhere('p.isMenu = :isMenu')
             ->andWhere('p.isPublish = :isPublish')
             ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+    /***
+     * Récupère la page antérieur selon une position identique
+     */
+    public function previousPage($id, $position)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.position = :position')
+            ->andWhere('p.id != :id')
+            ->setParameter('position', $position)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+    /***
+     * Récupère la page antérieur selon une position identique
+     */
+    public function nextPage($id, $position)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.position = :position')
+            //->andWhere('p.id != :id')
+            ->setParameter('position', $position)
+            //->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult()
             ;

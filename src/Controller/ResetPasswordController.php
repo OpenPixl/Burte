@@ -35,7 +35,7 @@ class ResetPasswordController extends AbstractController
     /**
      * Display & process form to request a password reset.
      *
-     * @Route("", name="app_forgot_password_request")
+     * @Route("", name="op_security_forgot_password_request")
      */
     public function request(Request $request, MailerInterface $mailer): Response
     {
@@ -63,7 +63,7 @@ class ResetPasswordController extends AbstractController
     {
         // We prevent users from directly accessing this page
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
-            return $this->redirectToRoute('app_forgot_password_request');
+            return $this->redirectToRoute('op_security_forgot_password_request');
         }
 
         return $this->render('reset_password/check_email.html.twig', [
@@ -99,7 +99,7 @@ class ResetPasswordController extends AbstractController
                 $e->getReason()
             ));
 
-            return $this->redirectToRoute('app_forgot_password_request');
+            return $this->redirectToRoute('op_security_forgot_password_request');
         }
 
         // The token is valid; allow the user to change their password.
@@ -122,7 +122,7 @@ class ResetPasswordController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('op_admin_dashboard_index');
         }
 
         return $this->render('reset_password/reset.html.twig', [

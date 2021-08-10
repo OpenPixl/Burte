@@ -1,0 +1,49 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Section</th>
+        <th>Description</th>
+        <th class="text-center">Mise en avant</th>
+        <th class="text-center">Contenu</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for section in sections %}
+        <tr>
+            <td>
+                {% if loop.first %}<i class="fas fa-long-arrow-alt-up text-muted"></i>&nbsp;&nbsp;{% else %}<a href="#" class="jsPosition" id="{{ section.id }}"><i class="fas fa-long-arrow-alt-up"></i></a>&nbsp;&nbsp;{% endif %}
+                {% if loop.last %}<i class="fas fa-long-arrow-alt-down text-muted"></i>{% else %}<a href="#" class="jsPosition" id="{{ section.id }}"><i class="fas fa-long-arrow-alt-down"></i></a>{% endif %}
+            </td>
+            <td>{{ section.title }}</td>
+            <td>{{ section.description }}</td>
+            <td class="text-center">
+                {% if section.favorites == 0 %}
+                    <p class="card-text"><a class="js-star" href="{{ path('op_webapp_section_star', {'id': section.id}) }}"><i class="far fa-star text-warning"></i></a></p>
+                {% else %}
+                    <p class="card-text"><a class="js-star" href="{{ path('op_webapp_section_star', {'id': section.id}) }}"><i class="fas fa-star text-warning"></i></a></p>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if section.contentType == 'One_article' %}
+                    Un article
+                {% else %}
+                {{ section.contentType }}
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ path('op_webapp_section_show', {'id': section.id}) }}"><i class="far fa-eye"></i></a>&nbsp;&nbsp;
+                <a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}"><i class="far fa-edit"></i></a>&nbsp;&nbsp;
+                <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ section.id }}">
+                    <i class="bi bi-eraser text-danger"></i>
+                </a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="9">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

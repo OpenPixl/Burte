@@ -9,6 +9,8 @@ use App\Form\Webapp\Section2Type;
 use App\Repository\Webapp\SectionRepository;
 use CKSource\CKFinder\Response\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Element;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,23 +107,29 @@ class SectionController extends AbstractController
     }
 
     /**
-     * @Route("/webapp/section/addsection/{idpage}", name="op_webapp_section_add", methods={"GET","POST"})
+     * @Route("/webapp/section/addsection/{page}/{row}", name="op_webapp_section_add", methods={"GET","POST"})
      */
-    public function addSection(Request $request, $idpage) : Response
+    public function addSection( $page, $row, EntityManagerInterface $em) : Response
     {
-        $page = $this->getDoctrine()->getRepository(Page::class)->find($idpage);
+        $element = $this->getDoctrine()->getRepository(Page::class)->find($page);
+        $position = $row +1;
 
-        $element = json_decode($request->getContent(), true);
         $section = new Section;
-        $section->setTitle($element['title']);
-        $section->setDescription($element['description']);
-        $section->setAttrId($element['attrId']);
-        $section->setAttrName($element['attrName']);
-        $section->setAttrClass($element['attrClass']);
-        $section->setPage($page);
+        $section->setTitle('Nouvelle section');
+        $section->setContentType('none');
+        $section->setPage($element);
+        $section->setPosition($position);
+        $em->persist($section);
+        $em->flush();
+
+        $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
+
         return $this->json([
             'code'          => 200,
-            'message'       => 'accès au json'
+            'message'       => 'LA section à bien été ajoutée.',
+            'liste'         =>  $this->renderView('webapp/section/include/_liste.html.twig', [
+                'sections' => $sections
+            ])
         ], 200);
     }
 
@@ -235,6 +243,63 @@ class SectionController extends AbstractController
             'code'=> 200,
             'message' => "L'évènenemt a été supprimé"
         ], 200);
+    }
+
+    /**
+     * Permet de déplacer une section dans la liste
+     * @Route("/webapp/section/position/{id}/{level}", name="op_webapp_section_position_down")
+     */
+    public function Position(Section $section, $level, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $id = $section->getId();
+        $page = $section->getPage();
+
+       //
+
+        // On récupére la position de la page actuelle et on prépare des les futures positions +1 et -1.
+        $position = $section->getPosition();
+        $nextPos = $section->getPosition()+1;
+        $previousPos = $section->getPosition()-1;
+        // dd($section, $previousPos, $position, $nextPos );
+
+        if($level == 'up')
+        {
+            $previousItem = $em->getRepository(Section::class)->findOneBy(array('position' => $previousPos));
+            $section->setPosition($previousPos);
+            $previousItem->setPosition($position);
+            //dd($section, $previousPos, $position, $nextPos , $previousItem);
+            $em->flush();
+            // on récupère la liste des pages ordonnée par position
+            $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
+            return $this->json([
+                'code'=> 200,
+                'message' => "La page est montée d'un niveau",
+                'liste' => $this->renderView('webapp/section/include/_liste.html.twig', [
+                    'sections' => $sections
+                ])
+            ], 200);
+        }elseif($level == 'down'){
+            $nextItem = $em->getRepository(Section::class)->findOneBy(array('position' => $nextPos));
+            $section->setPosition($nextPos);
+            $nextItem->setPosition($position);
+            $em->flush();
+            // on récupère la liste des pages ordonnée par position
+            $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
+            return $this->json([
+                'code'=> 200,
+                'message' => "La page est descendu d'un niveau",
+                'liste' => $this->renderView('webapp/section/include/_liste.html.twig', [
+                    'sections' => $sections
+                ])
+            ], 200);
+        }else{
+            return $this->json([
+                'code'=> 200,
+                'message' => "Une erreur a été détecter",
+
+            ], 200);
+        };
     }
 
 }

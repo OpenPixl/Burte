@@ -27,7 +27,6 @@ class PageType extends AbstractType
             ->add('metaKeywords')
             ->add('metaDescription')
             ->add('tags')
-            ->add('position')
             ->add('publishAt', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => false,
@@ -46,7 +45,6 @@ class PageType extends AbstractType
             ->add('isMenu')
             ->add('isTitle')
             ->add('isDescription')
-            ->add('sections')
         ;
     }
 

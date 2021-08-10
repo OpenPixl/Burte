@@ -19,10 +19,33 @@ class RecommandationRepository extends ServiceEntityRepository
         parent::__construct($registry, Recommandation::class);
     }
 
-    public function findByUser($user)
+    /**
+     * @param $user
+     * @return int|mixed|string
+     * Liste les recommandation reçues
+     */
+    public function findByUserReceipt($user)
     {
         return $this->createQueryBuilder('r')
             ->join('r.member', 'm')
+            ->andWhere('m.id = :id')
+            ->setParameter('id', $user)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $user
+     * @return int|mixed|string
+     * Liste les recommandation envoyées
+     */
+    public function findByUserSend($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.author', 'm')
             ->andWhere('m.id = :id')
             ->setParameter('id', $user)
             ->orderBy('r.id', 'ASC')

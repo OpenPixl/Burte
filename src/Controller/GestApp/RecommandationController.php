@@ -23,9 +23,11 @@ class RecommandationController extends AbstractController
     public function index(RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
-        $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUser($user);
+        $receipts = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceipt($user);
+        $sends = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserSend($user);
         return $this->render('gest_app/recommandation/index.html.twig', [
-            'recommandations' => $recommandations,
+            'receipts' => $receipts,
+            'sends' => $sends
         ]);
     }
 
@@ -159,13 +161,25 @@ class RecommandationController extends AbstractController
     }
 
     /**
-     * @Route("/op_admin/gestapp/recommandation/byuser", name="op_gestapp_recommandation_byuser", methods={"GET"})
+     * @Route("/op_admin/gestapp/recommandation/byuserReceipt", name="op_gestapp_recommandation_byuserreceipt", methods={"GET"})
      */
-    public function byUser(RecommandationRepository $recommandationRepository): Response
+    public function byUserReceipt(RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
-        $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUser($user);
-        return $this->render('gest_app/recommandation/byuser.html.twig', [
+        $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceipt($user);
+        return $this->render('gest_app/recommandation/byuserReceipt.html.twig', [
+            'recommandations' => $recommandations,
+        ]);
+    }
+
+    /**
+     * @Route("/op_admin/gestapp/recommandation/byuserSend", name="op_gestapp_recommandation_byusersend", methods={"GET"})
+     */
+    public function byUserSend(RecommandationRepository $recommandationRepository): Response
+    {
+        $user = $this->getUser();
+        $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserSend($user);
+        return $this->render('gest_app/recommandation/byuserSend.html.twig', [
             'recommandations' => $recommandations,
         ]);
     }

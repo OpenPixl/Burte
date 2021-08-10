@@ -43,10 +43,14 @@
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUser')) }}
+                    {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserReceipt')) }}
                 </div>
             </div>
-            <h3></h3>
+            <div class="card">
+                <div class="card-body">
+                    {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserSend')) }}
+                </div>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="row">

@@ -58,7 +58,7 @@
                     })
             }
 
-            // Bouton de suppression de la ligne en cours
+            // Ajout d'un event sur Bouton de suppression de la ligne en cours
             document.querySelectorAll('a.js-data-suppr').forEach(function(link){
                 link.addEventListener('click', onClickDelEvent)
             })
@@ -66,29 +66,47 @@
     </script>
 {% endblock %}
 {% block content %}
-<div class="container-fluid">
-    {{ include('gest_app/recommandation/include/_section_content_header.html.twig') }}
-    <section id="op_admin_content_body">
-        <div class="row g-2">
-            <div class="col-2">
-                {{ include('gest_app/recommandation/include/_section_content_aside.html.twig') }}
-            </div>
-            <div class="col-10">
-                <div class="card">
-                    <div class="card-body">
-                        <h4>Catalogue des recommandations</h4>
-                        <p>Créer, Modifier ou supprimer des recommandations du site.</p>
-                        <div class="row" id="liste">
-                            {{ include('gest_app/recommandation/include/_liste.html.twig') }}
+    {% set countReceipt = receipts|length %}
+    <div class="container-fluid">
+        {{ include('gest_app/recommandation/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                <div class="col-2">
+                    {{ include('gest_app/recommandation/include/_section_content_aside.html.twig') }}
+                </div>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Catalogue des recommandations</h4>
+                            <p>Créer, Modifier ou supprimer des recommandations du site.</p>
+                            <div class="row" id="liste">
+                                <div class="col-12">
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item">
+                                            <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Receipt" type="button" role="tab" aria-controls="Receipt" aria-selected="true"><h5>Reçues <span class="badge bg-secondary">{{ countReceipt }}</span></h5></button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Send" type="button" role="tab" aria-controls="Send" aria-selected="true"><h5>Envoyées <span class="badge bg-secondary">4</span></h5></button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="Receipt" role="tabpanel" aria-labelledby="home-tab">
+                                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserReceipt')) }}
+                                        </div>
+                                        <div class="tab-pane" id="Send" role="tabpanel" aria-labelledby="home-tab">
+                                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserSend')) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <a class="btn btn-sm btn-secondary" href="{{ path('op_gestapp_recommandation_index') }}">Retour à la liste des recommandations</a>
-                        <a class="btn btn-sm btn-primary" href="{{ path('op_gestapp_recommandation_new') }}">Ajouter une recommandation</a>
+                        <div class="card-footer">
+                            <a class="btn btn-sm btn-secondary" href="{{ path('op_gestapp_recommandation_index') }}">Retour à la liste des recommandations</a>
+                            <a class="btn btn-sm btn-primary" href="{{ path('op_gestapp_recommandation_new') }}">Ajouter une recommandation</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 {% endblock %}

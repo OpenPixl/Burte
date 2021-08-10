@@ -1,12 +1,12 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th colspan="2">Statistique personnelle</th>
+            <th colspan="2">Statistiques personnelle</th>
         </tr>
         <tr>
             <th>Statut</th>
-            <th>Cumul</th>
-            <th>Recommandant</th>
+            <th>Recues</th>
+            <th>Envoyés</th>
         </tr>
     </thead>
     <tbody>
@@ -15,11 +15,11 @@
             <td>
                 {% if stat.recoState == 'noRead' %}
                     Non lue
-                {% elseif stat.recoState == 'inProgress' %}
+                {% elseif stat.recoState == 'InProgress' %}
                     En cours
                 {% elseif stat.recoState == 'Valid' %}
                     validée
-                {% elseif stat.recoState == 'Valid' %}
+                {% elseif stat.recoState == 'Avort' %}
                     Sans suite
                 {% endif %}</td>
             <td>{% if stat.recoPrice is not null %}{{ stat.recoPrice }} €{% else %}0.00 €{% endif %}</td>

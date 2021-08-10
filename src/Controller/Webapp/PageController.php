@@ -25,25 +25,74 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route("/webapp/page/new", name="op_webapp_page_new", methods={"GET","POST"})
+     * @Route("/webapp/page/new/", name="op_webapp_page_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
+        // OPn déclare les variablezs utiles à la méthode
         $member = $this->getUser();
+
+        // on alimente une nouvelle page -> l'objet
         $page = new Page();
         $page->setAuthor($member);
+        $page->setPosition(1);
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // on persiste en base de donée le nouvel objet
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($page);
             $entityManager->flush();
 
+            // on alimente une nouvelle section au nouvel objet fraichement créer et on le persiste
             $section = new Section();
             $section->setTitle('nouvelle section');
-            $section->setDescription('Espace présentant sur le dashboard, le role de la section créée dans la page.');
+            $section->setDescription('');
             $section->setContentType('none');
+            $section->setPosition(1);
+            $section->setPage($page);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($section);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_webapp_page_index');
+        }
+
+        return $this->render('webapp/page/new.html.twig', [
+            'page' => $page,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/webapp/page/new/{position}", name="op_webapp_page_newposition", methods={"GET","POST"})
+     */
+    public function newPosition(Request $request, $position): Response
+    {
+        // OPn déclare les variablezs utiles à la méthode
+        $member = $this->getUser();
+        $newpos = $position +1;
+
+        // on alimente une nouvelle page -> l'objet
+        $page = new Page();
+        $page->setAuthor($member);
+        $page->setPosition($newpos);
+        $form = $this->createForm(PageType::class, $page);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // on persiste en base de donée le nouvel objet
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($page);
+            $entityManager->flush();
+
+            // on alimente une nouvelle section au nouvel objet fraichement créer et on le persiste
+            $section = new Section();
+            $section->setTitle('nouvelle section');
+            $section->setDescription('');
+            $section->setContentType('none');
+            $section->setPosition(1);
             $section->setPage($page);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($section);
@@ -111,6 +160,27 @@ class PageController extends AbstractController
         }
 
         return $this->redirectToRoute('op_webapp_page_index');
+    }
+
+    /**
+     * Suppression d'une ligne index.php
+     * @Route("/webapp/page/del/{id}", name="op_gestapp_recommandation_del", methods={"POST"})
+     */
+    public function DelEvent(Request $request, Page $page) : Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($page);
+        $entityManager->flush();
+
+        $pages = $this->getDoctrine()->getRepository(Page::class)->sortPosition();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'évènenemt a été supprimé",
+            'liste' => $this->renderView('webapp/page/include/_liste.html.twig', [
+                'pages' => $pages
+            ])
+        ], 200);
     }
 
     /**
@@ -233,6 +303,5 @@ class PageController extends AbstractController
                 ])
             ], 200);
         };
-
     }
 }

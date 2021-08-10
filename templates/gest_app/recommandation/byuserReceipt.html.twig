@@ -1,11 +1,11 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th colspan="10">Liste des Recommandations</th>
+            <th colspan="10">Mes recommandations reçues.</th>
         </tr>
         <tr>
             <th>Titre</th>
-            <th>Recommandé par</th>
+            <th>Reçue de </th>
             <th>Client</th>
             <th>Contact</th>
             <th>Estimation</th>
@@ -19,7 +19,7 @@
             <td>{{ recommandation.name }}
                 {% if recommandation.recostate == 'noRead' %}
                     <span class="badge bg-warning">Non lue</span>
-                {% elseif recommandation.recostate == 'inProgress'%}
+                {% elseif recommandation.recostate == 'InProgress'%}
                     <span class="badge bg-info">En cours</span>
                 {% elseif recommandation.recostate == 'Valid'%}
                     <span class="badge bg-success">Validée</span>

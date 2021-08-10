@@ -1,43 +1,14 @@
-    <h4>Liste des sections de la page {{ element.name }}</h4>
-    <p>Dans cet espace, vous pouvez ajouter/supprimer les différentes sections composants cette dernière.</p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th class="text-center">Mise en avant</th>
-                <th class="text-center">Contenu</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for section in sections %}
-            <tr>
-                <td>{{ section.title }}</td>
-                <td>{{ section.description }}</td>
-                <td class="text-center">
-                    {% if section.favorites == 0 %}
-                        <p class="card-text"><a class="js-star" href="{{ path('op_webapp_section_star', {'id': section.id}) }}"><i class="far fa-star text-warning"></i></a></p>
-                    {% else %}
-                        <p class="card-text"><a class="js-star" href="{{ path('op_webapp_section_star', {'id': section.id}) }}"><i class="fas fa-star text-warning"></i></a></p>
-                    {% endif %}
-                </td>
-                <td class="text-center">
-                    {{ section.contentType }}
-                </td>
-                <td>
-                    <a href="{{ path('op_webapp_section_show', {'id': section.id}) }}"><i class="far fa-eye"></i></a>&nbsp;&nbsp;
-                    <a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}"><i class="far fa-edit"></i></a>&nbsp;&nbsp;
-                    <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ section.id }}">
-                        <i class="bi bi-eraser text-danger"></i>
-                    </a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{% set countrow = sections|length %}
+<div class="d-flex justify-content-between">
+    <div>
+        <h4>Liste des sections de la page : {{ element.name }}</h4>
+        <p>Dans cet espace, vous pouvez ajouter/supprimer les différentes sections composants cette dernière.</p>
+    </div>
+    <div id="op_actions" class="d-flex align-items-center">
+        <button id="btnAddSection" name="{{ element.id }}-{{ countrow }}" class="btn btn-sm btn-outline-secondary js-add-section"><i class="bi bi-plus-square"></i> Ajouter une section</button>
+    </div>
+</div>
+<div id="liste">
+    {{ include('webapp/section/include/_liste.html.twig') }}
+</div>
 

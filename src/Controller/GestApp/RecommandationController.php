@@ -8,7 +8,7 @@ use App\Repository\GestApp\RecommandationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Message;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -23,8 +23,8 @@ class RecommandationController extends AbstractController
     public function index(RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
-        $receipts = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceipt($user);
-        $sends = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserSend($user);
+        $receipts = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceiptRead($user);
+        $sends = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserSendRead($user);
         return $this->render('gest_app/recommandation/index.html.twig', [
             'receipts' => $receipts,
             'sends' => $sends
@@ -53,7 +53,7 @@ class RecommandationController extends AbstractController
         $form = $this->createForm(RecommandationType::class, $recommandation);
         $recommandation->setRecoState('noRead');
         $recommandation->setAuthor($user);
-        $recommandation->setIsFirstView(0);
+        $recommandation->setIsFirstView(1);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -66,7 +66,7 @@ class RecommandationController extends AbstractController
             $email = $membre->getEmail();
 
             // partie de code pour envoyer un email au membre recommandé
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->from('postmaster@openpixl.fr')
                 ->to($email)
                 //->cc('cc@example.com')
@@ -75,11 +75,11 @@ class RecommandationController extends AbstractController
                 //->priority(Email::PRIORITY_HIGH)
                 ->subject('JUSTàFaire - une nouvelle recommandation vous attends dans votre espace')
                 //->text('Sending emails is fun again!')
-                ->html('<p>test</p>');
+                ->htmlTemplate('email/newRecommandation.html.twig');
             $mailer->send($email);
 
             // partie de code pour envoyer un email au membre recommandé
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->from('postmaster@openpixl.fr')
                 ->to('xavier.burke@openpixl.fr')
                 //->cc('cc@example.com')
@@ -88,7 +88,7 @@ class RecommandationController extends AbstractController
                 //->priority(Email::PRIORITY_HIGH)
                 ->subject('JUSTàFaire - une nouvelle recommandation a été émise depuis le site')
                 //->text('Sending emails is fun again!')
-                ->html('<h1>Just à Faire<small> - Nouvelle Recommandation</small></h1>');
+                ->htmlTemplate('email/newRecommandationWebMaster.html.twig');
             $mailer->send($email);
 
             return $this->redirectToRoute('op_gestapp_recommandation_index');
@@ -107,7 +107,7 @@ class RecommandationController extends AbstractController
     {
         $isread = $recommandation->getIsRead();
         if($isread == 0) {
-            $recommandation->setIsRead(1);
+            $recommandation->setIsRead(0);
             $recommandation->setIsFirstView(1);
             $recommandation->setRecoState('inProgress');
             $this->getDoctrine()->getManager()->flush();
@@ -161,26 +161,29 @@ class RecommandationController extends AbstractController
     }
 
     /**
-     * @Route("/op_admin/gestapp/recommandation/byuserReceipt", name="op_gestapp_recommandation_byuserreceipt", methods={"GET"})
+     * @Route("/op_admin/gestapp/recommandation/byuserReceipt/{hide}", name="op_gestapp_recommandation_byuserreceipt", methods={"GET"})
      */
-    public function byUserReceipt(RecommandationRepository $recommandationRepository): Response
+    public function byUserReceipt($hide, RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
         $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceipt($user);
         return $this->render('gest_app/recommandation/byuserReceipt.html.twig', [
             'recommandations' => $recommandations,
+            'hide' => $hide
         ]);
     }
 
     /**
-     * @Route("/op_admin/gestapp/recommandation/byuserSend", name="op_gestapp_recommandation_byusersend", methods={"GET"})
+     * @Route("/op_admin/gestapp/recommandation/byuserSend/{hide}", name="op_gestapp_recommandation_byusersend", methods={"GET"})
      */
-    public function byUserSend(RecommandationRepository $recommandationRepository): Response
+    public function byUserSend($hide,RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
         $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserSend($user);
+        $hide = 1;
         return $this->render('gest_app/recommandation/byuserSend.html.twig', [
             'recommandations' => $recommandations,
+            'hide' => $hide
         ]);
     }
 
@@ -197,60 +200,98 @@ class RecommandationController extends AbstractController
     }
 
     /**
+     * Suppression d'une ligne index.php
+     * @Route("/op_admin/gestapp/recommandation/del/{id}", name="op_gestapp_recommandation_suppr", methods={"POST"})
+     */
+    public function DelEvent(Request $request, Recommandation $recommandation) : Response
+    {
+        $author = $recommandation->getAuthor();
+        $hide = 0;
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($recommandation);
+        $entityManager->flush();
+
+        $receipt = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceipt($author);
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'évènenemt a été supprimé",
+            'listeReceipt' => $this->renderView('gest_app/recommandation/include/_liste.html.twig', [
+                'recommandations' => $receipt,
+                'hide' => $hide
+            ]),
+        ], 200);
+    }
+
+    /**
+     * Mise a jour des recommandations depuis le show Recommandation
      * @Route("/op_admin/gestapp/recommandation/reco/{id}", name="op_gestapp_recommandation_addrecoprice",methods={"GET","POST"})
      */
     public function addrecoprice(Recommandation $recommandation, Request $request): Response
     {
         $user = $this->getUser();
-        $data = json_decode($request->getContent(), true);
-        $name = $data['name'];
-        $description = $data['description'];
-        $recoprice = $data['recoprice'];
-        $recostate = $data['recostate'];
-        // renvoie une erreur car l'utilisateur n'est pas connecté
+        $hide = 0;
+        $isread = $recommandation->getIsRead();
+
         if(!$user) {return $this->json([
             'code' => 403,
             'message'=> "Vous n'êtes pas connecté"
         ], 403);
-        }elseif($recoprice and !$recostate){                            // enregistre seulement si l'estimation de la reco est entrée
+        }elseif($isread == 0){
+            $data = json_decode($request->getContent(), true);
+            $recoprice = $data['recoprice'];
+
+            // Hydratation de l'entité
+            $recommandation->setIsRead('1');
             $recommandation->setRecoPrice($recoprice);
             $this->getDoctrine()->getManager()->flush();
+
+            // Préparation de la liste à rafraichir
+            $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceipt($user);
+
+            // Réponse JSON
             return $this->json([
                 'code'=> 200,
-                'message' => "L'estimation de la recommandation a été ajoutée à la recommandation."
+                'message' => "L'estimation de la recommandation a été ajoutée à la recommandation.",
+                'listeReceipt' => $this->renderView('gest_app/recommandation/include/_liste.html.twig', [
+                    'recommandations' => $recommandations,
+                    'hide' => $hide
+                ]),
+            ], 200);
+        }else{
+            $data = json_decode($request->getContent(), true);
+            $name = $data['name'];
+            $description = $data['description'];
+            $recoprice = $data['recoprice'];
+            $recostate = $data['recostate'];
+            $clientAddress = $data['clientAddress'];
+            $clientComplement = $data['clientComplement'];
+            $clientZipcode = $data['clientZipcode'];
+            $clientCity = $data['clientCity'];
+
+            // Hydratation de l'entité
+            $recommandation->setRecoPrice($recoprice);
+            $recommandation->setName($name);
+            $recommandation->setRecoState($recostate);
+            $recommandation->setDescription($description);
+            $recommandation->setClientAddress($clientAddress);
+            $recommandation->setClientCity($clientComplement);
+            $recommandation->setClientZipcode($clientZipcode);
+            $recommandation->setClientCity($clientCity);
+            $this->getDoctrine()->getManager()->flush();
+
+            // Préparation de la liste à rafraichir
+            $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceipt($user);
+
+            // Réponse JSON
+            return $this->json([
+                'code'=> 200,
+                'message' => "L'estimation de la recommandation a été ajoutée à la recommandation.",
+                'listeReceipt' => $this->renderView('gest_app/recommandation/include/_liste.html.twig', [
+                    'recommandations' => $recommandations,
+                    'hide' => $hide
+                ]),
             ], 200);
         }
-        $recommandation->setName($name);
-        $recommandation->setDescription($description);
-        $recommandation->setRecoPrice($recoprice);
-        $recommandation->setRecoState($recostate);
-        $this->getDoctrine()->getManager()->flush();
-        return $this->json([
-            'code'=> 200,
-            'message' => "L'estimation de la recommandation a été ajoutée à la recommandation."
-        ], 200);
-    }
-
-    /**
-     * Suppression d'une ligne index.php
-     * @Route("/gest/app/recommandation/del/{id}", name="op_gestapp_recommandation_del", methods={"POST"})
-     */
-    public function DelEvent(Request $request, Recommandation $recommandation, SerializerInterface $serializer) : Response
-    {
-        $author = $recommandation->getAuthor();
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($recommandation);
-        $entityManager->flush();
-
-        $RefreshRecommandation = $this->getDoctrine()->getRepository(Recommandation::class)->findByUser($author);
-
-        return $this->json([
-            'code'=> 200,
-            'message' => "L'évènenemt a été supprimé",
-            'liste' => $this->renderView('gest_app/recommandation/include/_liste.html.twig', [
-                'recommandations' => $RefreshRecommandation
-            ])
-        ], 200);
     }
 }

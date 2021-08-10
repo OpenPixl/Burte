@@ -29,10 +29,10 @@
 
             // function Suppression de la ligne en cours
             function onClickDelEvent(event){
-                //event.preventDefault()
+                event.preventDefault()
                 const id = document.getElementById('recipient-name').value
                 axios
-                    .post('/gest/app/recommandation/del/'+ id)
+                    .post('/op_admin/gestapp/recommandation/del/'+ id)
                     .then(function(response)
                     {
                         // préparation du toaster
@@ -50,7 +50,11 @@
                         toastElement.show();
 
                         // rafraichissement du tableau
-                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        const listeReceipt = document.getElementById('listeReceipt').innerHTML = response.data.listeReceipt;
+                        // Ajout d'un event sur Bouton de suppression de la ligne en cours
+                        document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                            link.addEventListener('click', onClickDelEvent)
+                        })
 
                     })
                     .catch(function(error){
@@ -67,6 +71,7 @@
 {% endblock %}
 {% block content %}
     {% set countReceipt = receipts|length %}
+    {% set countSend = sends|length %}
     <div class="container-fluid">
         {{ include('gest_app/recommandation/include/_section_content_header.html.twig') }}
         <section id="op_admin_content_body">
@@ -83,18 +88,36 @@
                                 <div class="col-12">
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item">
-                                            <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Receipt" type="button" role="tab" aria-controls="Receipt" aria-selected="true"><h5>Reçues <span class="badge bg-secondary">{{ countReceipt }}</span></h5></button>
+                                            <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Receipt" type="button" role="tab" aria-controls="Receipt" aria-selected="true">
+                                                <div class="position-relative">
+                                                    RE&#xc7;UES
+                                                    {% if countReceipt > 0 %}
+                                                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-warning rounded-circle">
+                                                            <span class="visually-hidden">New alerts</span>
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
+                                            </button>
                                         </li>
                                         <li class="nav-item">
-                                            <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Send" type="button" role="tab" aria-controls="Send" aria-selected="true"><h5>Envoyées <span class="badge bg-secondary">4</span></h5></button>
+                                            <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Send" type="button" role="tab" aria-controls="Send" aria-selected="true">
+                                                <div class="position-relative">
+                                                    ENVOY&#201;ES
+                                                    {% if countSend > 0 %}
+                                                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-warning rounded-circle">
+                                                            <span class="visually-hidden">New alerts</span>
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
+                                            </button>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="Receipt" role="tabpanel" aria-labelledby="home-tab">
-                                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserReceipt')) }}
+                                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserReceipt', {'hide':0})) }}
                                         </div>
                                         <div class="tab-pane" id="Send" role="tabpanel" aria-labelledby="home-tab">
-                                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserSend')) }}
+                                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserSend', {'hide':0} )) }}
                                         </div>
                                     </div>
                                 </div>

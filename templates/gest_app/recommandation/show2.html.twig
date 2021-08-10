@@ -13,10 +13,14 @@
                 const id = document.getElementById('recoid').value;
                 const name = document.getElementById('name').value;
                 const description = document.getElementById('description').value;
+                const clientAddress = document.getElementById('clientAddress').value;
+                const clientComplement = document.getElementById('clientComplement').value;
+                const clientZipcode = document.getElementById('clientZipcode').value;
+                const clientCity = document.getElementById('clientCity').value;
                 const recoprice = document.getElementById('recoprice').value;
                 const recostate = document.getElementById('recostate').value;
                 axios
-                    .post(url, {name:name, description:description, recoprice:recoprice, recostate:recostate})
+                    .post(url, {name:name, description:description, recoprice:recoprice, recostate:recostate, clientAddress: clientAddress, clientComplement:clientComplement, clientZipcode:clientZipcode, clientCity:clientCity})
                     .then(function(response) {
                         var option = {
                             animation : true,
@@ -94,7 +98,7 @@
                                         <input id="clientZipcode" class="form-control form-control-sm" name="clientZipcode" type="text" value="{{ recommandation.clientZipcode }}">
                                     </div>
                                     <div class="col-6">
-                                        <input id="clientZipcode" class="form-control form-control-sm" name="clientZipcode" type="text" value="{{ recommandation.clientZipcode }}">
+                                        <input id="clientCity" class="form-control form-control-sm" name="clientZipcode" type="text" value="{{ recommandation.clientZipcode }}">
                                     </div>
                                     <div class="col-3">
                                         <div class="input-group mb-3">

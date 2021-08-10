@@ -40,6 +40,25 @@ class RecommandationRepository extends ServiceEntityRepository
     /**
      * @param $user
      * @return int|mixed|string
+     * Liste les recommandation reçues lues
+     */
+    public function findByUserReceiptRead($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.member', 'm')
+            ->andWhere('m.id = :id')
+            ->andWhere('r.isRead = 0')
+            ->setParameter('id', $user)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $user
+     * @return int|mixed|string
      * Liste les recommandation envoyées
      */
     public function findByUserSend($user)
@@ -55,6 +74,30 @@ class RecommandationRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param $user
+     * @return int|mixed|string
+     * Liste les recommandation envoyées lues
+     */
+    public function findByUserSendRead($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.author', 'm')
+            ->andWhere('m.id = :id')
+            ->andWhere('r.isRead = 0')
+            ->setParameter('id', $user)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $user
+     * @return int|mixed|string
+     * Liste les recommandation envoyées
+     */
     public function statsByUser($user)
     {
         return $this->createQueryBuilder('r')
@@ -72,6 +115,7 @@ class RecommandationRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
 
     // /**
     //  * @return Recommandation[] Returns an array of Recommandation objects

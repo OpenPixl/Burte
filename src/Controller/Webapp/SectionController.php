@@ -233,15 +233,26 @@ class SectionController extends AbstractController
     /**
      * @Route("/webapp/section/del/{id}", name="op_webapp_section_del", methods={"POST"})
      */
-    public function DelEvent(Request $request, Section $section) : Response
+    public function DelEvent(Request $request, Section $section, EntityManagerInterface $em) : Response
     {
+        // creation des éléement ncessaire à la méthode
+        $user = $this->getUser();
+        $page = $section->getPage();
+
+        // Suppression de l'entité
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($section);
         $entityManager->flush();
 
+        // Récupération de la liste des sectiosn
+        $element = $this->getDoctrine()->getRepository(Page::class)->find($page);
+        $sections = $em->getRepository(Section::class)->findbypage($page);
         return $this->json([
             'code'=> 200,
-            'message' => "L'évènenemt a été supprimé"
+            'message' => "L'évènenemt a été supprimé",
+            'liste' => $this->renderView('webapp/section/include/_liste.html.twig', [
+                'sections' => $sections,
+            ])
         ], 200);
     }
 
@@ -255,23 +266,22 @@ class SectionController extends AbstractController
         $id = $section->getId();
         $page = $section->getPage();
 
-       //
-
         // On récupére la position de la page actuelle et on prépare des les futures positions +1 et -1.
         $position = $section->getPosition();
         $nextPos = $section->getPosition()+1;
         $previousPos = $section->getPosition()-1;
-        // dd($section, $previousPos, $position, $nextPos );
 
         if($level == 'up')
         {
             $previousItem = $em->getRepository(Section::class)->findOneBy(array('position' => $previousPos));
             $section->setPosition($previousPos);
             $previousItem->setPosition($position);
-            //dd($section, $previousPos, $position, $nextPos , $previousItem);
             $em->flush();
+
             // on récupère la liste des pages ordonnée par position
             $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
+
+            // on retourne au format JSON
             return $this->json([
                 'code'=> 200,
                 'message' => "La page est montée d'un niveau",
@@ -296,10 +306,8 @@ class SectionController extends AbstractController
         }else{
             return $this->json([
                 'code'=> 200,
-                'message' => "Une erreur a été détecter",
-
+                'message' => "Une erreur a été détecté",
             ], 200);
-        };
+        }
     }
-
 }

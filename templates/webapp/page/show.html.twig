@@ -47,12 +47,19 @@
 
             // function Suppression de la ligne en cours
             function onClickDelEvent(event){
-                //event.preventDefault()
+                event.preventDefault()
                 const id = document.getElementById('recipient-name').value
                 axios
                     .post('/webapp/section/del/'+ id)
                     .then(function(response)
                     {
+                        // préparation de la liste à rafraichir
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        // on réinitie l'appel de l'évènement sur jsPosition
+                        document.querySelectorAll('a.jsPosition').forEach(function (link){
+                            link.addEventListener('click', onClickBtnPosition);
+                        })
+                        //On appelle le toast
                         var option = {
                             animation : true,
                             autohide: true,

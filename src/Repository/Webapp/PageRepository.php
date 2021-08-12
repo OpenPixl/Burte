@@ -29,7 +29,7 @@ class PageRepository extends ServiceEntityRepository
             ->andWhere('p.state = :state')
             ->andWhere('p.isMenu = :isMenu')
             ->andWhere('p.isPublish = :isPublish')
-            ->setParameter('state', 'publish')
+            ->setParameter('state', 'finished')
             ->setParameter('isMenu', 1)
             ->setParameter('isPublish', 1)
             ->orderBy('p.position', 'ASC')

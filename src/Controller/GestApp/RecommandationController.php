@@ -75,7 +75,10 @@ class RecommandationController extends AbstractController
                 //->priority(Email::PRIORITY_HIGH)
                 ->subject('JUSTàFaire - une nouvelle recommandation vous attends dans votre espace')
                 //->text('Sending emails is fun again!')
-                ->htmlTemplate('email/newRecommandation.html.twig');
+                ->htmlTemplate('email/newRecommandation.html.twig')
+                ->context([
+                    'author' => $user->getUsername(),
+                ]);
             $mailer->send($email);
 
             // partie de code pour envoyer un email au membre recommandé

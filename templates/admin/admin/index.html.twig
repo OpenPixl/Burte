@@ -43,14 +43,29 @@
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserReceipt', {'hide':1})) }}
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Receipt" type="button" role="tab" aria-controls="Receipt" aria-selected="true">
+                                RE&#xc7;UES
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Send" type="button" role="tab" aria-controls="Send" aria-selected="true">
+                                ENVOY&#201;ES
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="Receipt" role="tabpanel" aria-labelledby="home-tab">
+                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserReceipt', {'hide':1})) }}
+                        </div>
+                        <div class="tab-pane" id="Send" role="tabpanel" aria-labelledby="home-tab">
+                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserSend', {'hide':1} )) }}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body">
-                    {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserSend', {'hide':1})) }}
-                </div>
-            </div>
+
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="row">

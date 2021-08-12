@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         {% for recommandation in recommandations %}
-        <tr>
+        <tr {%  if recommandation.isRead == 0 %}class="table-active"{% endif %}>
             {% if hide == 0 %}
                 <td><input type="checkbox"></td>
             {% else %}

@@ -1,0 +1,22 @@
+<div class="row">
+    {% for galerie in galeries %}
+        <div class="col-2">
+            <div class="card">
+                <img src="{{ vich_uploader_asset(galerie) }}" alt="{{ galerie.alt }}" class="card-img-top" >
+                <div class="card-body">
+                    <p>{{ galerie.name }}</p>
+                    <p>{{ galerie.alt }}<br>{{ galerie.description }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Voir</a>
+                    <a href="#">Modifier</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <tr>
+            <td colspan="10">no records found</td>
+        </tr>
+    {% endfor %}
+</div>
+

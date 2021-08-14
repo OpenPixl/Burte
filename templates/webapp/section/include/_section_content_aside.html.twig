@@ -1,10 +1,9 @@
 <div class="card">
     <div class="card-body">
-        <h4><a href="{{ path('op_webapp_section_new') }}"><i class="far fa-plus-square"></i> Nouvelle section</a></h4>
-    </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <h4>{% if app.request.get('_route') == 'op_webapp_section_index'%}<a href="{{ path('op_admin_dashboard_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a></h4>{% else %}<a href="{{ path('op_webapp_section_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a></h4>{% endif %}
+        {% if app.request.get('_route') == 'op_webapp_section_index'%}
+        <h4><a href="{{ path('op_webapp_page_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a></h4>
+        {% else %}
+        <h4><a href="{{ path('op_webapp_section_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a></h4>
+        {% endif %}
     </div>
 </div>

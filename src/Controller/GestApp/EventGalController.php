@@ -5,6 +5,7 @@ namespace App\Controller\GestApp;
 use App\Entity\GestApp\EventGal;
 use App\Form\GestApp\EventGalType;
 use App\Repository\GestApp\EventGalRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -102,5 +103,18 @@ class EventGalController extends AbstractController
         }
 
         return $this->redirectToRoute('gest_app_event_gal_index');
+    }
+
+    /**
+     * Affiche le contenu de la galerie dans l'admin selon un event.
+     * @Route("/opadmin/gestapp/showGalByEvent/{event}", name="op_admin_eventgal_showgalbyevent", methods={"GET"})
+     */
+    public function showGalByEvent(EntityManagerInterface $em, $event)
+    {
+        $galeries = $em->getRepository(EventGal::class)->findBy(array('event'=>$event));
+
+        return $this->render('gest_app/event_gal/showgalbyevent.html.twig',[
+            'galeries' => $galeries
+        ]);
     }
 }

@@ -165,9 +165,14 @@
             </div>
         </div>
         {% if app.request.get('_route') == 'op_gestapp_event_edit' %}
-        <div class="tab_pane" id="Galerie" role="tabpanel" aria-labelledby="Galerie">
+            <div class="tab-pane" id="Galerie" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
-
+                <div class="col-2">
+                    {{ include('gest_app/event/include/_addeventgal.html.twig') }}
+                </div>
+                <div class="col-10">
+                    {% include 'gest_app/event_gal/showgalbyevent.html.twig' with galeries %}
+                </div>
             </div>
         </div>
         {% endif %}

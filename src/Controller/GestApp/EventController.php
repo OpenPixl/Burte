@@ -3,6 +3,7 @@
 namespace App\Controller\GestApp;
 
 use App\Entity\GestApp\Event;
+use App\Entity\GestApp\EventGal;
 use App\Form\GestApp\EventType;
 use App\Repository\GestApp\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -127,8 +128,13 @@ class EventController extends AbstractController
      */
     public function edit(Request $request, Event $event): Response
     {
+        $idevent = $event->getId();
+        $galeries = $this->getDoctrine()->getRepository(EventGal::class)->findBy(array('event'=>$idevent));
+
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
+
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -139,6 +145,7 @@ class EventController extends AbstractController
         return $this->render('gest_app/event/edit.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+            'galeries' => $galeries
         ]);
     }
 

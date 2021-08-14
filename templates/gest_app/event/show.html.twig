@@ -3,48 +3,100 @@
 {% block title %}Event{% endblock %}
 
 {% block content %}
-    <h1>Event</h1>
+<div class="container-fluid">
+    {{ include('gest_app/event/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('gest_app/event/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>L'événèment</h1>
+                    </div>
+                    <div class="card-body">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ event.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ event.name }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ event.slug }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ event.description }}</td>
-            </tr>
-            <tr>
-                <th>IsPublish</th>
-                <td>{{ event.isPublish ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>IsValidBy</th>
-                <td>{{ event.isValidBy ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ event.updatedAt ? event.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Details" type="button" role="tab" aria-controls="Details" aria-selected="true"><h5>Details</h5></button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Options" type="button" role="tab" aria-controls="Options" aria-selected="true"><h5>Options</h5></button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Visuel" type="button" role="tab" aria-controls="Visuel" aria-selected="true"><h5>Visuel et réseau</h5></button>
+                            </li>
+                            {% if app.request.get('_route') == 'op_gestapp_event_edit'%}
+                                <li class="nav-item">
+                                    <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Galerie" type="button" role="tab" aria-controls="Visuel" aria-selected="true"><h5>Galerie</h5></button>
+                                </li>
+                            {% endif %}
+                        </ul>
 
-    <a href="{{ path('op_gestapp_event_index') }}">Retour à liste</a>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="Details" role="tabpanel" aria-labelledby="home-tab">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Id</th>
+                                        <td>{{ event.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>{{ event.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Slug</th>
+                                        <td>{{ event.slug }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Description</th>
+                                        <td>{{ event.description|raw }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>IsPublish</th>
+                                        <td>{{ event.isPublish ? 'Yes' : 'No' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>IsValidBy</th>
+                                        <td>{{ event.isValidBy ? 'Yes' : 'No' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>CreatedAt</th>
+                                        <td>{{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>UpdatedAt</th>
+                                        <td>{{ event.updatedAt ? event.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
-    <a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}">Modifier</a>
+                                <a href="{{ path('op_gestapp_event_index') }}">Retour à liste</a>
 
-    {{ include('gest_app/event/_delete_form.html.twig') }}
+                                <a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}">Modifier</a>
+
+                                {{ include('gest_app/event/_delete_form.html.twig') }}
+                            </div>
+                            <div class="tab-pane" id="Options" role="tabpanel" aria-labelledby="home-tab">
+                            </div>
+                            <div class="tab-pane" id="Visuel" role="tabpanel" aria-labelledby="home-tab"></div>
+                            {% if app.request.get('_route') == 'op_gestapp_event_edit' or app.request.get('_route') == 'op_gestapp_event_show'%}
+                            <div class="tab_pane" id="Galerie" role="tabpanel" aria-labelledby="home-tab">
+                                {{ render(controller('App\\Controller\\GestApp\\EventGalController::showGalByEvent', {'event': event.id})) }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}

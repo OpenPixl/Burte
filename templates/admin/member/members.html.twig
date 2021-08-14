@@ -2,14 +2,12 @@
     {% for member in members %}
         <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-4">
             <div id="member-card" class="card mb-4">
+                {% if member.logoStructureName is null %}
+                <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar" style="width:286px;height:180px;">
+                {% elseif member.logoStructureName is not null %}
+                <img src="{{ vich_uploader_asset(member, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') | imagine_filter('logostruct_image') }}" class="card-img-top" alt="...">
+                {% endif %}
                 <div class="card-body">
-                    <div class="row align-items-center" style="height: 200px;">
-                        {% if member.logoStructureName is null %}
-                            <p class="text-center"><img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar" style="width:286px;height:180px;"></p>
-                        {% elseif member.logoStructureName is not null %}
-                            <img class="card-img-top img-fluid" src="{{ vich_uploader_asset(member, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') | imagine_filter('logostruct_image') }}" alt="{{ member.logoStructureName }}">
-                        {% endif %}
-                    </div>
                     <div class="row">
                         <h2 class="text-center"><a href="{{ path('op_admin_member_front_member', {'id': member.id}) }}">{{ member.structure }}</a></h2>
                         <p class="text-center ">

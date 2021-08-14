@@ -17,12 +17,10 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <h4>
-        {% if app.request.get('_route') == 'op_webapp_page_index'%}
+        <h3>{% if app.request.get('_route') == 'op_webapp_page_index'%}
         <a href="{{ path('op_admin_dashboard_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
         {% else %}
         <a href="{{ path('op_webapp_page_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
-        {% endif %}
-        </h4>
+        {% endif %}</h3>
     </div>
 </div>

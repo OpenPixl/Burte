@@ -207,9 +207,9 @@ class Member implements UserInterface
     private $authorReco;
 
     /**
-     * @ORM\OneToMany(targetEntity=Annonces::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="author")
      */
-    private $annonces;
+    private $annonce;
 
     public function __construct()
     {
@@ -703,26 +703,26 @@ class Member implements UserInterface
     }
 
     /**
-     * @return Collection|Annonces[]
+     * @return Collection|Annonce[]
      */
-    public function getAnnonces(): Collection
+    public function getAnnonce(): Collection
     {
-        return $this->annonces;
+        return $this->annonce;
     }
 
-    public function addAnnonce(Annonces $annonce): self
+    public function addAnnonce(Annonce $annonce): self
     {
-        if (!$this->annonces->contains($annonce)) {
-            $this->annonces[] = $annonce;
+        if (!$this->annonce->contains($annonce)) {
+            $this->annonce[] = $annonce;
             $annonce->setAuthor($this);
         }
 
         return $this;
     }
 
-    public function removeAnnonce(Annonces $annonce): self
+    public function removeAnnonce(Annonce $annonce): self
     {
-        if ($this->annonces->removeElement($annonce)) {
+        if ($this->annonce->removeElement($annonce)) {
             // set the owning side to null (unless already changed)
             if ($annonce->getAuthor() === $this) {
                 $annonce->setAuthor(null);

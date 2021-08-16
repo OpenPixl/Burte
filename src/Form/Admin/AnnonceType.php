@@ -2,12 +2,12 @@
 
 namespace App\Form\Admin;
 
-use App\Entity\Admin\Annonces;
+use App\Entity\Admin\Annonce;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AnnoncesType extends AbstractType
+class AnnonceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,7 +25,7 @@ class AnnoncesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Annonces::class,
+            'data_class' => annonce::class,
         ]);
     }
 }

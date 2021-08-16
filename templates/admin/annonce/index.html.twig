@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Annonces index{% endblock %}
+{% block title %}annonce index{% endblock %}
 
 {% block body %}
-    <h1>Annonces index</h1>
+    <h1>annonce index</h1>
 
     <table class="table">
         <thead>
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for annonce in annonces %}
+        {% for annonce in annonce %}
             <tr>
                 <td>{{ annonce.id }}</td>
                 <td>{{ annonce.title }}</td>
@@ -29,8 +29,8 @@
                 <td>{{ annonce.createAt ? annonce.createAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ annonce.updateAt ? annonce.updateAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_annonces_show', {'id': annonce.id}) }}">show</a>
-                    <a href="{{ path('admin_annonces_edit', {'id': annonce.id}) }}">edit</a>
+                    <a href="{{ path('admin_annonce_show', {'id': annonce.id}) }}">show</a>
+                    <a href="{{ path('admin_annonce_edit', {'id': annonce.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +41,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_annonces_new') }}">Create new</a>
+    <a href="{{ path('admin_annonce_new') }}">Create new</a>
 {% endblock %}

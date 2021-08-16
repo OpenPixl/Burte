@@ -2,13 +2,13 @@
 
 namespace App\Entity\Admin;
 
-use App\Repository\Admin\AnnoncesRepository;
+use App\Repository\Admin\AnnonceRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=AnnoncesRepository::class)
+ * @ORM\Entity(repositoryClass=AnnonceRepository::class)
  */
-class Annonces
+class Annonce
 {
     /**
      * @ORM\Id
@@ -28,7 +28,7 @@ class Annonces
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="annonces")
+     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="annonce")
      */
     private $author;
 

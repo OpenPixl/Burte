@@ -1,8 +1,12 @@
 {% if app.request.get('_route') == 'op_webapp_page_index'%}
-    {% set lastposition = '' %}
-    {% for page in pages %}
-        {% if loop.last %}{% set lastposition = page.position %}{% endif %}
-    {% endfor %}
+    {% if not pages %}
+        {% set lastposition = 0 %}
+    {% else %}
+        {% set lastposition = '' %}
+        {% for page in pages %}
+            {% if loop.last %}{% set lastposition = page.position %}{% endif %}
+        {% endfor %}
+    {% endif %}
 {% endif %}
 <div class="card">
     <div class="card-body">

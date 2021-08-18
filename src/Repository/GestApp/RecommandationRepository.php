@@ -96,25 +96,31 @@ class RecommandationRepository extends ServiceEntityRepository
     /**
      * @param $user
      * @return int|mixed|string
-     * Liste les recommandation envoyées
+     * Liste les recommandations envoyées et reçues
      */
     public function statsByUser($user)
     {
-        return $this->createQueryBuilder('r')
-            ->addSelect('
-                SUM(r.recoPrice) AS recoPrice,
-                r.recoState,
-                m.id
-            ')
-            ->join('r.member', 'm')
-            ->andWhere('m.id = :id')
-            ->setParameter('id', $user)
-            ->addGroupBy('r.recoState')
-            ->orderBy('r.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-            ;
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager
+            ->createQuery(
+            "
+                SELECT 
+                    r.recoState AS recoState, 
+                    SUM(CASE WHEN m.id = :user THEN r.recoPrice ELSE 0 END) AS recoPriceReceipt,
+                    SUM(CASE WHEN a.id = :user THEN r.recoPrice ELSE 0 END) AS recoPriceSend
+                FROM App\Entity\GestApp\Recommandation r
+                JOIN r.author a
+                JOIN r.member m
+                GROUP BY r.recoState
+                ORDER BY r.recoState ASC
+                "
+            )
+        ->setParameter('user', $user);
+
+        // Retourne un tabelau associatif
+        return $query->getResult();
     }
+
 
 
     // /**

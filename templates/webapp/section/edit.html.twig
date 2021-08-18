@@ -11,7 +11,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
+        window.onload = function(){
+            const OneArticle = document.getElementById('One_article');
+            const SelectContentType = document.getElementById('section_contentType')
 
+            // Elements masqués au démarrage de la page
+            OneArticle.style.visibility = 'hidden';
+
+            // affiche le champs "Choix d'un article si Content = One_Article
+            SelectContentType.addEventListener('change', (event) => {
+                OneArticle.style.visibility = 'visible';
+            });
+        }
     </script>
 {% endblock %}
 
@@ -28,7 +39,7 @@
                         <div class="card-header">
                             <h3>Modifier une section</h3>
                         </div>
-                        {{ include('webapp/section/_form.html.twig') }}
+                        {{ include('webapp/section/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
                     </div>
                 </div>
             </div>

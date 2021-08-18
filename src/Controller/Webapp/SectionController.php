@@ -148,17 +148,23 @@ class SectionController extends AbstractController
      */
     public function edit(Request $request, Section $section): Response
     {
+        $page = $section->getPage();
+        $idpage = $page->getId();
+        //dd($idpage);
         $form = $this->createForm(SectionType::class, $section);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('op_webapp_section_index');
+            return $this->redirectToRoute('op_webapp_section_edit', [
+                'id' => $section->getId()
+            ]);
         }
 
         return $this->render('webapp/section/edit.html.twig', [
             'section' => $section,
+            'idpage'=> $idpage,
             'form' => $form->createView(),
         ]);
     }

@@ -112,7 +112,7 @@ class RecommandationController extends AbstractController
         if($isread == 0) {
             $recommandation->setIsRead(0);
             $recommandation->setIsFirstView(1);
-            $recommandation->setRecoState('inProgress');
+            $recommandation->setRecoState('InProgress');
             $this->getDoctrine()->getManager()->flush();
 
             return $this->render('gest_app/recommandation/show.html.twig', [

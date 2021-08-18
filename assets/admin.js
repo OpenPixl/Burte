@@ -7,6 +7,9 @@
 
 // any CSS you import will output into a single css file (app.scss in this case)
 import './styles/admin.scss';
+
 window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 // start the Stimulus application
 import './bootstrap';
+import flatpickr from "flatpickr/dist/flatpickr.js";
+import french from  "flatpickr/dist/l10n/fr.js"

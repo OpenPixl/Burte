@@ -1,0 +1,27 @@
+<h3>Annonces du Groupe</h3>
+{% if annonces is not null %}
+    <div id="SlideAnnonce" class="carousel slide carousel-fade border-large" data-bs-ride="carousel" data-bs-pause="false">
+        <div class="carousel-inner border-sm">
+            <div class="carousel-indicators">
+                {% for annonce in annonces %}
+                    <button type="button" data-bs-target="#SlideEvent" data-bs-slide-to="{{ loop.index - 1 }}" {% if loop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ loop.index}}"></button>
+                {% endfor %}
+            </div>
+            {% for annonce in annonces %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="row">
+                    <div class="col-3">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(annonce, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') }}" alt="{{ annonce.logoStructureName }}">
+                    </div>
+                    <div class="col-9">
+                        <h6>{{ annonce.title }}</h6>
+                        <p>{{ annonce.content|raw }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <p>Pour l'instant aucunn membre du groupe n'a publié d'annonces.</p>
+{% endif %}

@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="tab-pane" id="Contenu" role="tabpanel" aria-labelledby="contenu-tab">
-                <div class="row">
+                <div class="row" id="contentType">
                     <div class="col-4">
                         <div class="row mb-1 mt-1 g-1">
                             <div class="col-3">
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" id="one_Article">
+                <div class="row" id="One_article">
                     <div class="col-4">
                         <div class="row mb-1 mt-1 g-1">
                             <div class="col-3">
@@ -153,6 +153,6 @@
     </div>
 </div>
 <div class="card-footer">
-    <a class="btn btn-secondary btn-sm" href="{{ path('op_webapp_section_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a> <button class="btn btn-sm btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    <a class="btn btn-secondary btn-sm" href="{{ path('op_webapp_page_show', {'id':idpage}) }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a> <button class="btn btn-sm btn-primary">{{ button_label|default('Enregistrer') }}</button>
 </div>
 {{ form_end(form) }}

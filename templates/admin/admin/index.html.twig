@@ -2,6 +2,62 @@
 
 {% block title %}Hello AdminController!{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+    <script>
+        window.onload = function(){
+
+            // mise en place du datapicker flatpickr sur les champs de date
+            flatpickr(".flatpickr", {
+                "locale": "fr",
+                enableTime: true,
+                altFormat: "j F Y",
+                dateFormat: "d-m-Y",
+            });
+
+            // Soumission du fomrulaire ajout d'une annonce
+            function onClickAddAnnonceSubmit(event){
+                event.preventDefault();
+                const url = '/opadmin/annonce/newaxios';
+                const title = document.getElementById('annonce_title').value;
+                const content = document.getElementById('annonce_content').value;
+                const publishAt = document.getElementById('annonce_publishAt').value;
+                const dispublishAt =document.getElementById('annonce_dispublishAt').value;
+                axios
+                    .post(url, {title:title, content:content, publishAt:publishAt, dispublishAt:dispublishAt})
+                    .then(function (response){
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastHeader = toastHTMLElement.querySelector('.toast-header');
+                        var toastBody = toastHTMLElement.querySelector('.toast-body'); // selection de l'élément possédant le message
+                        toastHeader.textContent = 'Annonce'
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                        // reset des inputs
+
+                    })
+                    .catch(function(error){
+                            console.log(error);
+                        })
+                }
+
+            // évènement sur le clic d'envoie formulaire
+            document.querySelectorAll('a.js-add-annonce').forEach(function(link){
+                link.addEventListener('click', onClickAddAnnonceSubmit)
+            })
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
 <section id="infos" class="container-fluid">
     <div class="row">
@@ -10,31 +66,43 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+        <div class="offset-6 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <div class="card">
+                <div class="card-body">
+                    {{ render(controller('App\\Controller\\Admin\\AnnonceController::publishDashboard')) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="card border-primary">
                 <div class="card-body">
                     <h3>{{ members|length }} Membres</h3>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-            <div class="card">
+            <div class="card border-primary">
                 <div class="card-body">
                     <h3>{{ recommandations|length }} Recommandations</h3>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-            <div class="card">
+            <div class="card border-primary">
                 <div class="card-body">
                     <h3>{{ events|length }} Evènements</h3>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-            <div class="card">
+            <div class="card border-primary">
                 <div class="card-body">
-                    <h3>Annonces</h3>
+                    <div class="d-flex justify-content-between">
+                        <div><h3>Annonces</h3></div>
+                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#Add"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -85,6 +153,4 @@
         </div>
     </div>
 </section>
-
-
 {% endblock %}

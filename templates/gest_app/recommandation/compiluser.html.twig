@@ -18,12 +18,12 @@
                 {% elseif stat.recoState == 'InProgress' %}
                     En cours
                 {% elseif stat.recoState == 'Valid' %}
-                    validée
+                    Validée
                 {% elseif stat.recoState == 'Avort' %}
                     Sans suite
                 {% endif %}</td>
-            <td>{% if stat.recoPrice is not null %}{{ stat.recoPrice }} €{% else %}0.00 €{% endif %}</td>
-            <td></td>
+            <td>{% if stat.recoPriceReceipt is not null %}{{ stat.recoPriceReceipt }} €{% else %}0.00 €{% endif %}</td>
+            <td>{% if stat.recoPriceSend is not null %}{{ stat.recoPriceSend }} €{% else %}0.00 €{% endif %}</td>
         </tr>
     {% else %}
         <tr> 

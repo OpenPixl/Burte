@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/annonce")
+ * @Route("/opadmin/annonce")
  */
 class AnnonceController extends AbstractController
 {
@@ -30,7 +30,9 @@ class AnnonceController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $user = $this->getUser();
         $annonce = new Annonce();
+        $annonce->setAuthor($user);
         $form = $this->createForm(annonceType::class, $annonce);
         $form->handleRequest($request);
 
@@ -39,13 +41,40 @@ class AnnonceController extends AbstractController
             $entityManager->persist($annonce);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_annonce_index');
+            return $this->redirectToRoute('op_admin_annonce_index');
         }
 
         return $this->render('admin/annonce/new.html.twig', [
             'annonce' => $annonce,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/newaxios", name="op_admin_annonce_newaxios", methods={"GET","POST"})
+     */
+    public function newaxios(Request $request): Response
+    {
+        // on recupère les données transmises
+        $data = json_decode($request->getContent(), true);
+
+        //
+        $user = $this->getUser();
+        $annonce = new Annonce();
+        $annonce->setTitle($data['title']);
+        $annonce->setContent($data['content']);
+        $annonce->setAuthor($user);
+        $annonce->setPublishAt(new \DateTime($data['publishAt']));
+        $annonce->setDispublishAt(new \DateTime($data['dispublishAt']));
+        //dd($annonce);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($annonce);
+        $entityManager->flush();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "Ajout d'annonce réalisée."
+        ], 200);
     }
 
     /**
@@ -94,7 +123,7 @@ class AnnonceController extends AbstractController
 
     /**
      * Affichage des annonces sur le dashboard
-     * @Rroute("/dashboard", name="op_admin_annonces_dashboard", methods=={"GET"})
+     * @Route("/dashboard", name="op_admin_annonces_dashboard", methods={"GET"})
      */
     public function publishDashboard(AnnonceRepository $annonceRepository)
     {
@@ -107,7 +136,8 @@ class AnnonceController extends AbstractController
 
         // on retourne la vue
         return $this->render('admin/annonce/dashboard.html.twig',[
-            'annonces' => $annonces
+            'annonces' => $annonces,
+            'current' => $current
         ]);
     }
 }

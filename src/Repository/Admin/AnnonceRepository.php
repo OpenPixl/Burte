@@ -24,24 +24,30 @@ class AnnonceRepository extends ServiceEntityRepository
     */
     public function publishDashboard($current)
     {
-        return $this->createQueryBuilder('a')
-            ->andSelect('
-                a.id,
-                a.title,
-                a.content,
-                a.publishat,
-                a.dispublishAt,
-                
-            ')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager
+            ->createQuery(
+                "
+                SELECT 
+                    a.id,
+                    a.title As title,
+                    a.content AS content,
+                    a.publishAt AS publishAt,
+                    a.dispublishAt AS dispublishAt,
+                    s.logoStructureName AS logoStructureName
+                FROM App\Entity\Admin\Annonce a
+                JOIN a.author m
+                JOIN m.structure s
+                WHERE (:current BETWEEN a.publishAt AND a.dispublishAt)
+                "
+            )
+            ->setParameter('current', $current);
+
+        // Retourne un tabelau associatif
+        return $query->getResult();
+
     }
-    */
+
 
     // /**
     //  * @return annonce[] Returns an array of annonce objects

@@ -1,0 +1,18 @@
+{% if is_granted('ROLE_ADMIN')  %}
+<div class="card">
+    <div class="card-header">
+        <h4><a href="{{ path('op_admin_message_new') }}"><i class="far fa-plus-square"></i> Nouveau message</a></h4>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <h4><a href="{{ path('op_admin_message_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a></h4>
+    </div>
+</div>
+{% elseif is_granted('ROLE_USER') %}
+<div class="card">
+    <div class="card-header">
+        <h4><a href="{{ path('op_admin_message_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a></h4>
+    </div>
+</div>
+{% endif %}

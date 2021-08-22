@@ -1,0 +1,53 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th></th>
+        <th>De</th>
+        <th>Sujet</th>
+        <th>Follow</th>
+        <th>Envoyé le </th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for message in messages %}
+        {% if message.isRead == 1 %}
+        <tr>
+            <td><input type="checkbox"></td>
+            <td>{{ message.author }}</td>
+            <td>{{ message.subject }}</td>
+            <td>{{ message.content }}</td>
+            <td>{{ message.follow }}</td>
+            <td>{{ message.createdAt ? message.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            <td>
+                <a href="{{ path('op_admin_message_show', {'id': message.id}) }}"><i class="far fa-eye"></i></a>
+                <a href="{{ path('op_admin_message_edit', {'id': message.id}) }}"><i class="far fa-edit"></i></a>
+                <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ message.id }}">
+                    <i class="fas fa-eraser"></i>
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr class="table-secondary">
+            <td><input type="checkbox"></td>
+            <td>{{ message.author }}</td>
+            <td>{{ message.subject }}</td>
+            <td>{{ message.content }}</td>
+            <td>{{ message.follow }}</td>
+            <td>{{ message.createdAt ? message.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            <td>
+                <a href="{{ path('op_admin_message_show', {'id': message.id}) }}"><i class="far fa-eye"></i></a>
+                <a href="{{ path('op_admin_message_edit', {'id': message.id}) }}"><i class="far fa-edit"></i></a>
+                <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ message.id }}">
+                    <i class="fas fa-eraser"></i>
+                </a>
+            </td>
+        </tr>
+        {% endif %}
+    {% else %}
+        <tr>
+            <td colspan="8">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

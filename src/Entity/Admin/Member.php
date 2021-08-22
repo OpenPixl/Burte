@@ -211,6 +211,17 @@ class Member implements UserInterface
      */
     private $annonce;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="author")
+     */
+    private $authormessages;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="recipient")
+     */
+    private $recipientmessage;
+
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -220,6 +231,9 @@ class Member implements UserInterface
         $this->recommandations = new ArrayCollection();
         $this->authorReco = new ArrayCollection();
         $this->annonces = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->authormessages = new ArrayCollection();
+        $this->recipientmessage = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -727,6 +741,63 @@ class Member implements UserInterface
             if ($annonce->getAuthor() === $this) {
                 $annonce->setAuthor(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getAuthormessages(): Collection
+    {
+        return $this->authormessages;
+    }
+
+    public function addAuthormessage(Message $authormessage): self
+    {
+        if (!$this->authormessages->contains($authormessage)) {
+            $this->authormessages[] = $authormessage;
+            $authormessage->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthormessage(Message $authormessage): self
+    {
+        if ($this->authormessages->removeElement($authormessage)) {
+            // set the owning side to null (unless already changed)
+            if ($authormessage->getAuthor() === $this) {
+                $authormessage->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getRecipientmessage(): Collection
+    {
+        return $this->recipientmessage;
+    }
+
+    public function addRecipientmessage(Message $recipientmessage): self
+    {
+        if (!$this->recipientmessage->contains($recipientmessage)) {
+            $this->recipientmessage[] = $recipientmessage;
+            $recipientmessage->addRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipientmessage(Message $recipientmessage): self
+    {
+        if ($this->recipientmessage->removeElement($recipientmessage)) {
+            $recipientmessage->removeRecipient($this);
         }
 
         return $this;

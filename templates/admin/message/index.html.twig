@@ -1,0 +1,29 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Message index{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('admin/message/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('admin/message/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Liste des messages</h4>
+                        <p>Créer, Modifier ou supprimer des message.</p>
+
+                        {{ include('admin/message/include/_liste.html.twig') }}
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-sm btn-secondary" href="{{ path('op_admin_message_new') }}"><i class="fas fa-angle-double-left"></i> Ajouter un nouveau message</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -50,3 +50,9 @@ liip_imagine:
                 thumbnail:
                     size: [ 800, 500 ]
                     mode: outbond
+        history_event:
+            quality: 150
+            filters:
+                thumbnail:
+                    size: [ 194, 130 ]
+                    mode: outbond

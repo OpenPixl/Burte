@@ -3,7 +3,7 @@
 namespace App\Controller\Webapp;
 
 use App\Entity\Admin\Parameter;
-use App\Entity\Webapp\Page;
+use App\Entity\Admin\Message;
 use App\Entity\Webapp\Section;
 use App\Repository\Webapp\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -106,8 +106,13 @@ class PublicController extends AbstractController
      */
     public function BlocMenu(PageRepository $pageRepository): Response
     {
+        // onr récupère l'utilisateur courant
+        $user = $this->getUser();
+
+        // préparation des éléments d'interactivité du menu
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
         $menus = $pageRepository->listMenu();
+
 
         return $this->render('include/navbar_webapp.html.twig', [
             'parameter' => $parameter,

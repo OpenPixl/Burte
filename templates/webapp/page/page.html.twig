@@ -11,18 +11,24 @@
 {% block content %}
     {% if page is empty %}
     {% else %}
-        {% if page.isTitle == 1 %}
         <header id="page-title">
             <div class="container">
+            {% if page.isTitle == 1 %}
                 <div class="row">
                     <div class="col">
                         <h1 class="title">{{ page.name }}</h1>
                     </div>
                 </div>
+            {% endif %}
+            {% if page.isDescription == 1 %}
+                <div class="row">
+                    <div class="col">
+                        <p>{{ page.description }}</p>
+                    </div>
+                </div>
+            {% endif %}
             </div>
         </header>
-        {% else %}
-        {% endif %}
-    {{ render(controller('App\\Controller\\Webapp\\SectionController::frontbypage', {'id' : page.id})) }}
+        {{ render(controller('App\\Controller\\Webapp\\SectionController::frontbypage', {'id' : page.id})) }}
     {% endif %}
 {% endblock %}

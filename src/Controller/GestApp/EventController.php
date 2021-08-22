@@ -204,4 +204,13 @@ class EventController extends AbstractController
         $em->flush();
         return $this->json(['code'=> 200, 'message' => "L'évènement est publié sur le site"], 200);
     }
+
+    public function historyOfEventPublish()
+    {
+        $events = $this->getDoctrine()->getRepository(Event::class)->findBy(array('isPublish'=> 1));
+
+        return $this->render('gest_app/event/history.html.twig', [
+            'events' => $events,
+        ]);
+    }
 }

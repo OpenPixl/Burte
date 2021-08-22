@@ -118,7 +118,12 @@
                             <tbody>
                             {% for event in events %}
                                 <tr>
-                                    <td><a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}">{{ event.name }}</a></td>
+                                    <td>
+                                        <a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}">{{ event.name }}</a>
+                                        {% if date(event.eventAt) < date() %}
+                                            <i class="bi bi-exclamation-diamond text-warning"></i>
+                                        {% endif %}
+                                    </td>
                                     {% if is_granted('ROLE_ADMIN') %}
                                     <td>{{ event.author }}</td>
                                     {% endif %}

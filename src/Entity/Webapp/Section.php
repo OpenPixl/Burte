@@ -101,6 +101,11 @@ class Section
     private $isShowtitle = false;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShowdescription = false;
+
+    /**
      * Insertion de l'image mise en avant liée à un article
      * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
      *
@@ -329,6 +334,18 @@ class Section
     public function setIsShowtitle(bool $isShowtitle): self
     {
         $this->isShowtitle = $isShowtitle;
+
+        return $this;
+    }
+
+    public function getIsShowdescription(): ?bool
+    {
+        return $this->isShowdescription;
+    }
+
+    public function setIsShowdescription(bool $isShowdescription): self
+    {
+        $this->isShowdescription = $isShowdescription;
 
         return $this;
     }

@@ -26,17 +26,28 @@ class SectionType extends AbstractType
             ->add('contentType', ChoiceType::class, [
                 'choices'  => [
                     'aucun' => 'none',
-                    'introduction' => 'intro',
-                    'Un article' => 'One_article',
-                    'Plusieurs articles' => 'More_article',
-                    'Une categorie' => 'Category',
-                    'Un évènement' => 'One_event',
-                    'les évènements' => 'Events',
-                    'membre' => 'Member',
-                    "bulletin d'adhésion" => "Adhesion",
-                    "image seule" => "Media_one",
-                    "liste des avis" => "Avis",
-                    'Autres' => 'Others'
+                    'ARTICLES' => [
+                        'Un article' => 'One_article',
+                        'Plusieurs articles' => 'More_article',
+                        'Une categorie' => 'Category',
+                    ],
+                    'EVENEMENTS' =>[
+                        'Un évènement' => 'One_event',
+                        'les évènements' => 'Events',
+                        'historiques des évènements' => 'HistoryOfEvent',
+                    ],
+                    'GALERIES' =>[
+                        "image seule" => "Media_one",
+                    ],
+                    'MEMBRES' => [
+                        'membre' => 'Member',
+                        "bulletin d'adhésion" => "Adhesion",
+                    ],
+                    'DIVERS' => [
+                        'introduction' => 'intro',
+                        "liste des avis" => "Avis",
+                        'Autres' => 'Others'
+                    ],
                 ],
             ])
             ->add('oneArticle')
@@ -44,6 +55,7 @@ class SectionType extends AbstractType
             ->add('isSectionFluid')
             ->add('position')
             ->add('isShowtitle')
+            ->add('isShowdescription')
             ->add('cssBackgroundImageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,

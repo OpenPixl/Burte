@@ -6,30 +6,37 @@
     <div id="section_title" class="row">
         {% if section.isShowtitle == 1 %}
         <div class="col">
-            <h2>{{ section.title }}</h2>
+            <h2>{{ section.title|upper }}</h2>
         </div>
         {% else %}
         {% endif %}
     </div>
     <div id="section_content">
+        {% if section.isShowdescription == 1 %}
         <div class="row">
             <div class="col-12">
-
+                <p>{{ section.description|raw }}</p>
             </div>
         </div>
+        {% endif %}
         <div class="row">
             <div class="col">
+                <# Affiche l'intro du site #>
                 {% if section.contentType == 'intro'%}
                     {{ include('webapp/section/include/_sectionIntro.html.twig') }}
-
+                <# Affiche un article #>
                 {% elseif section.contentType == 'One_article' %}
                 {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle})) }}
+                <# Affiche l'intro du site #>
                 {% elseif section.contentType == 'More_article'%}
+                <# Affiche une catégorie d'articles #>
                 {% elseif section.contentType == 'Category'%}
                     {{ render(controller('App\\Controller\\Webapp\\ArticleController::carousel')) }}
                 {% elseif section.contentType == 'One_event'%}
                 {% elseif section.contentType == 'Events'%}
                     {{ render(controller('App\\Controller\\GestApp\\EventController::ListAllEventPublish')) }}
+                {% elseif section.contentType == 'HistoryOfEvent'%}
+                    {{ render(controller('App\\Controller\\GestApp\\EventController::historyOfEventPublish')) }}
                 {% elseif section.contentType == 'Member'%}
                     {{ render(controller('App\\Controller\\Admin\\MemberController::Members')) }}
                 {% elseif section.contentType == 'Adhesion'%}

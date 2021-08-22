@@ -1,45 +1,59 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}annonce index{% endblock %}
 
-{% block body %}
-    <h1>annonce index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>PublishAt</th>
-                <th>DispublishAt</th>
-                <th>CreateAt</th>
-                <th>UpdateAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for annonce in annonce %}
-            <tr>
-                <td>{{ annonce.id }}</td>
-                <td>{{ annonce.title }}</td>
-                <td>{{ annonce.content }}</td>
-                <td>{{ annonce.publishAt ? annonce.publishAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ annonce.dispublishAt ? annonce.dispublishAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ annonce.createAt ? annonce.createAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ annonce.updateAt ? annonce.updateAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('admin_annonce_show', {'id': annonce.id}) }}">show</a>
-                    <a href="{{ path('admin_annonce_edit', {'id': annonce.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('admin_annonce_new') }}">Create new</a>
+{% block content %}
+<div class="container-fluid">
+    {{ include('admin/member/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('admin/member/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Liste des annonces</h4>
+                        <p>Créer, Modifier ou supprimer des membre du site.</p>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Titre</th>
+                                    <th>Contenu</th>
+                                    <th>Dates de publication</th>
+                                    <th>Auteur</th>
+                                    <th>Créer le</th>
+                                    <th>Modifiée le</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for annonce in annonce %}
+                                <tr>
+                                    <td><a href="{{ path('op_admin_annonce_show', {'id': annonce.id}) }}">{{ annonce.title }}</a></td>
+                                    <td>{{ annonce.content }}</td>
+                                    <td>{{ annonce.publishAt ? annonce.publishAt|format_datetime('medium', 'none', locale='fr') : ''  }} au {{ annonce.dispublishAt ? annonce.dispublishAt|format_datetime('medium', 'none', locale='fr') : ''  }}</td>
+                                    <td>{{ annonce.author }}</td>
+                                    <td>{{ annonce.createdAt ? annonce.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    <td>{{ annonce.updatedAt ? annonce.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    <td>
+                                        <a href="{{ path('op_admin_annonce_show', {'id': annonce.id}) }}"><i class="far fa-eye"></i></a>&nbsp;&nbsp;
+                                        <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ annonce.id }}">
+                                            <i class="fas fa-eraser"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}

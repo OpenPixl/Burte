@@ -1,6 +1,18 @@
 <section
         {% if section.attrId is null %}{% else %}id="{{ section.attrId }}"{% endif %}
-        {% if section.isSectionFluid == 0 %}class="container {% elseif section.contentType == 'Member'%}{% else %}op-section{% endif %}"{% if section.isSectionFluid == 1 %}class="container-fluid {% if section.contentType == 'Member'%}{% else %}op-section{% endif %}"{% endif %}
+        {% if section.isSectionFluid == 0 %}
+        class="container
+            {% if section.contentType == 'Member'%}
+            {% else %}op-section
+            {% endif %}
+        "
+        {% elseif section.isSectionFluid == 1 %}
+        class="container-fluid
+            {% if section.contentType == 'Member'%}
+            {% else %}op-section
+            {% endif %}
+            "
+        {% endif %}
         style="">
     <div id="section_title" class="mt-3 mb-3">
         <div class="row">

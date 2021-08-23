@@ -110,9 +110,9 @@
                                     <th>Auteur</th>
                                     {% endif %}
                                     <th>Description</th>
-                                    <th>Publié</th>
-                                    <th>Validé</th>
-                                    <th>actions</th>
+                                    <th class="text-center">Publié</th>
+                                    <th class="text-center">Validé</th>
+                                    <th class="text-center">actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,8 +128,14 @@
                                     <td>{{ event.author }}</td>
                                     {% endif %}
                                     <td>{{ event.description|u.truncate(100, ' ...')|raw }}</td>
-                                    <td>{{ event.isPublish ? 'Yes' : 'No' }}</td>
-                                    <td>
+                                    <td class="text-center">
+                                        {% if event.isPublish == 1 %}
+                                            <a class="js-publish" href="{{path('op_gestapp_event_isvalid', {'id' : event.id})}}"><i class="far fa-check-circle text-success"></i></a>
+                                        {% else %}
+                                            <a class="js-publish" href="{{path('op_gestapp_event_isvalid', {'id' : event.id})}}"><i class="far fa-times-circle text-danger"></i></a>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
                                         {% if is_granted('ROLE_ADMIN') %}
                                             {% if event.isValidBy == 1 %}
                                                 <a class="js-valid" href="{{path('op_gestapp_event_isvalid', {'id' : event.id})}}"><i class="far fa-check-circle text-success"></i></a>
@@ -144,7 +150,7 @@
                                             {% endif %}
                                         {% endif %}
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="{{ path('op_gestapp_event_show', {'id': event.id}) }}"><i class="bi bi-calendar3" style="font-size: 1.2rem;"></i></a>&nbsp;&nbsp;
                                         <a href="{{ path('op_gestapp_event_edit', {'id': event.id}) }}"><i class="bi bi-calendar2-check" style="font-size: 1.2rem;"></i></a>&nbsp;&nbsp;
                                         <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ event.id }}">

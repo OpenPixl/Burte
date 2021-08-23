@@ -29,6 +29,7 @@ class EventRepository extends ServiceEntityRepository
                 e.visuelName,
                 e.isPublish,
                 e.eventAt,
+                e.eventtimeAt,
                 e.placeAddress,
                 e.placeComplement,
                 e.placeZipcode,

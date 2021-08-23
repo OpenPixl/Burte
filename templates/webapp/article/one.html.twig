@@ -1,87 +1,83 @@
 <article>
-    <div id="member-card" class="card">
-        <diV class="card-body">
-            {% if article.isShowtitle == 1 %}
-                <header id="article_header">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2 class="text-center text-h1">{{ article.title }}</h2>
-                        </div>
-                    </div>
-                </header>
-            {% else %}
-            {% endif %}
+    {% if article.isShowtitle == 1 %}
+        <header id="article_header">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-center text-h1">{{ article.title }}</h2>
+                </div>
+            </div>
+        </header>
+    {% else %}
+    {% endif %}
 
-            <section id="article_content">
-                {% if article.articleFrontName is null %}
-                    <div class="row">
-                        <div class="col-12">
+    <section id="article_content">
+        {% if article.articleFrontName is null %}
+            <div class="row">
+                <div class="col-12">
+                    {% if article.isReadMore == 1 %}
+                        <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
+                        <p class="text-center"><a href="">Lire la suite ...</a></p>
+                    {% else %}
+                        <p class="text-center">{{ article.content|raw }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'right' %}
+            <div class="row">
+                <div class="col-9">
+                    <div class="d-flex justify-content-center">
+                        <div>
                             {% if article.isReadMore == 1 %}
                                 <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
-                                <p class="text-center"><a href="">Lire la suite ...</a></p>
                             {% else %}
                                 <p class="text-center">{{ article.content|raw }}</p>
                             {% endif %}
                         </div>
-                    </div>
-                {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'right' %}
-                    <div class="row">
-                        <div class="col-9">
-                            <div class="d-flex justify-content-center">
-                                <div>
-                                    {% if article.isReadMore == 1 %}
-                                        <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
-                                    {% else %}
-                                        <p class="text-center">{{ article.content|raw }}</p>
-                                    {% endif %}
-                                </div>
 
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <p class="text-center">
-                                <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}">
-                            </p>
-                        </div>
-                    </div>
-                {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'left' %}
-                    <div class="row">
-                        <div class="col-3">
-                            <p class="text-center">
-                                <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}">
-                            </p>
-                        </div>
-                        <div class="col-9">
-                            <div class="d-flex align-items-center">
-                                {% if article.isReadMore == 1 %}
-                                    <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
-                                {% else %}
-                                    <p class="text-center">{{ article.content|raw }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'none' %}
-                    <div class="row">
-                        <div class="col-12">
-                            <p class="text-center">
-                                <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}" style="width:60%">
-                            </p>
-                        </div>
-                    </div>
-                {% endif %}
-            </section>
-            {% if article.isShowdate == 1 %}
-            <footer id="article_footer">
-                <div class="row">
-                    <div class="col-12">
-                        <p>Article crée le : {{ article.createdAt|format_datetime('medium', 'none', locale='fr') }}</p>
-                        <p>Article modifié le : {{ article.updatedAt|format_datetime('medium', 'none', locale='fr') }}</p>
                     </div>
                 </div>
-            </footer>
-        </diV>
-    </div>
+                <div class="col-3">
+                    <p class="text-center">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}">
+                    </p>
+                </div>
+            </div>
+        {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'left' %}
+            <div class="row">
+                <div class="col-3">
+                    <p class="text-center">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}">
+                    </p>
+                </div>
+                <div class="col-9">
+                    <div class="d-flex align-items-center">
+                        {% if article.isReadMore == 1 %}
+                            <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
+                        {% else %}
+                            <p class="text-center">{{ article.content|raw }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'none' %}
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-center">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}" style="width:60%">
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+    {% if article.isShowdate == 1 %}
+    <footer id="article_footer">
+        <div class="row">
+            <div class="col-12">
+                <p>Article crée le : {{ article.createdAt|format_datetime('medium', 'none', locale='fr') }}</p>
+                <p>Article modifié le : {{ article.updatedAt|format_datetime('medium', 'none', locale='fr') }}</p>
+            </div>
+        </div>
+    </footer>
     {% else %}
     {% endif %}
 </article>

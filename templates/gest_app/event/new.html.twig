@@ -4,6 +4,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
     <script>
         window.onload = function(){
             ClassicEditor
@@ -14,6 +15,23 @@
                 .catch(error => {
                     console.error(error);
                 });
+
+            // mise en place du datapicker flatpickr sur les champs de date
+            flatpickr(".flatpickr", {
+                "locale": "fr",
+                enableTime: true,
+                altFormat: "j F Y",
+                dateFormat: "d/m/Y",
+            });
+
+            // mise en place du datapicker flatpickr sur les champs de date
+            flatpickr(".flatpickrtime", {
+                "locale": "fr",
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
         }
     </script>
 {%  endblock %}

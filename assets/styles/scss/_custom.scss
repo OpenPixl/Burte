@@ -92,6 +92,14 @@ label {
   color: #ffffff;
 }
 
+.op-section{
+  background-color: rgba(0, 0, 0, 0);
+  background-image: url("./../images/main_pattern.png");
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
 /***---------- MAIN : articles ----------***/
 
 .border-large{
@@ -130,6 +138,8 @@ label {
   margin-bottom: 0;
 }
 
+/***---------- MAIN : Member Card ----------***/
+
 #member-card{
   position: relative;
   display: flex;
@@ -142,6 +152,40 @@ label {
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
 }
+
+#member-card .card-img {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+#member-card .card-img-overlay {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right:0;
+  text-align: center;
+}
+
+#member-card:hover .card-img {
+  opacity: 0.3;
+}
+#member-card:hover .card-img-overlay {
+  opacity: 1;
+}
+
+#member-card .text {
+  color: white;
+  font-size: 16px;
+  padding: 2px 2px;
+}
+
 
 #SlideEvent .border-sm{
   height: 100%;

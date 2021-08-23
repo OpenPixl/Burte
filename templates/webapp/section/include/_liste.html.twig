@@ -3,7 +3,6 @@
     <tr>
         <th></th>
         <th>Section</th>
-        <th>Description</th>
         <th class="text-center">Mise en avant</th>
         <th class="text-center">Contenu</th>
         <th>actions</th>
@@ -17,7 +16,6 @@
                 {% if loop.last %}<i class="fas fa-long-arrow-alt-down text-muted"></i>{% else %}<a href="#" class="jsPosition" id="{{ section.id }}"><i class="fas fa-long-arrow-alt-down"></i></a>{% endif %}
             </td>
             <td><a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}">{{ section.title }}</a></td>
-            <td>{{ section.description }}</td>
             <td class="text-center">
                 {% if section.favorites == 0 %}
                     <p class="card-text"><a class="js-star" href="{{ path('op_webapp_section_star', {'id': section.id}) }}"><i class="far fa-star text-warning"></i></a></p>
@@ -28,6 +26,16 @@
             <td class="text-center">
                 {% if section.contentType == 'One_article' %}
                     Un article
+                {% elseif section.contentType == 'More_article' %}
+                    Plusieurs articles
+                {% elseif section.contentType == 'Category' %}
+                    Une catégorie
+                {% elseif section.contentType == 'One_event' %}
+                    Un Evènement
+                {% elseif section.contentType == 'Events' %}
+                    les évènement à venir
+                {% elseif section.contentType == 'HistoryOfEvent' %}
+                    Historique des évènements
                 {% else %}
                 {{ section.contentType }}
                 {% endif %}

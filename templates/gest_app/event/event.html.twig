@@ -21,7 +21,7 @@
                         <p class="text-center">
                             <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
                         </p>
-                        <h3 class="text-capitalize-h">le {{ event.eventAt|format_datetime('medium', 'none', locale='fr') }} à partir de 20h30</h3>
+                        <h3 class="text-capitalize-h">le {{ event.eventAt|format_datetime('medium', 'none', locale='fr') }} à partir de {{ event.eventtimeAt|date('H:i') }}</h3>
                         <p>{{ event.description|raw }}</p>
                         <div class="place-event m-3">
                             <p class="text-center">{{ event.placeAddress}}<br>{{ event.placeComplement}}<br>{{ event.placeZipcode}} {{ event.placeCity }}</p>
@@ -31,6 +31,38 @@
                         </div>
                         <div class="follow-event">
                             <p>Informations & contact :</p>
+                            <p>Nous suivre sur :
+                                <a href="#"><i class="bi bi-facebook text-light"></i></a>
+                                <a href="#"><i class="bi bi-instagram text-light"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="carousel-item active">
+
+            <img src="{{ asset('images/png/Modèle_Evenement.png')}}" alt="..." style="height:500px">
+
+            <div class="carousel-caption d-md-block">
+                <div class="row">
+                    <div class="col-5 d-none d-lg-block">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 ">
+                        <h2 class="mt-5">JUST à FAIRE</h2>
+                        <p class="text-center">
+                            <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
+                        </p>
+                        <h3 class="text-capitalize-h">Très prochainement</h3>
+                        <p>Vous pourrez participer à l'un de nos évènements.<br>En attendant retrouvez toute l'actualité du réseau JUST à FAIRE sur les réseaux.</p>
+                        <div class="place-event m-3">
+                            <p class="text-center"><br><br></p>
+                            <p class="text-center">
+                                <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
+                            </p>
+                        </div>
+                        <div class="follow-event">
                             <p>Nous suivre sur :
                                 <a href="#"><i class="bi bi-facebook text-light"></i></a>
                                 <a href="#"><i class="bi bi-instagram text-light"></i></a>

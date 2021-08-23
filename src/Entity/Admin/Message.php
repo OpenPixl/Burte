@@ -24,7 +24,6 @@ class Message
      */
     private $subject;
 
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */

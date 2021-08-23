@@ -56,7 +56,13 @@
                         <div class="col-3">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text" ><i class="bi bi-calendar-event"></i></span>
-                                {{ form_widget(form.eventAt, {'attr': {'class': 'form-control form-control-sm date datepicker-input', 'placeholder':''}}) }}
+                                {{ form_widget(form.eventAt, {'attr': {'class': 'form-control form-control-sm flatpickr', 'placeholder':''}}) }}
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text" ><i class="bi bi-clock"></i></span>
+                                {{ form_widget(form.eventtimeAt, {'attr': {'class': 'form-control form-control-sm flatpickrtime', 'placeholder':''}}) }}
                             </div>
                         </div>
                     </div>
@@ -65,13 +71,13 @@
                         <div class="col-3">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text" >Du</span>
-                                {{ form_widget(form.eventStartAt, {'attr': {'class': 'form-control form-control-sm date datepicker-input', 'placeholder':''}}) }}
+                                {{ form_widget(form.eventStartAt, {'attr': {'class': 'form-control form-control-sm flatpickr', 'placeholder':''}}) }}
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text" >Au</span>
-                                {{ form_widget(form.eventFinishAt, {'attr': {'class': 'form-control form-control-sm date datepicker-input', 'placeholder':''}}) }}
+                                {{ form_widget(form.eventFinishAt, {'attr': {'class': 'form-control form-control-sm flatpickr', 'placeholder':''}}) }}
                             </div>
                         </div>
                     </div>

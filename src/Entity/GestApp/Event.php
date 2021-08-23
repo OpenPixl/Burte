@@ -154,6 +154,11 @@ class Event
      */
     private $eventFinishAt;
 
+    /**
+     * @ORM\Column(type="time",nullable=true)
+     */
+    private $eventtimeAt;
+
     public function __construct()
     {
         $this->eventGals = new ArrayCollection();
@@ -497,6 +502,18 @@ class Event
     public function setEventFinishAt(?\DateTimeInterface $eventFinishAt): self
     {
         $this->eventFinishAt = $eventFinishAt;
+
+        return $this;
+    }
+
+    public function getEventtimeAt(): ?\DateTimeInterface
+    {
+        return $this->eventtimeAt;
+    }
+
+    public function setEventtimeAt(\DateTimeInterface $eventtimeAt): self
+    {
+        $this->eventtimeAt = $eventtimeAt;
 
         return $this;
     }

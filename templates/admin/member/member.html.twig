@@ -20,25 +20,25 @@
                                     </div>
                                     <div class="d-flex flex-row">
                                         {% if member.urlWeb is null %}
-                                            <h1><a href="#" class="isdisabled"><i class="fas fa-globe-europe"></i></a></h1>&nbsp;&nbsp;
+                                            <h1><i class="fas fa-globe-europe text-secondary"></i></h1>&nbsp;&nbsp;
                                         {% else %}
                                             <h1><a href="{{ member.urlWeb }}" onclick="window.open(this.href); return false;"><i class="fas fa-globe-europe"></i></a></h1>&nbsp;&nbsp;
                                         {% endif %}
 
                                         {% if member.Facebook is null %}
-                                            <h1><a href="#" class="isdisabled"><i class="fab fa-facebook"></i></a></h1>&nbsp;&nbsp;
+                                            <h1><i class="fab fa-facebook text-secondary"></i></h1>&nbsp;&nbsp;
                                         {% else %}
                                             <h1><a href="{{ member.Facebook }}" onclick="window.open(this.href); return false;"><i class="fab fa-facebook"></i></a></h1>&nbsp;&nbsp;
                                         {% endif %}
 
                                         {% if member.Instagram is null %}
-                                            <h1><a href="#" class="isdisabled"><i class="fab fa-instagram"></i></a></h1>&nbsp;&nbsp;
+                                            <h1><i class="fab fa-instagram text-secondary"></i></h1>&nbsp;&nbsp;
                                         {% else %}
                                             <h1><a href="{{ member.Instagram }}" onclick="window.open(this.href); return false;"><i class="fab fa-instagram"></i></a></h1>&nbsp;&nbsp;
                                         {% endif %}
 
                                         {% if member.Linkedin is null %}
-                                            <h1><a href="#" class="isdisabled"><i class="fab fa-linkedin"></i></a></h1>&nbsp;&nbsp;
+                                            <h1><i class="fab fa-linkedin text-secondary"></i></h1>&nbsp;&nbsp;
                                         {% else %}
                                             <h1><a href="{{ member.Linkedin }}" onclick="window.open(this.href); return false;"><i class="fab fa-linkedin"></i></a></h1>&nbsp;&nbsp;
                                         {% endif %}

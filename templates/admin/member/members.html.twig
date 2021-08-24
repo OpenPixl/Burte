@@ -1,7 +1,7 @@
 <div class="row" id="member_content">
     {% for member in members %}
         <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-4">
-            <div id="member-card" class="card mb-4">
+            <div id="member-card" class="card lift lift-lg mb-4">
                 {% if member.logoStructureName is null %}
                 <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar" style="width:286px;height:180px;">
                 {% elseif member.logoStructureName is not null %}

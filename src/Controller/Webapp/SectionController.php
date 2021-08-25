@@ -58,6 +58,19 @@ class SectionController extends AbstractController
     }
 
     /**
+     * Liste les sections de la page d'accueil pour les réorganisées.
+     * @Route("/webapp/section/homepagefavourites", name="op_webapp_section_homepagefavourites", methods={"GET"})
+     */
+    public function HomepageFavourites()
+    {
+        $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1), array('positionfavorite' => 'ASC'));
+
+        return $this->render('webapp/page/homepagefavourites.html.twig', [
+            'sections' => $sections
+        ]);
+    }
+
+    /**
      * @Route("/webapp/section/new", name="op_webapp_section_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -302,6 +315,64 @@ class SectionController extends AbstractController
             $em->flush();
             // on récupère la liste des pages ordonnée par position
             $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
+            return $this->json([
+                'code'=> 200,
+                'message' => "La page est descendu d'un niveau",
+                'liste' => $this->renderView('webapp/section/include/_liste.html.twig', [
+                    'sections' => $sections
+                ])
+            ], 200);
+        }else{
+            return $this->json([
+                'code'=> 200,
+                'message' => "Une erreur a été détecté",
+            ], 200);
+        }
+    }
+
+    /**
+     * Permet de déplacer une section dans la liste
+     * @Route("/webapp/section/favorite/position/{id}/{level}", name="op_webapp_section_favorite_position_down")
+     */
+    public function PositionFavorite(Section $section, $level, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $id = $section->getId();
+        $page = $section->getPage();
+
+        // On récupére la position de la page actuelle et on prépare des les futures positions +1 et -1.
+        $position = $section->getPositionfavorite();
+        $nextPos = $section->getPositionfavorite()+1;
+        $previousPos = $section->getPositionfavorite()-1;
+
+        //dd($position, $nextPos, $previousPos);
+
+        if($level == 'up')
+        {
+            $previousItem = $em->getRepository(Section::class)->findOneBy(array('positionfavorite' => $previousPos));
+            //dd($section);
+            $section->setPositionfavorite($previousPos);
+            $previousItem->setPositionfavorite($position);
+            $em->flush();
+
+            // on récupère la liste des pages ordonnée par position
+            $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1), array('positionfavorite' => 'ASC'));
+
+            // on retourne au format JSON
+            return $this->json([
+                'code'=> 200,
+                'message' => "La page est montée d'un niveau",
+                'liste' => $this->renderView('webapp/section/include/_liste.html.twig', [
+                    'sections' => $sections
+                ])
+            ], 200);
+        }elseif($level == 'down'){
+            $nextItem = $em->getRepository(Section::class)->findOneBy(array('positionfavorite' => $nextPos));
+            $section->setPositionfavorite($nextPos);
+            $nextItem->setPositionfavorite($position);
+            $em->flush();
+            // on récupère la liste des pages ordonnée par position
+            $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1), array('positionfavorite' => 'ASC'));
             return $this->json([
                 'code'=> 200,
                 'message' => "La page est descendu d'un niveau",

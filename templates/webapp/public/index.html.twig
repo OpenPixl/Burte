@@ -57,9 +57,14 @@
         </div>
     </section>
 {% else %}
+    {% if app.request.get('_route') == 'op_webapp_public_homepage'%}
+        {% for section in sections|sort((a, b) => a.positionfavorite <=> b.positionfavorite) %}
+            {% include('webapp/section/include/_onesection.html.twig') %}
+        {% endfor %}
+    {% else %}
     {% for section in sections %}
-
     {% include('webapp/section/include/_onesection.html.twig') %}
     {% endfor %}
+    {% endif%}
 {% endif %}
 {% endblock %}

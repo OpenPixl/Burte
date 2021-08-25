@@ -43,6 +43,9 @@ class SectionType extends AbstractType
                         'membre' => 'Member',
                         "bulletin d'adhésion" => "Adhesion",
                     ],
+                    'ANIMATION' => [
+                        'Compteur' => "CountUp"
+                    ],
                     'DIVERS' => [
                         'introduction' => 'intro',
                         "liste des avis" => "Avis",

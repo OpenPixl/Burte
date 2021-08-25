@@ -1,0 +1,85 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}OpenGaia | Administration - site{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            // function pour changer le position d'une section favorites
+            function onClickBtnPosition(event)
+            {
+                event.preventDefault();
+                const id = this.id;
+                const icone = this.querySelector('i');
+                let level;
+                if(icone.classList.contains('fa-long-arrow-alt-up')) {
+                    level = 'up';
+                }else{
+                    level = 'down';
+                }
+                const url = '/webapp/section/favorite/position/' + id + '/' + level;
+                axios
+                    .get(url)
+                    .then(function(response){
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        // on réinitie l'appel de l'évènement sur jsPosition
+                        document.querySelectorAll('a.jsPosition').forEach(function (link){
+                            link.addEventListener('click', onClickBtnPosition);
+                        })
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+            }
+
+            // Appel de la fonction lors du clic sur la flèche DOWN
+            document.querySelectorAll('a.jsPosition').forEach(function (link){
+                link.addEventListener('click', onClickBtnPosition);
+            })
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        {{ include('webapp/page/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                <div class="col-2">
+                    {{ include('webapp/page/include/_section_content_aside.html.twig') }}
+                </div>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-body">
+
+                            {% set countrow = sections|length %}
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>Liste des sections en page d'accueil</h4>
+                                    <p>Affiche les éléments que vous avez choisi de placer sur la page d'accueil. vous pouvez les ordonner sur cette page.</p>
+                                </div>
+                                <div id="op_actions" class="d-flex align-items-center">
+                                    <button id="btnAddSection" name="{{ countrow }}" class="btn btn-sm btn-outline-secondary js-add-section"><i class="bi bi-plus-square"></i> Ajouter une section</button>
+                                </div>
+                            </div>
+                            <div id="liste">
+                                {{ include('webapp/section/include/_liste.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -128,6 +128,11 @@ class Section
      */
     private $cssBackgroundImageSize;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $positionfavorite;
+
 
     /**
      * Permet d'initialiser le slug !
@@ -392,5 +397,17 @@ class Section
     public function getCssBackgroundImageSize(): ?int
     {
         return $this->cssBackgroundImageSize;
+    }
+
+    public function getPositionfavorite(): ?int
+    {
+        return $this->positionfavorite;
+    }
+
+    public function setPositionfavorite(int $positionfavorite): self
+    {
+        $this->positionfavorite = $positionfavorite;
+
+        return $this;
     }
 }

@@ -2,7 +2,7 @@
     <div class="carousel-inner">
         {% for avi in avis %}
         <div class="carousel-item {% if loop.first %}active{% endif %}">
-            <img src="{{ asset('images/png/fond_jaf.jpg') }}" class="d-block w-100" alt="...">
+            <img src="{{ asset('images/png/fond_jaf.png') }}" class="d-block w-100" alt="...">
             <div class="carousel-caption">
                 <h5>{{ avi.description|raw }}</h5>
                 <p class="text-end">{{ avi.author }}</p>

@@ -14,7 +14,7 @@
             "
         {% endif %}
         style="">
-    <div id="section_title" class="mt-3 mb-3">
+    <div id="section_title" class="mt-3">
         <div class="row">
             {% if section.isShowtitle == 1 %}
             <div class="col">
@@ -24,7 +24,7 @@
             {% endif %}
         </div>
     </div>
-    <div id="section_content" class="mt-3 mb-3">
+    <div id="section_content" class="mb-3">
         {% if section.isShowdescription == 1 %}
         <div class="row">
             <div class="col-12">
@@ -61,6 +61,8 @@
                     {{ render(controller('App\\Controller\\GestApp\\AdhesionController::addAdhesion')) }}
                 {% elseif section.contentType == 'Avis'%}
                     {{ render(controller('App\\Controller\\GestApp\\AvisController::view')) }}
+                {% elseif section.contentType == 'CountUp'%}
+                    {{ render(controller('App\\Controller\\Admin\\StatistiqueController::CountUp')) }}
                 {% else %}
                 {% endif %}
             </div>

@@ -21,6 +21,13 @@
 </div>
 <div class="card">
     <div class="card-body">
+        <h3>
+            <a href="{{ path('op_webapp_section_homepagefavourites') }}"><i class="fas fa-home"></i> Page d'accueil</a>
+        </h3>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
         <h3>{% if app.request.get('_route') == 'op_webapp_page_index'%}
         <a href="{{ path('op_admin_dashboard_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
         {% else %}

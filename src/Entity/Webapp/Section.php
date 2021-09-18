@@ -129,7 +129,7 @@ class Section
     private $cssBackgroundImageSize;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $positionfavorite;
 

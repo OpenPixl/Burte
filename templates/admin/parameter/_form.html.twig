@@ -8,6 +8,9 @@
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Accueil" type="button" role="tab" aria-controls="Accueil" aria-selected="true"><h5>Page d'accueil</h5></button>
         </li>
         <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#PiedPage" type="button" role="tab" aria-controls="Hors-ligne" aria-selected="true"><h5>Pied de Page</h5></button>
+        </li>
+        <li class="nav-item">
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Hors-ligne" type="button" role="tab" aria-controls="Hors-ligne" aria-selected="true"><h5>Hors-ligne</h5></button>
         </li>
         <li class="nav-item">
@@ -48,7 +51,7 @@
                         <div class="col-3">
                             <b>{{ form_label(form.logoFile, 'Logo file', {'label_attr': {'class':'form-label'}}) }}</b>
                         </div>
-                        <div class="col-2">
+                        <div class="col-5">
                             {{ form_widget(form.logoFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
                         </div>
                     </div>
@@ -56,7 +59,7 @@
                         <div class="col-3">
                             <b>{{ form_label(form.faviconFile, 'Favicon file', {'label_attr': {'class':'form-label'}}) }}</b>
                         </div>
-                        <div class="col-2">
+                        <div class="col-5">
                             {{ form_widget(form.faviconFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
                         </div>
                     </div>
@@ -109,6 +112,31 @@
                             </div>
                         </fieldset>
                     </div>
+                    <h5>Section d'accueil</h5>
+                    <div class="row mb-1 mt-1 g-1">
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.sectionHome, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.sectionHome, "Afficher la section de page d'accueil", {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.homeFile, 'image de section', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-5">
+                            {{ form_widget(form.homeFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="tab-pane" id="PiedPage" role="tabpanel" aria-labelledby="Accueil-tab">
+            <div class="row">
+                <div class="col-12">
+
                 </div>
             </div>
         </div>

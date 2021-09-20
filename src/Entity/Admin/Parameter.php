@@ -147,6 +147,34 @@ class Parameter
      */
     private $urlLinkedin;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $sectionHome = false;
+
+    /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="home_front", fileNameProperty="homeName", size="homeSize")
+     * @var File|null
+     */
+    private $homeFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $homeName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $homeSize;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -437,5 +465,61 @@ class Parameter
         $this->urlLinkedin = $urlLinkedin;
 
         return $this;
+    }
+
+    public function getSectionHome(): ?bool
+    {
+        return $this->sectionHome;
+    }
+
+    public function setSectionHome(bool $sectionHome): self
+    {
+        $this->sectionHome = $sectionHome;
+
+        return $this;
+    }
+
+    /**
+     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
+     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
+     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
+     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $homeFile
+     */
+    public function setHomeFile(?File $homeFile = null): void
+    {
+        $this->homeFile = $homeFile;
+
+        if (null !== $homeFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getHomeFile(): ?File
+    {
+        return $this->homeFile;
+    }
+
+    public function setHomeName(?string $homeName): void
+    {
+        $this->homeName = $homeName;
+    }
+
+    public function getHomeName(): ?string
+    {
+        return $this->homeName;
+    }
+
+    public function setHomeSize(?int $homeSize): void
+    {
+        $this->homeSize = $homeSize;
+    }
+
+    public function getHomeSize(): ?int
+    {
+        return $this->homeSize;
     }
 }

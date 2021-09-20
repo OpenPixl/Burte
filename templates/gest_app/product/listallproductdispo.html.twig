@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-3">
+        <form>
+            <h3>Calligraphie</h3>
+            <h3>Aquarelles</h3>
+            <h3>Autre Artisanat</h3>
+        </form>
+    </div>
+    <div class="col-9">
+        {% for product in products %}
+            <div class="col-3">
+                <div class="card">
+                    {% if product.productName is null %}
+                        <img src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
+                    {% else %}
+                        <img src="{{ vich_uploader_asset(product) | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                    {% endif %}
+                    <div class="card-body">
+                        <div id="product-header" class="d-flex align-self-center">
+                            <h6 class="text-start">{{ product.name }}/ {{ product.typo }}</h6>
+                            <h6 class="text-end">{{ product.price }}€</h6>
+                        </div>
+                        <div id="product-content">
+                            <p class="card-text">{{ product.description|raw }}</p>
+                        </div>
+                        <div>
+                            <p class="card-subtitle"></p>
+                            <p class="card-subtitle">{{ product.quantity }} {{ product.typo }}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        1
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <p class="mt-3"><strong>Il n'y a pas de produits actuellement disponible dans la boutique.</strong></p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+

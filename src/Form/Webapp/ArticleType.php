@@ -4,6 +4,8 @@ namespace App\Form\Webapp;
 
 use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Category;
+use App\Entity\Webapp\Page;
+use App\Repository\Webapp\PageRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -44,12 +46,24 @@ class ArticleType extends AbstractType
                 'choices'  => [
                     'à droite du contenu' => 'right',
                     'à gauche du contenu' => 'left',
+                    'au dessus du contenu' => 'up',
+                    'en dessous du contenu' => 'down',
                     'sans texte' => 'none'
                 ],
             ])
             ->add('isReadMore')
             ->add('isShowtitle')
             ->add('isShowdate')
+            ->add('isLink')
+            ->add('link', EntityType::class, [
+                'class' => Page::class,
+                'choice_label' => 'name',
+                'placeholder' => 'aucun lien',
+                'query_builder' => function(PageRepository $pageRepository){
+                    return $pageRepository->createQueryBuilder('p')->orderBy('p.name', 'ASC');
+                }
+            ])
+            ->add('linktext')
         ;
     }
 

@@ -36,8 +36,8 @@ class SectionType extends AbstractType
                         'les évènements' => 'Events',
                         'historiques des évènements' => 'HistoryOfEvent',
                     ],
-                    'GALERIES' =>[
-                        "image seule" => "Media_one",
+                    'ECOMMERCE' =>[
+                        "Listes des produits" => "All_products",
                     ],
                     'MEMBRES' => [
                         'membre' => 'Member',

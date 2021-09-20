@@ -1,6 +1,6 @@
 $op-primary: darken(#428bca, 20%);
-$jaf-color-first: #cdb55f;
-$jaf-color-second: #ffffff;
+$sm-primary-color: #142864;
+$sm-secondary-color: #ffffff;
 $admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 100%);
 //*** ------------- Import Variables of bootstrap ---------------- ***//
 @import './node_modules/bootstrap/scss/bootstrap';
@@ -15,6 +15,6 @@ $admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 //*** ------------- Import mixins ---------------- ***//
 @import "scss/mixins/fontface";
-@include fontface('selima', '../../fonts/selima/selima_webfont', 500, normal);
-@include fontface('CerebriSans-light', '../../fonts/CerebriSans-Light', 300, normal);
-@include fontface('voga', '../../fonts/Volga/voga', 500, normal);
+@include fontface('Tangerine', '../../fonts/Tangerine/tangerine', 300, normal);
+@include fontface('Monserrat-light', '../../fonts/Montserrat/montserrat-light', 300, normal);
+@include fontface('CerebriSans-light', '../../fonts/Cerebri-sans/CerebriSans-Light', 300, normal);

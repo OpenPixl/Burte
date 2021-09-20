@@ -6,6 +6,41 @@
     {{ parent() }}
     <script>
         window.onload = function(){
+
+            function onClickaddCategory(event){
+                event.preventDefault();
+                const name = document.getElementById('product_category_name').value;
+                const nature = document.getElementById('product_nature')
+                const url = "/gestapp/product/category/new";
+                axios
+                .post(url,{name:name, nature:nature})
+                .then(function(response)
+                {
+                    const select = document.getElementById('product_category');
+                    const options = document.createElement("option");
+                    options.text = response.data.category;
+                    select.add(options)
+
+                    var option = {
+                        animation : true,
+                        autohide: true,
+                        delay : 3000,
+                    };
+
+                    var toastHTMLElement = document.getElementById("toaster");
+                    var message = response.data.message;
+                    var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                    toastBody.textContent = message;
+                    var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                    toastElement.show();
+                })
+            }
+
+            // déclaration de l'event sur js-add-catégory
+            document.querySelectorAll('a.js-add-category').forEach(function(link){
+                link.addEventListener('click', onClickaddCategory)
+            })
+
             ClassicEditor
                 .create(document.querySelector('#product_description'), {
                     toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
@@ -27,11 +62,8 @@
                 {{ include('gest_app/product/include/_section_content_aside.html.twig') }}
             </div>
             <div class="col-10">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Ajouter un produit</h3>
-                    </div>
-                    {{ include('gest_app/product/_form.html.twig') }}
+                <div class="card" id="addProduct">
+                    {{ include('gest_app/product_category/include/_addproduct.html.twig') }}
                 </div>
             </div>
         </div>

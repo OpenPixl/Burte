@@ -124,6 +124,22 @@ class Article
      */
     private $isShowdate = false;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isLink = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Page::class)
+     */
+    private $link;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Linktext;
+
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
@@ -396,6 +412,42 @@ class Article
     public function setIsShowdate(bool $isShowdate): self
     {
         $this->isShowdate = $isShowdate;
+
+        return $this;
+    }
+
+    public function getIsLink(): ?bool
+    {
+        return $this->isLink;
+    }
+
+    public function setIsLink(bool $isLink): self
+    {
+        $this->isLink = $isLink;
+
+        return $this;
+    }
+
+    public function getLink(): ?Page
+    {
+        return $this->link;
+    }
+
+    public function setLink(?Page $link): self
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    public function getLinktext(): ?string
+    {
+        return $this->Linktext;
+    }
+
+    public function setLinktext(?string $Linktext): self
+    {
+        $this->Linktext = $Linktext;
 
         return $this;
     }

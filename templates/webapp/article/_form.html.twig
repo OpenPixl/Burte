@@ -15,7 +15,7 @@
                 <div class="col-8">
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-3">
-                            <b>{{ form_label(form.title, 'Title', {'label_attr': {'class':'form-label'}}) }}</b>
+                            <b>{{ form_label(form.title, 'Titre', {'label_attr': {'class':'form-label'}}) }}</b>
                         </div>
                         <div class="col-9">
                             {{ form_widget(form.title, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
@@ -32,7 +32,7 @@
                     <hr>
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-3">
-                            <b>{{ form_label(form.content, 'Content', {'label_attr': {'class':'form-label'}}) }}</b>
+                            <b>{{ form_label(form.content, 'Contenu', {'label_attr': {'class':'form-label'}}) }}</b>
                         </div>
                         <div class="col-9">
                             {{ form_widget(form.content, {'attr': {'class': 'form-control form-control-sm', 'rows':'15'}}) }}
@@ -40,9 +40,10 @@
                     </div>
                 </div>
                 <div class="col-4">
+                    <h5>Paramètre de l'article</h5>
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-3">
-                            <b>{{ form_label(form.category, 'category', {'label_attr': {'class':'form-label'}}) }}</b>
+                            <b>{{ form_label(form.category, 'Categorie', {'label_attr': {'class':'form-label'}}) }}</b>
                         </div>
                         <div class="col-9">
                             {{ form_widget(form.category, {'attr': {'class': 'form-control form-control-sm'}}) }}
@@ -50,7 +51,7 @@
                     </div>
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-4">
-                            <b>{{ form_label(form.state, 'State', {'label_attr': {'class':'form-label'}}) }}</b>
+                            <b>{{ form_label(form.state, 'Etat', {'label_attr': {'class':'form-label'}}) }}</b>
                         </div>
                         <div class="col-8">
                             {{ form_widget(form.state, {'attr': {'class': 'form-select form-select-sm'}}) }}
@@ -60,9 +61,50 @@
                         <fieldset>
                             <div class="form-check form-switch">
                                 {{ form_widget(form.isReadMore, {'attr': {'class': 'form-check-input'}}) }}
-                                {{ form_label(form.isReadMore, 'Is read more', {'label_attr': {'class':'form-check-label'}}) }}
+                                {{ form_label(form.isReadMore, 'Afficher "Lire la suite"', {'label_attr': {'class':'form-check-label'}}) }}
                             </div>
                         </fieldset>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.isShowtitle, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.isShowtitle, "Afficher le titre de l'article", {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.isShowdate, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.isShowdate, "Afficher la date de création", {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                    <h5>Bouton</h5>
+                    <div class="row mb-1 mt-1 g-1">
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.isLink, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.isLink, "Ajouter un bouton cliquable", {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-6">
+                            <b>{{ form_label(form.link, "Inserer un lien avec l'article", {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-6">
+                            {{ form_widget(form.link, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                        </div>
+                    </div>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            <b>{{ form_label(form.linktext, 'texte du bouton', {'label_attr': {'class':'form-label'}}) }}</b>
+                        </div>
+                        <div class="col-9">
+                            {{ form_widget(form.linktext, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                        </div>
                     </div>
                 </div>
             </div>

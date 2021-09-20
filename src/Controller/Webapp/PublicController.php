@@ -3,9 +3,9 @@
 namespace App\Controller\Webapp;
 
 use App\Entity\Admin\Parameter;
-use App\Entity\Admin\Message;
 use App\Entity\Webapp\Section;
 use App\Repository\Webapp\PageRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,7 +60,6 @@ class PublicController extends AbstractController
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
         $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1), array('position' => 'ASC'));
 
-
         // integration du code sélectionnant les sections classées comme favorites
         return $this->render('webapp/public/index.html.twig',[
             'parameter' => $parameter,
@@ -90,6 +89,7 @@ class PublicController extends AbstractController
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
         $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1));
         $isOnline = $parameter->getIsOnline();
+
         if ($isOnline == 1){
             return $this->render('webapp/public/index.html.twig', [
                 'parameter' => $parameter,
@@ -102,21 +102,21 @@ class PublicController extends AbstractController
     }
 
     /**
-     * @Route ("/webapp/public/menus", name="op_webapp_public_listmenus")
+     * @Route ("/webapp/public/menus/{route}", name="op_webapp_public_listmenus")
      */
-    public function BlocMenu(PageRepository $pageRepository): Response
+    public function BlocMenu(PageRepository $pageRepository, Request $request, $route): Response
     {
-        // onr récupère l'utilisateur courant
+        // on récupère l'utilisateur courant
         $user = $this->getUser();
 
         // préparation des éléments d'interactivité du menu
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
         $menus = $pageRepository->listMenu();
 
-
         return $this->render('include/navbar_webapp.html.twig', [
             'parameter' => $parameter,
-            'menus' => $menus
+            'menus' => $menus,
+            'route' => $route
         ]);
     }
 }

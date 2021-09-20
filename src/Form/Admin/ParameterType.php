@@ -39,6 +39,13 @@ class ParameterType extends AbstractType
             ->add('urlFacebook')
             ->add('urlInstagram')
             ->add('urlLinkedin')
+            ->add('sectionHome')
+            ->add('homeFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
+            ])
         ;
     }
 

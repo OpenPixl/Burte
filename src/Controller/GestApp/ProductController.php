@@ -154,4 +154,17 @@ class ProductController extends AbstractController
             'message'       => 'Le produit est publié en vedette.'
         ], 200);
     }
+
+    /**
+     * Espace E-Commerce : Liste les produits
+     * @Route("/gestapp/product/alldispo", name="op_gestapp_product_alldispo", methods={"POST"})
+     */
+    public function ListAllProductDispo()
+    {
+        $products = $this->getDoctrine()->getRepository(Product::class)->findBy(array('isOnLine' => 1));
+
+        return $this->render('gest_app/product/listallproductdispo.html.twig',[
+            'products' => $products
+        ]);
+    }
 }

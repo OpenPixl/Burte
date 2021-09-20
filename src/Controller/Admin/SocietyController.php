@@ -20,7 +20,7 @@ class SocietyController extends AbstractController
      */
     public function index(SocietyRepository $societyRepository): Response
     {
-        return $this->render('admin/society/index.html.twig', [
+        return $this->render('admin/society/bottom.html.twig', [
             'societies' => $societyRepository->findAll(),
         ]);
     }

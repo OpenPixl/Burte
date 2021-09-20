@@ -10,4 +10,4 @@ $background-image: url('../images/covers/ImageLogin.png');
 @import '~@fortawesome/fontawesome-free/css/all.css';
 //*** ------------- Import mixins ---------------- ***//
 @import "scss/mixins/fontface";
-@include fontface('CerebriSans-light', '../../fonts/CerebriSans-Light', 300, normal);
+@include fontface('CerebriSans-light', '../../fonts/Cerebri-sans/CerebriSans-Light', 300, normal);

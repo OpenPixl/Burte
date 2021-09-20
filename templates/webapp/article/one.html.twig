@@ -3,7 +3,7 @@
         <header id="article_header">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="text-center text-h1">{{ article.title }}</h2>
+                    <h2 class="">{{ article.title }}</h2>
                 </div>
             </div>
         </header>
@@ -21,40 +21,107 @@
                         <p class="text-center">{{ article.content|raw }}</p>
                     {% endif %}
                 </div>
+                {% if article.link %}
+                <div class="col-12">
+                    <a class="btn btn-light" href="/webapp/page/{{ article.link|lower }}">{{article.linktext}}</a>
+                </div>
+                {% endif %}
             </div>
         {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'right' %}
             <div class="row">
                 <div class="col-9">
-                    <div class="d-flex justify-content-center">
-                        <div>
-                            {% if article.isReadMore == 1 %}
-                                <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
-                            {% else %}
-                                <p class="text-center">{{ article.content|raw }}</p>
-                            {% endif %}
-                        </div>
-
-                    </div>
+                    {% if article.isReadMore == 1 %}
+                        {{ article.content|u.truncate(600, ' ...')|raw }}
+                    {% else %}
+                        {{ article.content|raw }}
+                    {% endif %}
+                    {% if article.link %}
+                        <a class="btn btn-light" href="/webapp/page/{{ article.link|lower }}">{{article.linktext}}</a>
+                    {% endif %}
                 </div>
                 <div class="col-3">
-                    <p class="text-center">
-                        <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}">
-                    </p>
+                    <div class="position-relative mb-5">
+                        <!-- Image -->
+                        <img src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}" class="img-fluid d-block">
+                        <!-- Shape -->
+                        <div class="shape shape-bottom shape-fluid-x text-white">
+                            <svg viewBox="0 0 2880 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2160 0C1440 240 720 240 720 240H0v240h2880V0h-720z" fill="currentColor"></path>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'left' %}
             <div class="row">
                 <div class="col-3">
-                    <p class="text-center">
-                        <img class="img-fluid" src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}">
-                    </p>
+                    <div class="position-relative mb-5 mb-md-0">
+                        <!-- Image -->
+                        <img src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}" class="img-fluid d-block">
+                        <!-- Shape -->
+                        <div class="shape shape-bottom shape-fluid-x text-white">
+                            <svg viewBox="0 0 2880 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M720 0c720 240 1440 240 1440 240h720v240H0V0h720z" fill="currentColor"></path>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-9">
-                    <div class="d-flex align-items-center">
+                    {% if article.isReadMore == 1 %}
+                        {{ article.content|u.truncate(600, ' ...')|raw }}
+                    {% else %}
+                        {{ article.content|raw }}
+                    {% endif %}
+                    {% if article.link %}
+                        <a class="btn btn-lg btn-light btn-bluelight" href="/page/{{ article.link|lower }}">{{article.linktext}}</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'up' %}
+            <div class="row">
+                <div class="col-12">
+                    <div>
                         {% if article.isReadMore == 1 %}
                             <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
                         {% else %}
                             <p class="text-center">{{ article.content|raw }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="position-relative">
+                        <!-- Image -->
+                        <img src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}" class="img-fluid d-block">
+                        <!-- Shape -->
+                        <div class="shape shape-top shape-fluid-x text-white">
+                            <svg viewBox="0 0 2880 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2880 0H0v54.112h720s289.42 40.248 705 0c416.5-37.733 735 0 735 0h720V0z" fill="currentColor"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'down' %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="position-relative">
+                        <!-- Image -->
+                        <img src="{{ vich_uploader_asset(article) }}" alt="{{ article.articleFrontName }}" class="img-fluid d-block">
+                        <!-- Shape -->
+                        <div class="shape shape-top shape-fluid-x text-white">
+                            <svg viewBox="0 0 2880 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2880 0H0v54.112h720s289.42 40.248 705 0c416.5-37.733 735 0 735 0h720V0z" fill="currentColor"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div>
+                        {% if article.isReadMore == 1 %}
+                            <p>{{ article.content|u.truncate(600, ' ...')|raw }}</p>
+                        {% else %}
+                            <p>{{ article.content|raw }}</p>
                         {% endif %}
                     </div>
                 </div>

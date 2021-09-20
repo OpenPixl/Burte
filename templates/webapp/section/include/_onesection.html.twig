@@ -40,7 +40,7 @@
                     {{ include('webapp/section/include/_sectionIntro.html.twig') }}
                     {# Affiche un article #}
                 {% elseif section.contentType == 'One_article' %}
-                    {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle})) }}
+                    {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle })) }}
                     {# Affiche l'intro du site #}
                 {% elseif section.contentType == 'More_article'%}
                     {# Affiche une catégorie d'articles #}

@@ -17,4 +17,4 @@ $admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 
 @import "scss/mixins/fontface";
 @include fontface('Tangerine', '../../fonts/Tangerine/tangerine', 300, normal);
 @include fontface('Monserrat-light', '../../fonts/Montserrat/montserrat-light', 300, normal);
-@include fontface('CerebriSans-light', '../../fonts/Cerebri-sans/CerebriSans-Light', 300, normal);
+@include fontface('CerebriSans-light', '../../fonts/Cerebri-Sans/CerebriSans-Light', 300, normal);

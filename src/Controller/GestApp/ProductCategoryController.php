@@ -10,13 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/gestapp/product/category")
- */
+
 class ProductCategoryController extends AbstractController
 {
     /**
-     * @Route("/gestapp/product/category/", name="op_gestapp_product_category_index", methods={"GET"})
+     * @Route("/opadmin/product/category/", name="op_gestapp_product_category_index", methods={"GET"})
      */
     public function index(ProductCategoryRepository $productCategoryRepository): Response
     {
@@ -26,7 +24,7 @@ class ProductCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/gestapp/product/category/new", name="op_gestapp_product_category_new", methods={"GET","POST"})
+     * @Route("/opadmin/product/category/new", name="op_gestapp_product_category_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +47,7 @@ class ProductCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/gestapp/product/category/{id}", name="op_gestapp_product_category_show", methods={"GET"})
+     * @Route("/opadmin/product/category/{id}", name="op_gestapp_product_category_show", methods={"GET"})
      */
     public function show(ProductCategory $productCategory): Response
     {
@@ -59,7 +57,7 @@ class ProductCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/gestapp/product/category/{id}/edit", name="op_gestapp_product_category_edit", methods={"GET","POST"})
+     * @Route("/opadmin/product/category/{id}/edit", name="op_gestapp_product_category_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, ProductCategory $productCategory): Response
     {
@@ -79,7 +77,7 @@ class ProductCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/gestapp/product/category/{id}", name="op_gestapp_product_category_delete", methods={"POST"})
+     * @Route("/opadmin/product/category/{id}", name="op_gestapp_product_category_delete", methods={"POST"})
      */
     public function delete(Request $request, ProductCategory $productCategory): Response
     {

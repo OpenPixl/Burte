@@ -13,9 +13,6 @@ class ProductCategoryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('slug')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 

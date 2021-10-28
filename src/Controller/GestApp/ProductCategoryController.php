@@ -47,6 +47,29 @@ class ProductCategoryController extends AbstractController
     }
 
     /**
+     * @Route("/opadmin/product/category/new2", name="op_gestapp_product_category_new2", methods={"GET","POST"})
+     */
+    public function new2(Request $request): Response
+    {
+        $productCategory = new ProductCategory();
+        $form = $this->createForm(ProductCategoryType::class, $productCategory);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($productCategory);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('gest_app_product_category_index');
+        }
+
+        return $this->render('gest_app/product_category/new2.html.twig', [
+            'product_category' => $productCategory,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/opadmin/product/category/{id}", name="op_gestapp_product_category_show", methods={"GET"})
      */
     public function show(ProductCategory $productCategory): Response

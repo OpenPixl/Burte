@@ -1,4 +1,11 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="row mb-1 mt-1 g-1">
+    <div class="col-2">
+        <b>{{ form_label(form.name, 'Nom :', {'label_attr': {'class':'form-label'}}) }}</b>
+    </div>
+    <div class="col-3">
+        {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Categorie'}}) }}
+    </div>
+</div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

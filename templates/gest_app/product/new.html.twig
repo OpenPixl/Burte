@@ -13,27 +13,27 @@
                 const nature = document.getElementById('product_nature')
                 const url = "/gestapp/product/category/new";
                 axios
-                .post(url,{name:name, nature:nature})
-                .then(function(response)
-                {
-                    const select = document.getElementById('product_category');
-                    const options = document.createElement("option");
-                    options.text = response.data.category;
-                    select.add(options)
+                    .post(url,{name:name, nature:nature})
+                    .then(function(response)
+                    {
+                        const select = document.getElementById('product_category');
+                        const options = document.createElement("option");
+                        options.text = response.data.category;
+                        select.add(options)
 
-                    var option = {
-                        animation : true,
-                        autohide: true,
-                        delay : 3000,
-                    };
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
 
-                    var toastHTMLElement = document.getElementById("toaster");
-                    var message = response.data.message;
-                    var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
-                    toastBody.textContent = message;
-                    var toastElement = new bootstrap.Toast(toastHTMLElement, option);
-                    toastElement.show();
-                })
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
             }
 
             // déclaration de l'event sur js-add-catégory
@@ -63,7 +63,7 @@
             </div>
             <div class="col-10">
                 <div class="card" id="addProduct">
-                    {{ include('gest_app/product_category/include/_addproduct.html.twig') }}
+                    {{ include('gest_app/product/_form.html.twig') }}
                 </div>
             </div>
         </div>

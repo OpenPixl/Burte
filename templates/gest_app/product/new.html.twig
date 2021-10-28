@@ -35,9 +35,37 @@
                     })
             }
 
+            function onClickaddNature(event){
+                event.preventDefault();
+                const name = document.getElementById('product_nature_name').value;
+                const url = "/opadmin/product/nature/new2";
+                axios
+                    .post(url, {name:name})
+                    .then(function(response)
+                    {
+                        const select = document.getElementById('product_nature');
+                        const options = document.createElement("option");
+                        options.text = response.data.nature;
+                        select.add(options)
+
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+            }
+
             // déclaration de l'event sur js-add-catégory
-            document.querySelectorAll('a.js-add-category').forEach(function(link){
-                link.addEventListener('click', onClickaddCategory)
+            document.querySelectorAll('a.js-add-nature').forEach(function(link){
+                link.addEventListener('click', onClickaddNature)
             })
 
             ClassicEditor

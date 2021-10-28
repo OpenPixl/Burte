@@ -27,7 +27,14 @@ class ProductType extends AbstractType
                 'delete_label' => 'Supprimer',
                 'download_label' => 'Télecharger',
             ])
-            ->add('nature')
+            ->add('ProductNature', EntityType::class, [
+                'class' => ProductNature::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
+                'choice_label' => 'name',
+            ])
             ->add('category', EntityType::class, [
                 'class' => ProductCategory::class,
                 'query_builder' => function (EntityRepository $er) {

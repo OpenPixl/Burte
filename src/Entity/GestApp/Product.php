@@ -102,11 +102,6 @@ class Product
     private $isDisponible;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $nature;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $isOnLine = false;
@@ -317,18 +312,6 @@ class Product
     public function setIsDisponible(bool $isDisponible): self
     {
         $this->isDisponible = $isDisponible;
-
-        return $this;
-    }
-
-    public function getNature(): ?string
-    {
-        return $this->nature;
-    }
-
-    public function setNature(string $nature): self
-    {
-        $this->nature = $nature;
 
         return $this;
     }

@@ -4,6 +4,7 @@ namespace App\Form\GestApp;
 
 use App\Entity\GestApp\Product;
 use App\Entity\GestApp\ProductCategory;
+use App\Entity\GestApp\ProductNature;
 use Doctrine\ORM\EntityRepository;
 use Proxies\__CG__\App\Entity\Admin\member;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -26,17 +27,7 @@ class ProductType extends AbstractType
                 'delete_label' => 'Supprimer',
                 'download_label' => 'Télecharger',
             ])
-            ->add('nature', ChoiceType::class, [
-                'choices'  => [
-                    'Légumes' => 'legumes',
-                    'Fruits' => 'fruits',
-                    'Laitiers' => 'laitiers',
-                    'viandes' => 'viandes',
-                    'cuisinés' => 'cuisinés',
-                    'mer'=> 'mer',
-                    'autres' => 'autres'
-                ],
-            ])
+            ->add('nature')
             ->add('category', EntityType::class, [
                 'class' => ProductCategory::class,
                 'query_builder' => function (EntityRepository $er) {

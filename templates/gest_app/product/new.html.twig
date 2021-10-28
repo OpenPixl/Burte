@@ -10,10 +10,9 @@
             function onClickaddCategory(event){
                 event.preventDefault();
                 const name = document.getElementById('product_category_name').value;
-                const nature = document.getElementById('product_nature')
-                const url = "/gestapp/product/category/new";
+                const url = "/opadmin/product/category/new2";
                 axios
-                    .post(url,{name:name, nature:nature})
+                    .post(url, {name:name})
                     .then(function(response)
                     {
                         const select = document.getElementById('product_category');

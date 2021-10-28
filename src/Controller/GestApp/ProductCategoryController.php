@@ -51,22 +51,43 @@ class ProductCategoryController extends AbstractController
      */
     public function new2(Request $request): Response
     {
-        $productCategory = new ProductCategory();
-        $form = $this->createForm(ProductCategoryType::class, $productCategory);
-        $form->handleRequest($request);
+        $data = json_decode($request->getContent(), true);
+        if(!$data)
+        {
+            $productCategory = new ProductCategory();
+            $form = $this->createForm(ProductCategoryType::class, $productCategory);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($productCategory);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('op_gestapp_product_category_index');
+            }
+
+            return $this->render('gest_app/product_category/new2.html.twig', [
+                'product_category' => $productCategory,
+                'form' => $form->createView(),
+            ]);
+        }else{
+            $name = $data['name'];
+            $productCategory = new ProductCategory();
+            $productCategory->setName($name);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($productCategory);
             $entityManager->flush();
 
-            return $this->redirectToRoute('gest_app_product_category_index');
+            $category = $productCategory->getName();
+
+            return $this->json([
+                'code' => 200,
+                'category' => $category,
+                'message' => "Une catégorie a été ajoutée."
+            ], 200);
         }
 
-        return $this->render('gest_app/product_category/new2.html.twig', [
-            'product_category' => $productCategory,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**

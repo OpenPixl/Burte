@@ -117,6 +117,11 @@ class Product
     private $isStar = false;
 
     /**
+     * @ORM\ManyToOne(targetEntity=ProductNature::class, inversedBy="product")
+     */
+    private $productNature;
+
+    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist
@@ -348,6 +353,18 @@ class Product
     public function setIsStar(bool $isStar): self
     {
         $this->isStar = $isStar;
+
+        return $this;
+    }
+
+    public function getProductNature(): ?ProductNature
+    {
+        return $this->productNature;
+    }
+
+    public function setProductNature(?ProductNature $productNature): self
+    {
+        $this->productNature = $productNature;
 
         return $this;
     }

@@ -2,17 +2,17 @@
 
 namespace App\Entity\GestApp;
 
-use App\Repository\GestApp\ProductCategoryRepository;
+use App\Repository\GestApp\ProductNatureRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ProductCategoryRepository::class)
+ * @ORM\Entity(repositoryClass=ProductNatureRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductCategory
+class ProductNature
 {
     /**
      * @ORM\Id
@@ -42,9 +42,9 @@ class ProductCategory
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="productNature")
      */
-    private $products;
+    private $product;
 
     /**
      * Permet d'initialiser le slug !
@@ -62,6 +62,7 @@ class ProductCategory
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->product = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,16 +126,16 @@ class ProductCategory
     /**
      * @return Collection|Product[]
      */
-    public function getProducts(): Collection
+    public function getProduct(): Collection
     {
-        return $this->products;
+        return $this->product;
     }
 
     public function addProduct(Product $product): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setCategory($this);
+        if (!$this->product->contains($product)) {
+            $this->product[] = $product;
+            $product->setProductNature($this);
         }
 
         return $this;
@@ -142,10 +143,10 @@ class ProductCategory
 
     public function removeProduct(Product $product): self
     {
-        if ($this->products->removeElement($product)) {
+        if ($this->product->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getCategory() === $this) {
-                $product->setCategory(null);
+            if ($product->getProductNature() === $this) {
+                $product->setProductNature(null);
             }
         }
 

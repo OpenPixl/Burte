@@ -254,6 +254,10 @@ main h1, main h2, main h3{
 
 /***---------- MAIN : Member Card ----------***/
 
+.card a{
+  text-decoration-line: none;
+}
+
 /***---------- FOOTER ----------***/
 footer{
   border-top:solid 2px $sm-primary-color;

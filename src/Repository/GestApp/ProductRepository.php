@@ -47,4 +47,75 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+    * Liste les produite selon une catégorie.
+    * @return Product[] Returns an array of Product objects
+    */
+    public function oneCategory($idcat)
+    {
+        return $this->createQueryBuilder('p')
+
+            ->leftJoin('p.producer', 'pr')
+            ->leftJoin('pr.structure', 's')
+            ->leftJoin('p.category', 'c')
+            ->Select('
+                p.id AS id,
+                p.name AS name, 
+                p.description AS description,
+                p.details,
+                p.price,
+                p.quantity,
+                p.productName AS productName,
+                c.id,
+                c.name,
+                p.isDisponible,
+                p.isStar,
+                p.isOnLine,
+                s.name AS producer,
+                s.logoStructureName AS logoStructureName
+                 ')
+            ->andWhere('c.id = :idcat')
+            ->andWhere('p.isOnLine = :isOnLine')
+            ->setParameter('idcat', $idcat)
+            ->setParameter('isOnLine', 1)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * Liste tous les produits en ligne.
+     * @return Product[] Returns an array of Product objects
+     */
+    public function listALlProduct()
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.producer', 'pr')
+            ->leftJoin('pr.structure', 's')
+            ->leftJoin('p.category', 'c')
+            ->Select('
+                p.id AS id,
+                p.name AS name, 
+                p.description AS description,
+                p.details,
+                p.price,
+                p.quantity,
+                p.productName AS productName,
+                c.id,
+                c.name,
+                p.isDisponible,
+                p.isStar,
+                p.isOnLine,
+                s.name AS producer,
+                s.logoStructureName AS logoStructureName
+                 ')
+            ->andWhere('p.isOnLine = :isOnLine')
+            ->setParameter('isOnLine', 1)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

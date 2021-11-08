@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ProductUnit{% endblock %}
+
+{% block body %}
+    <h1>Create new ProductUnit</h1>
+
+    {{ include('gest_app_product_unit/_form.html.twig') }}
+
+    <a href="{{ path('gest_app_product_unit_index') }}">back to list</a>
+{% endblock %}

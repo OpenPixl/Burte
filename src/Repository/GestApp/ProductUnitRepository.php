@@ -2,21 +2,21 @@
 
 namespace App\Repository\GestApp;
 
-use App\Entity\GestApp\ProductNature;
+use App\Entity\GestApp\ProductUnit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method ProductNature|null find($id, $lockMode = null, $lockVersion = null)
- * @method ProductNature|null findOneBy(array $criteria, array $orderBy = null)
- * @method ProductNature[]    findAll()
- * @method ProductNature[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ProductUnit|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ProductUnit|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ProductUnit[]    findAll()
+ * @method ProductUnit[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductNatureRepository extends ServiceEntityRepository
+class ProductUnitRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ProductNature::class);
+        parent::__construct($registry, ProductUnit::class);
     }
 
     // /**

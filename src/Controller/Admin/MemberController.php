@@ -26,7 +26,17 @@ class MemberController extends AbstractController
     public function index(MemberRepository $memberRepository): Response
     {
         return $this->render('admin/member/index.html.twig', [
-            'members' => $memberRepository->findBy(array("type" => "member")),
+            'members' => $memberRepository->findBy(array("type" => "producteur")),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/client/", name="op_admin_member_client", methods={"GET"})
+     */
+    public function client(MemberRepository $memberRepository): Response
+    {
+        return $this->render('admin/member/client.html.twig', [
+            'members' => $memberRepository->findBy(array("type" => "client")),
         ]);
     }
 

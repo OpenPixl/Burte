@@ -2,6 +2,7 @@
 
 namespace App\Entity\Webapp;
 
+use App\Entity\GestApp\ProductCategory;
 use App\Repository\Webapp\SectionRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -132,6 +133,11 @@ class Section
      * @ORM\Column(type="integer", nullable=true)
      */
     private $positionfavorite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ProductCategory::class, inversedBy="sections")
+     */
+    private $OneCatproduct;
 
 
     /**
@@ -407,6 +413,18 @@ class Section
     public function setPositionfavorite(int $positionfavorite): self
     {
         $this->positionfavorite = $positionfavorite;
+
+        return $this;
+    }
+
+    public function getOneCatproduct(): ?ProductCategory
+    {
+        return $this->OneCatproduct;
+    }
+
+    public function setOneCatproduct(?ProductCategory $OneCatproduct): self
+    {
+        $this->OneCatproduct = $OneCatproduct;
 
         return $this;
     }

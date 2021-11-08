@@ -89,6 +89,24 @@
                     </div>
                 </div>
 
+                <div class="modal fade" id="addProductUnit" tabindex="-1" aria-labelledby="addProductCategory" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ajouter une unité de produit :</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ render(controller('App\\Controller\\GestApp\\ProductUnitController::new2')) }}
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" type="button" class="btn btn-primary js-add-unit" data-bs-dismiss="modal">Publier</a>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="modal fade" id="addProductNature" tabindex="-1" aria-labelledby="addProductCategory" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">

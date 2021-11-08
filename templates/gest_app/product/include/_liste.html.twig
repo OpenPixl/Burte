@@ -9,7 +9,7 @@
             <div class="card-body">
                 <h5 class="card-title"><a href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}">{{ product.name }}</a></h5>
                 <p class="card-text">{{ product.description|raw }}</p>
-                <p class="card-subtitle">{{ product.price }} € / {{ product.typo }}</p>
+                <p class="card-subtitle">{{ product.price }} € / {{ product.productUnit }}</p>
             </div>
             <div class="card-footer">
                 <div class="d-flex flex-row justify-content-between">

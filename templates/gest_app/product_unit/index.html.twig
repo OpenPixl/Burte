@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProductUnit index{% endblock %}
+
+{% block body %}
+    <h1>ProductUnit index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product_unit in product_units %}
+            <tr>
+                <td>{{ product_unit.id }}</td>
+                <td>{{ product_unit.name }}</td>
+                <td>{{ product_unit.slug }}</td>
+                <td>{{ product_unit.createdAt ? product_unit.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ product_unit.updatedAt ? product_unit.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('gest_app_product_unit_show', {'id': product_unit.id}) }}">show</a>
+                    <a href="{{ path('gest_app_product_unit_edit', {'id': product_unit.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('gest_app_product_unit_new') }}">Create new</a>
+{% endblock %}

@@ -63,6 +63,8 @@
                     {{ render(controller('App\\Controller\\Admin\\StatistiqueController::CountUp')) }}
                 {% elseif section.contentType == 'All_products'%}
                     {{ render(controller('App\\Controller\\GestApp\\ProductController::ListAllProductDispo')) }}
+                {% elseif section.contentType == 'One_Cat_Product'%}
+                    {{ render(controller('App\\Controller\\GestApp\\ProductController::ListOneCatProduct', {'idcat':section.oneCatproduct})) }}
                 {% else %}
                 {% endif %}
             </div>

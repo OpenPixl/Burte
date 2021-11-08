@@ -14,10 +14,10 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
-                    <b>{{ form_label(form.ProductNature, 'Nature du produit', {'label_attr': {'class':'form-label'}}) }}</b>
+                    <b>{{ form_label(form.productNature, 'Nature du produit', {'label_attr': {'class':'form-label'}}) }}</b>
                 </div>
                 <div class="col-3">
-                    {{ form_widget(form.ProductNature, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                    {{ form_widget(form.productNature, {'attr': {'class': 'form-select form-select-sm'}}) }}
                 </div>
                 <div class="col-1">
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductNature"><i class="bi bi-plus-circle"></i></button>
@@ -42,13 +42,24 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
+                    <b>{{ form_label(form.details, 'Détails', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-10">
+                    {{ form_widget(form.details, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-2">
                     <b>{{ form_label(form.price, 'Prix', {'label_attr': {'class':'form-label'}}) }}</b>
                 </div>
                 <div class="col-2">
                     {{ form_widget(form.price, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Identifiant'}}) }}
                 </div>
                 <div class="col-3">
-                    {{ form_widget(form.typo, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                    {{ form_widget(form.productUnit, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                </div>
+                <div class="col-1 d-flex align-items-center">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductUnit"><i class="bi bi-plus-circle"></i></button>
                 </div>
             </div>
             <div class="row mb-1 mt-1 g-1">

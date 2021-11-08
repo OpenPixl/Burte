@@ -4,24 +4,42 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 {% endblock %}
 {%  block javascripts %}
     {{ parent() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
         window.onload = function(){
             const OneArticle = document.getElementById('One_article');
-            const SelectContentType = document.getElementById('section_contentType')
+            const OneCatProduct = document.getElementById('One_Cat_Product');
+            const SelectValue = document.getElementById('section_contentType').value;
+            console.log(SelectValue);
 
-            // Elements masqués au démarrage de la page
-            OneArticle.style.visibility = 'hidden';
+            if (SelectValue == 'One_article'){
+                OneArticle.style.display="block";
+            }else if (SelectValue == 'One_Cat_Product'){
+                OneArticle.style.display="none";
+                OneCatProduct.style.display="block";
+            }else{
+                OneArticle.style.display="none";
+                OneCatProduct.style.display="none";
+            }
+
+            document.getElementById("section_contentType").addEventListener("change", ShowDiv, false);
 
             // affiche le champs "Choix d'un article si Content = One_Article
-            SelectContentType.addEventListener('change', (event) => {
-                OneArticle.style.visibility = 'visible';
-            });
+            function ShowDiv(){
+                const getSelect = document.getElementById('section_contentType').value;
+                if (getSelect == 'One_article'){
+                    OneArticle.style.display="block";
+                }else if (getSelect == 'One_Cat_Product'){
+                    OneArticle.style.display="none";
+                    OneCatProduct.style.display="block";
+                }else{
+                    OneArticle.style.display="none";
+                    OneCatProduct.style.display="none";
+                }
+            }
+
         }
     </script>
 {% endblock %}

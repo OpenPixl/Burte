@@ -67,11 +67,6 @@ class Product
     private $category;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $typo;
-
-    /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
      */
     private $price;
@@ -115,6 +110,16 @@ class Product
      * @ORM\ManyToOne(targetEntity=ProductNature::class, inversedBy="product")
      */
     private $productNature;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ProductUnit::class, inversedBy="product")
+     */
+    private $productUnit;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $details;
 
     /**
      * Permet d'initialiser le slug !
@@ -222,18 +227,6 @@ class Product
     public function setCategory(?ProductCategory $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getTypo(): ?string
-    {
-        return $this->typo;
-    }
-
-    public function setTypo(string $typo): self
-    {
-        $this->typo = $typo;
 
         return $this;
     }
@@ -348,6 +341,30 @@ class Product
     public function setProductNature(?ProductNature $productNature): self
     {
         $this->productNature = $productNature;
+
+        return $this;
+    }
+
+    public function getProductUnit(): ?ProductUnit
+    {
+        return $this->productUnit;
+    }
+
+    public function setProductUnit(?ProductUnit $productUnit): self
+    {
+        $this->productUnit = $productUnit;
+
+        return $this;
+    }
+
+    public function getDetails(): ?string
+    {
+        return $this->details;
+    }
+
+    public function setDetails(?string $details): self
+    {
+        $this->details = $details;
 
         return $this;
     }

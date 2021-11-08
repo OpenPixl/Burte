@@ -50,7 +50,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/gestapp/product/{id}", name="op_gestapp_product_show", methods={"GET"})
+     * @Route("/webbapp/product/{id}", name="op_gestapp_product_show", methods={"GET"})
      */
     public function show(Product $product): Response
     {
@@ -161,9 +161,22 @@ class ProductController extends AbstractController
      */
     public function ListAllProductDispo()
     {
-        $products = $this->getDoctrine()->getRepository(Product::class)->findBy(array('isOnLine' => 1));
+        $products = $this->getDoctrine()->getRepository(Product::class)->listAllProduct();
 
         return $this->render('gest_app/product/listallproductdispo.html.twig',[
+            'products' => $products
+        ]);
+    }
+
+    /**
+     * Espace E-Commerce : Liste les produits
+     * @Route("/gestapp/product/oneCat/{idcat}", name="op_gestapp_product_onecat", methods={"POST"})
+     */
+    public function ListOneCatProduct($idcat)
+    {
+        $products = $this->getDoctrine()->getRepository(Product::class)->oneCategory($idcat);
+
+        return $this->render('gest_app/product/listonecatproduct.html.twig',[
             'products' => $products
         ]);
     }

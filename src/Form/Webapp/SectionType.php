@@ -2,6 +2,7 @@
 
 namespace App\Form\Webapp;
 
+use App\Entity\GestApp\ProductCategory;
 use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Section;
 use Doctrine\ORM\EntityRepository;
@@ -38,6 +39,7 @@ class SectionType extends AbstractType
                     ],
                     'ECOMMERCE' =>[
                         "Listes des produits" => "All_products",
+                        "Une catégorie de produit" => "One_Cat_Product",
                     ],
                     'MEMBRES' => [
                         'membre' => 'Member',
@@ -53,7 +55,25 @@ class SectionType extends AbstractType
                     ],
                 ],
             ])
-            ->add('oneArticle')
+            ->add('oneArticle', EntityType::class, [
+                'class' => Article::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('a')
+                        ->orderBy('a.title', 'ASC');
+                },
+                'choice_label' => 'title',
+                'attr' => [
+                    'class' => 'form-select form-select-sm',
+                ]
+            ])
+            ->add('oneCatproduct', EntityType::class, [
+                'class' => ProductCategory::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->orderBy('p.name', 'ASC');
+                },
+                'choice_label' => 'name',
+            ])
             ->add('favorites')
             ->add('isSectionFluid')
             ->add('position')

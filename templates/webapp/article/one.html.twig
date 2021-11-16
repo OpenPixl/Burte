@@ -23,7 +23,7 @@
                 </div>
                 {% if article.link %}
                 <div class="col-12">
-                    <a class="btn btn-light" href="/webapp/page/{{ article.link|lower }}">{{article.linktext}}</a>
+                    <a class="btn btn-light" href="/page/{{ article.link|lower }}">{{article.linktext}}</a>
                 </div>
                 {% endif %}
             </div>
@@ -36,7 +36,7 @@
                         {{ article.content|raw }}
                     {% endif %}
                     {% if article.link %}
-                        <a class="btn btn-light" href="/webapp/page/{{ article.link|lower }}">{{article.linktext}}</a>
+                        <a class="btn btn-light" href="/page/{{ article.link|lower }}">{{article.linktext}}</a>
                     {% endif %}
                 </div>
                 <div class="col-3">
@@ -122,6 +122,9 @@
                             <p>{{ article.content|u.truncate(600, ' ...')|raw }}</p>
                         {% else %}
                             <p>{{ article.content|raw }}</p>
+                        {% endif %}
+                        {% if article.link %}
+                        <a class="btn btn-lg btn-light btn-bluelight" href="/page/{{ article.link|lower }}">{{article.linktext}}</a>
                         {% endif %}
                     </div>
                 </div>

@@ -8,6 +8,11 @@
     {% endif %}
 {% endblock %}
 
+{% block javascript %}
+{{parent()}}
+<script src="{{ asset('js/filters.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     {% if page is empty %}
     {% else %}

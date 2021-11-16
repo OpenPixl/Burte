@@ -99,8 +99,11 @@ class ArticleController extends AbstractController
      * Affiche un seul article en Front
      * @Route("/webapp/article/one/{id}", name="op_webapp_article_one")
      */
-    public function oneArticle(Article $article) : Response
+    public function oneArticle($id) : Response
     {
+        $article = $this->getDoctrine()->getRepository(Article::class)->OneArticle($id);
+        //dd($article);
+
         return $this->render('webapp/article/one.html.twig', [
             'article' => $article,
         ]);

@@ -47,6 +47,11 @@ class ProductNature
     private $product;
 
     /**
+     * @ORM\OneToMany(targetEntity=ProductCategory::class, mappedBy="Nature")
+     */
+    private $productCategories;
+
+    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist
@@ -63,6 +68,7 @@ class ProductNature
     {
         $this->products = new ArrayCollection();
         $this->product = new ArrayCollection();
+        $this->productCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,6 +153,36 @@ class ProductNature
             // set the owning side to null (unless already changed)
             if ($product->getProductNature() === $this) {
                 $product->setProductNature(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProductCategory[]
+     */
+    public function getProductCategories(): Collection
+    {
+        return $this->productCategories;
+    }
+
+    public function addProductCategory(ProductCategory $productCategory): self
+    {
+        if (!$this->productCategories->contains($productCategory)) {
+            $this->productCategories[] = $productCategory;
+            $productCategory->setNature($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductCategory(ProductCategory $productCategory): self
+    {
+        if ($this->productCategories->removeElement($productCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($productCategory->getNature() === $this) {
+                $productCategory->setNature(null);
             }
         }
 

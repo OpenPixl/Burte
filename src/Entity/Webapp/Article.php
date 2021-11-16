@@ -131,6 +131,7 @@ class Article
 
     /**
      * @ORM\ManyToOne(targetEntity=Page::class)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $link;
 

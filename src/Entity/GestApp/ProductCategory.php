@@ -53,6 +53,11 @@ class ProductCategory
     private $sections;
 
     /**
+     * @ORM\ManyToOne(targetEntity=ProductNature::class, inversedBy="productCategories")
+     */
+    private $Nature;
+
+    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist
@@ -189,6 +194,18 @@ class ProductCategory
                 $section->setOneCatproduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNature(): ?ProductNature
+    {
+        return $this->Nature;
+    }
+
+    public function setNature(?ProductNature $Nature): self
+    {
+        $this->Nature = $Nature;
 
         return $this;
     }

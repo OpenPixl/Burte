@@ -31,6 +31,35 @@ class ArticleRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * Retourne seulement un article de l'entité
+     * @return Article[] Returns an array of Article objects
+     **/
+    public function OneArticle($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('
+                a.id AS id,
+                a.isShowtitle AS isShowtitle,
+                a.title AS title,
+                a.slug AS slug,
+                a.articleFrontName AS articleFrontName,
+                a.isReadMore AS isReadMore,
+                a.content AS content,
+                a.Linktext AS linktext,
+                p.slug AS link,
+                a.articleFrontPosition AS articleFrontPosition,
+                a.isShowdate AS isShowdate,
+                a.createdAt AS createdAt
+                ')
+            ->join('a.category', 'c')
+            ->join('a.link', 'p')
+            ->orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

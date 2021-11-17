@@ -46,17 +46,18 @@ class ArticleRepository extends ServiceEntityRepository
                 a.articleFrontName AS articleFrontName,
                 a.isReadMore AS isReadMore,
                 a.content AS content,
+                a.isLink AS isLink,
                 a.Linktext AS linktext,
-                p.slug AS link,
+                p.slug AS linkPage,
                 a.articleFrontPosition AS articleFrontPosition,
                 a.isShowdate AS isShowdate,
                 a.createdAt AS createdAt
                 ')
             ->join('a.category', 'c')
-            ->join('a.link', 'p')
+            ->join('a.linkPage', 'p')
             ->orderBy('a.id', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
             ;
     }
 

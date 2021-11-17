@@ -102,10 +102,9 @@ class ArticleController extends AbstractController
     public function oneArticle($id) : Response
     {
         $article = $this->getDoctrine()->getRepository(Article::class)->OneArticle($id);
-        //dd($article);
 
         return $this->render('webapp/article/one.html.twig', [
-            'article' => $article,
+            'articles' => $article,
         ]);
     }
 

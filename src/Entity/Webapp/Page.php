@@ -118,9 +118,15 @@ class Page
      */
     private $sections;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="linkPage")
+     */
+    private $LinkedPage;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
+        $this->LinkedPage = new ArrayCollection();
     }
 
     /**
@@ -391,6 +397,36 @@ class Page
             // set the owning side to null (unless already changed)
             if ($section->getPage() === $this) {
                 $section->setPage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getLinkedPage(): Collection
+    {
+        return $this->LinkedPage;
+    }
+
+    public function addLinkedPage(Article $linkedPage): self
+    {
+        if (!$this->LinkedPage->contains($linkedPage)) {
+            $this->LinkedPage[] = $linkedPage;
+            $linkedPage->setLinkPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLinkedPage(Article $linkedPage): self
+    {
+        if ($this->LinkedPage->removeElement($linkedPage)) {
+            // set the owning side to null (unless already changed)
+            if ($linkedPage->getLinkPage() === $this) {
+                $linkedPage->setLinkPage(null);
             }
         }
 

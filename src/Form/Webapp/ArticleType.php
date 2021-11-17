@@ -55,11 +55,10 @@ class ArticleType extends AbstractType
             ->add('isShowtitle')
             ->add('isShowdate')
             ->add('isLink')
-            ->add('link', EntityType::class, [
+            ->add('linkPage', EntityType::class, [
                 'class' => Page::class,
                 'choice_label' => 'name',
                 'placeholder' => 'aucun lien',
-                'empty_data' => '#',
                 'query_builder' => function(PageRepository $pageRepository){
                     return $pageRepository->createQueryBuilder('p')->orderBy('p.name', 'ASC');
                 }

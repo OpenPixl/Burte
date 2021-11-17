@@ -129,16 +129,16 @@ class Article
      */
     private $isLink = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Page::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $link;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Linktext;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="LinkedPage")
+     */
+    private $linkPage;
 
 
     public function __construct()
@@ -429,18 +429,6 @@ class Article
         return $this;
     }
 
-    public function getLink(): ?Page
-    {
-        return $this->link;
-    }
-
-    public function setLink(?Page $link): self
-    {
-        $this->link = $link;
-
-        return $this;
-    }
-
     public function getLinktext(): ?string
     {
         return $this->Linktext;
@@ -449,6 +437,18 @@ class Article
     public function setLinktext(?string $Linktext): self
     {
         $this->Linktext = $Linktext;
+
+        return $this;
+    }
+
+    public function getLinkPage(): ?Page
+    {
+        return $this->linkPage;
+    }
+
+    public function setLinkPage(?Page $linkPage): self
+    {
+        $this->linkPage = $linkPage;
 
         return $this;
     }

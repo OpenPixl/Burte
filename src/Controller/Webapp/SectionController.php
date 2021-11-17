@@ -51,7 +51,6 @@ class SectionController extends AbstractController
     public function frontByPage(Page $page): Response
     {
         $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('page' => $page), array('position' => 'ASC'));
-
         return $this->render('webapp/section/frontbypage.html.twig', [
             'sections' => $sections,
         ]);

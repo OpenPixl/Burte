@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Admin\Member;
 use App\Form\Admin\Member2Type;
 use App\Form\Admin\MemberType;
+use App\Form\Admin\ClientType;
 use App\Repository\Admin\MemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -96,6 +97,54 @@ class MemberController extends AbstractController
 
         return $this->render('admin/member/new.html.twig', [
             'member' => $member,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/webapp/client/new", name="op_webapp_clinet_new", methods={"GET","POST"})
+     */
+    public function clientNew(Request $request,UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer): Response
+    {
+        $client = new Member();
+        $client->setType('client');
+        $form = $this->createForm(ClientType::class, $client);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $client->setPassword(
+                $passwordEncoder->encodePassword(
+                    $client,
+                    $form->get('password')->getData()
+                )
+            );
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($client);
+            $entityManager->flush();
+
+            // partie de code pour envoyer un email au client
+            $email = (new Email())
+                ->from('postmaster@openpixl.fr')
+                ->to('xavier.burke@openpixl.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('JUSTàFaire - Inscription')
+                //->text('Sending emails is fun again!')
+                ->html('
+                    <h1>Cartes de prières<small> - Création de votre compte client</small></h1>
+                    <hr>
+                    <p>Vous venez de créer votre compte sur le site de : Cartes de prières.</p>
+                    ');
+            $mailer->send($email);
+
+
+            return $this->redirectToRoute('op_admin_member_index');
+        }
+
+        return $this->render('admin/member/newclient.html.twig', [
+            'member' => $client,
             'form' => $form->createView(),
         ]);
     }

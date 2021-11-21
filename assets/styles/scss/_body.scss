@@ -36,6 +36,28 @@ main{
   margin-bottom: 3rem;
 }
 
+/* ------- CSS Card dashboard --------*/
+.avatar-lg {
+  height: 4.5rem;
+  width: 4.5rem;
+}
+
+.avatar-lg i {
+  font-size: 28px !important;
+}
+
+.avatar-title {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.bg-soft-light {
+  background-color: rgba(236,242,245,.25) !important;
+}
 
 /* ------- CKEDITOR --------*/
 .ck-editor__editable {

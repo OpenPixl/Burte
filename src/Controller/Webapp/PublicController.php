@@ -74,7 +74,6 @@ class PublicController extends AbstractController
     {
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
 
-
         // integration du code sélectionnant les sections classées comme favorites
         return $this->render('webapp/public/adhesionreply.html.twig',[
             'parameter' => $parameter,
@@ -118,5 +117,13 @@ class PublicController extends AbstractController
             'menus' => $menus,
             'route' => $route
         ]);
+    }
+
+    /**
+     * Affiche l'espace clientelle
+     * @Route ("/webapp/public/dashboard/client", name="op_webapp_public_dashboard_client", methods={"GET"})
+     */
+    public function clientDashboard(){
+        return $this->render("");
     }
 }

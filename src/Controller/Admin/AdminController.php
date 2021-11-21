@@ -21,17 +21,24 @@ class AdminController extends AbstractController
     public function index(): Response
     {
         $user= $this->getUser();
-        $members = $this->getDoctrine()->getRepository(Member::class)->findBy(array('type' => 'member'));
-        $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findAll();
-        $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
-        $annonces = $this->getDoctrine()->getRepository(Annonce::class)->findAll();
-        $messages = $this->getDoctrine()->getRepository(Message::class)->MessagesByUser($user);
-        return $this->render('admin/admin/index.html.twig', [
-            'members' => $members,
-            'recommandations' => $recommandations,
-            'events' => $events,
-            'annonces' => $annonces,
-            'messages' => $messages,
-        ]);
+        $type = $user->getType();
+        if($type = "client"){
+            return $this->redirectToRoute('op_webapp_public_dashboard_client');
+        }
+        else{
+            $members = $this->getDoctrine()->getRepository(Member::class)->findBy(array('type' => 'client'));
+            $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findAll();
+            $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
+            $annonces = $this->getDoctrine()->getRepository(Annonce::class)->findAll();
+            $messages = $this->getDoctrine()->getRepository(Message::class)->MessagesByUser($user);
+            return $this->render('admin/admin/index.html.twig', [
+                'members' => $members,
+                'recommandations' => $recommandations,
+                'events' => $events,
+                'annonces' => $annonces,
+                'messages' => $messages,
+            ]);
+        }
+
     }
 }

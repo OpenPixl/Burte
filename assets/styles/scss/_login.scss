@@ -48,3 +48,10 @@ p{
   padding-right: 0;
   padding-left: 0;
 }
+.form-control-sm {
+  min-height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+  margin: 0rem 0.25rem;
+}

@@ -1,6 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'login.html.twig' %}
 
 {% block content %}
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 align-self-center px-lg-6 my-5">
+        <!-- Heading -->
+        <h2 class="display-4 text-center mb-3">
+            Créer son espace
+        </h2>
+        <p class="text-center d-lg-none">
+            <img class="img-fluid" src="{{ asset('images/png/Logo_jaf.png') }}" alt="justafaire">
+        </p>
+        {#
+        {% if error %}
+            <p class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        {% endif %}
+        #}
+        <!-- Subheading -->
+        {{ include('admin/member/_formclient.html.twig') }}
+
+    </div>
+    <div class="col-md-6 col-lg-6 col-xl-8 d-none d-lg-block">
+        <!-- Image -->
+        <div id="block_login_image" class="bg-cover h-100 min-vh-100 mt-n1 mr-n3">
+
+        </div>
+    </div>
+{#
 <div class="container">
     {{ include('admin/member/include/_section_content_header_client.html.twig') }}
     <section id="op_admin_content_body">
@@ -16,4 +40,5 @@
         </div>
     </section>
 </div>
+#}
 {% endblock %}

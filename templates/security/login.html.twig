@@ -5,25 +5,20 @@
 {% block content %}
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 align-self-center px-lg-6 my-5">
-
         <!-- Heading -->
         <h2 class="display-4 text-center mb-3">
             Se connecter
         </h2>
-
         <p class="text-center d-lg-none">
             <img class="img-fluid" src="{{ asset('images/png/Logo_jaf.png') }}" alt="justafaire">
         </p>
-
         {% if error %}
             <p class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
         {% endif %}
-
         <!-- Subheading -->
         <p class="text-muted text-center mb-5">
             Accéder à votre espace personnel.
         </p>
-
         <!-- Form -->
         <form method="post" autocomplete="false">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -52,7 +47,7 @@
             <!-- Link -->
             <p class="text-center">
                 <small class="text-muted text-center">
-                    Vous n'êtes pas membre ? <a href="{{ path('op_admin_security_register') }}">Créer votre compte</a>.
+                    Vous n'êtes pas membre ? <a href="{{ path('op_webapp_client_new') }}">Créer votre compte</a>.
                 </small>
             </p>
 
@@ -60,12 +55,10 @@
 
     </div>
     <div class="col-md-6 col-lg-6 col-xl-8 d-none d-lg-block">
-
         <!-- Image -->
         <div id="block_login_image" class="bg-cover h-100 min-vh-100 mt-n1 mr-n3">
 
         </div>
-
     </div>
 
 

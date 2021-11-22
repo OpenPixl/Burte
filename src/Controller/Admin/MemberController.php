@@ -102,7 +102,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/webapp/client/new", name="op_webapp_clinet_new", methods={"GET","POST"})
+     * @Route("/webapp/client/new", name="op_webapp_client_new", methods={"GET","POST"})
      */
     public function clientNew(Request $request,UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer): Response
     {

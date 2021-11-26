@@ -23,7 +23,7 @@
                     <!-- Body -->
                     <a class="card-body" href="{{ path('op_Gestapp_product_show', {'id': product.id}) }}">
                         <!-- Heading -->
-                        <h3>{{ product.name }}</h3>
+                        <h3>{{ product.name }} {{ product.id }}</h3>
                         <div class="mb-0 text-muted">
                             <!-- Text -->
                             {{ product.description|raw }}

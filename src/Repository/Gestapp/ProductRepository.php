@@ -103,7 +103,7 @@ class ProductRepository extends ServiceEntityRepository
                 p.price,
                 p.quantity,
                 p.productName AS productName,
-                c.id,
+                c.id AS categoryId,
                 c.name,
                 p.isDisponible,
                 p.isStar,

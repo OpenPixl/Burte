@@ -162,7 +162,7 @@ class ProductController extends AbstractController
     public function ListAllProductDispo()
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->listAllProduct();
-
+        //dd($products);
         return $this->render('Gestapp/product/listallproductdispo.html.twig',[
             'products' => $products
         ]);

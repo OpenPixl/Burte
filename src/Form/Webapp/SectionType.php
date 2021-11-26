@@ -2,7 +2,7 @@
 
 namespace App\Form\Webapp;
 
-use App\Entity\GestApp\ProductCategory;
+use App\Entity\Gestapp\ProductCategory;
 use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Section;
 use Doctrine\ORM\EntityRepository;

@@ -49,22 +49,22 @@
                 {% elseif section.contentType == 'One_event'%}
                     {# Affiche un slide des évènements #}
                 {% elseif section.contentType == 'Events'%}
-                    {{ render(controller('App\\Controller\\GestApp\\EventController::ListAllEventPublish')) }}
+                    {{ render(controller('App\\Controller\\Gestapp\\EventController::ListAllEventPublish')) }}
                     {# Affiche l'historique des évènements #}
                 {% elseif section.contentType == 'HistoryOfEvent'%}
-                    {{ render(controller('App\\Controller\\GestApp\\EventController::historyOfEventPublish')) }}
+                    {{ render(controller('App\\Controller\\Gestapp\\EventController::historyOfEventPublish')) }}
                 {% elseif section.contentType == 'Member'%}
                     {{ render(controller('App\\Controller\\Admin\\MemberController::Members')) }}
                 {% elseif section.contentType == 'Adhesion'%}
-                    {{ render(controller('App\\Controller\\GestApp\\AdhesionController::addAdhesion')) }}
+                    {{ render(controller('App\\Controller\\Gestapp\\AdhesionController::addAdhesion')) }}
                 {% elseif section.contentType == 'Avis'%}
-                    {{ render(controller('App\\Controller\\GestApp\\AvisController::view')) }}
+                    {{ render(controller('App\\Controller\\Gestapp\\AvisController::view')) }}
                 {% elseif section.contentType == 'CountUp'%}
                     {{ render(controller('App\\Controller\\Admin\\StatistiqueController::CountUp')) }}
                 {% elseif section.contentType == 'All_products'%}
-                    {{ render(controller('App\\Controller\\GestApp\\ProductController::ListAllProductDispo')) }}
+                    {{ render(controller('App\\Controller\\Gestapp\\ProductController::ListAllProductDispo')) }}
                 {% elseif section.contentType == 'One_Cat_Product'%}
-                    {{ render(controller('App\\Controller\\GestApp\\ProductController::ListOneCatProduct', {'idcat':section.oneCatproduct})) }}
+                    {{ render(controller('App\\Controller\\Gestapp\\ProductController::ListOneCatProduct', {'idcat':section.oneCatproduct})) }}
                 {% else %}
                 {% endif %}
             </div>

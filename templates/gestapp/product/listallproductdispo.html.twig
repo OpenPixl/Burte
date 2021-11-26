@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-2">
+        {#
+            Le code javascript pour la mise en marche du script se trouve sur le fichier :
+            "template/webapp/page/page.html.twig"
+
+       {{ include('Gestapp/product/include/_filters.html.twig') }} #}
+    </div>
+    <div class="col-10">
+        {% for product in products %}
+            <div class="col-3">
+                {# Card Produit #}
+                <div class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">
+                    {# Card image du produit #}
+                    <a class="card-img-top" href="{{ path('op_Gestapp_product_show', {'id': product.id}) }}">
+                        {% if product.productName is null %}
+                            <img class="img-fluid" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
+                        {% else %}
+                            <img src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\Gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                        {% endif %}
+                    </a>
+                    {# Effet Shape sur l'image du produit #}
+                    <div class="position-relative">
+                        <div class="shape shape-fluid-x shape-bottom text-white">
+                            <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 48h2880V0h-720C1442.5 52 720 0 720 0H0v48z" fill="currentColor"></path></svg>                    </div>
+                    </div>
+
+                    {# Card-Body du proquit #}
+                    <a class="card-body" href="#">
+                        <!-- Heading -->
+                        <h3>{{ product.name }}</h3>
+                        <div class="mb-0 text-muted">
+                            <!-- Text -->
+                            {{ product.description|raw }}
+                        </div>
+                    </a>
+
+                    <!-- Meta -->
+                    <a class="card-meta" href="#!">
+                        <!-- Divider -->
+                        <hr class="card-meta-divider">
+                        <!-- Avatar -->
+                        <div class="avatar avatar-sm me-2">
+                            <img src="{{ vich_uploader_asset(product, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') }}" alt="{{ product.logoStructureName }}" class="avatar-img rounded-circle" style="width:20px; height:20px">
+                        </div>
+                        <!-- Producer -->
+                        <h6 class="text-muted me-2 mb-0">
+                            {{ product.producer }}
+                        </h6>
+                        <!-- Cart -->
+                        <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="h6 text-uppercase text-muted mb-0 ms-auto">
+                            <i class="bi bi-cart-plus"></i>
+                        </a>
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <p class="mt-3"><strong>Il n'y a pas de produits actuellement disponible dans la boutique.</strong></p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+

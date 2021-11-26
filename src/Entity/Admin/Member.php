@@ -2,9 +2,9 @@
 
 namespace App\Entity\Admin;
 
-use App\Entity\GestApp\Event;
-use App\Entity\GestApp\Product;
-use App\Entity\GestApp\Recommandation;
+use App\Entity\Gestapp\Event;
+use App\Entity\Gestapp\Product;
+use App\Entity\Gestapp\Recommandation;
 use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Page;
 use App\Repository\Admin\MemberRepository;

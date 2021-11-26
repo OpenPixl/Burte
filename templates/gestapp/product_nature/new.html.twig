@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ProductNature{% endblock %}
+
+{% block body %}
+    <h1>Create new ProductNature</h1>
+
+    {{ include('Gestapp_product_nature/_form.html.twig') }}
+
+    <a href="{{ path('Gestapp_product_nature_index') }}">back to list</a>
+{% endblock %}

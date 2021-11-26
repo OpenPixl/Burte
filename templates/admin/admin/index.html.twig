@@ -150,10 +150,10 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="Receipt" role="tabpanel" aria-labelledby="home-tab">
-                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserReceipt', {'hide':1})) }}
+                            {{ render(controller('App\\Controller\\Gestapp\\RecommandationController::byUserReceipt', {'hide':1})) }}
                         </div>
                         <div class="tab-pane" id="Send" role="tabpanel" aria-labelledby="home-tab">
-                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::byUserSend', {'hide':1} )) }}
+                            {{ render(controller('App\\Controller\\Gestapp\\RecommandationController::byUserSend', {'hide':1} )) }}
                         </div>
                     </div>
                 </div>
@@ -165,7 +165,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            {{ render(controller('App\\Controller\\GestApp\\RecommandationController::compilUser')) }}
+                            {{ render(controller('App\\Controller\\Gestapp\\RecommandationController::compilUser')) }}
                         </div>
                     </div>
                 </div>

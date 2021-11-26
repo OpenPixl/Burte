@@ -9,14 +9,10 @@ use App\Form\Webapp\Section2Type;
 use App\Repository\Webapp\SectionRepository;
 use CKSource\CKFinder\Response\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Element;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class SectionController extends AbstractController
 {

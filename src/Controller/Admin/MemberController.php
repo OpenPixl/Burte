@@ -32,16 +32,6 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin/client/", name="op_admin_member_client", methods={"GET"})
-     */
-    public function client(MemberRepository $memberRepository): Response
-    {
-        return $this->render('admin/member/client.html.twig', [
-            'members' => $memberRepository->findBy(array("type" => "client")),
-        ]);
-    }
-
-    /**
      * @Route("/admin/member/vue", name="op_admin_member_vuefront", methods={"GET"})
      */
     public function vueFront(MemberRepository $memberRepository): Response
@@ -101,53 +91,7 @@ class MemberController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/webapp/client/new", name="op_webapp_client_new", methods={"GET","POST"})
-     */
-    public function clientNew(Request $request,UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer): Response
-    {
-        $client = new Member();
-        $client->setType('client');
-        $form = $this->createForm(ClientType::class, $client);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $client->setPassword(
-                $passwordEncoder->encodePassword(
-                    $client,
-                    $form->get('password')->getData()
-                )
-            );
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($client);
-            $entityManager->flush();
-
-            // partie de code pour envoyer un email au client
-            $email = (new Email())
-                ->from('postmaster@openpixl.fr')
-                ->to('xavier.burke@openpixl.fr')
-                //->cc('cc@example.com')
-                //->bcc('bcc@example.com')
-                //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
-                ->subject('JUSTàFaire - Inscription')
-                //->text('Sending emails is fun again!')
-                ->html('
-                    <h1>Cartes de prières<small> - Création de votre compte client</small></h1>
-                    <hr>
-                    <p>Vous venez de créer votre compte sur le site de : Cartes de prières.</p>
-                    ');
-            $mailer->send($email);
-
-
-            return $this->redirectToRoute('op_admin_member_index');
-        }
-
-        return $this->render('admin/member/newclient.html.twig', [
-            'member' => $client,
-            'form' => $form->createView(),
-        ]);
-    }
 
     /**
      * @Route("/admin/member/{id}", name="op_admin_member_show", methods={"GET"})

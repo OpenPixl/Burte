@@ -1,0 +1,135 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Recommandation index{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+
+            // Modal suppr une ligne
+            var Suppr = document.getElementById('Suppr')
+            Suppr.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var a = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                var recipient = a.getAttribute('data-bs-whatever')
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                var modalTitle = Suppr.querySelector('.modal-title')
+                var modalText = Suppr.querySelector('.modal-text')
+                var modalBodyInput = Suppr.querySelector('.modal-body input')
+
+                modalTitle.textContent = "Suppression d'une recommandation"
+                modalBodyInput.value = recipient
+                modalText.innerHTML = "Vous êtes sur le point de supprimer la recommandation sélectionnée.<br><b>Etes-vous sur de continuer ?</b>"
+            })
+
+            // function Suppression de la ligne en cours
+            function onClickDelEvent(event){
+                event.preventDefault()
+                const id = document.getElementById('recipient-name').value
+                axios
+                    .post('/op_admin/Gestapp/recommandation/del/'+ id)
+                    .then(function(response)
+                    {
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+
+                        // rafraichissement du tableau
+                        const listeReceipt = document.getElementById('listeReceipt').innerHTML = response.data.listeReceipt;
+                        // Ajout d'un event sur Bouton de suppression de la ligne en cours
+                        document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                            link.addEventListener('click', onClickDelEvent)
+                        })
+
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
+            // Ajout d'un event sur Bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelEvent)
+            })
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    {% set countReceipt = receipts|length %}
+    {% set countSend = sends|length %}
+    <div class="container-fluid">
+        {{ include('Gestapp/recommandation/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                <div class="col-2">
+                    {{ include('Gestapp/recommandation/include/_section_content_aside.html.twig') }}
+                </div>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Catalogue des recommandations</h4>
+                            <p>Créer, Modifier ou supprimer des recommandations du site.</p>
+                            <div class="row" id="liste">
+                                <div class="col-12">
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item">
+                                            <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Receipt" type="button" role="tab" aria-controls="Receipt" aria-selected="true">
+                                                <div class="position-relative">
+                                                    RE&#xc7;UES
+                                                    {% if countReceipt > 0 %}
+                                                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-warning rounded-circle">
+                                                            <span class="visually-hidden">New alerts</span>
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Send" type="button" role="tab" aria-controls="Send" aria-selected="true">
+                                                <div class="position-relative">
+                                                    ENVOY&#201;ES
+                                                    {% if countSend > 0 %}
+                                                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-warning rounded-circle">
+                                                            <span class="visually-hidden">New alerts</span>
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="Receipt" role="tabpanel" aria-labelledby="home-tab">
+                                            {{ render(controller('App\\Controller\\Gestapp\\RecommandationController::byUserReceipt', {'hide':0})) }}
+                                        </div>
+                                        <div class="tab-pane" id="Send" role="tabpanel" aria-labelledby="home-tab">
+                                            {{ render(controller('App\\Controller\\Gestapp\\RecommandationController::byUserSend', {'hide':0} )) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-sm btn-secondary" href="{{ path('op_Gestapp_recommandation_index') }}">Retour à la liste des recommandations</a>
+                            <a class="btn btn-sm btn-primary" href="{{ path('op_Gestapp_recommandation_new') }}">Ajouter une recommandation</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

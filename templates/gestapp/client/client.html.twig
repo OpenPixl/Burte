@@ -1,0 +1,157 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}OpenGaia | Administration{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            function onClickBtnVerified(event){
+                event.preventDefault();
+                const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
+                const icone = this.querySelector('i');
+                axios
+                    .get(url)
+                    .then(function(response) {
+                        if(icone.classList.contains('fa-check-circle')) {
+                            icone.classList.replace('fa-check-circle', 'fa-times-circle');
+                            icone.classList.replace('text-success', 'text-danger');
+                        }
+                        else {
+                            icone.classList.replace('fa-times-circle', 'fa-check-circle');
+                            icone.classList.replace('text-danger', 'text-success');
+                        };
+                    });
+            }
+
+            // Evènement sur le bouton js-verified
+            document.querySelectorAll('a.js-verified').forEach(function (link){
+                link.addEventListener('click', onClickBtnVerified);
+            })
+
+            // Modal suppr une ligne
+            var Suppr = document.getElementById('Suppr')
+            Suppr.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var a = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                var recipient = a.getAttribute('data-bs-whatever')
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                var modalTitle = Suppr.querySelector('.modal-title')
+                var modalText = Suppr.querySelector('.modal-text')
+                var modalBodyInput = Suppr.querySelector('.modal-body input')
+
+                modalTitle.textContent = "Suppression d'un évènement"
+                modalBodyInput.value = recipient
+                modalText.innerHTML = "Vous êtes sur le point de supprimer le membre sélectionné.<br><b>Etes-vous bien sur de vouloir continuer ?</b>"
+            })
+
+            // function Suppression de la ligne en cours
+            function onClickDelEvent(event){
+                //event.preventDefault()
+                const id = document.getElementById('recipient-name').value
+                axios
+                    .post('/admin/member/del/'+ id)
+                    .then(function(response)
+                    {
+                        const liste = document.getElementById('liste').innerHTML;
+                        console.log(liste);
+
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
+            // Bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelEvent)
+            })
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('Gestapp/client/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('Gestapp/client/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Liste des Clients</h4>
+                        <p>Créer, Modifier ou supprimer des clients du site.</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Client</th>
+                                    <th>Email</th>
+                                    <th>Adresse de contact</th>
+                                    <th>Adresse de facturation</th>
+                                    <th>Dernière commande</th>
+                                    <th>RGPD</th>
+                                    <th>Actif</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for member in members %}
+                                <tr>
+                                    <td><a href="{{ path('op_admin_member_show', {'id': member.id}) }}">{{ member.firstName }} {{ member.lastName }}</a></td>
+                                    <td></td>
+                                    <td>{{ member.phoneDesk }} / {{ member.phoneGsm }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        {% if member.isVerified == 0 %}
+                                            <a class="js-verified" href="{{ path('op_admin_member_verified', {'id': member.id}) }}"><i class="far fa-times-circle text-danger"></i></a>
+                                        {% elseif member.isVerified == 1 %}
+                                            <a class="js-verified" href="{{ path('op_admin_member_verified', {'id': member.id}) }}"><i class="far fa-check-circle text-success"></i></a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('op_admin_member_show', {'id': member.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
+                                        <a href="{{ path('op_admin_member_edit', {'id': member.id}) }}"><i class="far fa-edit"></i></a>&nbsp;
+                                        <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ member.id }}">
+                                            <i class="fas fa-eraser"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="16">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ path('op_admin_member_new') }}" class="btn btn-sm btn-primary">Ajouter un nouveau client manuellement</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+{% endblock %}

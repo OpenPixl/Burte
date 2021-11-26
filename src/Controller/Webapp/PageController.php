@@ -164,7 +164,7 @@ class PageController extends AbstractController
 
     /**
      * Suppression d'une ligne index.php
-     * @Route("/webapp/page/del/{id}", name="op_gestapp_recommandation_del", methods={"POST"})
+     * @Route("/webapp/page/del/{id}", name="op_Gestapp_recommandation_del", methods={"POST"})
      */
     public function DelEvent(Request $request, Page $page) : Response
     {

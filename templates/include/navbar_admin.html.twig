@@ -17,7 +17,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
                         <li><a class="dropdown-item" href="{{ path('op_webapp_page_index') }}"><i class="fas fa-pager"></i> Pages</a></li>
                         <li><a class="dropdown-item" href="{{ path('op_webapp_article_index') }}"><i class="far fa-file-alt"></i> Articles</a></li>
-                        <li><a class="dropdown-item" href="{{ path('op_gestapp_avis_index') }}"><i class="fas fa-sms"></i> Avis</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_Gestapp_avis_index') }}"><i class="fas fa-sms"></i> Avis</a></li>
                     </ul>
                 </li>
                 {% endif %}
@@ -27,9 +27,9 @@
                         <i class="fas fa-book-open"></i> Catalogue
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
-                        <li><a class="dropdown-item" href="{{ path('op_gestapp_product_index') }}"><i class="fab fa-product-hunt"></i> Produits</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_Gestapp_product_index') }}"><i class="fab fa-product-hunt"></i> Produits</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-shopping-cart"></i> En vente</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-users"></i> Les clients</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_admin_client_liste') }}"><i class="fas fa-users"></i> Les clients</a></li>
                     </ul>
                 </li>
                 {% endif %}
@@ -38,7 +38,7 @@
                         <i class="far fa-lightbulb"></i> Recommandations
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
-                        <li><a class="dropdown-item" href="{{ path('op_gestapp_recommandation_index') }}"><i class="fas fa-clipboard-list"></i> Liste des recommandations</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_Gestapp_recommandation_index') }}"><i class="fas fa-clipboard-list"></i> Liste des recommandations</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -47,11 +47,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
                         {% if is_granted('ROLE_ADMIN') %}
-                        <li><a class="dropdown-item" href="{{ path('op_gestapp_event_index') }}"><i class="fab fa-product-hunt"></i> Evènements</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_Gestapp_event_index') }}"><i class="fab fa-product-hunt"></i> Evènements</a></li>
                         {% else %}
-                        <li><a class="dropdown-item" href="{{ path('op_gestapp_event_index2') }}"><i class="fab fa-product-hunt"></i> Evènements</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_Gestapp_event_index2') }}"><i class="fab fa-product-hunt"></i> Evènements</a></li>
                         {% endif %}
-                        <li><a class="dropdown-item" href="{{ path('op_gestapp_eventgal_index') }}"><i class="fab fa-product-hunt"></i> Galerie</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_Gestapp_eventgal_index') }}"><i class="fab fa-product-hunt"></i> Galerie</a></li>
                     </ul>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
@@ -61,7 +61,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
                         <li><a class="dropdown-item" href="{{ path('op_admin_annonce_index') }}"><i class="fas fa-bullhorn"></i> Annonces</a></li>
-                        <li><a class="dropdown-item" href="{{ path('op_gestapp_adhesion_index') }}"><i class="far fa-id-badge"></i> Adhésions</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_Gestapp_adhesion_index') }}"><i class="far fa-id-badge"></i> Adhésions</a></li>
                         <li><a class="dropdown-item" href="{{ path('op_admin_structure_index') }}"><i class="fas fa-building"></i> Structures</a></li>
                         <li><a class="dropdown-item" href="{{ path('op_admin_parameter_index') }}"><i class="fas fa-cogs"></i> Paramètres</a></li>
                         <li><a class="dropdown-item" href="{{ path('op_admin_member_index') }}"><i class="fas fa-users-cog"></i> Membres</a></li>

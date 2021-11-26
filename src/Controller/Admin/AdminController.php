@@ -5,8 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Admin\Annonce;
 use App\Entity\Admin\Member;
 use App\Entity\Admin\Message;
-use App\Entity\GestApp\Event;
-use App\Entity\GestApp\Recommandation;
+use App\Entity\Gestapp\Event;
+use App\Entity\Gestapp\Recommandation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,10 +22,7 @@ class AdminController extends AbstractController
     {
         $user= $this->getUser();
         $type = $user->getType();
-        if($type = "client"){
-            return $this->redirectToRoute('op_webapp_public_dashboard_client');
-        }
-        else{
+        if($type = "administrateur"){
             $members = $this->getDoctrine()->getRepository(Member::class)->findBy(array('type' => 'client'));
             $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findAll();
             $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
@@ -38,6 +35,9 @@ class AdminController extends AbstractController
                 'annonces' => $annonces,
                 'messages' => $messages,
             ]);
+        }
+        else{
+            return $this->redirectToRoute('op_webapp_public_dashboard_client');
         }
 
     }

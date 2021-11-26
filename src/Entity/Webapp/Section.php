@@ -2,7 +2,7 @@
 
 namespace App\Entity\Webapp;
 
-use App\Entity\GestApp\ProductCategory;
+use App\Entity\Gestapp\ProductCategory;
 use App\Repository\Webapp\SectionRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;

@@ -1,4 +1,8 @@
 <div class="row">
+
+    {# message Flash #}
+    {{ dump(app.session.getBag('flashes').get('sucess')) }}
+
     <div class="col-2">
         {#
             Le code javascript pour la mise en marche du script se trouve sur le fichier :
@@ -36,7 +40,7 @@
                     </a>
 
                     <!-- Meta -->
-                    <a class="card-meta" href="#!">
+                    <a class="card-meta" href="#">
                         <!-- Divider -->
                         <hr class="card-meta-divider">
                         <!-- Avatar -->

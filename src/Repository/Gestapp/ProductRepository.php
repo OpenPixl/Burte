@@ -49,16 +49,16 @@ class ProductRepository extends ServiceEntityRepository
     */
 
     /**
-    * Liste les produite selon une catégorie.
+    * Liste les produits selon une nature.
     * @return Product[] Returns an array of Product objects
     */
-    public function oneCategory($idcat)
+    public function oneNature($idnat)
     {
         return $this->createQueryBuilder('p')
 
             ->leftJoin('p.producer', 'pr')
             ->leftJoin('pr.structure', 's')
-            ->leftJoin('p.category', 'c')
+            ->leftJoin('p.productNature', 'n')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -67,17 +67,17 @@ class ProductRepository extends ServiceEntityRepository
                 p.price,
                 p.quantity,
                 p.productName AS productName,
-                c.id,
-                c.name,
+                n.id AS idNature,
+                n.name AS nameNature,
                 p.isDisponible,
                 p.isStar,
                 p.isOnLine,
                 s.name AS producer,
                 s.logoStructureName AS logoStructureName
                  ')
-            ->andWhere('c.id = :idcat')
+            ->andWhere('n.id = :idnat')
             ->andWhere('p.isOnLine = :isOnLine')
-            ->setParameter('idcat', $idcat)
+            ->setParameter('idnat', $idnat)
             ->setParameter('isOnLine', 1)
             ->orderBy('p.id', 'ASC')
             ->getQuery()
@@ -94,7 +94,7 @@ class ProductRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->leftJoin('p.producer', 'pr')
             ->leftJoin('pr.structure', 's')
-            ->leftJoin('p.category', 'c')
+            ->leftJoin('p.productNature', 'n')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -103,8 +103,8 @@ class ProductRepository extends ServiceEntityRepository
                 p.price,
                 p.quantity,
                 p.productName AS productName,
-                c.id AS categoryId,
-                c.name,
+                n.id AS idNature,
+                n.name AS nameNature,
                 p.isDisponible,
                 p.isStar,
                 p.isOnLine,

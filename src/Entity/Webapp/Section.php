@@ -3,6 +3,7 @@
 namespace App\Entity\Webapp;
 
 use App\Entity\Gestapp\ProductCategory;
+use App\Entity\Gestapp\ProductNature;
 use App\Repository\Webapp\SectionRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -135,9 +136,9 @@ class Section
     private $positionfavorite;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ProductCategory::class, inversedBy="sections")
+     * @ORM\ManyToOne(targetEntity=ProductNature::class)
      */
-    private $OneCatproduct;
+    private $oneNatProduct;
 
 
     /**
@@ -417,14 +418,14 @@ class Section
         return $this;
     }
 
-    public function getOneCatproduct(): ?ProductCategory
+    public function getOneNatProduct(): ?ProductNature
     {
-        return $this->OneCatproduct;
+        return $this->oneNatProduct;
     }
 
-    public function setOneCatproduct(?ProductCategory $OneCatproduct): self
+    public function setOneNatProduct(?ProductNature $oneNatProduct): self
     {
-        $this->OneCatproduct = $OneCatproduct;
+        $this->oneNatProduct = $oneNatProduct;
 
         return $this;
     }

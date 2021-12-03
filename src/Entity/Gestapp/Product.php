@@ -62,11 +62,6 @@ class Product
     private $productSize;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ProductCategory::class, inversedBy="products")
-     */
-    private $category;
-
-    /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
      */
     private $price;
@@ -120,6 +115,16 @@ class Product
      * @ORM\Column(type="text", nullable=true)
      */
     private $details;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $Ref;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ProductCategory::class)
+     */
+    private $ProductCategory;
 
     /**
      * Permet d'initialiser le slug !
@@ -365,6 +370,30 @@ class Product
     public function setDetails(?string $details): self
     {
         $this->details = $details;
+
+        return $this;
+    }
+
+    public function getRef(): ?string
+    {
+        return $this->Ref;
+    }
+
+    public function setRef(string $Ref): self
+    {
+        $this->Ref = $Ref;
+
+        return $this;
+    }
+
+    public function getProductCategory(): ?ProductCategory
+    {
+        return $this->ProductCategory;
+    }
+
+    public function setProductCategory(?ProductCategory $ProductCategory): self
+    {
+        $this->ProductCategory = $ProductCategory;
 
         return $this;
     }

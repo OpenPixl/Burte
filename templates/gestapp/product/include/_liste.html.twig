@@ -8,6 +8,10 @@
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title"><a href="{{ path('op_Gestapp_product_edit', {'id': product.id}) }}">{{ product.name }}</a></h5>
+                <div class="d-flex justify-content-between">
+                    <p><span class="badge bg-primary">{{ product.productNature }}</span></p>
+                    {# <p><span class="badge bg-primary">{{ product.category }}</span></p> #}
+                </div>
                 <p class="card-text">{{ product.description|raw }}</p>
                 <p class="card-subtitle">{{ product.price }} € / {{ product.productUnit }}</p>
             </div>
@@ -25,10 +29,11 @@
                     {% endif %}
                     <p class="card-text">
                         <a class="js-edit-product" href="{{ path('op_Gestapp_product_edit', {'id': product.id}) }}"><i class="far fa-edit"></i></a>&nbsp;&nbsp;
-                        <a class="js-delete-product" href="#"><i class="fa fa-trash"></i></a>
+                        <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ product.id }}">
+                            <i class="bi bi-eraser text-danger"></i>
+                        </a>
                     </p>
                 </div>
-
             </div>
         </div>
     </div>

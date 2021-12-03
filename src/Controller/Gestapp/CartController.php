@@ -34,9 +34,10 @@ class CartController extends AbstractController
         /** @var FlashBag */                                        // on prépare une notification stockée dans la session
         $flashbag = $session->getBag('flashes');
         $flashbag->add('success', "Le produit a bien été ajouté au panier");
-        
+
         $session->set('cart', $cart);                               // on push le panier dans la session.
-        dd($flashbag);
+
+        return $this->redirectToRoute('op_Gestapp_product_alldispo');
     }
 
 }

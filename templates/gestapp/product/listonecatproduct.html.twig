@@ -1,6 +1,10 @@
 <div class="row">
+
+    {# message Flash #}
+    {{ dump(app.session.getBag(flashes)->get('sucess')) }}
+
     <div class="col-12">
-        {{ dump(products) }}
+
         {% for product in products %}
             <div class="col-3">
                 <!-- Card -->

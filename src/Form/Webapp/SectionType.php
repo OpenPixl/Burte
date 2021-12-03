@@ -3,6 +3,7 @@
 namespace App\Form\Webapp;
 
 use App\Entity\Gestapp\ProductCategory;
+use App\Entity\Gestapp\ProductNature;
 use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Section;
 use Doctrine\ORM\EntityRepository;
@@ -39,7 +40,7 @@ class SectionType extends AbstractType
                     ],
                     'ECOMMERCE' =>[
                         "Listes des produits" => "All_products",
-                        "Une catégorie de produit" => "One_Cat_Product",
+                        "Une nature de produit" => "One_Nat_Product",
                     ],
                     'MEMBRES' => [
                         'membre' => 'Member',
@@ -66,11 +67,11 @@ class SectionType extends AbstractType
                     'class' => 'form-select form-select-sm',
                 ]
             ])
-            ->add('oneCatproduct', EntityType::class, [
-                'class' => ProductCategory::class,
+            ->add('oneNatproduct', EntityType::class, [
+                'class' => ProductNature::class,
                 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('p')
-                        ->orderBy('p.name', 'ASC');
+                    return $er->createQueryBuilder('pn')
+                        ->orderBy('pn.name', 'ASC');
                 },
                 'choice_label' => 'name',
             ])

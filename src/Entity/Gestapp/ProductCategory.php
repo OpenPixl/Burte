@@ -43,11 +43,6 @@ class ProductCategory
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
-     */
-    private $products;
-
-    /**
      * @ORM\OneToMany(targetEntity=Section::class, mappedBy="OneCatproduct")
      */
     private $sections;
@@ -56,6 +51,11 @@ class ProductCategory
      * @ORM\ManyToOne(targetEntity=ProductNature::class, inversedBy="productCategories")
      */
     private $Nature;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ProductCategory::class)
+     */
+    private $parent;
 
     /**
      * Permet d'initialiser le slug !
@@ -134,35 +134,6 @@ class ProductCategory
         return $this;
     }
 
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getCategory() === $this) {
-                $product->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function __toString(){
         return $this->name;
@@ -206,6 +177,18 @@ class ProductCategory
     public function setNature(?ProductNature $Nature): self
     {
         $this->Nature = $Nature;
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
 
         return $this;
     }

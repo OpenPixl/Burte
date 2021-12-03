@@ -10,18 +10,18 @@
     <script>
         window.onload = function(){
             const OneArticle = document.getElementById('One_article');
-            const OneCatProduct = document.getElementById('One_Cat_Product');
+            const OneNatProduct = document.getElementById('One_Nat_Product');
             const SelectValue = document.getElementById('section_contentType').value;
-            console.log(SelectValue);
 
             if (SelectValue == 'One_article'){
                 OneArticle.style.display="block";
-            }else if (SelectValue == 'One_Cat_Product'){
+                OneNatProduct.style.display="none";
+            }else if (SelectValue == 'One_Nat_Product'){
                 OneArticle.style.display="none";
-                OneCatProduct.style.display="block";
+                OneNatProduct.style.display="block";
             }else{
                 OneArticle.style.display="none";
-                OneCatProduct.style.display="none";
+                OneNatProduct.style.display="none";
             }
 
             document.getElementById("section_contentType").addEventListener("change", ShowDiv, false);
@@ -31,12 +31,13 @@
                 const getSelect = document.getElementById('section_contentType').value;
                 if (getSelect == 'One_article'){
                     OneArticle.style.display="block";
-                }else if (getSelect == 'One_Cat_Product'){
+                    OneNatProduct.style.display="none";
+                }else if (getSelect == 'One_Nat_Product'){
                     OneArticle.style.display="none";
-                    OneCatProduct.style.display="block";
+                    OneNatProduct.style.display="block";
                 }else{
                     OneArticle.style.display="none";
-                    OneCatProduct.style.display="none";
+                    OneNatProduct.style.display="none";
                 }
             }
 

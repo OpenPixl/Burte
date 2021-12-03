@@ -33,6 +33,7 @@ class ProductController extends AbstractController
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -157,12 +158,12 @@ class ProductController extends AbstractController
 
     /**
      * Espace E-Commerce : Liste les produits
-     * @Route("/Gestapp/product/alldispo", name="op_Gestapp_product_alldispo", methods={"POST"})
+     * @Route("/Gestapp/product/alldispo", name="op_Gestapp_product_alldispo", methods={"GET","POST"})
      */
     public function ListAllProductDispo()
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->listAllProduct();
-        //dd($products);
+
         return $this->render('Gestapp/product/listallproductdispo.html.twig',[
             'products' => $products
         ]);
@@ -170,14 +171,46 @@ class ProductController extends AbstractController
 
     /**
      * Espace E-Commerce : Liste les produits
-     * @Route("/Gestapp/product/oneCat/{idcat}", name="op_Gestapp_product_onecat", methods={"POST"})
+     * @Route("/Gestapp/product/oneNat/{idnat}", name="op_Gestapp_product_onecat", methods={"POST"})
      */
-    public function ListOneCatProduct($idcat)
+    public function ListOneNatProduct($idcat)
     {
-        $products = $this->getDoctrine()->getRepository(Product::class)->oneCategory($idcat);
+        $products = $this->getDoctrine()->getRepository(Product::class)->oneNature($idnat);
 
         return $this->render('Gestapp/product/listonecatproduct.html.twig',[
             'products' => $products
         ]);
+    }
+
+    /**
+     * Espace E-Commerce : Liste les produits
+     * @Route("/gestapp/product/del/{id}", name="op_gestapp_product_del", methods={"POST"}, requirements={"id":"\d+"})
+     */
+    public function ProductDel(Product $product, Request $request, EntityManagerInterface $em)
+    {
+        $user = $this->getUser();
+        // si utilisateur non connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+
+        // code de suppression
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($product);
+        $entityManager->flush();
+        $em->flush();
+
+        // on récupère toute le liste de produits pour le rafraichissement
+        $products = $em->getRepository(Product::class)->findAll();
+
+        // Retourne une réponse en json
+        return $this->json([
+            'code'          => 200,
+            'message'       => "Le produit a été correctement supprimé.",
+            'liste'         => $this->renderView('gestapp/product/include/_liste.html.twig', [
+                'products' => $products
+            ])
+        ], 200);
     }
 }

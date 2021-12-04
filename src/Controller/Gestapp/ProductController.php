@@ -17,17 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/Gestapp/product/", name="op_Gestapp_product_index", methods={"GET"})
+     * @Route("/gestapp/product/", name="op_gestapp_product_index", methods={"GET"})
      */
     public function index(ProductRepository $productRepository): Response
     {
-        return $this->render('Gestapp/product/index.html.twig', [
+        return $this->render('gestapp/product/index.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/Gestapp/product/new", name="op_Gestapp_product_new", methods={"GET","POST"})
+     * @Route("/gestapp/product/new", name="op_gestapp_product_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -44,24 +44,24 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('op_Gestapp_product_index');
         }
 
-        return $this->render('Gestapp/product/new.html.twig', [
+        return $this->render('gestapp/product/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/webbapp/product/{id}", name="op_Gestapp_product_show", methods={"GET"})
+     * @Route("/webbapp/product/{id}", name="op_gestapp_product_show", methods={"GET"})
      */
     public function show(Product $product): Response
     {
-        return $this->render('Gestapp/product/show.html.twig', [
+        return $this->render('gestapp/product/show.html.twig', [
             'product' => $product,
         ]);
     }
 
     /**
-     * @Route("/Gestapp/product/{id}/edit", name="op_Gestapp_product_edit", methods={"GET","POST"})
+     * @Route("/gestapp/product/{id}/edit", name="op_gestapp_product_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Product $product): Response
     {
@@ -71,17 +71,17 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('op_Gestapp_product_index');
+            return $this->redirectToRoute('op_gestapp_product_index');
         }
 
-        return $this->render('Gestapp/product/edit.html.twig', [
+        return $this->render('gestapp/product/edit.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/Gestapp/product/{id}", name="op_Gestapp_product_delete", methods={"POST"})
+     * @Route("/gestapp/product/{id}", name="op_gestapp_product_delete", methods={"POST"})
      */
     public function delete(Request $request, Product $product): Response
     {
@@ -91,12 +91,12 @@ class ProductController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('Gestapp_product_index');
+        return $this->redirectToRoute('gestapp_product_index');
     }
 
     /**
      * Permet d'activer ou de désactiver la mise en ligne d'un produit
-     * @Route("/Gestapp/product/online/{id}/json", name="op_Gestapp_product_online")
+     * @Route("/gestapp/product/online/{id}/json", name="op_gestapp_product_online")
      */
     public function jsonline(Product $product, EntityManagerInterface $em) : Response
     {
@@ -127,7 +127,7 @@ class ProductController extends AbstractController
 
     /**
      * Permet d'activer ou de désactiver la mise en ligne d'un produit
-     * @Route("/Gestapp/product/jsstar/{id}/json", name="op_Gestapp_product_star")
+     * @Route("/gestapp/product/jsstar/{id}/json", name="op_gestapp_product_star")
      */
     public function jsstar(Product $product, EntityManagerInterface $em) : Response
     {
@@ -158,26 +158,26 @@ class ProductController extends AbstractController
 
     /**
      * Espace E-Commerce : Liste les produits
-     * @Route("/Gestapp/product/alldispo", name="op_Gestapp_product_alldispo", methods={"GET","POST"})
+     * @Route("/gestapp/product/alldispo", name="op_gestapp_product_alldispo", methods={"GET","POST"})
      */
     public function ListAllProductDispo()
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->listAllProduct();
 
-        return $this->render('Gestapp/product/listallproductdispo.html.twig',[
+        return $this->render('gestapp/product/listallproductdispo.html.twig',[
             'products' => $products
         ]);
     }
 
     /**
      * Espace E-Commerce : Liste les produits
-     * @Route("/Gestapp/product/oneNat/{idnat}", name="op_Gestapp_product_onecat", methods={"POST"})
+     * @Route("/gestapp/product/oneNat/{idnat}", name="op_gestapp_product_onecat", methods={"POST"})
      */
     public function ListOneNatProduct($idcat)
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->oneNature($idnat);
 
-        return $this->render('Gestapp/product/listonecatproduct.html.twig',[
+        return $this->render('gestapp/product/listonecatproduct.html.twig',[
             'products' => $products
         ]);
     }

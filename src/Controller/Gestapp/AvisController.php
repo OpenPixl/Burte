@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AvisController extends AbstractController
 {
     /**
-     * @Route("/op_admin/Gestapp/avis/", name="op_Gestapp_avis_index", methods={"GET"})
+     * @Route("/op_admin/gestapp/avis/", name="op_gestapp_avis_index", methods={"GET"})
      */
     public function index(AvisRepository $avisRepository): Response
     {
@@ -26,7 +26,7 @@ class AvisController extends AbstractController
     }
 
     /**
-     * @Route("/op_admin/Gestapp/avis/new", name="op_Gestapp_avis_new", methods={"GET","POST"})
+     * @Route("/op_admin/gestapp/avis/new", name="op_gestapp_avis_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -39,28 +39,28 @@ class AvisController extends AbstractController
             $entityManager->persist($avi);
             $entityManager->flush();
 
-            return $this->redirectToRoute('op_Gestapp_avis_index');
+            return $this->redirectToRoute('op_gestapp_avis_index');
         }
 
-        return $this->render('Gestapp/avis/new.html.twig', [
+        return $this->render('gestapp/avis/new.html.twig', [
             'avi' => $avi,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/op_admin/Gestapp/avis/{id}", name="op_Gestapp_avis_show", methods={"GET"})
+     * @Route("/op_admin/gestapp/avis/{id}", name="op_gestapp_avis_show", methods={"GET"})
      */
     public function show(Avis $avi): Response
     {
         $avis = $this->getDoctrine()->getRepository(Avis::class)->findAll();
-        return $this->render('Gestapp/avis/show.html.twig', [
+        return $this->render('gestapp/avis/show.html.twig', [
             'avis' => $avis,
         ]);
     }
 
     /**
-     * @Route("/op_admin/Gestapp/avis/{id}/edit", name="op_Gestapp_avis_edit", methods={"GET","POST"})
+     * @Route("/op_admin/gestapp/avis/{id}/edit", name="op_gestapp_avis_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Avis $avi): Response
     {
@@ -73,7 +73,7 @@ class AvisController extends AbstractController
             return $this->redirectToRoute('op_Gestapp_avis_index');
         }
 
-        return $this->render('Gestapp/avis/edit.html.twig', [
+        return $this->render('gestapp/avis/edit.html.twig', [
             'avi' => $avi,
             'form' => $form->createView(),
         ]);
@@ -90,15 +90,15 @@ class AvisController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('op_Gestapp_avis_index');
+        return $this->redirectToRoute('op_gestapp_avis_index');
     }
 
     /**
-     * @Route("/op_admin/Gestapp/avis/view", name="op_Gestapp_avis_view", methods={"GET"})
+     * @Route("/op_admin/gestapp/avis/view", name="op_Gestapp_avis_view", methods={"GET"})
      */
     public function view(AvisRepository $avisRepository): Response
     {
-        return $this->render('Gestapp/avis/view.html.twig', [
+        return $this->render('gestapp/avis/view.html.twig', [
             'avis' => $avisRepository->findAll(),
         ]);
     }

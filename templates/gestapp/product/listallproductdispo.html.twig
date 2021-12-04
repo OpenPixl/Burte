@@ -16,7 +16,7 @@
                 {# Card Produit #}
                 <div class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">
                     {# Card image du produit #}
-                    <a class="card-img-top" href="{{ path('op_Gestapp_product_show', {'id': product.id}) }}">
+                    <a class="card-img-top" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
                         {% if product.productName is null %}
                             <img class="img-fluid" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
                         {% else %}

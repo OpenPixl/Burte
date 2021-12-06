@@ -21,6 +21,9 @@
                     document.querySelectorAll('a.js-increment').forEach(function (link){
                         link.addEventListener('click', onClickBtnIncrement);
                     })
+                    document.querySelectorAll('a.js-decrement').forEach(function (link){
+                        link.addEventListener('click', onClickBtnDecrement);
+                    })
                     // mise en place de l'alerte
                     var alertHTMLElement = document.getElementById("alertMessage");
                     console.log(alertHTMLElement);
@@ -33,9 +36,43 @@
                 });
         }
 
-        // Appel de la fonction de mise en ligne du produit lors d'un clic
+        // Construction de la fonction "onClickBtnIncrement" : incrémentation d'un produit
+        function onClickBtnDecrement(event){
+            event.preventDefault();
+            const url = this.href;
+            console.log(url);
+            axios
+                .post(url)
+                .then(function(response) {
+                    // Rafraichissement du tableau "liste"
+                    const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                    // Remise en place des évènements sur la page
+                    document.querySelectorAll('a.js-increment').forEach(function (link){
+                        link.addEventListener('click', onClickBtnIncrement);
+                    })
+                    document.querySelectorAll('a.js-decrement').forEach(function (link){
+                        link.addEventListener('click', onClickBtnDecrement);
+                    })
+                    // mise en place de l'alerte
+                    var alertHTMLElement = document.getElementById("alertMessage");
+                    console.log(alertHTMLElement);
+                    var message = response.data.message;
+                    var alertBody = alertHTMLElement.querySelector('.alert-content') // selection de l'élément possédant le message
+                    alertBody.textContent = message;
+                    var alertElement = new bootstrap.Alert(alertHTMLElement);
+                    alertElement.show();
+
+                });
+        }
+
+        // Appel de la fonction d'incrémentation d'un produit
         document.querySelectorAll('a.js-increment').forEach(function (link){
             link.addEventListener('click', onClickBtnIncrement);
+        })
+
+        // Appel de la fonction de décrementation d'un produit
+        document.querySelectorAll('a.js-decrement').forEach(function (link){
+            link.addEventListener('click', onClickBtnDecrement);
         })
     }
 </script>
@@ -54,13 +91,9 @@
 </header>
 <section id="page-content" class="op-section">
     <div class="container">
-        {% for rubrique, messages in app.flashes %}
-        <div id="alertMessage" class="alert alert-{{rubrique}}">
-            {% for message in messages %}
-                <p class="alert-content">{{ message }}</p>
-            {% endfor %}
+        <div id="alertMessage">
+            {% include 'include/_alert.html.twig' with [{'app.flashes': app.flashes}] %}
         </div>
-        {% endfor %}
         <div id="liste">
             {{ include('gestapp/cart/include/_liste.html.twig') }}
         </div>

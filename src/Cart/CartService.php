@@ -28,17 +28,14 @@ class CartService
 
     public function increment(int $id){
 
-        // On chercher dans la session si le panier existe.
-        // On creer si le panier n'existe pas.
-        $cart = $this->getCart();
+        $cart = $this->getCart();                                       // récupération du panier par le service CartService
 
-        if(array_key_exists($id, $cart)){                           // On teste si dans le tableau panier si "Id" existe,
-            $cart[$id]++;                                           // si c'est le cas ajoute la quantité,
-        } else {
-            $cart[$id]=1;                                           // sinon, on ajoute 1 à l'Id dans le panier.
+        if(!array_key_exists($id, $cart)){                              // si dans le tableau panier si "Id" n'existe pas,
+            $cart[$id] = 0;                                             // alors le panier ajout 0 en quantité du panier,
         }
+        $cart[$id]++;                                                   // et automatiquement, on incrémente de 1 le produit dans le panier.
 
-        $this->setCart($cart);
+        $this->setCart($cart);                                          // on insére en session le panier modifié
     }
 
     public function decrement(int $id){
@@ -55,7 +52,7 @@ class CartService
                 return;
             }
             $cart[$id]--;
-            $this->session->set('cart', $cart);
+        $this->session->set('cart', $cart);
         }
 
         $this->setCart($cart);

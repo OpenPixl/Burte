@@ -14,13 +14,8 @@
     </header>
     <section id="page-content" class="op-section">
         <div class="container">
-            {% for rubrique, messages in app.flashes %}
-            <div class="alert alert-{{rubrique}}">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-            {% endfor %}
+            {% include 'include/_alert.html.twig' with app.flashes %}
+
             <div class="row">
                 <div class="col-4">
                     <div class="mb-1">

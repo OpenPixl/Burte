@@ -173,7 +173,7 @@ class ProductController extends AbstractController
      * Espace E-Commerce : Liste les produits
      * @Route("/gestapp/product/oneNat/{idnat}", name="op_gestapp_product_onecat", methods={"POST"})
      */
-    public function ListOneNatProduct($idcat)
+    public function ListOneNatProduct($idnat)
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->oneNature($idnat);
 

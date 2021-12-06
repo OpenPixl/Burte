@@ -17,7 +17,7 @@
             <td>
                 <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
                 {{ i.qty }}
-                <a href="{{ path('op_webapp_cart_decrement', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
+                <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
             </td>
             <td>{{ total|number_format(2, ',', ' ') }} €</td>
             <td><a href="{{ path('op_webapp_cart_delete', {'id': i.product.id}) }}"><i class="bi bi-cart-dash text-danger" style="font-size: 1rem;"></i></a></td>

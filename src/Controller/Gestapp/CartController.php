@@ -99,6 +99,10 @@ class CartController extends AbstractController
 
         $this->addFlash('success', "Le produit a bien été diminué dans le panier.");
 
+        if($request->query->get('returnToCart')){
+            return $this->redirectToRoute('op_webapp_cart_showcartjson');
+        }
+
         return $this->redirectToRoute('op_gestapp_product_show', [
             'id' => $id
         ]);

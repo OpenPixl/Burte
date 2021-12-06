@@ -63,8 +63,9 @@
                     {{ render(controller('App\\Controller\\Admin\\StatistiqueController::CountUp')) }}
                 {% elseif section.contentType == 'All_products'%}
                     {{ render(controller('App\\Controller\\Gestapp\\ProductController::ListAllProductDispo')) }}
-                {% elseif section.contentType == 'One_Cat_Product'%}
-                    {{ render(controller('App\\Controller\\Gestapp\\ProductController::ListOneCatProduct', {'idcat':section.oneCatproduct})) }}
+                {% elseif section.contentType == 'One_Nat_Product'%}
+                    {# affiche les produits d'une nature #}
+                    {{ render(controller('App\\Controller\\Gestapp\\ProductController::ListOneNatProduct', {'idnat':section.oneNatproduct})) }}
                 {% else %}
                 {% endif %}
             </div>

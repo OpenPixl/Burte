@@ -8,7 +8,7 @@
             Le code javascript pour la mise en marche du script se trouve sur le fichier :
             "template/webapp/page/page.html.twig"
 
-       {{ include('Gestapp/product/include/_filters.html.twig') }} #}
+       {{ include('gestapp/product/include/_filters.html.twig') }} #}
     </div>
     <div class="col-10">
         {% for product in products %}
@@ -20,7 +20,7 @@
                         {% if product.productName is null %}
                             <img class="img-fluid" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
                         {% else %}
-                            <img src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\Gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                            <img src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
                         {% endif %}
                     </a>
                     {# Effet Shape sur l'image du produit #}
@@ -30,9 +30,9 @@
                     </div>
 
                     {# Card-Body du proquit #}
-                    <a class="card-body" href="#">
+                    <a class="card-body" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
                         <!-- Heading -->
-                        <h3>{{ product.name }} {{ product.id }}</h3>
+                        <h3>{{ product.name }}</h3>
                         <div class="mb-0 text-muted">
                             <!-- Text -->
                             {{ product.description|raw }}
@@ -40,7 +40,7 @@
                     </a>
 
                     <!-- Meta -->
-                    <a class="card-meta" href="#">
+                    <a class="card-meta" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
                         <!-- Divider -->
                         <hr class="card-meta-divider">
                         <!-- Avatar -->

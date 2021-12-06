@@ -28,8 +28,8 @@
             <td>
                 {% if recommandation.recoPrice is null %}Non déterminé{% else %}{{ recommandation.recoPrice }}€{% endif %}</td>
             <td>
-                <a href="{{ path('op_Gestapp_recommandation_show', {'id': recommandation.id}) }}">voir</a>
-                <a href="{{ path('op_Gestapp_recommandation_edit', {'id': recommandation.id}) }}">modifier</a>
+                <a href="{{ path('op_gestapp_recommandation_show', {'id': recommandation.id}) }}">voir</a>
+                <a href="{{ path('op_gestapp_recommandation_edit', {'id': recommandation.id}) }}">modifier</a>
                 <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ recommandation.id }}">
                     <i class="bi bi-eraser text-danger"></i>
                 </a>

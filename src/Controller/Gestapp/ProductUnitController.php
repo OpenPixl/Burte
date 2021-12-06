@@ -13,17 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductUnitController extends AbstractController
 {
     /**
-     * @Route("/opadmin/product/unit/", name="op_Gestapp_product_unit_index", methods={"GET"})
+     * @Route("/opadmin/product/unit/", name="op_gestapp_product_unit_index", methods={"GET"})
      */
     public function index(ProductUnitRepository $productUnitRepository): Response
     {
-        return $this->render('Gestapp/product_unit/index.html.twig', [
+        return $this->render('gestapp/product_unit/index.html.twig', [
             'product_units' => $productUnitRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/opadmin/product/unit/new", name="op_Gestapp_product_unit_new", methods={"GET","POST"})
+     * @Route("/opadmin/product/unit/new", name="op_gestapp_product_unit_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -36,17 +36,17 @@ class ProductUnitController extends AbstractController
             $entityManager->persist($productUnit);
             $entityManager->flush();
 
-            return $this->redirectToRoute('Gestapp_product_unit_index');
+            return $this->redirectToRoute('op_gestapp_product_unit_index');
         }
 
-        return $this->render('Gestapp/product_unit/new.html.twig', [
+        return $this->render('gestapp/product_unit/new.html.twig', [
             'product_unit' => $productUnit,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/opadmin/product/unit/new2", name="op_Gestapp_product_unit_new2", methods={"GET","POST"})
+     * @Route("/opadmin/product/unit/new2", name="op_gestapp_product_unit_new2", methods={"GET","POST"})
      */
     public function new2(Request $request): Response
     {
@@ -62,10 +62,10 @@ class ProductUnitController extends AbstractController
                 $entityManager->persist($productUnit);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('op_Gestapp_product_nature_index');
+                return $this->redirectToRoute('op_gestapp_product_unit_index');
             }
 
-            return $this->render('Gestapp/product_category/new2.html.twig', [
+            return $this->render('gestapp/product_category/new2.html.twig', [
                 'product_category' => $productUnit,
                 'form' => $form->createView(),
             ]);
@@ -90,17 +90,17 @@ class ProductUnitController extends AbstractController
     }
 
     /**
-     * @Route("/opadmin/product/unit/{id}", name="op_Gestapp_product_unit_show", methods={"GET"})
+     * @Route("/opadmin/product/unit/{id}", name="op_gestapp_product_unit_show", methods={"GET"})
      */
     public function show(ProductUnit $productUnit): Response
     {
-        return $this->render('Gestapp/product_unit/show.html.twig', [
+        return $this->render('gestapp/product_unit/show.html.twig', [
             'product_unit' => $productUnit,
         ]);
     }
 
     /**
-     * @Route("/opadmin/product/unit/{id}/edit", name="op_Gestapp_product_unit_edit", methods={"GET","POST"})
+     * @Route("/opadmin/product/unit/{id}/edit", name="op_gestapp_product_unit_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, ProductUnit $productUnit): Response
     {
@@ -110,17 +110,17 @@ class ProductUnitController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('Gestapp_product_unit_index');
+            return $this->redirectToRoute('gestapp_product_unit_index');
         }
 
-        return $this->render('Gestapp/product_unit/edit.html.twig', [
+        return $this->render('gestapp/product_unit/edit.html.twig', [
             'product_unit' => $productUnit,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/opadmin/product/unit/{id}", name="op_Gestapp_product_unit_delete", methods={"POST"})
+     * @Route("/opadmin/product/unit/{id}", name="op_gestapp_product_unit_delete", methods={"POST"})
      */
     public function delete(Request $request, ProductUnit $productUnit): Response
     {
@@ -130,6 +130,6 @@ class ProductUnitController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('Gestapp_product_unit_index');
+        return $this->redirectToRoute('gestapp_product_unit_index');
     }
 }

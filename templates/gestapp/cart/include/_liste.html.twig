@@ -1,0 +1,33 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nom du produit</th>
+        <th>Prix unitaire</th>
+        <th>Quantité</th>
+        <th>total</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% for i in items %}
+            {% set sstotal = i.qty * i.product.price %}
+            <td>{{ i.product.name }}</td>
+            <td>{{ i.product.price|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}</td>
+            <td>
+                <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
+                {{ i.qty }}
+                <a href="{{ path('op_webapp_cart_decrement', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
+            </td>
+            <td>{{ total|number_format(2, ',', ' ') }} €</td>
+            <td><a href="{{ path('op_webapp_cart_delete', {'id': i.product.id}) }}"><i class="bi bi-cart-dash text-danger" style="font-size: 1rem;"></i></a></td>
+        {% endfor %}
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">Total</td>
+        <td colspan="2">{{ total|number_format(2, ',', ' ')}} €</td>
+    </tr>
+    </tfoot>
+</table>

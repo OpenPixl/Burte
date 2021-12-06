@@ -66,11 +66,11 @@
 
 {% block content %}
 <div class="container-fluid">
-    {{ include('Gestapp/adhesion/include/_section_content_header.html.twig') }}
+    {{ include('gestapp/adhesion/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
             <div class="col-2">
-                {{ include('Gestapp/adhesion/include/_section_content_aside.html.twig') }}
+                {{ include('gestapp/adhesion/include/_section_content_aside.html.twig') }}
             </div>
             <div class="col-10">
                 <div class="card">
@@ -111,8 +111,8 @@
                                             <td>{{ adhesion.urlLinkedin }}</td>
                                             <td>{{ adhesion.createdAt ? adhesion.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                             <td>
-                                                <a href="{{ path('op_Gestapp_adhesion_show', {'id': adhesion.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
-                                                <a href="{{ path('op_Gestapp_adhesion_edit', {'id': adhesion.id}) }}"><i class="far fa-edit"></i></a>&nbsp;
+                                                <a href="{{ path('op_gestapp_adhesion_show', {'id': adhesion.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
+                                                <a href="{{ path('op_gestapp_adhesion_edit', {'id': adhesion.id}) }}"><i class="far fa-edit"></i></a>&nbsp;
                                                 <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ adhesion.id }}">
                                                     <i class="fas fa-eraser"></i>
                                                 </a>

@@ -20,18 +20,18 @@
 
 {% block content %}
 <div class="container-fluid">
-    {{ include('Gestapp/recommandation/include/_section_content_header.html.twig') }}
+    {{ include('gestapp/recommandation/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
             <div class="col-2">
-                {{ include('Gestapp/recommandation/include/_section_content_aside.html.twig') }}
+                {{ include('gestapp/recommandation/include/_section_content_aside.html.twig') }}
             </div>
             <div class="col-10">
                 <div class="card">
                     <div class="card-header">
                         <h3>Modifier une recommandation</h3>
                     </div>
-                    {{ include('Gestapp/recommandation/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                    {{ include('gestapp/recommandation/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
                 </div>
             </div>
         </div>

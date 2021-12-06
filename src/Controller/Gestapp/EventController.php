@@ -10,44 +10,41 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- * @Route("")
- */
+
 class EventController extends AbstractController
 {
     /**
-     * @Route("/gest/app/event/", name="op_Gestapp_event_index", methods={"GET"})
+     * @Route("/gestapp/event/", name="op_gestapp_event_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function indexAdmin(EventRepository $eventRepository): Response
     {
 
         $user = $this->getUser()->getId();
-        return $this->render('Gestapp/event/index.html.twig', [
+        return $this->render('gestapp/event/index.html.twig', [
             'events' => $eventRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/gest/app/event2/", name="op_Gestapp_event_index2", methods={"GET"})
+     * @Route("/gestapp/event2/", name="op_gestapp_event_index2", methods={"GET"})
      */
     public function indexUser(EventRepository $eventRepository): Response
     {
 
         $user = $this->getUser()->getId();
-        return $this->render('Gestapp/event/index.html.twig', [
+        return $this->render('gestapp/event/index.html.twig', [
             'events' => $eventRepository->findBy(array("author"=> $user)),
         ]);
     }
 
     /**
-     * @Route("/gest/app/ListAllEventPublish/", name="op_Gestapp_event_ListAllEventPublish", methods={"GET"})
+     * @Route("/gestapp/ListAllEventPublish/", name="op_gestapp_event_ListAllEventPublish", methods={"GET"})
      */
     public function ListAllEventPublish(): Response
     {
@@ -55,25 +52,25 @@ class EventController extends AbstractController
         $current = $date->format('Y-m-d');
         $events = $this->getDoctrine()->getRepository(Event::class)->ListAllEventPublish($current);
 
-        return $this->render('Gestapp/event/event.html.twig', [
+        return $this->render('gestapp/event/event.html.twig', [
             'events' => $events,
         ]);
     }
 
     /**
-     * @Route("/gest/app/ListEventPublishByMember/{idmember}", name="op_Gestapp_event_ListEventPublishByMember", methods={"GET"})
+     * @Route("/gestapp/ListEventPublishByMember/{idmember}", name="op_gestapp_event_ListEventPublishByMember", methods={"GET"})
      */
     public function ListEventPublishByMember($idmember): Response
     {
         $events = $this->getDoctrine()->getRepository(Event::class)->ListEventPublishMember($idmember);
 
-        return $this->render('Gestapp/event/eventsbyuser.html.twig', [
+        return $this->render('gestapp/event/eventsbyuser.html.twig', [
             'events' => $events,
         ]);
     }
 
     /**
-     * @Route("/gest/app/event/new", name="op_Gestapp_event_new", methods={"GET","POST"})
+     * @Route("/gestapp/event/new", name="op_gestapp_event_new", methods={"GET","POST"})
      */
     public function new(Request $request, MailerInterface $mailer): Response
     {
@@ -104,27 +101,27 @@ class EventController extends AbstractController
                     ');
             $mailer->send($email);
 
-            return $this->redirectToRoute('op_Gestapp_event_index');
+            return $this->redirectToRoute('op_gestapp_event_index');
         }
 
-        return $this->render('Gestapp/event/new.html.twig', [
+        return $this->render('gestapp/event/new.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/gest/app/event/{id}", name="op_Gestapp_event_show", methods={"GET"})
+     * @Route("/gestapp/event/{id}", name="op_gestapp_event_show", methods={"GET"})
      */
     public function show(Event $event): Response
     {
-        return $this->render('Gestapp/event/show.html.twig', [
+        return $this->render('gestapp/event/show.html.twig', [
             'event' => $event,
         ]);
     }
 
     /**
-     * @Route("/gest/app/event/{id}/edit", name="op_Gestapp_event_edit", methods={"GET","POST"})
+     * @Route("/gestapp/event/{id}/edit", name="op_gestapp_event_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Event $event): Response
     {
@@ -139,10 +136,10 @@ class EventController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('op_Gestapp_event_index');
+            return $this->redirectToRoute('op_gestapp_event_index');
         }
 
-        return $this->render('Gestapp/event/edit.html.twig', [
+        return $this->render('gestapp/event/edit.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
             'galeries' => $galeries
@@ -150,7 +147,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/gest/app/event/{id}", name="op_Gestapp_event_delete", methods={"POST"})
+     * @Route("/gestapp/event/{id}", name="op_gestapp_event_delete", methods={"POST"})
      */
     public function delete(Request $request, Event $event): Response
     {
@@ -160,12 +157,12 @@ class EventController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('op_Gestapp_event_index');
+        return $this->redirectToRoute('op_gestapp_event_index');
     }
 
     /**
      * Suppression d'une ligne index.php
-     * @Route("/gest/app/event/delevent/{id}", name="op_Gestapp_event_delevent", methods={"POST"})
+     * @Route("/gestapp/event/delevent/{id}", name="op_gestapp_event_delevent", methods={"POST"})
      */
     public function DelEvent(Request $request, Event $event) : Response
     {
@@ -182,7 +179,7 @@ class EventController extends AbstractController
 
     /**
      * Permet de mettre en menu la poge ou non
-     * @Route("/admin/event/valid/{id}", name="op_Gestapp_event_isvalid")
+     * @Route("/admin/event/valid/{id}", name="op_gestapp_event_isvalid")
      */
     public function jsMenuvalid(Event $event, EntityManagerInterface $em) : Response
     {
@@ -209,7 +206,7 @@ class EventController extends AbstractController
     {
         $events = $this->getDoctrine()->getRepository(Event::class)->findBy(array('isPublish'=> 1));
 
-        return $this->render('Gestapp/event/history.html.twig', [
+        return $this->render('gestapp/event/history.html.twig', [
             'events' => $events,
         ]);
     }

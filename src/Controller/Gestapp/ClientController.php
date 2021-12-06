@@ -20,7 +20,7 @@ class ClientController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('Gestapp/client/index.html.twig', [
+        return $this->render('gestapp/client/index.html.twig', [
             'controller_name' => 'ClientController',
         ]);
     }
@@ -30,7 +30,7 @@ class ClientController extends AbstractController
      */
     public function client(MemberRepository $memberRepository): Response
     {
-        return $this->render('Gestapp/client/client.html.twig', [
+        return $this->render('gestapp/client/client.html.twig', [
             'members' => $memberRepository->findBy(array("type" => "client")),
         ]);
     }

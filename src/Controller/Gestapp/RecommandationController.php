@@ -18,33 +18,33 @@ use Symfony\Component\Serializer\SerializerInterface;
 class RecommandationController extends AbstractController
 {
     /**
-     * @Route("/op_admin/Gestapp/recommandation/", name="op_Gestapp_recommandation_index", methods={"GET"})
+     * @Route("/op_admin/gestapp/recommandation/", name="op_gestapp_recommandation_index", methods={"GET"})
      */
     public function index(RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
         $receipts = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceiptRead($user);
         $sends = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserSendRead($user);
-        return $this->render('Gestapp/recommandation/index.html.twig', [
+        return $this->render('gestapp/recommandation/index.html.twig', [
             'receipts' => $receipts,
             'sends' => $sends
         ]);
     }
 
     /**
-     * @Route("/op_admin/Gestapp/recommandation/reload", name="op_Gestapp_recommandation_indexreload", methods={"GET"})
+     * @Route("/op_admin/gestapp/recommandation/reload", name="op_gestapp_recommandation_indexreload", methods={"GET"})
      */
     public function indexReload(RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
         $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUser($user);
-        return $this->render('Gestapp/recommandation/reload.html.twig', [
+        return $this->render('gestapp/recommandation/reload.html.twig', [
             'recommandations' => $recommandations,
         ]);
     }
 
     /**
-     * @Route("/op_admin/Gestapp/recommandation/new", name="op_Gestapp_recommandation_new", methods={"GET","POST"})
+     * @Route("/op_admin/gestapp/recommandation/new", name="op_gestapp_recommandation_new", methods={"GET","POST"})
      */
     public function new(Request $request, MailerInterface $mailer): Response
     {
@@ -94,17 +94,17 @@ class RecommandationController extends AbstractController
                 ->htmlTemplate('email/newRecommandationWebMaster.html.twig');
             $mailer->send($email);
 
-            return $this->redirectToRoute('op_Gestapp_recommandation_index');
+            return $this->redirectToRoute('op_gestapp_recommandation_index');
         }
 
-        return $this->render('Gestapp/recommandation/new.html.twig', [
+        return $this->render('gestapp/recommandation/new.html.twig', [
             'recommandation' => $recommandation,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/op_admin/Gestapp/recommandation/{id}", name="op_Gestapp_recommandation_show", methods={"GET"})
+     * @Route("/op_admin/gestapp/recommandation/{id}", name="op_gestapp_recommandation_show", methods={"GET"})
      */
     public function show(Recommandation $recommandation): Response
     {
@@ -115,21 +115,21 @@ class RecommandationController extends AbstractController
             $recommandation->setRecoState('InProgress');
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->render('Gestapp/recommandation/show.html.twig', [
+            return $this->render('gestapp/recommandation/show.html.twig', [
                 'recommandation' => $recommandation,
             ]);
         }elseif($isread == 1){
-            return $this->render('Gestapp/recommandation/show2.html.twig', [
+            return $this->render('gestapp/recommandation/show2.html.twig', [
                 'recommandation' => $recommandation,
             ]);
         }
-        return $this->render('Gestapp/recommandation/show.html.twig', [
+        return $this->render('gestapp/recommandation/show.html.twig', [
             'recommandation' => $recommandation,
         ]);
     }
 
     /**
-     * @Route("/op_admin/Gestapp/recommandation/{id}/edit", name="op_Gestapp_recommandation_edit", methods={"GET","POST"})
+     * @Route("/op_admin/gestapp/recommandation/{id}/edit", name="op_gestapp_recommandation_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Recommandation $recommandation): Response
     {
@@ -140,17 +140,17 @@ class RecommandationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('Gestapp_recommandation_index');
+            return $this->redirectToRoute('gestapp_recommandation_index');
         }
 
-        return $this->render('Gestapp/recommandation/edit.html.twig', [
+        return $this->render('gestapp/recommandation/edit.html.twig', [
             'recommandation' => $recommandation,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/op_admin/Gestapp/recommandation/{id}", name="op_Gestapp_recommandation_delete", methods={"POST"})
+     * @Route("/op_admin/gestapp/recommandation/{id}", name="op_gestapp_recommandation_delete", methods={"POST"})
      */
     public function delete(Request $request, Recommandation $recommandation): Response
     {
@@ -160,51 +160,51 @@ class RecommandationController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('op_Gestapp_recommandation_index');
+        return $this->redirectToRoute('op_gestapp_recommandation_index');
     }
 
     /**
-     * @Route("/op_admin/Gestapp/recommandation/byuserReceipt/{hide}", name="op_Gestapp_recommandation_byuserreceipt", methods={"GET"})
+     * @Route("/op_admin/gestapp/recommandation/byuserReceipt/{hide}", name="op_gestapp_recommandation_byuserreceipt", methods={"GET"})
      */
     public function byUserReceipt($hide, RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
         $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceipt($user);
-        return $this->render('Gestapp/recommandation/byuserReceipt.html.twig', [
+        return $this->render('gestapp/recommandation/byuserReceipt.html.twig', [
             'recommandations' => $recommandations,
             'hide' => $hide
         ]);
     }
 
     /**
-     * @Route("/op_admin/Gestapp/recommandation/byuserSend/{hide}", name="op_Gestapp_recommandation_byusersend", methods={"GET"})
+     * @Route("/op_admin/gestapp/recommandation/byuserSend/{hide}", name="op_gestapp_recommandation_byusersend", methods={"GET"})
      */
     public function byUserSend($hide,RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
         $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserSend($user);
         $hide = 1;
-        return $this->render('Gestapp/recommandation/byuserSend.html.twig', [
+        return $this->render('gestapp/recommandation/byuserSend.html.twig', [
             'recommandations' => $recommandations,
             'hide' => $hide
         ]);
     }
 
     /**
-     * @Route("/op_admin/Gestapp/recommandation/compiluser", name="op_Gestapp_recommandation_compiluser", methods={"GET"})
+     * @Route("/op_admin/gestapp/recommandation/compiluser", name="op_gestapp_recommandation_compiluser", methods={"GET"})
      */
     public function compilUser(): Response
     {
         $user = $this->getUser();
         $stats = $this->getDoctrine()->getRepository(Recommandation::class)->statsByUser($user);
-        return $this->render('Gestapp/recommandation/compiluser.html.twig', [
+        return $this->render('gestapp/recommandation/compiluser.html.twig', [
             'stats' => $stats,
         ]);
     }
 
     /**
      * Suppression d'une ligne index.php
-     * @Route("/op_admin/Gestapp/recommandation/del/{id}", name="op_Gestapp_recommandation_suppr", methods={"POST"})
+     * @Route("/op_admin/gestapp/recommandation/del/{id}", name="op_gestapp_recommandation_suppr", methods={"POST"})
      */
     public function DelEvent(Request $request, Recommandation $recommandation) : Response
     {
@@ -219,7 +219,7 @@ class RecommandationController extends AbstractController
         return $this->json([
             'code'=> 200,
             'message' => "L'évènenemt a été supprimé",
-            'listeReceipt' => $this->renderView('Gestapp/recommandation/include/_liste.html.twig', [
+            'listeReceipt' => $this->renderView('gestapp/recommandation/include/_liste.html.twig', [
                 'recommandations' => $receipt,
                 'hide' => $hide
             ]),
@@ -228,7 +228,7 @@ class RecommandationController extends AbstractController
 
     /**
      * Mise a jour des recommandations depuis le show Recommandation
-     * @Route("/op_admin/Gestapp/recommandation/reco/{id}", name="op_Gestapp_recommandation_addrecoprice",methods={"GET","POST"})
+     * @Route("/op_admin/gestapp/recommandation/reco/{id}", name="op_gestapp_recommandation_addrecoprice",methods={"GET","POST"})
      */
     public function addrecoprice(Recommandation $recommandation, Request $request): Response
     {
@@ -256,7 +256,7 @@ class RecommandationController extends AbstractController
             return $this->json([
                 'code'=> 200,
                 'message' => "L'estimation de la recommandation a été ajoutée à la recommandation.",
-                'listeReceipt' => $this->renderView('Gestapp/recommandation/include/_liste.html.twig', [
+                'listeReceipt' => $this->renderView('gestapp/recommandation/include/_liste.html.twig', [
                     'recommandations' => $recommandations,
                     'hide' => $hide
                 ]),
@@ -290,7 +290,7 @@ class RecommandationController extends AbstractController
             return $this->json([
                 'code'=> 200,
                 'message' => "L'estimation de la recommandation a été ajoutée à la recommandation.",
-                'listeReceipt' => $this->renderView('Gestapp/recommandation/include/_liste.html.twig', [
+                'listeReceipt' => $this->renderView('gestapp/recommandation/include/_liste.html.twig', [
                     'recommandations' => $recommandations,
                     'hide' => $hide
                 ]),

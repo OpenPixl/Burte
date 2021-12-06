@@ -41,7 +41,7 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('op_Gestapp_product_index');
+            return $this->redirectToRoute('op_gestapp_product_index');
         }
 
         return $this->render('gestapp/product/new.html.twig', [
@@ -91,7 +91,7 @@ class ProductController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('gestapp_product_index');
+        return $this->redirectToRoute('op_gestapp_product_index');
     }
 
     /**

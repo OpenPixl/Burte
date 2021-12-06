@@ -25,8 +25,8 @@
                 <td>{{ product_nature.createdAt ? product_nature.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ product_nature.updatedAt ? product_nature.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('Gestapp_product_nature_show', {'id': product_nature.id}) }}">show</a>
-                    <a href="{{ path('Gestapp_product_nature_edit', {'id': product_nature.id}) }}">edit</a>
+                    <a href="{{ path('op_gestapp_product_nature_show', {'id': product_nature.id}) }}">show</a>
+                    <a href="{{ path('op_gestapp_product_nature_edit', {'id': product_nature.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('Gestapp_product_nature_new') }}">Create new</a>
+    <a href="{{ path('op_gestapp_product_nature_new') }}">Create new</a>
 {% endblock %}

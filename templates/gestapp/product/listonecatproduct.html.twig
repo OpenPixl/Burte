@@ -14,7 +14,7 @@
                         {% if product.productName is null %}
                             <img class="img-fluid" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
                         {% else %}
-                            <img src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\Gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                            <img src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
                         {% endif %}
                     </a>
 

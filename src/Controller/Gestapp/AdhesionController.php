@@ -16,17 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdhesionController extends AbstractController
 {
     /**
-     * @Route("/Gestapp/adhesion", name="op_Gestapp_adhesion_index", methods={"GET"})
+     * @Route("/gestapp/adhesion", name="op_gestapp_adhesion_index", methods={"GET"})
      */
     public function index(AdhesionRepository $adhesionRepository): Response
     {
-        return $this->render('Gestapp/adhesion/index.html.twig', [
+        return $this->render('gestapp/adhesion/index.html.twig', [
             'adhesions' => $adhesionRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/Gestapp/adhesion/new", name="op_Gestapp_adhesion_new", methods={"GET","POST"})
+     * @Route("/gestapp/adhesion/new", name="op_gestapp_adhesion_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -39,17 +39,17 @@ class AdhesionController extends AbstractController
             $entityManager->persist($adhesion);
             $entityManager->flush();
 
-            return $this->redirectToRoute('Gestapp_adhesion_index');
+            return $this->redirectToRoute('gestapp_adhesion_index');
         }
 
-        return $this->render('Gestapp/adhesion/new.html.twig', [
+        return $this->render('gestapp/adhesion/new.html.twig', [
             'adhesion' => $adhesion,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/Gestapp/adhesion/new2", name="op_Gestapp_adhesion_new2", methods={"GET","POST"})
+     * @Route("/gestapp/adhesion/new2", name="op_gestapp_adhesion_new2", methods={"GET","POST"})
      */
     public function new2(Request $request): Response
     {
@@ -65,14 +65,14 @@ class AdhesionController extends AbstractController
             return $this->redirectToRoute('op_webapp_public_index');
         }
 
-        return $this->render('Gestapp/adhesion/new2.html.twig', [
+        return $this->render('gestapp/adhesion/new2.html.twig', [
             'adhesion' => $adhesion,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/Gestapp/adhesion/add", name="op_Gestapp_adhesion_add", methods={"GET","POST"})
+     * @Route("/gestapp/adhesion/add", name="op_gestapp_adhesion_add", methods={"GET","POST"})
      */
     public function addAdhesion(Request $request): Response
     {
@@ -88,24 +88,24 @@ class AdhesionController extends AbstractController
             return $this->redirectToRoute('op_webapp_public_index');
         }
 
-        return $this->render('Gestapp/adhesion/add.html.twig', [
+        return $this->render('gestapp/adhesion/add.html.twig', [
             'adhesion' => $adhesion,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/Gestapp/adhesion/{id}", name="op_Gestapp_adhesion_show", methods={"GET"})
+     * @Route("/gestapp/adhesion/{id}", name="op_gestapp_adhesion_show", methods={"GET"})
      */
     public function show(Adhesion $adhesion): Response
     {
-        return $this->render('Gestapp/adhesion/show.html.twig', [
+        return $this->render('gestapp/adhesion/show.html.twig', [
             'adhesion' => $adhesion,
         ]);
     }
 
     /**
-     * @Route("/Gestapp/adhesion/{id}/edit", name="op_Gestapp_adhesion_edit", methods={"GET","POST"})
+     * @Route("/gestapp/adhesion/{id}/edit", name="op_gestapp_adhesion_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Adhesion $adhesion): Response
     {
@@ -115,17 +115,17 @@ class AdhesionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('Gestapp_adhesion_index');
+            return $this->redirectToRoute('gestapp_adhesion_index');
         }
 
-        return $this->render('Gestapp/adhesion/edit.html.twig', [
+        return $this->render('gestapp/adhesion/edit.html.twig', [
             'adhesion' => $adhesion,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/Gestapp/adhesion/{id}", name="op_Gestapp_adhesion_delete", methods={"POST"})
+     * @Route("/gestapp/adhesion/{id}", name="op_gestapp_adhesion_delete", methods={"POST"})
      */
     public function delete(Request $request, Adhesion $adhesion): Response
     {
@@ -135,6 +135,6 @@ class AdhesionController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('Gestapp_adhesion_index');
+        return $this->redirectToRoute('gestapp_adhesion_index');
     }
 }

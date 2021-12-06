@@ -1,15 +1,15 @@
 <div class="card">
     <div class="card-body">
-        <h4><a href="{{ path('op_Gestapp_event_new') }}"><i class="far fa-plus-square"></i> Nouvel évènement</a></h4>
+        <h4><a href="{{ path('op_gestapp_event_new') }}"><i class="far fa-plus-square"></i> Nouvel évènement</a></h4>
     </div>
 </div>
 <div class="card">
     <div class="card-body">
         <h4>
-            {% if app.request.get('_route') == 'op_Gestapp_event_index'%}
+            {% if app.request.get('_route') == 'op_gestapp_event_index'%}
             <a href="{{ path('op_admin_dashboard_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
             {% else %}
-            <a href="{{ path('op_Gestapp_event_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
+            <a href="{{ path('op_gestapp_event_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
             {% endif %}
         </h4>
     </div>

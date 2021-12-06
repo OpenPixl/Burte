@@ -20,7 +20,7 @@ class AvisController extends AbstractController
      */
     public function index(AvisRepository $avisRepository): Response
     {
-        return $this->render('Gestapp/avis/index.html.twig', [
+        return $this->render('gestapp/avis/index.html.twig', [
             'avis' => $avisRepository->findAll(),
         ]);
     }

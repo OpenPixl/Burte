@@ -14,17 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductCategoryController extends AbstractController
 {
     /**
-     * @Route("/opadmin/product/category/", name="op_Gestapp_product_category_index", methods={"GET"})
+     * @Route("/opadmin/product/category/", name="op_gestapp_product_category_index", methods={"GET"})
      */
     public function index(ProductCategoryRepository $productCategoryRepository): Response
     {
-        return $this->render('Gestapp/product_category/index.html.twig', [
+        return $this->render('gestapp/product_category/index.html.twig', [
             'product_categories' => $productCategoryRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/opadmin/product/category/new", name="op_Gestapp_product_category_new", methods={"GET","POST"})
+     * @Route("/opadmin/product/category/new", name="op_gestapp_product_category_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -37,17 +37,17 @@ class ProductCategoryController extends AbstractController
             $entityManager->persist($productCategory);
             $entityManager->flush();
 
-            return $this->redirectToRoute('Gestapp_product_category_index');
+            return $this->redirectToRoute('op_gestapp_product_category_index');
         }
 
-        return $this->render('Gestapp/product_category/new.html.twig', [
+        return $this->render('gestapp/product_category/new.html.twig', [
             'product_category' => $productCategory,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/opadmin/product/category/new2", name="op_Gestapp_product_category_new2", methods={"GET","POST"})
+     * @Route("/opadmin/product/category/new2", name="op_gestapp_product_category_new2", methods={"GET","POST"})
      */
     public function new2(Request $request): Response
     {
@@ -63,10 +63,10 @@ class ProductCategoryController extends AbstractController
                 $entityManager->persist($productCategory);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('op_Gestapp_product_category_index');
+                return $this->redirectToRoute('op_gestapp_product_category_index');
             }
 
-            return $this->render('Gestapp/product_category/new2.html.twig', [
+            return $this->render('gestapp/product_category/new2.html.twig', [
                 'product_category' => $productCategory,
                 'form' => $form->createView(),
             ]);
@@ -91,17 +91,17 @@ class ProductCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/opadmin/product/category/{id}", name="op_Gestapp_product_category_show", methods={"GET"})
+     * @Route("/opadmin/product/category/{id}", name="op_gestapp_product_category_show", methods={"GET"})
      */
     public function show(ProductCategory $productCategory): Response
     {
-        return $this->render('Gestapp/product_category/show.html.twig', [
+        return $this->render('gestapp/product_category/show.html.twig', [
             'product_category' => $productCategory,
         ]);
     }
 
     /**
-     * @Route("/opadmin/product/category/{id}/edit", name="op_Gestapp_product_category_edit", methods={"GET","POST"})
+     * @Route("/opadmin/product/category/{id}/edit", name="op_gestapp_product_category_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, ProductCategory $productCategory): Response
     {
@@ -111,17 +111,17 @@ class ProductCategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('Gestapp_product_category_index');
+            return $this->redirectToRoute('gestapp_product_category_index');
         }
 
-        return $this->render('Gestapp/product_category/edit.html.twig', [
+        return $this->render('gestapp/product_category/edit.html.twig', [
             'product_category' => $productCategory,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/opadmin/product/category/{id}", name="op_Gestapp_product_category_delete", methods={"POST"})
+     * @Route("/opadmin/product/category/{id}", name="op_gestapp_product_category_delete", methods={"POST"})
      */
     public function delete(Request $request, ProductCategory $productCategory): Response
     {
@@ -131,6 +131,6 @@ class ProductCategoryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('Gestapp_product_category_index');
+        return $this->redirectToRoute('gestapp_product_category_index');
     }
 }

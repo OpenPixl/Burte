@@ -7,70 +7,53 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>{{ product.name }}</h1>
+                    <h1>{{ product.name }} - Réf : {{ product.ref }}</h1>
                 </div>
             </div>
         </div>
     </header>
     <section id="page-content" class="op-section">
         <div class="container">
+            {% for rubrique, messages in app.flashes %}
+            <div class="alert alert-{{rubrique}}">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endfor %}
             <div class="row">
                 <div class="col-4">
-                    {% if product.productName is null %}
-                        <img class="img-fluid" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
-                    {% else %}
-                        <img src="{{ vich_uploader_asset(product) | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
-                    {% endif %}
+                    <div class="mb-1">
+                        {% if product.productName is null %}
+                            <img class="img-fluid" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
+                        {% else %}
+                            <img src="{{ vich_uploader_asset(product) | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                        {% endif %}
+                    </div>
+                    <div class="mt-1">
+                        <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="btn btn-secondary"><i class="bi bi-cart-plus"></i> Ajouter au panier</a>
+                    </div>
                 </div>
                 <div class="col-8">
-                    {{ product.description|raw }}
-                    <hr>
-                    <b>{{ product.price }} € / {{ product.productUnit }}</b>
+                    <div>
+                        <p>Informations</p>
+                        {{ product.description|raw }}
+
+                    </div>
+                    <div>
+                        <p>Détails :</p>
+                        {{ product.details|raw }}
+                    </div>
+                    <div>
+                        <hr>
+                        <b>{{ product.price }} € / {{ product.productUnit }}</b>
+                    </div>
+                    <div>
+                        Ce produit est disponible : {{ product.isDisponible ? 'Oui' : 'Non' }}<br>
+                        Produit en stock : {{ product.quantity }}
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-    <table class="table">
-        <tbody>
-
-            <tr>
-                <th>Name</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ product.slug }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Typo</th>
-                <td>{{ product.productUnit }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price }}</td>
-            </tr>
-            <tr>
-                <th>Quantity</th>
-                <td>{{ product.quantity }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>IsDisponible</th>
-                <td>{{ product.isDisponible ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
 {% endblock %}

@@ -108,7 +108,7 @@
                                     <th>Structure</th>
                                     <th>Contacts téléphoniques</th>
                                     <th>Email</th>
-                                    <th>Créée le</th>
+                                    <th>Type</th>
                                     <th>Modifiée le</th>
                                     <th>Actif</th>
                                     <th>actions</th>
@@ -127,7 +127,7 @@
                                     </td>
                                     <td>{{ member.phoneDesk }} / {{ member.phoneGsm }}</td>
                                     <td>{{ member.email }}</td>
-                                    <td>{{ member.createdAt ? member.createdAt|format_datetime('medium', 'none', locale='fr') }}</td>
+                                    <td>{{ member.type }}</td>
                                     <td>{{ member.updatedAt ? member.updatedAt|format_datetime('medium', 'none', locale='fr') }}</td>
                                     <td>
                                         {% if member.isVerified == 0 %}

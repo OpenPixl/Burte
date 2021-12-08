@@ -4,6 +4,7 @@ namespace App\Entity\Admin;
 
 use App\Entity\Gestapp\Event;
 use App\Entity\Gestapp\Product;
+use App\Entity\Gestapp\Purchase;
 use App\Entity\Gestapp\Recommandation;
 use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Page;
@@ -221,6 +222,11 @@ class Member implements UserInterface
      */
     private $recipientmessage;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Purchase::class, mappedBy="customer")
+     */
+    private $purchases;
+
 
     public function __construct()
     {
@@ -234,6 +240,7 @@ class Member implements UserInterface
         $this->messages = new ArrayCollection();
         $this->authormessages = new ArrayCollection();
         $this->recipientmessage = new ArrayCollection();
+        $this->purchases = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -798,6 +805,36 @@ class Member implements UserInterface
     {
         if ($this->recipientmessage->removeElement($recipientmessage)) {
             $recipientmessage->removeRecipient($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Purchase[]
+     */
+    public function getPurchases(): Collection
+    {
+        return $this->purchases;
+    }
+
+    public function addPurchase(Purchase $purchase): self
+    {
+        if (!$this->purchases->contains($purchase)) {
+            $this->purchases[] = $purchase;
+            $purchase->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchase(Purchase $purchase): self
+    {
+        if ($this->purchases->removeElement($purchase)) {
+            // set the owning side to null (unless already changed)
+            if ($purchase->getCustomer() === $this) {
+                $purchase->setCustomer(null);
+            }
         }
 
         return $this;

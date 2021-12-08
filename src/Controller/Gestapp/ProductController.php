@@ -3,6 +3,8 @@
 namespace App\Controller\Gestapp;
 
 use App\Entity\Gestapp\Product;
+use App\Entity\Gestapp\ProductCategory;
+use App\Entity\Gestapp\ProductNature;
 use App\Form\Gestapp\ProductType;
 use App\Repository\Gestapp\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -177,8 +179,12 @@ class ProductController extends AbstractController
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->oneNature($idnat);
 
+        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
+        dd($categories);
+
         return $this->render('gestapp/product/listonecatproduct.html.twig',[
-            'products' => $products
+            'products' => $products,
+            'categories' => $categories
         ]);
     }
 

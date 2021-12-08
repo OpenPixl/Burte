@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Admin\Member;
+use App\Entity\Gestapp\Product;
 use App\Form\Admin\Member2Type;
 use App\Form\Admin\MemberType;
 use App\Form\Admin\ClientType;
@@ -27,7 +28,7 @@ class MemberController extends AbstractController
     public function index(MemberRepository $memberRepository): Response
     {
         return $this->render('admin/member/index.html.twig', [
-            'members' => $memberRepository->findBy(array("type" => "producteur")),
+            'members' => $memberRepository->findAll(),
         ]);
     }
 
@@ -212,11 +213,17 @@ class MemberController extends AbstractController
      */
     public function Del(Request $request, Member $member) : Response
     {
-        $Structure = $member->getStructure();
+        $producers = $member->getId();
+        $ListProducers = $this->getDoctrine()->getRepository(Product::class)->findBy(array('producer'=>$member));
+        foreach($ListProducers as $producer){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($producer);
+            $entityManager->flush();
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($member);
-        $entityManager->remove($Structure);
+
         $entityManager->flush();
 
         return $this->json([

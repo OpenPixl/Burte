@@ -21,7 +21,16 @@
                     </li>
                 </ul>
             {% else %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="#">Pas de catégorie</a>
+                    </li>
+                </ul>
             {% endfor %}
+        {% else %}
+        <div class="card-header">
+            Aucune catégorie
+        </div>
         {% endfor %}
     </div>
     <input type="hidden" id="page" value="{{ page }}">

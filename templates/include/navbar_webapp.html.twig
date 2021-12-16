@@ -65,12 +65,25 @@
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="panier" href="{{ path('op_webapp_cart_showcart')}}">
                                     <i class="fas fa-shopping-cart"></i>
-                                    Panier ({{ cartService.total }})
+                                    Panier ({{ cartService.total|number_format(2, ',', ' ') }})
                                 </a>
                             </li>
+                            {% if app.user %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mon Espace
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#">Mes commandes</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{ path('op_admin_security_logout') }}">Se déconnecter</a></li>
+                                </ul>
+                            </li>
+                            {% else %}
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="{{ path('op_admin_dashboard_index')}}"><i class="fas fa-unlock-alt"></i> Mon espace</a>
                             </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </nav>
@@ -91,17 +104,18 @@
     <div id="bloc_production3" class="container" data-aos="fade-down">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-12">
-                <a href="#calligraphie" class="btn btn-light">Calligraphie</a>
+                <a href="#calligraphie" class="btn btn-light">Calligraphies</a>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12">
-                <a type="button" class="btn btn-light" href="#aquarelles">Aquarelle</a>
+                <a type="button" class="btn btn-light" href="#aquarelles">Aquarelles</a>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12">
-                <a type="button" class="btn btn-light" href="#artisanats">Autres artisanats</a>
+                <a href="#sanctuaires" class="btn btn-light">Sanctuaires</a>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12">
-                <a type="button" class="btn btn-light" href="#creations">Vos créations</a>
+                <a type="button" class="btn btn-light" href="#artisanats">Artisanats</a>
             </div>
+
         </div>
     </div>
 </div>

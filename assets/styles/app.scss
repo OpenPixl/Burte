@@ -2,6 +2,7 @@ $op-primary: darken(#428bca, 20%);
 $sm-primary-color: #142864;
 $sm-secondary-color: #ffffff;
 $admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 100%);
+
 //*** ------------- Import Variables of bootstrap ---------------- ***//
 @import './node_modules/bootstrap/scss/bootstrap';
 @import './node_modules/bootstrap/scss/variables';
@@ -9,7 +10,8 @@ $admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 
 @import './scss/theme.scss';
 @import "./scss/libs.scss";
 //*** ------------- Import Variables of my theme ---------------- ***//
-@import "scss/custom";
+@import "./scss/custom/productCard";
+@import "./scss/custom";
 //*** ------------- Import Variables of icons ---------------- ***//
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~bootstrap-icons/font/bootstrap-icons.css';

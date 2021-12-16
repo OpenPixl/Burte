@@ -68,6 +68,7 @@ class ProductRepository extends ServiceEntityRepository
                 p.quantity,
                 p.productName AS productName,
                 n.id AS idNature,
+                p.ref AS ref,
                 n.name AS nameNature,
                 p.isDisponible,
                 p.isStar,

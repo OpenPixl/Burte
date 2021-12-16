@@ -1,22 +1,22 @@
 <div class="row">
-    <div class="col-2">
+    <div class="col-3">
     {#
     Le code javascript pour la mise en marche du script se trouve sur le fichier :
     "template/webapp/page/page.html.twig" #}
 
     {{ include('gestapp/product/include/_filtersnature.html.twig') }}
     </div>
-    <div class="col-10">
+    <div class="col-9">
         {% for product in products %}
-            <div class="col-3">
+            <div class="col-4">
                 <!-- Card -->
-                <div class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">
+                <div id="productCard" class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">
                     <!-- Image -->
                     <a class="card-img-top" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
                         {% if product.productName is null %}
-                            <img class="img-fluid" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
+                            <img class="img-fluid img-thumbnail" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
                         {% else %}
-                            <img src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                            <img class="card-img-top" src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}">
                         {% endif %}
                     </a>
 
@@ -29,10 +29,11 @@
                     <!-- Body -->
                     <a class="card-body" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
                         <!-- Heading -->
-                        <h3>{{ product.name }} {{ product.id }}</h3>
+                        <h3 class="product-title">{{ product.name }}</h3>
+                        <p class="product-subtitle">{{ product.ref }}</p>
                         <div class="mb-0 text-muted">
                             <!-- Text -->
-                            {{ product.description|raw }}
+                            {{ product.description|u.truncate(100, ' ...')|raw }}
                         </div>
 
                     </a>

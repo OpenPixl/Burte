@@ -119,7 +119,7 @@ class Product
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $Ref;
+    private $ref;
 
     /**
      * @ORM\ManyToOne(targetEntity=ProductCategory::class)
@@ -376,12 +376,12 @@ class Product
 
     public function getRef(): ?string
     {
-        return $this->Ref;
+        return $this->ref;
     }
 
-    public function setRef(string $Ref): self
+    public function setRef(string $ref): self
     {
-        $this->Ref = $Ref;
+        $this->ref = $ref;
 
         return $this;
     }

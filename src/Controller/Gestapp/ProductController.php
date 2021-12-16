@@ -177,10 +177,11 @@ class ProductController extends AbstractController
      */
     public function ListOneNatProduct($idnat)
     {
+        //dd($idnat);
         $products = $this->getDoctrine()->getRepository(Product::class)->oneNature($idnat);
-
-        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
-        dd($categories);
+        //dd($products);
+        $nature = $this->getDoctrine()->getRepository(ProductNature::class)->find($idnat);
+        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findBy(array('Nature'=> $idnat));
 
         return $this->render('gestapp/product/listonecatproduct.html.twig',[
             'products' => $products,

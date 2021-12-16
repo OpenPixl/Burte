@@ -3,16 +3,16 @@
     {# message Flash #}
     {{ dump(app.session.getBag('flashes').get('sucess')) }}
 
-    <div class="col-2">
+    <div class="col-3">
         {#
             Le code javascript pour la mise en marche du script se trouve sur le fichier :
             "template/webapp/page/page.html.twig"
 
        {{ include('gestapp/product/include/_filters.html.twig') }} #}
     </div>
-    <div class="col-10">
+    <div class="col-9">
         {% for product in products %}
-            <div class="col-3">
+            <div class="col-4">
                 {# Card Produit #}
                 <div class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">
                     {# Card image du produit #}

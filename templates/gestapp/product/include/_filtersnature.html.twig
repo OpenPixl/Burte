@@ -11,27 +11,27 @@
         {# Mise en place de la boucle à partir de Parents #}
         {% for parent in parents %}
             <div class="card-header">
-                {{parent.name}}
+                {{parent.name|upper}}
             </div>
-            {% for categorie in categories|filter(categorie => categorie.parent == parent.id) %}
+            {% for categorie in categories|filter(categorie => categorie.parent == parent.name) %}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <input type="checkbox" name="categories[]" id="cat{{ categorie.id }}" value="{{ categorie.id }}">
                         <label for="cat{{ categorie.id }}">{{ categorie.name }}</label>
                     </li>
                 </ul>
-            {% else %}
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <a href="#">Pas de catégorie</a>
-                    </li>
-                </ul>
             {% endfor %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <input type="checkbox" name="categories[]" id="cat{{ parent.id }}" value="{{ parent.id }}">
+                    <label for="cat{{ parent.id }}">{{ parent.name }}</label>
+                </li>
+            </ul>
         {% else %}
         <div class="card-header">
             Aucune catégorie
         </div>
         {% endfor %}
     </div>
-    <input type="hidden" id="page" value="{{ page }}">
+    {# <input type="hidden" id="page" value="{{ page }}"> #}
 </form>

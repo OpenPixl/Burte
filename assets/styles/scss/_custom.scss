@@ -15,7 +15,7 @@ body {
     position: relative;
     top: 0px;
     left: 0px;
-    background-image: url('../../../public/images/home_front/fond_section_home.jpeg');
+    background-image: url('/public/images/home_front/fond_section_home.jpeg');
     z-index: 0;
     width: 100%;
   }
@@ -28,7 +28,7 @@ body {
     position: relative;
     top: -56px;
     left: 0px;
-    background-image: url('../../../public/images/home_front/fond_section_home.jpeg');
+    background-image: url('/public/images/home_front/fond_section_home.jpeg');
     z-index: 0;
     height: 100vh;
   }
@@ -256,6 +256,26 @@ main h1, main h2, main h3{
 
 .card a{
   text-decoration-line: none;
+}
+
+#filters .card > .list-group {
+  border-top: none !important;
+  border-bottom: inherit;
+}
+
+#filters .list-group-item {
+  position: relative;
+  display: block;
+  padding: .5rem 1rem !important;
+  color: #212529;
+  text-decoration: none;
+  background-color: #fff;
+}
+
+//*** ------------- Personnalisation produit show ---------------- ***//
+
+.op-section-product p{
+  margin-bottom: 0rem;
 }
 
 /***---------- FOOTER ----------***/

@@ -9,20 +9,20 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
         {% for i in items %}
+        <tr>
             {% set sstotal = i.qty * i.product.price %}
-            <td>{{ i.product.name }}</td>
+            <td><a href="{{ path('op_gestapp_product_show', {'id': i.product.id}) }}"></a>{{ i.product.name }}</td>
             <td>{{ i.product.price|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}</td>
             <td>
                 <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
                 {{ i.qty }}
                 <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
             </td>
-            <td>{{ total|number_format(2, ',', ' ') }} €</td>
+            <td>{{ sstotal|number_format(2, ',', ' ') }} €</td>
             <td><a href="{{ path('op_webapp_cart_delete', {'id': i.product.id}) }}"><i class="bi bi-cart-dash text-danger" style="font-size: 1rem;"></i></a></td>
+        </tr>
         {% endfor %}
-    </tr>
     </tbody>
     <tfoot>
     <tr>

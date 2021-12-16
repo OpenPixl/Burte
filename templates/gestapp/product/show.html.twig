@@ -12,17 +12,16 @@
             </div>
         </div>
     </header>
-    <section id="page-content" class="op-section">
+    <section id="page-content" class="op-section-product">
         <div class="container">
             {% include 'include/_alert.html.twig' with app.flashes %}
-
             <div class="row">
                 <div class="col-4">
                     <div class="mb-1">
                         {% if product.productName is null %}
-                            <img class="img-fluid" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
+                            <img class="img-fluid img-thumbnail" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
                         {% else %}
-                            <img src="{{ vich_uploader_asset(product) | imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                            <img class="card-img-top" src="{{ vich_uploader_asset(product) | imagine_filter('product_image_card') }}" alt="{{ product.productName }}">
                         {% endif %}
                     </div>
                     <div class="mt-1">
@@ -30,20 +29,19 @@
                     </div>
                 </div>
                 <div class="col-8">
-                    <div>
-                        <p>Informations</p>
+                    <div class="mb-2">
+                        <p><strong>Informations</strong></p>
                         {{ product.description|raw }}
-
                     </div>
-                    <div>
+                    <div class="mb-2">
                         <p>Détails :</p>
                         {{ product.details|raw }}
                     </div>
-                    <div>
+                    <div class="mb-2">
                         <hr>
                         <b>{{ product.price }} € / {{ product.productUnit }}</b>
                     </div>
-                    <div>
+                    <div class="mb-2">
                         Ce produit est disponible : {{ product.isDisponible ? 'Oui' : 'Non' }}<br>
                         Produit en stock : {{ product.quantity }}
                     </div>

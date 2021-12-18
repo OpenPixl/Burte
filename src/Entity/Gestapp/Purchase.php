@@ -68,6 +68,11 @@ class Purchase
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $purchasedAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -177,6 +182,18 @@ class Purchase
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getPurchasedAt(): ?\DateTimeInterface
+    {
+        return $this->purchasedAt;
+    }
+
+    public function setPurchasedAt(?\DateTimeInterface $purchasedAt): self
+    {
+        $this->purchasedAt = $purchasedAt;
 
         return $this;
     }

@@ -1,0 +1,22 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Numéro de commande</th>
+        <th>adresse</th>
+        <th>Quantité</th>
+        <th>Date de commande</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for p in purchases %}
+        <tr>
+            <td>{{p.id}}</td>
+            <td>{{p.adress}}<br>{{p.zipcode}} {{p.city}}</td>
+            <td>{{p.purchasedAt}}</td>
+            <td>{{p.total}}</td
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>

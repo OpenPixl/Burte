@@ -2,14 +2,15 @@
 
 namespace App\Controller\Gestapp\Purchase;
 
-use App\Entity\Admin\Member;
-use http\Env\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
+use App\Entity\Admin\Member;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class PurchasesListController extends abstractController
 {
@@ -34,10 +35,9 @@ class PurchasesListController extends abstractController
          */
         $member = $this->security->getUser();
         if(!$member){
-            $url = $this->router->generate('op_webapp_public_homepage');
-            return new RedirectResponse($url);
+            throw new AccessDeniedException('Vous devez être connecter');
         }
-        $html = $this->twig->render('purchase/index.html.twig', [
+        $html = $this->twig->render('gestapp/purchase/index.html.twig', [
            'purchases' => $member->getPurchases()
         ]);
         return new Response($html);

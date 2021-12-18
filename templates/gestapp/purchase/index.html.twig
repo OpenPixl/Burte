@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block content %}
+<header id="page-title">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Vos commandes</h1>
+            </div>
+        </div>
+    </div>
+</header>
+<section id="page-content" class="op-section">
+    <div class="container">
+        <div id="alertMessage">
+            {% include 'include/_alert.html.twig' with [{'app.flashes': app.flashes}] %}
+        </div>
+        <div id="liste">
+            {{ include('gestapp/purchase/include/_liste.html.twig') }}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -7,9 +7,10 @@
             {% set parents = parents|merge([{name : categorie.name, id: categorie.id}]) %}
         {% endif%}
     {% endfor%}
-    <div class="card">
+
         {# Mise en place de la boucle à partir de Parents #}
         {% for parent in parents %}
+        <div class="card mb-1">
             <div class="card-header">
                 {{parent.name|upper}}
             </div>
@@ -27,11 +28,13 @@
                     <label for="cat{{ parent.id }}">{{ parent.name }}</label>
                 </li>
             </ul>
+        </div>
         {% else %}
-        <div class="card-header">
-            Aucune catégorie
+        <div class="card">
+            <div class="card-header">
+                Aucune catégorie
+            </div>
         </div>
         {% endfor %}
-    </div>
     {# <input type="hidden" id="page" value="{{ page }}"> #}
 </form>

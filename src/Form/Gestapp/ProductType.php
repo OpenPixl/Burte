@@ -11,6 +11,7 @@ use App\Entity\Gestapp\ProductUnit;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -71,6 +72,13 @@ class ProductType extends AbstractType
                         ->orderBy('m.id', 'ASC');
                 },
                 'choice_label' => 'structure',
+            ])
+            ->add('format', ChoiceType::class, [
+                'choices'  => [
+                    'Carte 10*15' => "card10-15",
+                    'Carte double' => 'card_double',
+                    'Autres' => 'other',
+                ],
             ])
         ;
     }

@@ -1,3 +1,4 @@
+{% if items %}
 <table class="table">
     <thead>
     <tr>
@@ -31,3 +32,11 @@
     </tr>
     </tfoot>
 </table>
+<hr>
+<h2>Confimez votre commande en remplissant ce formulaire</h2>
+    {{ form_start(confirmationForm) }}
+    {{ form_widget(confirmationForm) }}
+    <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
+{% else %}
+<h2>Le panier est vide</h2>
+{% endif %}

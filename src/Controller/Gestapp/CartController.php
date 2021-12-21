@@ -3,6 +3,7 @@
 namespace App\Controller\Gestapp;
 
 use App\Cart\CartService;
+use App\Form\Gestapp\CartConfirmationType;
 use App\Repository\Gestapp\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,12 +55,15 @@ class CartController extends AbstractController
      */
     public function showCart()
     {
+        $form = $this->createForm(CartConfirmationType::class);
+
         $detailedCart = $this->cartService->getDetailedCartItem();
         $total = $this->cartService->getTotal();
 
         return $this->render('gestapp/cart/index.html.twig', [
             'items' => $detailedCart,
-            'total' => $total
+            'total' => $total,
+            'confirmationForm' => $form->createView()
         ]);
     }
 
@@ -69,6 +73,8 @@ class CartController extends AbstractController
      */
     public function showCartJson()
     {
+        $form = $this->createForm(CartConfirmationType::class);
+
         $detailedCart = $this->cartService->getDetailedCartItem();
         $total = $this->cartService->getTotal();
 
@@ -78,7 +84,8 @@ class CartController extends AbstractController
             'message'       => "Le produit a été correctement supprimé.",
             'liste'         => $this->renderView('gestapp/cart/include/_liste.html.twig', [
                 'items' => $detailedCart,
-                'total' => $total
+                'total' => $total,
+                'confirmationForm' => $form->createView()
             ])
         ], 200);
     }

@@ -3,8 +3,8 @@
     <tr>
         <th>Numéro de commande</th>
         <th>adresse</th>
-        <th>Quantité</th>
         <th>Date de commande</th>
+        <th>Détails</th>
         <th>Total</th>
     </tr>
     </thead>
@@ -14,7 +14,14 @@
             <td>{{p.id}}</td>
             <td>{{p.adress}}<br>{{p.zipcode}} {{p.city}}</td>
             <td>{{p.purchasedAt}}</td>
-            <td>{{p.total}}</td
+            <td>
+                {% for i in p.purchaseItems %}
+                <ul>
+                    <li>{{ i.productQty }}x {{ i.productName }} ({{ i.productPrice }}) - {{ i.totalItem }}</li>
+                </ul>
+                {% endfor %}
+            </td>
+            <td>{{p.total}}</td>
         </tr>
         {% endfor %}
     </tbody>

@@ -26,6 +26,14 @@ class CartService
         return $this->session->set('cart', $cart);
     }
 
+    protected function saveCart(array $cart){
+        $this->session->set('cart', $cart);
+    }
+
+    public function emptyCart(){
+        $this->saveCart([]);
+    }
+
     public function increment(int $id){
 
         $cart = $this->getCart();                                       // récupération du panier par le service CartService
@@ -81,6 +89,9 @@ class CartService
         return $total;
     }
 
+    /**
+     * @return CartItem[]
+     */
     public function getDetailedCartItem() : array
     {
         $detailedCart =[];                                            // on prépare un tableau du futur panier détaillé
@@ -96,5 +107,7 @@ class CartService
         }
         return $detailedCart;
     }
+
+
 
 }

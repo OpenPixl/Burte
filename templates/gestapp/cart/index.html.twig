@@ -93,6 +93,7 @@
     <div class="container">
         <div id="alertMessage">
             {% include 'include/_alert.html.twig' with [{'app.flashes': app.flashes}] %}
+            {% include 'include/_alert.html.twig' %}
         </div>
         <div id="liste">
             {{ include('gestapp/cart/include/_liste.html.twig') }}

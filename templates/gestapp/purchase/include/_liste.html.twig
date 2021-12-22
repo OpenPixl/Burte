@@ -12,12 +12,12 @@
         {% for p in purchases %}
         <tr>
             <td>{{p.id}}</td>
-            <td>{{p.adress}}<br>{{p.zipcode}} {{p.city}}</td>
-            <td>{{p.purchasedAt}}</td>
+            <td>{{p.address}}<br>{{p.zipcode}} {{p.city}}</td>
+            <td>{{p.purchasedAt|format_datetime('medium', 'none', locale='fr')}}</td>
             <td>
                 {% for i in p.purchaseItems %}
                 <ul>
-                    <li>{{ i.productQty }}x {{ i.productName }} ({{ i.productPrice }}) - {{ i.totalItem }}</li>
+                    <li>{{ i.productQty }}x {{ i.productName }} ({{ i.productPrice }}€) - {{ i.totalItem }}€</li>
                 </ul>
                 {% endfor %}
             </td>

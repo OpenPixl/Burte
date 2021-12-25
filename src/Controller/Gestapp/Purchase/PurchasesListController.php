@@ -11,7 +11,7 @@ class PurchasesListController extends abstractController
 {
     /**
      * @Route("/webapp/purchases/", name="op_webapp_purchases_index")
-     * @IsGranted("ROLE_USER", message="Vpous devez être connecté pour accéder àn vos commandes")
+     * @IsGranted("ROLE_USER", message="Vous devez être connecté pour accéder à vos commandes")
      */
     public function index()
     {
@@ -19,6 +19,20 @@ class PurchasesListController extends abstractController
         $member = $this->getUser();
 
         return $this->render('gestapp/purchase/index.html.twig',[
+            'purchases'=> $member->getPurchases()
+        ]);
+    }
+
+    /**
+     * @Route("/opadmin/purchases/", name="op_admin_purchases_index")
+     * @IsGranted("ROLE_USER", message="Vous devez être connecté pour accéder à l'administration")
+     */
+    public function listAdmin()
+    {
+        /** @var Member */
+        $member = $this->getUser();
+
+        return $this->render('gestapp/purchase/list.html.twig',[
             'purchases'=> $member->getPurchases()
         ]);
     }

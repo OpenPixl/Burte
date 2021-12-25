@@ -18,15 +18,15 @@
             </div>
 
             <!-- Body -->
-            <a class="card-body" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
+            <div class="card-body" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
                 <!-- Heading -->
                 <h3 class="product-title">{{ product.name }}</h3>
                 <p class="product-subtitle">{{ product.ref }}</p>
-                <div class="mb-0 text-muted">
+                <div class="mb-0 text-muted" style="font-size: 14px">
                     <!-- Text -->
                     {{ product.description|u.truncate(100, ' ...')|raw }}
                 </div>
-            </a>
+            </div>
 
             <!-- Meta -->
             <div class="card-meta" href="#!">
@@ -41,7 +41,8 @@
                     {{ product.producer }}
                 </h6>
                 <!-- Cart -->
-                <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="h6 text-uppercase text-muted mb-0 ms-auto">
+                <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="h6 text-muted mb-0 ms-auto btn btn-sm btn-outline-info">
+                    Ajouter au panier
                     <i class="bi bi-cart-plus"></i>
                 </a>
             </div>

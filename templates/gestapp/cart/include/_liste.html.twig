@@ -41,11 +41,11 @@
     {{ form_end(confirmationForm) }}
     {% else %}
     <div class="row">
-        <div class="col-6">
-            <button class="btn btn-sm btn-primary">se connecter</button>
+        <div class="col-6 justify-content-center">
+            <a href="{{ path('op_admin_security_login') }}" class="btn btn-sm btn-primary">se connecter</a>
         </div>
-        <div class="col-6">
-            <button class="btn btn-sm btn-warning">Créer son compte</button>
+        <div class="col-6 justify-content-center">
+            <a href="#" class="btn btn-sm btn-warning">Créer son compte</a>
         </div>
     </div>
     {% endif %}

@@ -186,12 +186,8 @@
                                 <table class="table">
                                     <tbody>
                                     <tr>
-                                        <th>Id</th>
-                                        <td>{{ page.id }}<input id="page" type="hidden" value="{{ page.id }}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Title</th>
-                                        <td>{{ page.title }}</td>
+                                        <th>Nom</th>
+                                        <td>{{ page.name }}</td>
                                     </tr>
                                     <tr>
                                         <th>Slug</th>
@@ -227,11 +223,11 @@
                                     </tr>
                                     <tr>
                                         <th>CreateAt</th>
-                                        <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                        <td>{{ page.createdAt ? page.createdAt|date('d M Y') : '' }}</td>
                                     </tr>
                                     <tr>
                                         <th>UpdateAt</th>
-                                        <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                        <td>{{ page.updatedAt ? page.updatedAt|date('d M Y') : '' }}</td>
                                     </tr>
                                     </tbody>
                                 </table>

@@ -83,15 +83,7 @@ class Page
      */
     private $isMenu;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updatedAt;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -122,6 +114,16 @@ class Page
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="linkPage")
      */
     private $LinkedPage;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -279,34 +281,7 @@ class Page
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
 
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedAt(): self
-    {
-        $this->createdAt = new \DateTime('now');
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function setUpdatedAt(): self
-    {
-        $this->updatedAt = new \DateTime('now');
-        return $this;
-    }
 
     public function getName(): ?string
     {
@@ -430,6 +405,35 @@ class Page
             }
         }
 
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
+    {
+        $this->createdAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
+    {
+        $this->updatedAt = new \DateTime('now');
         return $this;
     }
 }

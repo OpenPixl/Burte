@@ -1,7 +1,7 @@
 {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
 <div class="card-body">
     <div class="row">
-
+        {# Panel pour le nav du formulaire #}
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Informations" type="button" role="tab" aria-controls="Informations" aria-selected="true"><h5>Informations</h5></button>
@@ -13,7 +13,7 @@
                 <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#SEO" type="button" role="tab" aria-controls="SEO" aria-selected="true"><h5>SEO</h5></button>
             </li>
         </ul>
-
+        {# Eléments pour les panels #}
         <div class="tab-content">
             <div class="tab-pane active" id="Informations" role="tabpanel" aria-labelledby="home-tab">
                 <div class="row">
@@ -63,6 +63,15 @@
                                     {{ form_label(form.isPublish, 'Is publish', {'label_attr': {'class':'form-check-label'}}) }}
                                 </div>
                             </fieldset>
+                        </div>
+                        <h5>Filiation de la page</h5>
+                        <div class="row mb-1 mt-1 g-1">
+                            <div class="col-4">
+                                {{ form_label(form.parent, 'Page Parente', {'label_attr': {'class':'form-label'}}) }}
+                            </div>
+                            <div class="col-8">
+                                {{ form_widget(form.parent, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                            </div>
                         </div>
                     </div>
                 </div>

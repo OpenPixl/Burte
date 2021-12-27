@@ -125,6 +125,11 @@ class Page
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Page::class)
+     */
+    private $parent;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
@@ -434,6 +439,18 @@ class Page
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
+
         return $this;
     }
 }

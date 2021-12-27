@@ -3,6 +3,8 @@
 namespace App\Form\Webapp;
 
 use App\Entity\Webapp\Page;
+use App\Repository\Webapp\PageRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -45,7 +47,14 @@ class PageType extends AbstractType
             ->add('isMenu')
             ->add('isTitle')
             ->add('isDescription')
-            ->add('parent')
+            ->add('parent', EntityType::class, [
+                'class' => Page::class,
+                'choice_label' => 'name',
+                'placeholder' => '--- Aucune page parente ---',
+                'query_builder' => function(PageRepository $pageRepository){
+                    return $pageRepository->createQueryBuilder('p')->orderBy('p.name', 'ASC');
+                }
+            ])
         ;
     }
 

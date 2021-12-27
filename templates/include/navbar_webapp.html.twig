@@ -1,3 +1,19 @@
+{# Création des boucles pour le menu déroulant à 1 niveau #}
+{% set parents = [] %}
+{% set childs = [] %}
+{% for menu in menus %}
+    {% if menu.parent is null %}
+        {# Assemblage du tableau en twig #}
+        {% set parents = parents|merge([{id: menu.id, name : menu.name, slug: menu.slug}]) %}
+    {% endif%}
+{% endfor%}
+{% for menu in menus %}
+    {% if menu.parent is not null %}
+        {# Assemblage du tableau en twig #}
+        {% set childs = childs|merge([{id: menu.id, name : menu.name, slug: menu.slug, parent: menu.parent }]) %}
+    {% endif%}
+{% endfor%}
+{# Mis en place de la vue #}
 <div id="navbar">
     <div id="navbar_large" class="container{% if parameter.isBlocMenuFluid == 1 %}-fluid{% else %}{% endif %} d-lg-block d-none">
         <div class="row">
@@ -18,17 +34,31 @@
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="{{ path('op_webapp_public_homepage')}}"> Accueil</a>
                             </li>
-                            {% for menu in menus %}
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="{{ path('op_webapp_page_slug', {'slug':menu.slug}) }}">{{ menu.name }}</a>
+                            {% for parent in parents %}
+                                {# Création de la variable pour le dropdown de niveau 1#}
+                                {% set dropdown = '' %}
+                                {% for child in childs|filter(child => child.parent == parent.id) %}
+                                    {% set dropdown = ' dropdown' %}
+                                {% endfor %}
+                                {# Mise en place des <li> pour le menu #}
+                                <li class="nav-item{{ dropdown }}">
+                                    {% if dropdown == ' dropdown' %}
+                                    <a class="nav-link dropdown-toggle" href="{{ path('op_webapp_page_slug', {'slug':parent.slug}) }}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ parent.name }}
+                                    </a>
+                                    {% else %}
+                                    <a class="nav-link" aria-current="page" href="{{ path('op_webapp_page_slug', {'slug':parent.slug}) }}">{{ parent.name }}</a>
+                                    {% endif %}
+                                    {# Si niveau 1, on ajoute les <ul> suivants #}
+                                    {% if dropdown == ' dropdown' %}
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        {% for child in childs|filter(child => child.parent == parent.id) %}
+                                        <li><a class="dropdown-item" href="{{ path('op_webapp_page_slug', {'slug':child.slug}) }}">{{ child.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
                                 </li>
                             {% endfor %}
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="panier" href="{{ path('op_webapp_purchases_index')}}">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    Commandes
-                                </a>
-                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="panier" href="{{ path('op_webapp_cart_showcart')}}">
                                     <i class="fas fa-shopping-cart"></i>
@@ -75,10 +105,27 @@
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="{{ path('op_webapp_public_homepage')}}"> Accueil</a>
                             </li>
-                            {% for menu in menus %}
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ path('op_webapp_page_slug', {'slug':menu.slug}) }}">{{ menu.name }}</a>
-                            </li>
+                            {% for parent in parents %}
+                                {% set dropdown = '' %}
+                                {% for child in childs|filter(child => child.parent == parent.id) %}
+                                    {% set dropdown = ' dropdown' %}
+                                {% endfor %}
+                                <li class="nav-item{{ dropdown }}">
+                                    {% if dropdown == ' dropdown' %}
+                                        <a class="nav-link dropdown-toggle" href="{{ path('op_webapp_page_slug', {'slug':parent.slug}) }}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ parent.name }}
+                                        </a>
+                                    {% else %}
+                                        <a class="nav-link" aria-current="page" href="{{ path('op_webapp_page_slug', {'slug':parent.slug}) }}">{{ parent.name }}</a>
+                                    {% endif %}
+                                    {% if dropdown == ' dropdown' %}
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        {% for child in childs|filter(child => child.parent == parent.id) %}
+                                            <li><a class="dropdown-item" href="{{ path('op_webapp_page_slug', {'slug':child.slug}) }}">{{ child.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                </li>
                             {% endfor %}
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="panier" href="{{ path('op_webapp_cart_showcart')}}">

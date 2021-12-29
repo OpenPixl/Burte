@@ -20,16 +20,30 @@
             <!-- Body -->
             <div class="card-body" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
                 <!-- Heading -->
+                <div>
+                    <btn class="btn btn-sm btn-outline-sm" style="font-size: 12px;">{{ product.nameNature }}</btn>
+                    <btn class="btn btn-sm btn-outline-sm" style="font-size: 12px;">Format : {{ product.format }}</btn>
+                </div>
                 <h3 class="product-title">{{ product.name }}</h3>
-                <p class="product-subtitle">{{ product.ref }}</p>
+
                 <div class="mb-0 text-muted" style="font-size: 14px">
                     <!-- Text -->
                     {{ product.description|u.truncate(100, ' ...')|raw }}
                 </div>
+                <div class="row align-items-center mt-1 mb-1">
+                    <div class="col">
+                        <p class="product-subtitle"> Réf : {{ product.ref }}</p>
+                    </div>
+                    <div class="col">
+                        <p class="product-subtitle text-end">{{ product.price }}€ / {{ product.productUnit }}</p>
+                    </div>
+
+
+                </div>
             </div>
 
             <!-- Meta -->
-            <div class="card-meta" href="#!">
+            <div class="card-meta">
                 <!-- Divider -->
                 <hr class="card-meta-divider">
                 <!-- Avatar -->
@@ -41,7 +55,7 @@
                     {{ product.producer }}
                 </h6>
                 <!-- Cart -->
-                <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="h6 text-muted mb-0 ms-auto btn btn-sm btn-outline-info">
+                <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="mb-0 ms-auto btn btn-sm btn-outline-sm" style="font-size: 12px;">
                     Ajouter au panier
                     <i class="bi bi-cart-plus"></i>
                 </a>

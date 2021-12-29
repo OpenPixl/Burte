@@ -43,7 +43,7 @@
                                 {# Mise en place des <li> pour le menu #}
                                 <li class="nav-item{{ dropdown }}">
                                     {% if dropdown == ' dropdown' %}
-                                    <a class="nav-link dropdown-toggle" href="{{ path('op_webapp_page_slug', {'slug':parent.slug}) }}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" aria-current="page"  href="{{ path('op_webapp_page_slug', {'slug':parent.slug}) }}" id="navbarDropdown" role="button"  aria-expanded="false">
                                         {{ parent.name }}
                                     </a>
                                     {% else %}
@@ -167,7 +167,7 @@
     <div id="bloc_prez" class="container" data-aos="fade-up">
         <div class="row">
             <div id="overlay_logo" class="col-md-6 offset-md-3 d-none d-md-block">
-                <p class="text-center"> <img class="img-fluid" src="{{ asset('images/logosite_front/logo-fondblanc-614610a0b4fc4229405629.png') }}" alt="carte_de_priere" height="200px"> </p>
+                <p class="text-start"><img class="img-fluid" src="{{ asset('images/logosite_front/logo-fondblanc-614610a0b4fc4229405629.png') }}" alt="carte_de_priere" height="200px"> </p>
             </div>
         </div>
     </div>

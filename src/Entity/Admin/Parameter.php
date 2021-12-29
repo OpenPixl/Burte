@@ -2,7 +2,10 @@
 
 namespace App\Entity\Admin;
 
+use App\Entity\Webapp\Page;
 use App\Repository\Admin\ParameterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -174,6 +177,16 @@ class Parameter
      * @var int|null
      */
     private $homeSize;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Page::class, mappedBy="parameter")
+     */
+    private $PagesFooter;
+
+    public function __construct()
+    {
+        $this->PagesFooter = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -521,5 +534,35 @@ class Parameter
     public function getHomeSize(): ?int
     {
         return $this->homeSize;
+    }
+
+    /**
+     * @return Collection|Page[]
+     */
+    public function getPagesFooter(): Collection
+    {
+        return $this->PagesFooter;
+    }
+
+    public function addPagesFooter(Page $pagesFooter): self
+    {
+        if (!$this->PagesFooter->contains($pagesFooter)) {
+            $this->PagesFooter[] = $pagesFooter;
+            $pagesFooter->setParameter($this);
+        }
+
+        return $this;
+    }
+
+    public function removePagesFooter(Page $pagesFooter): self
+    {
+        if ($this->PagesFooter->removeElement($pagesFooter)) {
+            // set the owning side to null (unless already changed)
+            if ($pagesFooter->getParameter() === $this) {
+                $pagesFooter->setParameter(null);
+            }
+        }
+
+        return $this;
     }
 }

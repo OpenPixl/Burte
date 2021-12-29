@@ -94,7 +94,7 @@ class CartService
      */
     public function getDetailedCartItem() : array
     {
-        $detailedCart =[];                                            // on prépare un tableau du futur panier détaillé
+        $detailedCart = [];                                           // on prépare un tableau du futur panier détaillé
 
         foreach($this->getCart() as $id => $qty)
         {

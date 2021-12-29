@@ -76,6 +76,16 @@ class SectionType extends AbstractType
                 },
                 'choice_label' => 'name',
             ])
+            ->add('oneCatproduct', EntityType::class, [
+                'class' => ProductCategory::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('pc')
+                        ->where('pc.parent IS NULL')
+                        ->orderBy('pc.name', 'ASC')
+                        ;
+                },
+                'choice_label' => 'name',
+            ])
             ->add('favorites')
             ->add('isSectionFluid')
             ->add('position')

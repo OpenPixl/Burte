@@ -47,4 +47,25 @@ class ProductCategoryRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findParents()
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.parent IS NULL')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+    public function findChilds($idcat)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.parent = :idcat')
+            ->setParameter('idcat', $idcat)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }

@@ -11,17 +11,25 @@
         window.onload = function(){
             const OneArticle = document.getElementById('One_article');
             const OneNatProduct = document.getElementById('One_Nat_Product');
+            const OneCatProduct = document.getElementById('One_Cat_Product');
             const SelectValue = document.getElementById('section_contentType').value;
 
             if (SelectValue == 'One_article'){
                 OneArticle.style.display="block";
                 OneNatProduct.style.display="none";
+                OneCatProduct.style.display="none";
             }else if (SelectValue == 'One_Nat_Product'){
                 OneArticle.style.display="none";
                 OneNatProduct.style.display="block";
+                OneCatProduct.style.display="none";
+            }else if (SelectValue == 'One_Cat_Product'){
+                OneArticle.style.display="none";
+                OneNatProduct.style.display="none";
+                OneCatProduct.style.display="block";
             }else{
                 OneArticle.style.display="none";
                 OneNatProduct.style.display="none";
+                OneCatProduct.style.display="none";
             }
 
             document.getElementById("section_contentType").addEventListener("change", ShowDiv, false);

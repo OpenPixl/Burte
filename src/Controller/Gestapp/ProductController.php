@@ -193,17 +193,18 @@ class ProductController extends AbstractController
      * Espace E-Commerce : Liste les produits
      * @Route("/gestapp/product/oneCat/{idcat}", name="op_gestapp_product_onecat", methods={"POST"})
      */
-    public function ListOneCatProduct($idnat)
+    public function ListOneCatProduct($idcat)
     {
-        //dd($idnat);
-        $products = $this->getDoctrine()->getRepository(Product::class)->oneCategory($idcat);
+        $childs = $this->getDoctrine()->getRepository(ProductCategory::class)->findChilds($idcat);
+        //dd($childs);
+        $products = $this->getDoctrine()->getRepository(Product::class)->oneCategory($childs);
         //dd($products);
-        $category = $this->getDoctrine()->getRepository(ProductNature::class)->find($idcat);
-        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findBy(array('Nature'=> $idnat));
+        $category = $this->getDoctrine()->getRepository(ProductCategory::class)->find($idcat);
 
         return $this->render('gestapp/product/listonecatproduct.html.twig',[
             'products' => $products,
-            'categories' => $categories
+            'category' => $category,
+            'childs' => $childs
         ]);
     }
 

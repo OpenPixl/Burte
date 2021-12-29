@@ -1,0 +1,15 @@
+<form id="filters" action="">
+    <div class="card mb-1">
+        <div class="card-header">
+            {{ category }}
+        </div>
+        {% for child in childs %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <input type="checkbox" name="categories[]" id="cat{{ child.id }}" value="{{ child.id }}">
+                    <label for="cat{{ child.id }}">{{ child.name }}</label>
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
+</form>

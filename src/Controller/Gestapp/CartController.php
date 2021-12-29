@@ -50,6 +50,14 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/gestapp/cart/addname/{id}/{name}", name="op_webapp_cart_addname")
+     */
+    public function addName($id, $name)
+    {
+
+    }
+
+    /**
      * Liste les produits inclus dans le panier
      * @Route("/webapp/cart/show", name="op_webapp_cart_showcart")
      */

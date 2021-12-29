@@ -258,6 +258,21 @@ main h1, main h2, main h3{
   text-decoration-line: none;
 }
 
+
+
+//*** ------------- Personnalisation produit show ---------------- ***//
+
+.op-section-product p{
+  margin-bottom: 0rem;
+}
+
+#filters li{
+  transition: all 0.5s;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+}
+
 #filters .card > .list-group {
   border-top: none !important;
   border-bottom: inherit;
@@ -269,13 +284,12 @@ main h1, main h2, main h3{
   padding: .5rem 1rem !important;
   color: #212529;
   text-decoration: none;
-  background-color: #fff;
+  background-color: transparent;
 }
 
-//*** ------------- Personnalisation produit show ---------------- ***//
-
-.op-section-product p{
-  margin-bottom: 0rem;
+#filters li:hover {
+  color: #ffffff;
+  background-color: #142864;
 }
 
 /***---------- FOOTER ----------***/

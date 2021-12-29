@@ -15,7 +15,7 @@ class FooterController extends AbstractController
     public function FooterBottom(): Response
     {
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
-        return $this->render('admin/footer/block.html.twig', [
+        return $this->render('admin/footer/bottom.html.twig', [
             'parameter' => $parameter
         ]);
     }
@@ -25,6 +25,6 @@ class FooterController extends AbstractController
      */
     public function FooterBlock()
     {
-        return $this->render('admin/footer/bottom.html.twig');
+        return $this->render('admin/footer/block.html.twig');
     }
 }

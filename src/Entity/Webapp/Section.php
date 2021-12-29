@@ -140,6 +140,11 @@ class Section
      */
     private $oneNatProduct;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ProductCategory::class)
+     */
+    private $oneCatProduct;
+
 
     /**
      * Permet d'initialiser le slug !
@@ -426,6 +431,18 @@ class Section
     public function setOneNatProduct(?ProductNature $oneNatProduct): self
     {
         $this->oneNatProduct = $oneNatProduct;
+
+        return $this;
+    }
+
+    public function getOneCatProduct(): ?ProductCategory
+    {
+        return $this->oneCatProduct;
+    }
+
+    public function setOneCatProduct(?ProductCategory $oneCatProduct): self
+    {
+        $this->oneCatProduct = $oneCatProduct;
 
         return $this;
     }

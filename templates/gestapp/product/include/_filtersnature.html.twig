@@ -22,12 +22,6 @@
                     </li>
                 </ul>
             {% endfor %}
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <input type="checkbox" name="categories[]" id="cat{{ parent.id }}" value="{{ parent.id }}">
-                    <label for="cat{{ parent.id }}">{{ parent.name }}</label>
-                </li>
-            </ul>
         </div>
         {% else %}
         <div class="card">

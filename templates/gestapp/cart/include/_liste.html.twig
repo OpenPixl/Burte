@@ -1,54 +1,71 @@
 {% if items %}
-<table class="table">
-    <thead>
-    <tr>
-        <th>Nom du produit</th>
-        <th>Prix unitaire</th>
-        <th>Quantité</th>
-        <th>total</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-        {% for i in items %}
+    <table class="table align-middle">
+        <thead>
         <tr>
-            {% set sstotal = i.qty * i.product.price %}
-            <td><a href="{{ path('op_gestapp_product_show', {'id': i.product.id}) }}"></a>{{ i.product.name }}</td>
-            <td>{{ i.product.price|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}</td>
-            <td>
-                <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
-                {{ i.qty }}
-                <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
-            </td>
-            <td>{{ sstotal|number_format(2, ',', ' ') }} €</td>
-            <td><a href="{{ path('op_webapp_cart_delete', {'id': i.product.id}) }}"><i class="bi bi-cart-dash text-danger" style="font-size: 1rem;"></i></a></td>
+            <th>Le produit</th>
+            <th></th>
+            <th>Prix unitaire</th>
+            <th>Quantité</th>
+            <th>total</th>
+            <th></th>
         </tr>
-        {% endfor %}
-    </tbody>
-    <tfoot>
-    <tr>
-        <td colspan="3">Total</td>
-        <td colspan="2">{{ total|number_format(2, ',', ' ')}} €</td>
-    </tr>
-    </tfoot>
-</table>
-{# Formulaire de commande #}
+        </thead>
+        <tbody>
+            {% for i in items %}
+            <tr style="background: rgb(249, 249, 251);">
+                {% set sstotal = i.qty * i.product.price %}
+                <td>
+                    <img class="rounded" src="{{ vich_uploader_asset(i.product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_cart') }}" alt="{{ i.product.name }}">
+                    &nbsp;&nbsp;
+                    <a class="text-start" href="{{ path('op_gestapp_product_show', {'id': i.product.id}) }}">{{ i.product.name }}</a> - réf :{{ i.product.ref }}
+                </td>
+                <td><form><input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte"></form></td>
+                <td>{{ i.product.price|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}</td>
+                <td>
+                    <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
+                    {{ i.qty }}
+                    <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
+                </td>
+                <td>{{ sstotal|number_format(2, ',', ' ') }} €</td>
+                <td><a href="{{ path('op_webapp_cart_delete', {'id': i.product.id}) }}"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">Total</td>
+            <td colspan="2">{{ total|number_format(2, ',', ' ')}} €</td>
+        </tr>
+        </tfoot>
+    </table>
     {% if app.user %}
-    <h2>Confimez votre commande en remplissant ce formulaire</h2>
-    {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm')}) }}
-    {{ form_widget(confirmationForm) }}
-    <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
-    {{ form_end(confirmationForm) }}
+    {# Formulaire de commande si connecté #}
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2>Confimez votre commande en remplissant ce formulaire</h2>
+            {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm')}) }}
+            {{ form_widget(confirmationForm) }}
+            <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
+            {{ form_end(confirmationForm) }}
+        </div>
+    </div>
     {% else %}
-    <div class="row">
-        <div class="col-6 justify-content-center">
+    {# En cas d'user non connecté ou non inscrit sur la plateforme #}
+    <div class="row mb-2">
+        <div class="col-12">
+            <p class="text-center">Vous n'êtes pas connecté à la plateforme. Pour finaliser votre commande, veuillez soit vous connecter, soit créer votre compte.
+            <br>Cordialement.</p>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-2 offset-4">
             <a href="{{ path('op_admin_security_login') }}" class="btn btn-sm btn-primary">se connecter</a>
         </div>
-        <div class="col-6 justify-content-center">
+        <div class="col-2">
             <a href="#" class="btn btn-sm btn-warning">Créer son compte</a>
         </div>
     </div>
     {% endif %}
 {% else %}
-<h2>Le panier est vide</h2>
+    <h2>Le panier est vide</h2>
 {% endif %}

@@ -3,6 +3,7 @@
 namespace App\Entity\Webapp;
 
 use App\Entity\Admin\Member;
+use App\Entity\Admin\Parameter;
 use App\Repository\Webapp\PageRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -116,6 +117,11 @@ class Page
     private $LinkedPage;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Page::class)
+     */
+    private $parent;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -126,9 +132,10 @@ class Page
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Page::class)
+     * @ORM\ManyToOne(targetEntity=Parameter::class, inversedBy="PagesFooter")
      */
-    private $parent;
+    private $parameter;
+
 
     public function __construct()
     {
@@ -450,6 +457,18 @@ class Page
     public function setParent(?self $parent): self
     {
         $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getParameter(): ?Parameter
+    {
+        return $this->parameter;
+    }
+
+    public function setParameter(?Parameter $parameter): self
+    {
+        $this->parameter = $parameter;
 
         return $this;
     }

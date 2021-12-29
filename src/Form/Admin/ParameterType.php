@@ -3,6 +3,8 @@
 namespace App\Form\Admin;
 
 use App\Entity\Admin\Parameter;
+use App\Entity\Webapp\Page;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -45,6 +47,11 @@ class ParameterType extends AbstractType
                 'allow_delete' => true,
                 'delete_label' => 'Supprimer',
                 'download_label' => 'Télecharger',
+            ])
+            ->add('PagesFooter', EntityType::class, [
+                'class' => Page::class,
+                'multiple' => true,
+                'choice_label' => 'name'
             ])
         ;
     }

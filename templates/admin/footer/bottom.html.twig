@@ -4,7 +4,10 @@
         {% if app.request.get('_route') == 'op_admin_dashboard_index' %}
             <p>Version : 2.0.3</p>
         {% else %}
-            <p class="text-end"><a href="{{ path('op_webapp_page_slug', {'slug': 'mentions-legales'}) }}">Mentions légales</a> | <a href="{{ path('op_admin_security_login') }}">Se connecter</a></p>
+            <p class="text-end">
+                <a href="{{ path('op_webapp_page_slug', {'slug': 'mentions-legales'}) }}">Mentions légales</a> |
+                <a href="{{ path('op_admin_security_login') }}">Se connecter</a>
+            </p>
         {% endif %}
     </div>
 </div>

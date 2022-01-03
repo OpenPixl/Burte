@@ -175,7 +175,6 @@ class Structure
      */
     private $description;
 
-    
     /**
      * Insertion de l'image mise en avant liée à un article
      * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
@@ -264,10 +263,8 @@ class Structure
      * @ORM\PreUpdate
      */
     public function initializeSlug() {
-        if(empty($this->slug)) {
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->name);
-        }
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->name);
     }
 
     public function getId(): ?int

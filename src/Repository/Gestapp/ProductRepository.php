@@ -55,7 +55,6 @@ class ProductRepository extends ServiceEntityRepository
     public function oneNature($idnat)
     {
         return $this->createQueryBuilder('p')
-
             ->leftJoin('p.producer', 'pr')
             ->leftJoin('pr.structure', 's')
             ->leftJoin('p.productNature', 'n')
@@ -96,11 +95,11 @@ class ProductRepository extends ServiceEntityRepository
     public function oneCategory($findchild)
     {
         return $this->createQueryBuilder('p')
-
             ->leftJoin('p.producer', 'pr')
             ->leftJoin('pr.structure', 's')
             ->leftJoin('p.ProductCategory', 'c')
             ->leftJoin('p.productUnit', 'pu')
+            ->leftJoin('p.productNature', 'n')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -110,6 +109,7 @@ class ProductRepository extends ServiceEntityRepository
                 pu.name AS productUnit,
                 p.quantity,
                 p.productName AS productName,
+                n.name AS nameNature,
                 c.id AS idCategory,
                 p.ref AS ref,
                 c.name AS nameCategory,
@@ -117,6 +117,7 @@ class ProductRepository extends ServiceEntityRepository
                 p.isStar,
                 p.isOnLine,
                 s.name AS producer,
+                p.format,
                 s.logoStructureName AS logoStructureName
                  ')
             ->andWhere('c.id in (:childs)')

@@ -36,32 +36,19 @@ class Product
     private $slug;
 
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $ref;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-    
-    /**
-     * Insertion de l'image mise en avant liée à un article
-     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
-     *
-     * @Vich\UploadableField(mapping="product_image_card", fileNameProperty="productName", size="productSize")
-     * @var File|null
-     */
-    private $productFile;
 
     /**
-     * @ORM\Column(type="string",nullable=true)
-     *
-     * @var string|null
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $productName;
-
-    /**
-     * @ORM\Column(type="integer",nullable=true)
-     *
-     * @var int|null
-     */
-    private $productSize;
+    private $details;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
@@ -69,19 +56,14 @@ class Product
     private $price;
 
     /**
+     * @ORM\Column(type="float")
+     */
+    private $tva;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $quantity;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updatedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="products")
@@ -114,16 +96,6 @@ class Product
     private $productUnit;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $details;
-
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private $ref;
-
-    /**
      * @ORM\ManyToOne(targetEntity=ProductCategory::class)
      */
     private $ProductCategory;
@@ -138,6 +110,44 @@ class Product
      */
     private $format;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPersonalisable = false;
+
+    /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="product_image_card", fileNameProperty="productName", size="productSize")
+     * @var File|null
+     */
+    private $productFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $productName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $productSize;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->purchaseItems = new ArrayCollection();
@@ -150,10 +160,8 @@ class Product
      * @ORM\PreUpdate
      */
     public function initializeSlug() {
-        if(empty($this->slug)) {
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->name);
-        }
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->name);
     }
 
     public function getId(): ?int
@@ -453,6 +461,30 @@ class Product
     public function setFormat(?string $format): self
     {
         $this->format = $format;
+
+        return $this;
+    }
+
+    public function getTva(): ?float
+    {
+        return $this->tva;
+    }
+
+    public function setTva(float $tva): self
+    {
+        $this->tva = $tva;
+
+        return $this;
+    }
+
+    public function getIsPersonalisable(): ?bool
+    {
+        return $this->isPersonalisable;
+    }
+
+    public function setIsPersonalisable(bool $isPersonalisable): self
+    {
+        $this->isPersonalisable = $isPersonalisable;
 
         return $this;
     }

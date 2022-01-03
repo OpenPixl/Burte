@@ -50,6 +50,7 @@ class ParameterType extends AbstractType
             ])
             ->add('PagesFooter', EntityType::class, [
                 'class' => Page::class,
+                'required' => false,
                 'multiple' => true,
                 'choice_label' => 'name'
             ])

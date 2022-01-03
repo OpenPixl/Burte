@@ -2,6 +2,82 @@
 
 {% block title %}Product{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        window.onload = function(){
+
+            // Construction de la fonction "onClickBtnIncrement" : incrémentation d'un produit
+            function onClickBtnIncrement(event){
+                event.preventDefault();
+                const url = this.href;
+                console.log(url);
+                axios
+                    .post(url)
+                    .then(function(response) {
+                        // Rafraichissement du tableau "liste"
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        // Remise en place des évènements sur la page
+                        document.querySelectorAll('a.js-increment').forEach(function (link){
+                            link.addEventListener('click', onClickBtnIncrement);
+                        })
+                        document.querySelectorAll('a.js-decrement').forEach(function (link){
+                            link.addEventListener('click', onClickBtnDecrement);
+                        })
+                        // mise en place de l'alerte
+                        var alertHTMLElement = document.getElementById("alertMessage");
+                        console.log(alertHTMLElement);
+                        var message = response.data.message;
+                        var alertBody = alertHTMLElement.querySelector('.alert-content') // selection de l'élément possédant le message
+                        alertBody.textContent = message;
+                        var alertElement = new bootstrap.Alert(alertHTMLElement);
+                        alertElement.show();
+
+                    });
+            }
+
+            // Construction de la fonction "onClickBtnIncrement" : incrémentation d'un produit
+            function onClickBtnDecrement(event){
+                event.preventDefault();
+                const url = this.href;
+                console.log(url);
+                axios
+                    .post(url)
+                    .then(function(response) {
+                        // Rafraichissement du tableau "liste"
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        // Remise en place des évènements sur la page
+                        document.querySelectorAll('a.js-increment').forEach(function (link){
+                            link.addEventListener('click', onClickBtnIncrement);
+                        })
+                        document.querySelectorAll('a.js-decrement').forEach(function (link){
+                            link.addEventListener('click', onClickBtnDecrement);
+                        })
+                        // mise en place de l'alerte
+                        var alertHTMLElement = document.getElementById("alertMessage");
+                        console.log(alertHTMLElement);
+                        var message = response.data.message;
+                        var alertBody = alertHTMLElement.querySelector('.alert-content') // selection de l'élément possédant le message
+                        alertBody.textContent = message;
+                        var alertElement = new bootstrap.Alert(alertHTMLElement);
+                        alertElement.show();
+
+                    });
+            }
+
+            // Appel de la fonction d'incrémentation d'un produit
+            document.querySelectorAll('a.js-increment').forEach(function (link){
+                link.addEventListener('click', onClickBtnIncrement);
+            })
+
+            // Appel de la fonction de décrementation d'un produit
+            document.querySelectorAll('a.js-decrement').forEach(function (link){
+                link.addEventListener('click', onClickBtnDecrement);
+            })
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <header id="page-title">
         <div class="container">
@@ -13,7 +89,7 @@
         </div>
     </header>
     <section id="page-content" class="op-section-product">
-        <div class="container">
+        <div id="productCard" class="container">
             {% include 'include/_alert.html.twig' with app.flashes %}
             <div class="row">
                 <div class="col-4">
@@ -24,9 +100,7 @@
                             <img class="card-img-top" src="{{ vich_uploader_asset(product) | imagine_filter('product_image_card') }}" alt="{{ product.productName }}">
                         {% endif %}
                     </div>
-                    <div class="mt-1">
-                        <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="btn btn-secondary"><i class="bi bi-cart-plus"></i> Ajouter au panier</a>
-                    </div>
+
                 </div>
                 <div class="col-8">
                     <div class="mb-2">
@@ -39,12 +113,22 @@
                     </div>
                     <div class="mb-2">
                         <hr>
-                        <b>{{ product.price }} € / {{ product.productUnit }}</b>
+                        <b>{{ product.price|number_format(2, ',', ' ') }} € / {{ product.productUnit }}</b>
                     </div>
                     <div class="mb-2">
                         Ce produit est disponible : {{ product.isDisponible ? 'Oui' : 'Non' }}<br>
                         Produit en stock : {{ product.quantity }}
                     </div>
+                    {% if app.session.get('cart') is not null %}
+                    <div>
+                        <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
+                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
+                    </div>
+                    {% else %}
+                    <div class="mt-1">
+                        <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="btn btn-sm btn-outline-sm"><i class="bi bi-cart-plus"></i> Ajouter au panier</a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

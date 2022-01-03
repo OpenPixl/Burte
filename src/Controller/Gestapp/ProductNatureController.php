@@ -2,6 +2,8 @@
 
 namespace App\Controller\Gestapp;
 
+use App\Entity\Gestapp\Product;
+use App\Entity\Gestapp\ProductCategory;
 use App\Entity\Gestapp\ProductNature;
 use App\Form\Gestapp\ProductNature1Type;
 use App\Form\Gestapp\ProductNatureType;
@@ -135,5 +137,43 @@ class ProductNatureController extends AbstractController
         }
 
         return $this->redirectToRoute('gestapp_product_nature_index');
+    }
+
+    /**
+     * Suppression d'une ligne index.php
+     * @Route("/gestapp/product/nature/delevent/{id}", name="op_gestapp_product_nature_del", methods={"POST"})
+     */
+    public function DelEvent(Request $request, ProductNature $productNature, ProductCategory $productCategory) : Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $productNatures = $productNature->getProductCategories()->getValues();
+        $products = $productNature->getProduct()->getValues();
+        //dd($products);
+        if($productNatures){
+            foreach ( $productNatures as $productCategory) {
+                $productNature->removeProductCategory($productCategory);
+                $entityManager->flush();
+            }
+        }
+        if($products){
+            foreach ( $products as $product) {
+                $productNature->removeProduct($product);
+                $entityManager->flush();
+            }
+        }
+
+        $entityManager->remove($productNature);
+        $entityManager->flush();
+
+        $productnatures = $this->getDoctrine()->getRepository(ProductNature::class)->findAll();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "La nature a été supprimé",
+            'liste' => $this->renderView('gestapp/product_nature/include/_liste.html.twig', [
+                'product_natures' => $productnatures
+            ])
+        ], 200);
     }
 }

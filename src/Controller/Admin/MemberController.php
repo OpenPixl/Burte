@@ -72,7 +72,7 @@ class MemberController extends AbstractController
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('JUSTàFaire - Inscription')
+                ->subject('Cartes de prière - Inscription')
                 //->text('Sending emails is fun again!')
                 ->html('
                     <h1>Just à Faire<small> - Nouvelle inscription</small></h1>

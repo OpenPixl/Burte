@@ -46,7 +46,6 @@ class ProductUnit
      */
     private $product;
 
-
     /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
@@ -54,10 +53,8 @@ class ProductUnit
      * @ORM\PreUpdate
      */
     public function initializeSlug() {
-        if(empty($this->slug)) {
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->name);
-        }
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->name);
     }
 
     public function __construct()

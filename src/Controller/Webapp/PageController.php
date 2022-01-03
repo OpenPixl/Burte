@@ -2,6 +2,7 @@
 
 namespace App\Controller\Webapp;
 
+use App\Entity\Webapp\Article;
 use App\Entity\Webapp\Page;
 use App\Entity\Webapp\Section;
 use App\Form\Webapp\PageType;
@@ -166,9 +167,15 @@ class PageController extends AbstractController
      * Suppression d'une ligne index.php
      * @Route("/webapp/page/del/{id}", name="op_Gestapp_recommandation_del", methods={"POST"})
      */
-    public function DelEvent(Request $request, Page $page) : Response
+    public function DelEvent(Request $request, Page $page, Article $article) : Response
     {
         $entityManager = $this->getDoctrine()->getManager();
+
+        $arts = $page->getLinkedPage()->getValues();
+        foreach ($arts as $article){
+            $page->removeLinkedPage($article);
+        }
+
         $entityManager->remove($page);
         $entityManager->flush();
 

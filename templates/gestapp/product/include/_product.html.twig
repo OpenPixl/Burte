@@ -35,13 +35,10 @@
                         <p class="product-subtitle"> Réf : {{ product.ref }}</p>
                     </div>
                     <div class="col">
-                        <p class="product-subtitle text-end">{{ product.price }}€ / {{ product.productUnit }}</p>
+                        <p class="product-subtitle text-end">{{ product.price|number_format(2, ',', ' ') }}€ / {{ product.productUnit }}</p>
                     </div>
-
-
                 </div>
             </div>
-
             <!-- Meta -->
             <div class="card-meta">
                 <!-- Divider -->

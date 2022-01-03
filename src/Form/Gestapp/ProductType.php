@@ -73,6 +73,15 @@ class ProductType extends AbstractType
                 },
                 'choice_label' => 'structure',
             ])
+            ->add('tva', ChoiceType::class, [
+                'choices'  => [
+                    'TVA 20%' => "20",
+                    'TVA 19,6%' => '19.6',
+                    'TVA 5,5%' => '5.5',
+                    'TVA 2.1%' => '2.1',
+                    'TVA 0%' => '0',
+                ],
+            ])
             ->add('format', ChoiceType::class, [
                 'choices'  => [
                     'Carte 10*15' => "card10-15",

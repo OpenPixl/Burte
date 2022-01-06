@@ -1,66 +1,68 @@
-{% for product in products %}
-    <div class="col-4">
-        <!-- Card -->
-        <div id="productCard" class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">
-            <!-- Image -->
-            <a class="card-img-top" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
-                {% if product.productName is null %}
-                    <img class="img-fluid img-thumbnail" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
-                {% else %}
-                    <img class="card-img-top" src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}">
-                {% endif %}
-            </a>
-
-            <!-- Shape -->
-            <div class="position-relative">
-                <div class="shape shape-fluid-x shape-bottom text-white">
-                    <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 48h2880V0h-720C1442.5 52 720 0 720 0H0v48z" fill="currentColor"></path></svg>                    </div>
-            </div>
-
-            <!-- Body -->
-            <div class="card-body" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
-                <!-- Heading -->
-                <div>
-                    <btn class="btn btn-sm btn-outline-sm" style="font-size: 12px;">{{ product.nameNature }}</btn>
-                    <btn class="btn btn-sm btn-outline-sm" style="font-size: 12px;">Format : {{ product.format }}</btn>
-                </div>
-                <h3 class="product-title">{{ product.name }}</h3>
-
-                <div class="mb-0 text-muted" style="font-size: 14px">
-                    <!-- Text -->
-                    {{ product.description|u.truncate(100, ' ...')|raw }}
-                </div>
-                <div class="row align-items-center mt-1 mb-1">
-                    <div class="col">
-                        <p class="product-subtitle"> Réf : {{ product.ref }}</p>
-                    </div>
-                    <div class="col">
-                        <p class="product-subtitle text-end">{{ product.price|number_format(2, ',', ' ') }}€ / {{ product.productUnit }}</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Meta -->
-            <div class="card-meta">
-                <!-- Divider -->
-                <hr class="card-meta-divider">
-                <!-- Avatar -->
-                <div class="avatar avatar-sm me-2">
-                    <img src="{{ vich_uploader_asset(product, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') }}" alt="{{ product.logoStructureName }}" class="avatar-img rounded-circle" style="width:20px; height:20px">
-                </div>
-                <!-- Producer -->
-                <h6 class="text-muted me-2 mb-0">
-                    {{ product.producer }}
-                </h6>
-                <!-- Cart -->
-                <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="mb-0 ms-auto btn btn-sm btn-outline-sm" style="font-size: 12px;">
-                    Ajouter au panier
-                    <i class="bi bi-cart-plus"></i>
+<div class="row">
+    {% for product in products %}
+        <div class="col-3 g-2">
+            <!-- Card -->
+            <div id="productCard" class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">
+                <!-- Image -->
+                <a class="card-img-top" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
+                    {% if product.productName is null %}
+                        <img class="img-fluid img-thumbnail" src="{{ asset('images/png/image_replace_product.png') }}" alt="image_replace">
+                    {% else %}
+                        <img class="card-img-top" src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}">
+                    {% endif %}
                 </a>
+
+                <!-- Shape -->
+                <div class="position-relative">
+                    <div class="shape shape-fluid-x shape-bottom text-white">
+                        <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 48h2880V0h-720C1442.5 52 720 0 720 0H0v48z" fill="currentColor"></path></svg>                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
+                    <!-- Heading -->
+                    <div>
+                        <btn class="btn btn-sm btn-outline-sm">{{ product.nameNature }}</btn>
+                        <btn class="btn btn-sm btn-outline-sm">Format : {{ product.format }}</btn>
+                    </div>
+                    <h3 class="product-title">{{ product.name }}</h3>
+
+                    <div class="mb-0 text-muted" style="font-size: 11px">
+                        <!-- Text -->
+                        {{ product.description|u.truncate(100, ' ...')|raw }}
+                    </div>
+                    <div class="row align-items-center mt-1 mb-1" style="font-size: 11px">
+                        <div class="col-6">
+                            <p class="product-subtitle"> Réf : {{ product.ref }}</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="product-subtitle text-end">{{ product.price|number_format(2, ',', ' ') }}€ </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Meta -->
+                <div class="card-meta">
+                    <!-- Divider -->
+                    <hr class="card-meta-divider">
+                    <!-- Avatar -->
+                    <div class="avatar avatar-sm me-2">
+                        <img src="{{ vich_uploader_asset(product, 'logoStructureFile', 'App\\Entity\\Admin\\Structure') }}" alt="{{ product.logoStructureName }}" class="avatar-img rounded-circle" style="width:20px; height:20px">
+                    </div>
+                    <!-- Producer -->
+                    <h6 class="text-muted me-2 mb-0" style="font-size: 11px;">
+                        {{ product.producer }}
+                    </h6>
+                    <!-- Cart -->
+                    <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="mb-0 ms-auto btn btn-sm btn-outline-sm">
+                        Ajouter au panier
+                        <i class="bi bi-cart-plus"></i>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-{% else %}
-    <div class="col-12">
-        <p class="mt-3"><strong>Il n'y a pas de produits actuellement disponible dans la boutique.</strong></p>
-    </div>
-{% endfor %}
+    {% else %}
+        <div class="col-12">
+            <p class="mt-3"><strong>Il n'y a pas de produits actuellement disponible dans la boutique.</strong></p>
+        </div>
+    {% endfor %}
+</div>

@@ -18,8 +18,6 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-/public/images/favicon_front
-/public/images/logosite_front
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###

@@ -2,52 +2,52 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.de66cf5a.js",
-        "/build/758.f4dfec67.js",
-        "/build/169.23f6f2fd.js",
-        "/build/577.1a469e38.js",
-        "/build/225.03d896cf.js",
-        "/build/app.733632ed.js"
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-0dd022.js",
+        "http://localhost:8080/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.js",
+        "http://localhost:8080/build/vendors-node_modules_bootstrap_dist_js_bootstrap_bundle_js.js",
+        "http://localhost:8080/build/vendors-node_modules_aos_dist_aos_js-node_modules_bigpicture_index_js-node_modules_choices_js-891c76.js",
+        "http://localhost:8080/build/app.js"
       ],
       "css": [
-        "/build/207.4a9b318b.css",
-        "/build/225.deb9fd07.css",
-        "/build/app.0fa93491.css"
+        "http://localhost:8080/build/vendors-node_modules_fortawesome_fontawesome-free_css_all_css-node_modules_bootstrap-icons_fo-cc6b4a.css",
+        "http://localhost:8080/build/vendors-node_modules_aos_dist_aos_js-node_modules_bigpicture_index_js-node_modules_choices_js-891c76.css",
+        "http://localhost:8080/build/app.css"
       ]
     },
     "admin": {
       "js": [
-        "/build/runtime.de66cf5a.js",
-        "/build/758.f4dfec67.js",
-        "/build/577.1a469e38.js",
-        "/build/673.2a3598cf.js",
-        "/build/admin.4f936057.js"
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-0dd022.js",
+        "http://localhost:8080/build/vendors-node_modules_bootstrap_dist_js_bootstrap_bundle_js.js",
+        "http://localhost:8080/build/vendors-node_modules_flatpickr_dist_flatpickr_js-node_modules_flatpickr_dist_l10n_fr_js.js",
+        "http://localhost:8080/build/admin.js"
       ],
       "css": [
-        "/build/207.4a9b318b.css",
-        "/build/admin.6be4b539.css"
+        "http://localhost:8080/build/vendors-node_modules_fortawesome_fontawesome-free_css_all_css-node_modules_bootstrap-icons_fo-cc6b4a.css",
+        "http://localhost:8080/build/admin.css"
       ]
     },
     "login": {
       "js": [
-        "/build/runtime.de66cf5a.js",
-        "/build/758.f4dfec67.js",
-        "/build/169.23f6f2fd.js",
-        "/build/login.85ee7f22.js"
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-0dd022.js",
+        "http://localhost:8080/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.js",
+        "http://localhost:8080/build/login.js"
       ],
       "css": [
-        "/build/207.4a9b318b.css",
-        "/build/login.179b2a9e.css"
+        "http://localhost:8080/build/vendors-node_modules_fortawesome_fontawesome-free_css_all_css-node_modules_bootstrap-icons_fo-cc6b4a.css",
+        "http://localhost:8080/build/login.css"
       ]
     },
     "offline": {
       "js": [
-        "/build/runtime.de66cf5a.js",
-        "/build/758.f4dfec67.js",
-        "/build/offline.0aaf01d0.js"
+        "http://localhost:8080/build/runtime.js",
+        "http://localhost:8080/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-0dd022.js",
+        "http://localhost:8080/build/offline.js"
       ],
       "css": [
-        "/build/offline.c113752d.css"
+        "http://localhost:8080/build/offline.css"
       ]
     }
   }

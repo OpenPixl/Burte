@@ -23,8 +23,13 @@ class ProductController extends AbstractController
      */
     public function index(ProductRepository $productRepository): Response
     {
+        $natures = $this->getDoctrine()->getRepository(ProductNature::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
+
         return $this->render('gestapp/product/index.html.twig', [
             'products' => $productRepository->findAll(),
+            'natures' => $natures,
+            'categories' => $categories
         ]);
     }
 

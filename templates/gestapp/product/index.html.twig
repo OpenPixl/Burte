@@ -4,6 +4,7 @@
 
 {% block javascripts %}
 {{ parent() }}
+    <script type="module" src="{{ asset('js/filtersadmin.js') }}"></script>
     <script type="text/javascript">
         window.onload = function(){
             // Construction de la fonction OnClickBtnMenu

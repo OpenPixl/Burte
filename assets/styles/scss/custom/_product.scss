@@ -7,21 +7,21 @@
 }
 
 #productCard .product-subtitle {
-  font-family: "Tangerine", cursive;
   margin-top: 0;
   margin-bottom: 0;
   color: $sm-primary-color;
-  font-size: 1.5rem;
   line-height: 1.2;
 }
 
 #productCard .btn-outline-sm{
   color: $sm-secondary-color;
   border-color: $sm-secondary-color;
+  font-size: 0.6rem;
 }
 
 #productCard .btn-outline-sm:hover{
   background-color: $sm-secondary-color;
   color: #FFFFFF;
   border-color: $sm-secondary-color;
+  font-size: 0.6rem;
 }

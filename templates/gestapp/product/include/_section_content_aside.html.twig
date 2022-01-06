@@ -19,3 +19,26 @@
         </h4>
     </div>
 </div>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-text">Filtres</h4>
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for nature in natures %}
+        <li class="list-group-item">
+            <a class="btn d-inline-flex align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#components-collapse" aria-expanded="false" aria-current="false">
+                {{ nature.name }}
+            </a>
+
+            <div class="collapse" id="components-collapse" style="">
+                {% for categorie in categories %}
+                <ul class="list-unstyled fw-normal pb-1 small">
+                    {{ categorie.name }}
+                </ul>
+                {% endfor %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

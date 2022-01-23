@@ -13,10 +13,15 @@
         <tbody>
             {% for i in items %}
             <tr style="background: rgb(249, 249, 251);">
+                {# préparation du prix par quantité du produit #}
                 {% set sstotal = i.qty * i.product.price %}
                 <td>
-                    <img class="rounded" src="{{ vich_uploader_asset(i.product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_cart') }}" alt="{{ i.product.name }}">
-                    &nbsp;&nbsp;
+                    {# intégration de l'image au sein du panier #}
+                    {% if i.product.productName is null %}
+                    {% else %}
+                    <img class="rounded" src="{{ vich_uploader_asset(i.product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_cart') }}" alt="{{ i.product.name }}">&nbsp;&nbsp;
+                    {% endif %}
+                    {# lien vers la fiche produit #}
                     <a class="text-start" href="{{ path('op_gestapp_product_show', {'id': i.product.id}) }}">{{ i.product.name }}</a> - réf :{{ i.product.ref }}
                 </td>
                 <td><form><input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte"></form></td>
@@ -42,7 +47,7 @@
     {# Formulaire de commande si connecté #}
     <div class="row mb-5">
         <div class="col-12">
-            <h2>Confimez votre commande en remplissant ce formulaire</h2>
+            <h2>Confirmez votre commande en remplissant ce formulaire</h2>
             {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm')}) }}
             {{ form_widget(confirmationForm) }}
             <button type="submit" class="btn btn-sm btn-success">Je confirme</button>

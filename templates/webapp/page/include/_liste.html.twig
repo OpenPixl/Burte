@@ -24,8 +24,12 @@
                     {% if loop.first %}<i class="fas fa-long-arrow-alt-up text-muted"></i>&nbsp;&nbsp;{% else %}<a href="#" class="jsPosition" id="{{ page.id }}"><i class="fas fa-long-arrow-alt-up"></i></a>&nbsp;&nbsp;{% endif %}
                     {% if loop.last %}<i class="fas fa-long-arrow-alt-down text-muted"></i>{% else %}<a href="#" class="jsPosition" id="{{ page.id }}"><i class="fas fa-long-arrow-alt-down"></i></a>{% endif %}
                 </td>
-                <td><a href="{{ path('op_webapp_page_show', {'id': page.id}) }}">{{ page.name }}</a> (<small class="text-dark">{{ page.slug }}</small>)</td>
-                <td>{% if page.state == 'finished' %}Finalisée{% else %}Brouillon{% endif %}</td>
+                <td>
+                    <a href="{{ path('op_webapp_page_show', {'id': page.id}) }}">{{ page.name }}</a> (<small class="text-dark">{{ page.slug }}</small>)
+                </td>
+                <td>
+                    {% if page.state == 'finished' %}Finalisée{% else %}Brouillon{% endif %}
+                </td>
                 <td><span class="badge bg-info">{{ page.sections|length }}</span></td>
                 <td>
                     {% if page.ismenu == 1 %}

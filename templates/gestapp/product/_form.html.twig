@@ -6,7 +6,7 @@
             <hr>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
-                    <b>{{ form_label(form.name, 'Nom', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.name, 'Nom', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-4">
                     {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom du produit'}}) }}
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <b>{{ form_label(form.ref, 'Référence', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.ref, 'Référence', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-4">
                     {{ form_widget(form.ref, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Référence produit'}}) }}
@@ -23,7 +23,7 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
-                    <b>{{ form_label(form.productNature, 'Nature du produit', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.productNature, 'Nature', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-3">
                     {{ form_widget(form.productNature, {'attr': {'class': 'form-select form-select-sm'}}) }}
@@ -32,7 +32,7 @@
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductNature"><i class="bi bi-plus-circle"></i></button>
                 </div>
                 <div class="col-2">
-                    <b>{{ form_label(form.productCategory, 'Catégorie', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.productCategory, 'Catégorie', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-3">
                     {{ form_widget(form.productCategory, {'attr': {'class': 'form-select form-select-sm'}}) }}
@@ -43,7 +43,7 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
-                    <b>{{ form_label(form.format, 'format', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.format, 'format', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-10">
                     {{ form_widget(form.format, {'attr': {'class': 'form-select form-select-sm'}}) }}
@@ -51,7 +51,7 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
-                    <b>{{ form_label(form.description, 'Description', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.description, 'Description', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-10">
                     {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm'}}) }}
@@ -59,7 +59,7 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
-                    <b>{{ form_label(form.details, 'Détails', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.details, 'Détails', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-10">
                     {{ form_widget(form.details, {'attr': {'class': 'form-control form-control-sm'}}) }}
@@ -67,7 +67,7 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
-                    <b>{{ form_label(form.price, 'Prix', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.price, 'Prix', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-2">
                     {{ form_widget(form.price, {'attr': {'class': 'form-control form-control-sm'}}) }}
@@ -84,23 +84,33 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
-                    <b>{{ form_label(form.producer, 'Producteur', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.producer, 'Producteur', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-6">
                     {{ form_widget(form.producer, {'attr': {'class': 'form-select form-select-sm'}}) }}
                 </div>
             </div>
             <div class="row mb-1 mt-1 g-1">
-                <fieldset>
-                    <div class="form-check form-switch">
-                        {{ form_widget(form.isDisponible, {'attr': {'class': 'form-check-input'}}) }}
-                        {{ form_label(form.isDisponible, 'Le produit est diponible à la vente', {'label_attr': {'class':'form-check-label'}}) }}
-                    </div>
-                </fieldset>
+                <div class="col-6">
+                    <fieldset>
+                        <div class="form-check form-switch">
+                            {{ form_widget(form.isDisponible, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isDisponible, 'Le produit est diponible à la vente', {'label_attr': {'class':'form-check-label'}}) }}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-6">
+                    <fieldset>
+                        <div class="form-check form-switch">
+                            {{ form_widget(form.isPersonalisable, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isPersonalisable, 'Le produit est personnalisable', {'label_attr': {'class':'form-check-label'}}) }}
+                        </div>
+                    </fieldset>
+                </div>
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-2">
-                    <b>{{ form_label(form.quantity, 'Quantité disponible', {'label_attr': {'class':'form-label'}}) }}</b>
+                    {{ form_label(form.quantity, 'Quantité disponible', {'label_attr': {'class':'form-label'}}) }}
                 </div>
                 <div class="col-3">
                     {{ form_widget(form.quantity, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom du produit'}}) }}

@@ -1,3 +1,21 @@
+#productCard{
+  display: grid;
+  grid-template-rows: 238px auto 1fr auto;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+#productCard .card-meta-divider {
+  width: 100%;
+  margin: 0 0 1rem;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #1e2125;
+  text-decoration: none;
+  background-color: #d4e0ec;
+}
+
 #productCard .product-title {
   font-family: "Tangerine", cursive;
   margin-top: 0.2rem;

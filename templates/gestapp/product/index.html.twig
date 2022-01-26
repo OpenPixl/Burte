@@ -133,8 +133,14 @@
                     <div class="card-body">
                         <h4>Catalogue des produits</h4>
                         <p>Créer, Modifier ou supprimer des articles du site</p>
+                        <div class="navigation">
+                            {{ knp_pagination_render(products, 'include/pagination.html.twig') }}
+                        </div>
                         <div class="row" id="liste">
                             {{ include('gestapp/product/include/_liste.html.twig') }}
+                        </div>
+                        <div class="navigation">
+                            {{ knp_pagination_render(products, 'include/pagination.html.twig') }}
                         </div>
                     </div>
                 </div>

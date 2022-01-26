@@ -1,6 +1,8 @@
+
 const FiltersForms = document.getElementById('filters');
 document.querySelectorAll('#filters input').forEach(input => {
     input.addEventListener('change', () => {
+        console.log('Ok')
         // j'intercepte les clics et ses données.
         const Form = new FormData(FiltersForms);
         // construction de la "QueryString"
@@ -10,7 +12,7 @@ document.querySelectorAll('#filters input').forEach(input => {
             Params.append(key, value);
         })
 
-        const url = '/gestapp/product/oneNat/filternature';
+        const url = '/gestapp/product/oneCat/filtercategory';
 
         axios
             .get(url + "?" + Params.toString())
@@ -45,5 +47,4 @@ function onClickPage(event){
 document.querySelectorAll('a.page-link').forEach(function(link){
     link.addEventListener('click', onClickPage)
 })
-
 

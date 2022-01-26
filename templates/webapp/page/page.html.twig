@@ -8,9 +8,10 @@
     {% endif %}
 {% endblock %}
 
-{% block javascript %}
-{{parent()}}
-<script src="{{ asset('js/filters.js') }}"></script>
+{% block javascripts %}
+    {{ parent() }}
+    <script type="module" src="{{ asset('js/filterscategory.js') }}"></script>
+    <script type="module" src="{{ asset('js/filtersnature.js') }}"></script>
 {% endblock %}
 
 {% block content %}

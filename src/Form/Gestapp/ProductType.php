@@ -53,6 +53,7 @@ class ProductType extends AbstractType
             ])
             ->add('productUnit', EntityType::class, [
                 'placeholder' => 'Choisir une unité de tarif',
+                'required' => false,
                 'class' => ProductUnit::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
@@ -89,6 +90,7 @@ class ProductType extends AbstractType
                     'Autres' => 'other',
                 ],
             ])
+            ->add('isPersonalisable')
         ;
     }
 

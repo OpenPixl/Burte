@@ -19,6 +19,39 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function ListFilterscategories($filters)
+    {
+        $query = $this->createQueryBuilder('p');
+        if($filters != null){
+            $query
+                ->leftJoin('p.productNature', 'n')
+                ->leftJoin('p.producer', 'pr')
+                ->leftJoin('pr.structure', 's')
+                ->addSelect('
+                    p.id AS id,
+                    p.name AS name, 
+                    p.description AS description,
+                    p.details,
+                    p.price,
+                    p.quantity,
+                    p.productName AS productName,
+                    p.ref AS ref,
+                    p.isDisponible,
+                    p.isStar,
+                    p.isOnLine,
+                    p.format,
+                    s.name AS producer,
+                    n.name AS nameNature,
+                    s.logoStructureName AS logoStructureName
+                ')
+                ->andWhere('p.ProductCategory IN(:cats)')
+                ->setParameter(':cats', array_values($filters));
+        }else{
+
+        }
+        return $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

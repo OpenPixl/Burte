@@ -10,18 +10,32 @@
 
         {# Mise en place de la boucle à partir de Parents #}
         {% for parent in parents %}
+            {# détection du nombre d'enfant #}
+            {% set childs = categories|filter(categorie => categorie.parent == parent.name) %}
+
         <div class="card mb-1">
+            {% if childs|length == 0 %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <input type="checkbox" name="categories[]" id="cat{{ parent.id }}" value="{{ parent.id }}">
+                    <label for="cat{{ parent.id }}">{{ parent.name|upper }}</label>
+                </li>
+            </ul>
+            {% else %}
             <div class="card-header">
                 {{parent.name|upper}}
             </div>
-            {% for categorie in categories|filter(categorie => categorie.parent == parent.name) %}
                 <ul class="list-group list-group-flush">
+
+                {% for categorie in categories|filter(categorie => categorie.parent == parent.name) %}
                     <li class="list-group-item">
                         <input type="checkbox" name="categories[]" id="cat{{ categorie.id }}" value="{{ categorie.id }}">
                         <label for="cat{{ categorie.id }}">{{ categorie.name }}</label>
                     </li>
-                </ul>
             {% endfor %}
+                </ul>
+
+            {% endif %}
         </div>
         {% else %}
         <div class="card">

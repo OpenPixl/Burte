@@ -24,7 +24,14 @@
                     {# lien vers la fiche produit #}
                     <a class="text-start" href="{{ path('op_gestapp_product_show', {'id': i.product.id}) }}">{{ i.product.name }}</a> - réf :{{ i.product.ref }}
                 </td>
-                <td><form><input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte"></form></td>
+                <td>
+                    {% if i.product.isPersonalisable > 0 %}
+                    <form>
+                        <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte">
+                    </form>
+                    {% else %}
+                    {% endif %}
+                </td>
                 <td>{{ i.product.price|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}</td>
                 <td>
                     <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>

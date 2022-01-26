@@ -8,6 +8,7 @@ use App\Entity\Gestapp\ProductNature;
 use App\Form\Gestapp\ProductType;
 use App\Repository\Gestapp\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +22,20 @@ class ProductController extends AbstractController
     /**
      * @Route("/gestapp/product/", name="op_gestapp_product_index", methods={"GET"})
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $natures = $this->getDoctrine()->getRepository(ProductNature::class)->findAll();
         $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
 
+        $data = $productRepository->findAll();
+        $products = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            18
+        );
+
         return $this->render('gestapp/product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $products,
             'natures' => $natures,
             'categories' => $categories
         ]);
@@ -72,6 +80,9 @@ class ProductController extends AbstractController
      */
     public function edit(Request $request, Product $product): Response
     {
+        $natures = $this->getDoctrine()->getRepository(ProductNature::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -84,6 +95,8 @@ class ProductController extends AbstractController
         return $this->render('gestapp/product/edit.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+            'natures' => $natures,
+            'categories' => $categories
         ]);
     }
 
@@ -177,33 +190,81 @@ class ProductController extends AbstractController
     }
 
     /**
-     * Espace E-Commerce : Liste les produits
+     * Espace E-Commerce : Liste les produits sur les natures
      * @Route("/gestapp/product/oneNat/{idnat}", name="op_gestapp_product_onecat", methods={"POST"})
      */
-    public function ListOneNatProduct($idnat)
+    public function ListOneNatProduct(Request $request, PaginatorInterface $paginator, $idnat)
     {
-        //dd($idnat);
-        $products = $this->getDoctrine()->getRepository(Product::class)->oneNature($idnat);
-        //dd($products);
+        $data = $this->getDoctrine()->getRepository(Product::class)->oneNature($idnat);
+
         $nature = $this->getDoctrine()->getRepository(ProductNature::class)->find($idnat);
         $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findBy(array('Nature'=> $idnat));
 
+        $products = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            8
+        );
+
         return $this->render('gestapp/product/listonenatproduct.html.twig',[
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
     /**
-     * Espace E-Commerce : Liste les produits
+     * @Route("/gestapp/product/oneNat/filternature", name="op_gestapp_products_filternature", methods={"GET","POST"})
+     */
+    public function filternature(Request $request, ProductRepository $productRepository,PaginatorInterface $paginator): Response
+    {
+        $filters = $request->get("categories");
+        $page = $request->get('page');
+
+        $data = $productRepository->ListFilterscategories($filters);
+
+        $products = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            8 /*limit per page*/
+        );
+        if(!$page){
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Ok",
+                'liste' => $this->renderView('gestapp/product/include/_product.html.twig', [
+                    'products' => $products,
+                    'page' => $request->query->getInt('page', 1),
+                ])
+            ], 200);
+        }else{
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Ok",
+                'liste' => $this->renderView('gestapp/product/include/_product.html.twig', [
+                    'products' => $products,
+                    'page' => $request->query->getInt('page', $page),
+                ])
+            ], 200);
+        }
+    }
+
+    /**
+     * Espace E-Commerce : Liste les produits sur les catégories
      * @Route("/gestapp/product/oneCat/{idcat}", name="op_gestapp_product_onecat", methods={"POST"})
      */
-    public function ListOneCatProduct($idcat)
+    public function ListOneCatProduct(Request $request, PaginatorInterface $paginator, $idcat)
     {
         $childs = $this->getDoctrine()->getRepository(ProductCategory::class)->findChilds($idcat);
         //dd($childs);
-        $products = $this->getDoctrine()->getRepository(Product::class)->oneCategory($childs);
+        $data = $this->getDoctrine()->getRepository(Product::class)->oneCategory($childs);
         //dd($products);
+
+        $products = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            8
+        );
+
         $category = $this->getDoctrine()->getRepository(ProductCategory::class)->find($idcat);
 
         return $this->render('gestapp/product/listonecatproduct.html.twig',[
@@ -212,6 +273,43 @@ class ProductController extends AbstractController
             'childs' => $childs
         ]);
     }
+
+    /**
+     * @Route("/gestapp/product/oneCat/filtercategory", name="op_gestapp_products_filtercategory", methods={"GET","POST"})
+     */
+    public function filtercategory(Request $request, ProductRepository $productRepository,PaginatorInterface $paginator): Response
+    {
+        $filters = $request->get("categories");
+        $page = $request->get('page');
+
+        $data = $productRepository->ListFilterscategories($filters);
+
+        $products = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            8 /*limit per page*/
+        );
+        if(!$page){
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Ok",
+                'liste' => $this->renderView('gestapp/product/include/_product.html.twig', [
+                    'products' => $products,
+                    'page' => $request->query->getInt('page', 1),
+                ])
+            ], 200);
+        }else{
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Ok",
+                'liste' => $this->renderView('gestapp/product/include/_product.html.twig', [
+                    'products' => $products,
+                    'page' => $request->query->getInt('page', $page),
+                ])
+            ], 200);
+        }
+    }
+
 
     /**
      * Espace E-Commerce : Liste les produits

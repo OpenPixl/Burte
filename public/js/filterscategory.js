@@ -21,30 +21,35 @@ document.querySelectorAll('#filters input').forEach(input => {
                 const liste = document.getElementById('liste').innerHTML = response.data.liste;
                 // Ajout d'un event sur Bouton de suppression dans la fenêtre modale
                 document.querySelectorAll('a.page-link').forEach(function(link){
-                    link.addEventListener('click', onClickPage)
+                    link.addEventListener('click', onClickPaginator)
                 })
             })
     });
 });
 
-// Construction de la fonction OnClickBtnMenu
-function onClickPage(event){
+// Construction de la fonction lorsque l'utilisateur
+function onClickPaginator(event){
     event.preventDefault();
+    var urlCour = document.location.href;
     const url = this.href;
+    alert(url + "/" + urlCour);
+    const cat = document.getElementById('listonecatproduct').dataset.natorcat;
+    const idcat = document.getElementById('listonecatproduct').dataset.name;
+
     axios
-        .get(url)
+        .get(url + "?" + cat +"=" + idcat )
         .then(response => {
             // rafraichissement du tableau
             const liste = document.getElementById('liste').innerHTML = response.data.liste;
             // Ajout d'un event sur Bouton de suppression dans la fenêtre modale
             document.querySelectorAll('a.page-link').forEach(function(link){
-                link.addEventListener('click', onClickPage)
+                link.addEventListener('click', onClickPaginator)
             })
         })
 }
 
 // Ajout d'un event sur Bouton de suppression dans la fenêtre modale
 document.querySelectorAll('a.page-link').forEach(function(link){
-    link.addEventListener('click', onClickPage)
+    link.addEventListener('click', onClickPaginator)
 })
 

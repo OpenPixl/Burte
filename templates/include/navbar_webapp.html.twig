@@ -10,7 +10,7 @@
 {% for menu in menus %}
     {% if menu.parent is not null %}
         {# Assemblage du tableau en twig #}
-        {% set childs = childs|merge([{id: menu.id, name : menu.name, slug: menu.slug, parent: menu.parent }]) %}
+        {% set childs = childs|merge([{id: menu.id, name : menu.name, slug: menu.slug, parent: menu.parent, position: menu.position }]) %}
     {% endif%}
 {% endfor%}
 {# Mis en place de la vue #}
@@ -51,7 +51,7 @@
                             {# Si niveau 1, on ajoute les <ul> suivants #}
                             {% if dropdown == ' dropdown' %}
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {% for child in childs|filter(child => child.parent == parent.id) %}
+                                {% for child in childs|filter(child => child.parent == parent.id)|sort((a,b) => a.position <=> b.position) %}
                                 <li><a class="dropdown-item" href="{{ path('op_webapp_page_slug', {'slug':child.slug}) }}">{{ child.name }}</a></li>
                                 {% endfor %}
                             </ul>

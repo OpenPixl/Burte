@@ -209,6 +209,8 @@ class ProductController extends AbstractController
         return $this->render('gestapp/product/listonenatproduct.html.twig',[
             'products' => $products,
             'categories' => $categories,
+            'nat' => $idnat,
+            'natorcat' => 'nature'
         ]);
     }
 
@@ -255,9 +257,13 @@ class ProductController extends AbstractController
     public function ListOneCatProduct(Request $request, PaginatorInterface $paginator, $idcat)
     {
         $childs = $this->getDoctrine()->getRepository(ProductCategory::class)->findChilds($idcat);
-        //dd($childs);
-        $data = $this->getDoctrine()->getRepository(Product::class)->oneCategory($childs);
-        //dd($products);
+        //dd($idcat);
+        if (!$childs){
+            $data = $this->getDoctrine()->getRepository(Product::class)->oneCategory($idcat);
+        }
+        else{
+            $data = $this->getDoctrine()->getRepository(Product::class)->childCategory($childs);
+        }
 
         $products = $paginator->paginate(
             $data,
@@ -270,7 +276,9 @@ class ProductController extends AbstractController
         return $this->render('gestapp/product/listonecatproduct.html.twig',[
             'products' => $products,
             'category' => $category,
-            'childs' => $childs
+            'childs' => $childs,
+            'cat' => $idcat->getId(),
+            'natorcat' => 'category'
         ]);
     }
 

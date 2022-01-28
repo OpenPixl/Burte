@@ -125,7 +125,7 @@ class ProductRepository extends ServiceEntityRepository
      * Liste les produits selon une categorie et ses enfants.
      * @return Product[] Returns an array of Product objects
      */
-    public function oneCategory($findchild)
+    public function oneCategory($idcat)
     {
         return $this->createQueryBuilder('p')
             ->leftJoin('p.producer', 'pr')
@@ -153,9 +153,9 @@ class ProductRepository extends ServiceEntityRepository
                 p.format,
                 s.logoStructureName AS logoStructureName
                  ')
-            ->andWhere('c.id in (:childs)')
+            ->andWhere('c.id = :idcat')
             ->andWhere('p.isOnLine = :isOnLine')
-            ->setParameter('childs', $findchild)
+            ->setParameter('idcat', $idcat)
             ->setParameter('isOnLine', 1)
             ->orderBy('p.id', 'ASC')
             ->getQuery()
@@ -190,6 +190,48 @@ class ProductRepository extends ServiceEntityRepository
                 s.logoStructureName AS logoStructureName
                  ')
             ->andWhere('p.isOnLine = :isOnLine')
+            ->setParameter('isOnLine', 1)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * Liste les produits selon une categorie et ses enfants.
+     * @return Product[] Returns an array of Product objects
+     */
+    public function childCategory($findchild)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.producer', 'pr')
+            ->leftJoin('pr.structure', 's')
+            ->leftJoin('p.ProductCategory', 'c')
+            ->leftJoin('p.productUnit', 'pu')
+            ->leftJoin('p.productNature', 'n')
+            ->Select('
+                p.id AS id,
+                p.name AS name, 
+                p.description AS description,
+                p.details,
+                p.price,
+                pu.name AS productUnit,
+                p.quantity,
+                p.productName AS productName,
+                n.name AS nameNature,
+                c.id AS idCategory,
+                p.ref AS ref,
+                c.name AS nameCategory,
+                p.isDisponible,
+                p.isStar,
+                p.isOnLine,
+                s.name AS producer,
+                p.format,
+                s.logoStructureName AS logoStructureName
+                 ')
+            ->andWhere('c.id in (:childs)')
+            ->andWhere('p.isOnLine = :isOnLine')
+            ->setParameter('childs', $findchild)
             ->setParameter('isOnLine', 1)
             ->orderBy('p.id', 'ASC')
             ->getQuery()

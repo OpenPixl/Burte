@@ -1,3 +1,5 @@
+
+/*** Effets de style sur la pages des cartes ***/
 #productCard{
   display: grid;
   grid-template-rows: 238px auto 1fr auto;
@@ -42,4 +44,34 @@
   color: #FFFFFF;
   border-color: $sm-secondary-color;
   font-size: 0.6rem;
+}
+
+/*** Effets de style sur la page d'un produit ***/
+
+#productCard #count{
+  padding: 0.4rem 0.2rem;
+  //background-color: #ffe4c4;
+}
+
+#productCard #product-info {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 416px;
+}
+
+#productCard #count .btn-outline-sm{
+  color: $sm-secondary-color;
+  border-color: $sm-secondary-color;
+  font-size: 1rem;
+}
+
+#productCard #count .btn-outline-sm:hover{
+  background-color: $sm-secondary-color;
+  color: #FFFFFF;
+  border-color: $sm-secondary-color;
+  font-size: 1rem;
+}
+
+#productCard #count p{
+  font-size: 0.8rem;
 }

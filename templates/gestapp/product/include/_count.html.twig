@@ -1,0 +1,50 @@
+{# Bloc dynamique - Ajout au panier et personnalisation #}
+{% if app.session.get('cart') is not null %}
+    {% for i in items %}
+    <div class="row justify-content-between align-items-center">
+        <div class="col-2">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                <a type="button" class="js-increment btn btn-outline-sm" href="{{ path('op_webapp_cart_add', {'id': product.id}) }}?showproduct=true"><i class="bi bi-plus-circle"></i></a>
+                <button type="button" class="btn btn-outline-sm">&nbsp{{ i.qty }}&nbsp</button>
+                <a type="button" class="js-decrement btn btn-outline-sm" href="{{ path('op_webapp_cart_decrement', {'id': product.id}) }}?showproduct=true"><i class="bi bi-dash-circle"></i></a>
+            </div>
+        </div>
+        <div class="col-8 align-self-end">
+            <form action="{{ path('op_gestapp_product_customize_new', {'id':i.product.id}) }}">
+                <div class="row align-items-center">
+                    <label for="nameCustomer" class="col-sm-4 col-form-label">Personnalisation :</label>
+                    <div class="col-sm-6">
+                        <input id="nameCustomer" name="nameCustomer" type="text" class="form-control form-control-sm" placeholder="Entrez le prénom ...">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-person-plus"></i></button>
+                    </div>
+                    <input id="sessid" name="sessid" type="hidden" value="{{ session }}">
+                </div>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="row justify-content-between align-items-center">
+        <div class="col-4">
+            <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="btn btn-default btn-outline-sm"><i class="bi bi-cart-plus"></i> Ajouter au panier</a>
+        </div>
+        <div class="col-6">
+            {% if product.isPersonalisable == 1 %}
+            <p>Il vous est possible de personnaliser cette carte par l'ajout de votre prénom où tout autre prénom.</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="row justify-content-between">
+        <div class="col-4">
+            <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="btn btn-default btn-outline-sm"><i class="bi bi-cart-plus"></i> Ajouter au panier</a>
+        </div>
+        <div class="col-6">
+            {% if product.isPersonalisable == 1 %}
+            <p>Il vous est possible de personnaliser cette carte par l'ajout de votre prénom où tout autre prénom.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

@@ -148,9 +148,15 @@ class Product
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProductCustomize::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $productCustomizes;
+
     public function __construct()
     {
         $this->purchaseItems = new ArrayCollection();
+        $this->productCustomizes = new ArrayCollection();
     }
 
     /**
@@ -485,6 +491,36 @@ class Product
     public function setIsPersonalisable(bool $isPersonalisable): self
     {
         $this->isPersonalisable = $isPersonalisable;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProductCustomize[]
+     */
+    public function getProductCustomizes(): Collection
+    {
+        return $this->productCustomizes;
+    }
+
+    public function addProductCustomize(ProductCustomize $productCustomize): self
+    {
+        if (!$this->productCustomizes->contains($productCustomize)) {
+            $this->productCustomizes[] = $productCustomize;
+            $productCustomize->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductCustomize(ProductCustomize $productCustomize): self
+    {
+        if ($this->productCustomizes->removeElement($productCustomize)) {
+            // set the owning side to null (unless already changed)
+            if ($productCustomize->getProduct() === $this) {
+                $productCustomize->setProduct(null);
+            }
+        }
 
         return $this;
     }

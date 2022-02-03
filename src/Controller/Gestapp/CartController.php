@@ -43,19 +43,17 @@ class CartController extends AbstractController
         if($request->query->get('returnToCart')){
             return $this->redirectToRoute('op_webapp_cart_showcartjson');
         }
+        elseif ($request->query->get('showproduct')){
+            return $this->redirectToRoute('op_gestapp_cart_showcartcount',[
+                'id' => $id
+            ]);
+        }
 
         return $this->redirectToRoute('op_gestapp_product_show', [
             'id' => $id
         ]);
     }
 
-    /**
-     * @Route("/gestapp/cart/addname/{id}/{name}", name="op_webapp_cart_addname")
-     */
-    public function addName($id, $name)
-    {
-
-    }
 
     /**
      * Liste les produits inclus dans le panier
@@ -63,6 +61,7 @@ class CartController extends AbstractController
      */
     public function showCart()
     {
+        /** Pour l'ajout de la livraison **/
         $form = $this->createForm(CartConfirmationType::class);
 
         $detailedCart = $this->cartService->getDetailedCartItem();
@@ -99,6 +98,26 @@ class CartController extends AbstractController
     }
 
     /**
+     * Liste les produits inclus dans le panier
+     * @Route("/webapp/cart/showcartcount/{id}", name="op_gestapp_cart_showcartcount")
+     */
+    public function showcartcount($id)
+    {
+        $detailedCart = $this->cartService->getDetailedCartItem();
+        $product = $this->productRepository->find($id);
+
+        // Retourne une réponse en json
+        return $this->json([
+            'code'          => 200,
+            'message'       => "Le produit a été correctement ajouté.",
+            'count'         => $this->renderView('gestapp/product/include/_count.html.twig', [
+                'items' => $detailedCart,
+                'product' => $product
+            ])
+        ], 200);
+    }
+
+    /**
      * @Route("/gestapp/cart/decrement/{id}", name="op_webapp_cart_decrement", requirements={"id":"\d+"})
      */
     public function decrementeCart($id, Request $request): Response
@@ -116,6 +135,11 @@ class CartController extends AbstractController
 
         if($request->query->get('returnToCart')){
             return $this->redirectToRoute('op_webapp_cart_showcartjson');
+        }
+        elseif ($request->query->get('showproduct')){
+            return $this->redirectToRoute('op_gestapp_cart_showcartcount',[
+                'id' => $id
+            ]);
         }
 
         return $this->redirectToRoute('op_gestapp_product_show', [

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Gestapp;
 
+use App\Cart\CartService;
 use App\Entity\Gestapp\Product;
 use App\Entity\Gestapp\ProductCategory;
 use App\Entity\Gestapp\ProductNature;
@@ -19,6 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductController extends AbstractController
 {
+    protected $cartService;
+
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
+
     /**
      * @Route("/gestapp/product/", name="op_gestapp_product_index", methods={"GET"})
      */
@@ -67,11 +75,20 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/webbapp/product/{id}", name="op_gestapp_product_show", methods={"GET"})
+     * @param Product $product
+     * @param Request $request
+     * @return Response
      */
-    public function show(Product $product): Response
+    public function show(Product $product, Request $request): Response
     {
+        $detailedCart = $this->cartService->getDetailedCartItem();
+
+        $session = $request->cookies->get('PHPSESSID');
+
         return $this->render('gestapp/product/show.html.twig', [
             'product' => $product,
+            'items' => $detailedCart,
+            'session' => $session
         ]);
     }
 

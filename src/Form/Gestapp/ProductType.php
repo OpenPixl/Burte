@@ -14,6 +14,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -44,13 +47,9 @@ class ProductType extends AbstractType
                 },
 
             ])
-            ->add('productCategory', EntityType::class, [
+            ->add('productCategory', ChoiceType::class, [
                 'placeholder' => 'Choisir une catégorie',
-                'class' => ProductCategory::class,
-                //'disabled' => true,
-                'choice_label' => 'name',
-                'query_builder' => fn(ProductCategoryRepository $productCategoryRepository)=> $productCategoryRepository->createQueryBuilder('pc')->orderBy('pc.name', 'ASC')
-            ])
+               ])
             ->add('productUnit', EntityType::class, [
                 'placeholder' => 'Choisir une unité de tarif',
                 'required' => false,
@@ -92,6 +91,25 @@ class ProductType extends AbstractType
             ])
             ->add('isPersonalisable')
         ;
+
+        $formModifier = function(FormInterface $form, ProductNature $productNature = null){
+            $category = (null === $productNature) ? [] : $productNature->getProductCategories();
+            $form->add('productCategory', EntityType::class, [
+                'class' => ProductCategory::class,
+                'choices' => $category,
+                'choice_label' => 'name',
+                'placeholder' => 'Choisir la category',
+                'label' => 'Catégorie'
+            ]);
+        };
+
+        $builder->get('productNature')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier){
+                $nature = $event->getForm()->getData();
+                $formModifier($event->getForm()->getParent(), $nature);
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

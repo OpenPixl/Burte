@@ -1,12 +1,12 @@
 <div class="row" id="listonecatproduct" data-natorcat="{{ natorcat }}" data-name="{{ cat }}">
-    <div class="col-3">
+    <div class="col-12 col-md-3">
     {#
     Le code javascript pour la mise en marche du script se trouve sur le fichier :
     "template/webapp/page/page.html.twig" #}
 
     {{ include('gestapp/product/include/_filterscategory.html.twig') }}
     </div>
-    <div class="col-9" id="liste">
+    <div class="col-12 col-md-9" id="liste">
         {{ include('gestapp/product/include/_product.html.twig') }}
     </div>
 </div>

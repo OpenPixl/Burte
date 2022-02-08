@@ -153,10 +153,16 @@ class Product
      */
     private $productCustomizes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=ProductCategory::class, inversedBy="otherProducts")
+     */
+    private $otherCategory;
+
     public function __construct()
     {
         $this->purchaseItems = new ArrayCollection();
         $this->productCustomizes = new ArrayCollection();
+        $this->otherCategory = new ArrayCollection();
     }
 
     /**
@@ -521,6 +527,30 @@ class Product
                 $productCustomize->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProductCategory[]
+     */
+    public function getOtherCategory(): Collection
+    {
+        return $this->otherCategory;
+    }
+
+    public function addOtherCategory(ProductCategory $otherCategory): self
+    {
+        if (!$this->otherCategory->contains($otherCategory)) {
+            $this->otherCategory[] = $otherCategory;
+        }
+
+        return $this;
+    }
+
+    public function removeOtherCategory(ProductCategory $otherCategory): self
+    {
+        $this->otherCategory->removeElement($otherCategory);
 
         return $this;
     }

@@ -29,12 +29,22 @@ class Purchase
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $fullName;
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $address;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $complement;
 
     /**
      * @ORM\Column(type="string", length=5)
@@ -45,6 +55,11 @@ class Purchase
      * @ORM\Column(type="string", length=255)
      */
     private $city;
+
+    /**
+     * @ORM\Column(type="string", length=14)
+     */
+    private $phoneContact;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
@@ -92,14 +107,26 @@ class Purchase
         return $this->id;
     }
 
-    public function getFullName(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->fullName;
+        return $this->firstName;
     }
 
-    public function setFullName(string $fullName): self
+    public function setFirstName(string $firstName): self
     {
-        $this->fullName = $fullName;
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -112,6 +139,18 @@ class Purchase
     public function setAddress(string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getComplement(): ?string
+    {
+        return $this->complement;
+    }
+
+    public function setComplement(string $complement): self
+    {
+        $this->complement = $complement;
 
         return $this;
     }
@@ -136,6 +175,18 @@ class Purchase
     public function setCity(string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getPhoneContact(): ?string
+    {
+        return $this->phoneContact;
+    }
+
+    public function setPhoneContact(string $phoneContact): self
+    {
+        $this->phoneContact = $phoneContact;
 
         return $this;
     }

@@ -7,6 +7,32 @@
 <script type="text/javascript">
     window.onload = function(){
 
+        const listCart = document.getElementById("listCart");
+        const adressCart = document.getElementById("adressCart");
+        const btnNextStep = document.getElementById("nextStep");
+        const btnPreviousStep = document.getElementById("previousStep");
+        listCart.style.display="block";
+        adressCart.style.display="none";
+
+        btnNextStep.onclick = function () {
+            if (adressCart.style.display !== "none") {
+                adressCart.style.display = "none";
+                listCart.style.display = "block";
+            } else {
+                adressCart.style.display = "block";
+                listCart.style.display = "none";
+            }
+        };
+        btnPreviousStep.onclick = function () {
+            if (listCart.style.display !== "none") {
+                listCart.style.display = "none";
+                adressCart.style.display = "block";
+            } else {
+                listCart.style.display = "block";
+                adressCart.style.display = "none";
+            }
+        };
+
         // Construction de la fonction "onClickBtnIncrement" : incrémentation d'un produit
         function onClickBtnIncrement(event){
             event.preventDefault();
@@ -83,8 +109,28 @@
 <header id="page-title">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1>Votre panier</h1>
+            <div class="col-12 d-flex justify-content-between">
+                <div>
+                    <h1>Votre panier</h1>
+                </div>
+                <div>
+                    {#
+                    <ul class="header__breadcrumb header__breadcrumb--basket header__breadcrumb--short">
+                        <li class="header__breadcrumb-item header__breadcrumb-item--short header__breadcrumb-item--active">
+                            <a><span>1<span class="header__breadcrumb-label">produits</span></span></a>
+                        </li>
+
+                        <li class="header__breadcrumb-item header__breadcrumb-item--short">
+                            <a><span>2<span class="header__breadcrumb-label">Coordonnées</span></span></a>
+                        </li>
+
+                        <li class="header__breadcrumb-item header__breadcrumb-item--short">
+                            <a><span>3<span class="header__breadcrumb-label">Livraison et Paiement</span></span></a>
+                        </li>
+                    </ul>
+                    #}
+                </div>
+
             </div>
         </div>
     </div>
@@ -97,6 +143,10 @@
         </div>
         <div id="liste">
             {{ include('gestapp/cart/include/_liste.html.twig') }}
+        </div>
+        <div class="mb-5 d-flex justify-content-around">
+            <button id="previousStep" class="btn btn-sm btn-outline-secondary"> << Etape Précedente</button>
+            <button id="nextStep" class="btn btn-sm btn-outline-secondary">Etape Suivante >> </button>
         </div>
     </div>
 </section>

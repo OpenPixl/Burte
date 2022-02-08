@@ -20,7 +20,7 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail:
-                    size: [ 120, 120 ]
+                    size: [ 90, 90 ]
                     mode: outbond
         avatar_image:
             quality: 75

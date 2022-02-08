@@ -38,6 +38,9 @@ class Member implements UserInterface
             'password' => $this->password,
             'adress1' => $this->adress1,
             'Adress2' => $this->Adress2,
+            'zipcode' => $this->zipcode,
+            'city' => $this->city,
+            'phoneGsm' => $this->phoneGsm
             //......
         ];
     }
@@ -52,6 +55,9 @@ class Member implements UserInterface
         $this->lastName = $serialized['lastName'];
         $this->adress1 = $serialized['adress1'];
         $this->Adress2 = $serialized['Adress2'];
+        $this->zipcode = $serialized['zipcode'];
+        $this->city = $serialized['city'];
+        $this->phoneGsm = $serialized['phoneGsm'];
         // .....
         return $this;
     }

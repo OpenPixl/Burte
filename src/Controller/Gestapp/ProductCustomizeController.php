@@ -7,6 +7,8 @@ use App\Entity\Gestapp\ProductCustomize;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class ProductCustomizeController extends AbstractController
 {
@@ -15,34 +17,28 @@ class ProductCustomizeController extends AbstractController
      * Envoie en Json - Réponse en Json
      * @Route("/gestapp/product/{id}/customize", name="op_gestapp_product_customize_new")
      */
-    public function new(Request $request, Product $product)
+    public function new(Request $request, Product $product, EntityManagerInterface $em)
     {
         $name = $request->get('nameCustomer');
-        $session = $request->cookies->get('PHPSESSID');
-        $sessid = $request->get('sessid');
-        //dd($product);
+        $session = $request->getSession()->get('name_uuid');
+
+        //dd($session);
 
         $productCustomize = new ProductCustomize();
         $productCustomize->setName($name);
-        $productCustomize->setUuid($sessid);
+        $productCustomize->setUuid($session);
         $productCustomize->setProduct($product);
 
         //dd($productCustomize);
-        if($sessid == $session){
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($productCustomize);
-            $entityManager->flush();
 
-            return $this->json([
-                'code' => 200,
-                'message'=> "Le produit a été personnalisé."
-            ], 200);
-        }
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($productCustomize);
+        $em->flush();
 
         return $this->json([
-            'code' => 403,
-            'message'=> "Une erreur s'est produite. Vous êtes rester inactif trop longtemps."
-        ], 403);
+            'code' => 200,
+            'message'=> "Le produit a été personnalisé."
+        ], 200);
 
     }
 }

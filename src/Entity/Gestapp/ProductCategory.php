@@ -58,6 +58,11 @@ class ProductCategory
     private $parent;
 
     /**
+     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="otherCategory")
+     */
+    private $otherProducts;
+
+    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist
@@ -72,6 +77,7 @@ class ProductCategory
     {
         $this->products = new ArrayCollection();
         $this->sections = new ArrayCollection();
+        $this->otherProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -187,6 +193,33 @@ class ProductCategory
     public function setParent(?self $parent): self
     {
         $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getOtherProducts(): Collection
+    {
+        return $this->otherProducts;
+    }
+
+    public function addOtherProduct(Product $otherProduct): self
+    {
+        if (!$this->otherProducts->contains($otherProduct)) {
+            $this->otherProducts[] = $otherProduct;
+            $otherProduct->addOtherCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOtherProduct(Product $otherProduct): self
+    {
+        if ($this->otherProducts->removeElement($otherProduct)) {
+            $otherProduct->removeOtherCategory($this);
+        }
 
         return $this;
     }

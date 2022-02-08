@@ -1,24 +1,26 @@
 {% set route_name = app.request.attributes.get('_route') %}
 
 <!DOCTYPE html>
-<html>
-<head>
-    {% block meta %}
-    {{ render(controller('App\\Controller\\Webapp\\PublicController::meta')) }}
-    {% endblock %}
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>{% block title %}OpenGaia{% endblock %}</title>
+<html lang="fr">
+    <head>
+        {% block meta %}
+        {{ render(controller('App\\Controller\\Webapp\\PublicController::meta')) }}
+        {% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>{% block title %}OpenGaia{% endblock %}</title>
 
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-        <script src="{{ asset('bundles/ckeditor5/build/ckeditor.js') }}"></script>
-    {% endblock %}
-</head>
-<body>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+            <script src="{{ asset('bundles/ckeditor5/build/ckeditor.js') }}"></script>
+        {% endblock %}
+
+    </head>
+    <body>
     <header>
         {% block header %}
             {{ render(controller('App\\Controller\\Webapp\\PublicController::BlocMenu', {'route': route_name})) }}

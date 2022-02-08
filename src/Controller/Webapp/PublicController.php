@@ -9,7 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class PublicController
@@ -17,6 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PublicController extends AbstractController
 {
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
     /**
      * @Route("/", name="op_webapp_public_index")
      */
@@ -57,6 +67,11 @@ class PublicController extends AbstractController
      */
     public function homepage() : Response
     {
+        $uuid = Uuid::v1();
+        if (PHP_SESSION_NONE === session_status()) {
+            $session = $this->requestStack->getSession();
+            $session->set('name_uuid', $uuid);
+        }
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
         $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1), array('position' => 'ASC'));
 
@@ -64,6 +79,7 @@ class PublicController extends AbstractController
         return $this->render('webapp/public/index.html.twig',[
             'parameter' => $parameter,
             'sections' => $sections,
+            'session' =>$session
         ]);
     }
 

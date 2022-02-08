@@ -3,6 +3,7 @@
 namespace App\Controller\Gestapp;
 
 use App\Cart\CartService;
+use App\Entity\Gestapp\ProductCustomize;
 use App\Form\Gestapp\CartConfirmationType;
 use App\Repository\Gestapp\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,10 +60,16 @@ class CartController extends AbstractController
      * Liste les produits inclus dans le panier
      * @Route("/webapp/cart/show", name="op_webapp_cart_showcart")
      */
-    public function showCart()
+    public function showCart(Request $request)
     {
+        $user = $this->getUser();
         /** Pour l'ajout de la livraison **/
         $form = $this->createForm(CartConfirmationType::class);
+
+        //Récupération de l'id de session et des personnalisation
+        $session = $request->getSession()->get('name_uuid');
+        $listProductCustomizes = $this->getDoctrine()->getRepository(ProductCustomize::class)->findBy(array('uuid' => $session));
+        //dd($listProductCustomize);
 
         $detailedCart = $this->cartService->getDetailedCartItem();
         $total = $this->cartService->getTotal();
@@ -70,6 +77,8 @@ class CartController extends AbstractController
         return $this->render('gestapp/cart/index.html.twig', [
             'items' => $detailedCart,
             'total' => $total,
+            'listCustoms' => $listProductCustomizes,
+            'user' => $user,
             'confirmationForm' => $form->createView()
         ]);
     }
@@ -78,9 +87,15 @@ class CartController extends AbstractController
      * Liste les produits inclus dans le panier
      * @Route("/webapp/cart/showjson", name="op_webapp_cart_showcartjson")
      */
-    public function showCartJson()
+    public function showCartJson(Request $request)
     {
         $form = $this->createForm(CartConfirmationType::class);
+
+        $user = $this->getUser();
+        //Récupération de l'id de session et des personnalisation
+        $session = $request->getSession()->get('name_uuid');
+        $listProductCustomizes = $this->getDoctrine()->getRepository(ProductCustomize::class)->findBy(array('uuid' => $session));
+        //dd($listProductCustomize);
 
         $detailedCart = $this->cartService->getDetailedCartItem();
         $total = $this->cartService->getTotal();
@@ -92,6 +107,8 @@ class CartController extends AbstractController
             'liste'         => $this->renderView('gestapp/cart/include/_liste.html.twig', [
                 'items' => $detailedCart,
                 'total' => $total,
+                'listCustoms' => $listProductCustomizes,
+                'user' => $user,
                 'confirmationForm' => $form->createView()
             ])
         ], 200);
@@ -101,10 +118,11 @@ class CartController extends AbstractController
      * Liste les produits inclus dans le panier
      * @Route("/webapp/cart/showcartcount/{id}", name="op_gestapp_cart_showcartcount")
      */
-    public function showcartcount($id)
+    public function showcartcount($id, Request $request)
     {
         $detailedCart = $this->cartService->getDetailedCartItem();
         $product = $this->productRepository->find($id);
+        $session = $request->getSession()->get('name_uuid');
 
         // Retourne une réponse en json
         return $this->json([
@@ -112,7 +130,8 @@ class CartController extends AbstractController
             'message'       => "Le produit a été correctement ajouté.",
             'count'         => $this->renderView('gestapp/product/include/_count.html.twig', [
                 'items' => $detailedCart,
-                'product' => $product
+                'product' => $product,
+                'session' => $session
             ])
         ], 200);
     }

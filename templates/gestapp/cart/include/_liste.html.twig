@@ -1,75 +1,169 @@
 {% if items %}
-    <table class="table align-middle">
-        <thead>
-        <tr>
-            <th>Le produit</th>
-            <th></th>
-            <th>Prix unitaire</th>
-            <th>Quantité</th>
-            <th>total</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for i in items %}
-            <tr style="background: rgb(249, 249, 251);">
-                {# préparation du prix par quantité du produit #}
-                {% set sstotal = i.qty * i.product.price %}
-                <td>
-                    {# intégration de l'image au sein du panier #}
-                    {% if i.product.productName is null %}
-                    {% else %}
-                    <img class="rounded" src="{{ vich_uploader_asset(i.product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_cart') }}" alt="{{ i.product.name }}">&nbsp;&nbsp;
-                    {% endif %}
-                    {# lien vers la fiche produit #}
-                    <a class="text-start" href="{{ path('op_gestapp_product_show', {'id': i.product.id}) }}">{{ i.product.name }}</a> - réf :{{ i.product.ref }}
-                </td>
-                <td>
-                    {% if i.product.isPersonalisable > 0 %}
-                    <form>
-                        <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte">
-                    </form>
-                    {% else %}
-                    {% endif %}
-                </td>
-                <td>{{ i.product.price|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}</td>
-                <td>
-                    <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
-                    {{ i.qty }}
-                    <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
-                </td>
-                <td>{{ sstotal|number_format(2, ',', ' ') }} €</td>
-                <td><a href="{{ path('op_webapp_cart_delete', {'id': i.product.id}) }}"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a></td>
+    <section id="listCart">
+        <table class="table align-middle">
+            <thead>
+            <tr>
+                <th>Le produit</th>
+                <th></th>
+                <th>Prix unitaire</th>
+                <th>Quantité</th>
+                <th>total</th>
+                <th></th>
             </tr>
+            </thead>
+            <tbody>
+            {% for i in items %}
+                <tr style="background: rgb(249, 249, 251);">
+                    {# préparation du prix par quantité du produit #}
+                    {% set sstotal = i.qty * i.product.price %}
+                    <td>
+                        {# intégration de l'image au sein du panier #}
+                        {% if i.product.productName is null %}
+                            <img class="rounded" src="{{ asset('images/jpg/Fond_product.jpg') | imagine_filter('product_image_cart') }}" alt="fond_product">
+                        {% else %}
+                            <img class="rounded" src="{{ vich_uploader_asset(i.product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_cart') }}" alt="{{ i.product.name }}">&nbsp;&nbsp;
+                        {% endif %}
+                        {# lien vers la fiche produit #}
+                        <a class="text-start" href="{{ path('op_gestapp_product_show', {'id': i.product.id}) }}">{{ i.product.name }}</a> - réf : {{ i.product.ref }}
+                    </td>
+                    <td>
+                        {% if i.product.isPersonalisable > 0 %}
+                            {% for l in listCustoms|filter(l => l.product.id == i.product.id) %}
+                                <form>
+                                    <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte" value="{{ l.name }}">
+                                </form>
+                            {% else %}
+                                <form>
+                                    <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte">
+                                </form>
+                            {% endfor %}
+                        {% else %}
+                        {% endif %}
+                    </td>
+                    <td>{{ i.product.price|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}</td>
+                    <td>
+                        <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
+                        {{ i.qty }}
+                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
+                    </td>
+                    <td>{{ sstotal|number_format(2, ',', ' ') }} €</td>
+                    <td><a href="{{ path('op_webapp_cart_delete', {'id': i.product.id}) }}"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a></td>
+                </tr>
             {% endfor %}
-        </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="4">Total</td>
-            <td colspan="2">{{ total|number_format(2, ',', ' ')}} €</td>
-        </tr>
-        </tfoot>
-    </table>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4">Total</td>
+                <td colspan="2">{{ total|number_format(2, ',', ' ')}} €</td>
+            </tr>
+            </tfoot>
+        </table>
+    </section>
+
     {% if app.user %}
     {# Formulaire de commande si connecté #}
-    <div class="row mb-5">
-        <div class="col-12">
-            <h2>Confirmez votre commande en remplissant ce formulaire</h2>
-            {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm')}) }}
-            {{ form_widget(confirmationForm) }}
-            <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
-            {{ form_end(confirmationForm) }}
+    <section id="adressCart" class="mb-5">
+        <div class="row">
+            <div class="col-6">
+                {# formulaire coordonnées user #}
+                <h3>Adresse de facturation :</h3>
+                <div class="row mb-1 mt-1 g-1 align-items-center">
+                    <label for="staticEmail" class="col-sm-3">Destinataire :</label>
+                    <div class="col-3">
+                        <input class="form-control form-control-sm" type="text" value="{{ user.firstName }}" aria-label="Disabled input example" disabled readonly>
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control form-control-sm" type="text" value="{{ user.lastName }}" aria-label="Disabled input example" disabled readonly>
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1 align-items-center">
+                    <label for="staticEmail" class="col-sm-3">Adresse :</label>
+                    <div class="col-7">
+                        <input class="form-control form-control-sm" type="text" value="{{ user.adress1 }}" aria-label="Disabled input example" disabled readonly>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                    <div class="col-3">
+                    </div>
+                    <div class="col-7">
+                        <input class="form-control form-control-sm" type="text" value="{{ user.Adress2 }}" aria-label="Disabled input example" disabled readonly>
+                    </div>
+                    <div class="col-2"></div>
+                    <div class="col-3"></div>
+                    <div class="col-2">
+                        <input class="form-control form-control-sm" type="text" value="{{ user.zipcode }}" aria-label="Disabled input example" disabled readonly>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-control form-control-sm" type="text" value="{{ user.city }}" aria-label="Disabled input example" disabled readonly>
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <label for="staticEmail" class="col-sm-7">Contact téléphonique en cas d'abscence :</label>
+                    <div class="col-3">
+                        <input class="form-control form-control-sm" type="text" value="{{ user.phoneGsm }}" aria-label="Disabled input example" disabled readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <h3>Adresse de livraison :</h3>
+                {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm')}) }}
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        {{ form_label(confirmationForm.firstName, 'Destinataire :', {'label_attr': {'class':'form-label'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(confirmationForm.firstName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom'}}) }}
+                    </div>
+                    <div class="col-4">
+                        {{ form_widget(confirmationForm.lastName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        {{ form_label(confirmationForm.address, 'Adresse :', {'label_attr': {'class':'form-label'}}) }}
+                    </div>
+                    <div class="col-7">
+                        {{ form_widget(confirmationForm.address, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Ligne 1'}}) }}
+                    </div>
+                    <div class="col-3">
+                    </div>
+                    <div class="col-7">
+                        {{ form_widget(confirmationForm.complement, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Ligne 2'}}) }}
+                    </div>
+                    <div class="col-2"></div>
+                    <div class="col-3"></div>
+                    <div class="col-2">
+                        {{ form_widget(confirmationForm.zipcode, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'CP'}}) }}
+                    </div>
+                    <div class="col-5">
+                        {{ form_widget(confirmationForm.city, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Commune'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-7">
+                        {{ form_label(confirmationForm.phoneContact, "Contact téléphonique en cas d'abscence :", {'label_attr': {'class':'form-label'}}) }}
+                    </div>
+                    <div class="col-3">
+                        {{ form_widget(confirmationForm.phoneContact, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom'}}) }}
+                    </div>
+                </div>
+                {{ form_widget(confirmationForm) }}
+                <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
+                {{ form_end(confirmationForm) }}
+            </div>
         </div>
-    </div>
+    </section>
     {% else %}
     {# En cas d'user non connecté ou non inscrit sur la plateforme #}
-    <div class="row mb-2">
+    <section id="adressCart" class="mb-5">
+        <div class="row mb-2">
         <div class="col-12">
             <p class="text-center">Vous n'êtes pas connecté à la plateforme. Pour finaliser votre commande, veuillez soit vous connecter, soit créer votre compte.
             <br>Cordialement.</p>
         </div>
     </div>
-    <div class="row mb-5">
+        <div class="row mb-5">
         <div class="col-2 offset-4">
             <a href="{{ path('op_admin_security_login') }}" class="btn btn-sm btn-primary">se connecter</a>
         </div>
@@ -77,6 +171,7 @@
             <a href="{{ path('op_admin_security_register') }}" class="btn btn-sm btn-warning">Créer son compte</a>
         </div>
     </div>
+    </section>
     {% endif %}
 {% else %}
     <h2>Le panier est vide</h2>

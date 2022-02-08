@@ -1,10 +1,10 @@
 <div class="row mt-1">
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
         <div class="count">
             Il y a actuellement {{ products.getTotalItemCount }} produits listés.
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
         <div class="navigation">
             {{ knp_pagination_render(products, 'include/pagination.html.twig', {}, {
                 'align': 'right',
@@ -16,7 +16,7 @@
 </div>
 <div class="row">
     {% for product in products %}
-        <div class="col-3 g-2">
+        <div class="col-6 col-lg-3 g-2">
             <!-- Card -->
             <div id="productCard" class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">
                 <!-- Image -->

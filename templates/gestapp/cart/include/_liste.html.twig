@@ -1,4 +1,10 @@
 {% if items %}
+    {% set qtyItems = 0 %}
+    {% if items %}
+        {% for i in items %}
+            {% set qtyItems = qtyItems + i.qty %}
+        {% endfor %}
+    {% endif %}
     <section id="listCart">
         <table class="table align-middle">
             <thead>
@@ -56,8 +62,47 @@
                 <td colspan="4">Total</td>
                 <td colspan="2">{{ total|number_format(2, ',', ' ')}} €</td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    Offre de remise sur la quantité de carte :<br>
+                    - 10% entre 50 et 99 cartes,<br>
+                    - 15% entre 100 et 149 cartes,<br>
+                    - 20% entre 150 et 299 cartes,<br>
+                    - 25% entre 300 et 499 cartes,<br>
+
+                </td>
+                {% if qtyItems < 50 %}
+                {% elseif qtyItems >= 50 and qtyItems <= 99 %}{% set reductotal = total*0.1 %}
+                <td>
+                    {{ qtyItems }} cartes
+                </td>
+                <td colspan="2">
+                    {{ reductotal|number_format(2, ',', ' ') }} €
+                </td>
+                {% elseif qtyItems >= 100 and qtyItems <= 149 %}{% set reductotal = total*0.15 %}
+                <td>
+                    {{ qtyItems }} cartes
+                </td>
+                <td colspan="2">
+                    {{ reductotal|number_format(2, ',', ' ') }} €
+                </td>
+                {% elseif qtyItems >= 150 and qtyItems <= 199 %}{% set reductotal = total*0.20 %}
+                <td>
+                    {{ qtyItems }} cartes
+                </td>
+                <td colspan="2">
+                    {{ reductotal|number_format(2, ',', ' ') }} €
+                </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td colspan="4">Frais de port</td>
+                <td colspan="2"></td>
+            </tr>
             </tfoot>
         </table>
+
+
     </section>
 
     {% if app.user %}
@@ -113,10 +158,10 @@
                         {{ form_label(confirmationForm.firstName, 'Destinataire :', {'label_attr': {'class':'form-label'}}) }}
                     </div>
                     <div class="col-3">
-                        {{ form_widget(confirmationForm.firstName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom'}}) }}
+                        {{ form_widget(confirmationForm.firstName, {'attr': {'class': 'form-control form-control-sm', 'value': user.firstName,'placeholder':'Prénom'}}) }}
                     </div>
                     <div class="col-4">
-                        {{ form_widget(confirmationForm.lastName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom'}}) }}
+                        {{ form_widget(confirmationForm.lastName, {'attr': {'class': 'form-control form-control-sm', 'value': user.lastName, 'placeholder':'Nom'}}) }}
                     </div>
                 </div>
                 <div class="row mb-1 mt-1 g-1">
@@ -124,20 +169,20 @@
                         {{ form_label(confirmationForm.address, 'Adresse :', {'label_attr': {'class':'form-label'}}) }}
                     </div>
                     <div class="col-7">
-                        {{ form_widget(confirmationForm.address, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Ligne 1'}}) }}
+                        {{ form_widget(confirmationForm.address, {'attr': {'class': 'form-control form-control-sm', 'value': user.adress1, 'placeholder':'Ligne 1'}}) }}
                     </div>
                     <div class="col-3">
                     </div>
                     <div class="col-7">
-                        {{ form_widget(confirmationForm.complement, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Ligne 2'}}) }}
+                        {{ form_widget(confirmationForm.complement, {'attr': {'class': 'form-control form-control-sm', 'value': user.Adress2, 'placeholder':'Ligne 2'}}) }}
                     </div>
                     <div class="col-2"></div>
                     <div class="col-3"></div>
                     <div class="col-2">
-                        {{ form_widget(confirmationForm.zipcode, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'CP'}}) }}
+                        {{ form_widget(confirmationForm.zipcode, {'attr': {'class': 'form-control form-control-sm', 'value': user.zipcode, 'placeholder':'CP'}}) }}
                     </div>
                     <div class="col-5">
-                        {{ form_widget(confirmationForm.city, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Commune'}}) }}
+                        {{ form_widget(confirmationForm.city, {'attr': {'class': 'form-control form-control-sm', 'value': user.city, 'placeholder':'Commune'}}) }}
                     </div>
                 </div>
                 <div class="row mb-1 mt-1 g-1">

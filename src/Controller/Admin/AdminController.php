@@ -23,7 +23,7 @@ class AdminController extends AbstractController
         $user= $this->getUser();
         //dd($hasAccess);
         if($hasAccess = $this->isGranted('ROLE_EDITOR') or $hasAccess = $this->isGranted('ROLE_ADMIN')){
-            dd($hasAccess);
+
             $members = $this->getDoctrine()->getRepository(Member::class)->findBy(array('type' => 'client'));
             $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findAll();
             $events = $this->getDoctrine()->getRepository(Event::class)->findAll();

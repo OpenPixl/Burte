@@ -106,6 +106,7 @@
 
 
 {% block content %}
+
 <header id="page-title">
     <div class="container">
         <div class="row">
@@ -142,12 +143,14 @@
             {% include 'include/_alert.html.twig' %}
         </div>
         <div id="liste">
-            {{ include('gestapp/cart/include/_liste.html.twig') }}
+            {{ include('gestapp/cart/include/_liste.html.twig')}}
         </div>
+        {% if items %}
         <div class="mb-5 d-flex justify-content-around">
             <button id="previousStep" class="btn btn-sm btn-outline-secondary"> << Etape Précedente</button>
             <button id="nextStep" class="btn btn-sm btn-outline-secondary">Etape Suivante >> </button>
         </div>
+        {% endif %}
     </div>
 </section>
 {% endblock %}

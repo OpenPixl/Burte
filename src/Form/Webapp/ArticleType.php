@@ -59,6 +59,7 @@ class ArticleType extends AbstractType
                 'class' => Page::class,
                 'choice_label' => 'name',
                 'placeholder' => 'aucun lien',
+                'required' => false,
                 'query_builder' => function(PageRepository $pageRepository){
                     return $pageRepository->createQueryBuilder('p')->orderBy('p.name', 'ASC');
                 }

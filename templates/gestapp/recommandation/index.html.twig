@@ -51,6 +51,7 @@
 
                         // rafraichissement du tableau
                         const listeReceipt = document.getElementById('listeReceipt').innerHTML = response.data.listeReceipt;
+
                         // Ajout d'un event sur Bouton de suppression de la ligne en cours
                         document.querySelectorAll('a.js-data-suppr').forEach(function(link){
                             link.addEventListener('click', onClickDelEvent)

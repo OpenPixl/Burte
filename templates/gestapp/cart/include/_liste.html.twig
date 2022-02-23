@@ -65,33 +65,37 @@
             <tr>
                 <td colspan="3">
                     Offre de remise sur la quantité de carte :<br>
+                    <span class="opgrey">
                     - 10% entre 50 et 99 cartes,<br>
                     - 15% entre 100 et 149 cartes,<br>
                     - 20% entre 150 et 299 cartes,<br>
                     - 25% entre 300 et 499 cartes,<br>
-
+                    </span>
                 </td>
                 {% if qtyItems < 50 %}
+                <td colspan="3">
+                    {{ qtyItems }} cartes
+                </td>
                 {% elseif qtyItems >= 50 and qtyItems <= 99 %}{% set reductotal = total*0.1 %}
                 <td>
                     {{ qtyItems }} cartes
                 </td>
-                <td colspan="2">
-                    {{ reductotal|number_format(2, ',', ' ') }} €
+                <td colspan="3">
+                    - {{ reductotal|number_format(2, ',', ' ') }} €
                 </td>
                 {% elseif qtyItems >= 100 and qtyItems <= 149 %}{% set reductotal = total*0.15 %}
                 <td>
                     {{ qtyItems }} cartes
                 </td>
-                <td colspan="2">
-                    {{ reductotal|number_format(2, ',', ' ') }} €
+                <td colspan="3">
+                    - {{ reductotal|number_format(2, ',', ' ') }} €
                 </td>
                 {% elseif qtyItems >= 150 and qtyItems <= 199 %}{% set reductotal = total*0.20 %}
                 <td>
                     {{ qtyItems }} cartes
                 </td>
-                <td colspan="2">
-                    {{ reductotal|number_format(2, ',', ' ') }} €
+                <td colspan="3">
+                    - {{ reductotal|number_format(2, ',', ' ') }} €
                 </td>
                 {% endif %}
             </tr>

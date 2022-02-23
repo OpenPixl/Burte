@@ -6,6 +6,7 @@ use App\Entity\Admin\Annonce;
 use App\Entity\Admin\Member;
 use App\Entity\Admin\Message;
 use App\Entity\Gestapp\Event;
+use App\Entity\Gestapp\Purchase;
 use App\Entity\Gestapp\Recommandation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,7 @@ class AdminController extends AbstractController
             $members = $this->getDoctrine()->getRepository(Member::class)->findBy(array('type' => 'client'));
             $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findAll();
             $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
+            $purchases = $this->getDoctrine()->getRepository(Purchase::class)->findAll();
             $annonces = $this->getDoctrine()->getRepository(Annonce::class)->findAll();
             $messages = $this->getDoctrine()->getRepository(Message::class)->MessagesByUser($user);
             return $this->render('admin/admin/index.html.twig', [
@@ -35,6 +37,7 @@ class AdminController extends AbstractController
                 'events' => $events,
                 'annonces' => $annonces,
                 'messages' => $messages,
+                'purchases' => $purchases
             ]);
         }
         else{

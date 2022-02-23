@@ -19,6 +19,80 @@ class PurchaseRepository extends ServiceEntityRepository
         parent::__construct($registry, Purchase::class);
     }
 
+    /**
+     * @param $user
+     * @return int|mixed|string
+     * Liste les recommandation reçues
+     */
+    public function findByUserReceipt($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.customer', 'm')
+            ->andWhere('m.id = :id')
+            ->setParameter('id', $user)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $user
+     * @return int|mixed|string
+     * Liste les recommandation reçues lues
+     */
+    public function findByUserReceiptRead($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.member', 'm')
+            ->andWhere('m.id = :id')
+            ->andWhere('r.isRead = 0')
+            ->setParameter('id', $user)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $user
+     * @return int|mixed|string
+     * Liste les recommandation envoyées
+     */
+    public function findByUserSend($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.customer', 'm')
+            ->andWhere('m.id = :id')
+            ->setParameter('id', $user)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $user
+     * @return int|mixed|string
+     * Liste les recommandation envoyées lues
+     */
+    public function findByUserSendRead($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.author', 'm')
+            ->andWhere('m.id = :id')
+            ->andWhere('r.isRead = 0')
+            ->setParameter('id', $user)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Purchase[] Returns an array of Purchase objects
     //  */

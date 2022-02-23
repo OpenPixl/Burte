@@ -16,8 +16,13 @@ class Purchase
 {
 
     public const STATUS_PENDING = 'PENDING';
-    public const STATUS_PAID = 'PAID';
+    public const STATUS_PREPARED = 'PREPARED';
+    public const STATUS_DELIVERED = 'DELIVERED';
     public const STATUS_CANCELLED = 'CANCELLED';
+
+    public const STATUSPAID_PENDING = 'PENDING';
+    public const STATUSPAID_PAID = 'PAID';
+    public const STATUSPAID_CANCELLED = 'CANCELLED';
 
     /**
      * @ORM\Id
@@ -95,6 +100,16 @@ class Purchase
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $statuspaid = 'PENDING';
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $numPurchase;
 
     public function __construct()
     {
@@ -295,6 +310,30 @@ class Purchase
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTime('now');
+        return $this;
+    }
+
+    public function getStatuspaid(): ?string
+    {
+        return $this->statuspaid;
+    }
+
+    public function setStatuspaid(?string $statuspaid): self
+    {
+        $this->statuspaid = $statuspaid;
+
+        return $this;
+    }
+
+    public function getNumPurchase(): ?string
+    {
+        return $this->numPurchase;
+    }
+
+    public function setNumPurchase(?string $numPurchase): self
+    {
+        $this->numPurchase = $numPurchase;
+
         return $this;
     }
 }

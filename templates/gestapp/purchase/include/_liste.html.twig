@@ -1,29 +1,65 @@
-<table class="table">
-    <thead>
-    <tr>
-        <th>Numéro de commande</th>
-        <th>adresse</th>
-        <th>Date de commande</th>
-        <th>Détails</th>
-        <th>Total</th>
-    </tr>
-    </thead>
-    <tbody>
-        {% for p in purchases %}
+<div class="col-12">
+    <table class="table">
+        <thead>
         <tr>
-            <td>{{p.id}}</td>
-            <td>{{p.address}}<br>{{p.zipcode}} {{p.city}}</td>
-            <td>{{p.purchasedAt|format_datetime('medium', 'none', locale='fr')}}</td>
-            <td>
-                {% for i in p.purchaseItems %}
-                <ul>
-                    <li>{{ i.productQty }}x {{ i.productName }} ({{ i.productPrice }}€) - {{ i.totalItem }}€</li>
-                </ul>
-                {% endfor %}
-            </td>
-            <td>{{p.total}}</td>
+            <th></th>
+            <th>Commande</th>
+            <th>Client</th>
+            {% if hide == 0 %}
+            <th>Adresse</th>
+            {% endif %}
+            <th>Dépot</th>
+            {% if hide == 0 %}
+            <th>Détails</th>
+            {% endif %}
+            <th>Total</th>
+            <th>Progression</th>
+            {% if hide == 0 %}
+            <th>Etat</th>
+            {% endif %}
+            {% if hide == 0 %}
+            <th></th>
+            {% endif %}
         </tr>
-        {% endfor %}
-    </tbody>
+        </thead>
+        <tbody>
+        {% for p in purchases %}
+            <tr>
+                <th>{{p.id}}</th>
+                <td>{{p.numPurchase}}</td>
+                <td>{{ p.firstName }} {{ p.lastName }}</td>
+                {% if hide == 0 %}
+                <td>{{p.address}}<br>{{p.zipcode}} {{p.city}}</td>
+                {% endif %}
+                <td>{{p.purchasedAt|format_datetime('medium', 'none', locale='fr')}}</td>
+                {% if hide == 0 %}
+                <td>
+                    {% for i in p.purchaseItems %}
+                    <ul>
+                        <li>{{ i.productQty }} x {{ i.productName }} ({{ i.productPrice }}€) - {{ i.totalItem }}€</li>
+                    </ul>
+                    {% endfor %}
+                </td>
+                {% endif %}
+                <td>{{p.total}} €</td>
+                <td>
+                    {% if p.status == 'PENDING' %}En attente{% endif %}
+                    {% if p.status == 'DELIVERED' %}En cours de Livraison{% endif %}
+                    {% if p.status == 'PREPARED' %}En cours de préparation{% endif %}
+                    {% if p.status == 'CANCELLED' %}Annulé{% endif %}
+                </td>
+                {% if hide == 0 %}
+                <td>{{ p.statuspaid }}</td>
+                {% endif %}
+                {% if hide == 0 %}
+                <td>
+                    <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ p.id }}">Supprimer</a>
+                </td>
+                {% endif %}
 
-</table>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+</div>

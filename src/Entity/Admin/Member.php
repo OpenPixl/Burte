@@ -27,39 +27,38 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Member implements UserInterface
 {
-    public function __serialize(): array
+    public function serialize(): array
     {
-        return [
-            'id' => $this->id,
-            'email' => $this->email,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
-            'roles' => $this->roles,
-            'password' => $this->password,
-            'adress1' => $this->adress1,
-            'Adress2' => $this->Adress2,
-            'zipcode' => $this->zipcode,
-            'city' => $this->city,
-            'phoneGsm' => $this->phoneGsm
-            //......
-        ];
+        return (array(
+            $this->id,
+            $this->email,
+            $this->firstName,
+            $this->lastName,
+            $this->roles,
+            $this->password,
+            $this->adress1,
+            $this->Adress2,
+            $this->zipcode,
+            $this->city,
+            $this->phoneGsm
+        ));
     }
 
-    public function __unserialize(array $serialized): Member
+    public function unserialize(array $serialized)
     {
-        $this->id = $serialized['id'];
-        $this->email = $serialized['email'];
-        $this->roles = $serialized['roles'];
-        $this->password = $serialized['password'];
-        $this->firstName = $serialized['firstName'];
-        $this->lastName = $serialized['lastName'];
-        $this->adress1 = $serialized['adress1'];
-        $this->Adress2 = $serialized['Adress2'];
-        $this->zipcode = $serialized['zipcode'];
-        $this->city = $serialized['city'];
-        $this->phoneGsm = $serialized['phoneGsm'];
-        // .....
-        return $this;
+        list(
+            $this->id,
+            $this->email,
+            $this->firstName,
+            $this->lastName,
+            $this->roles,
+            $this->password,
+            $this->adress1,
+            $this->Adress2,
+            $this->zipcode,
+            $this->city,
+            $this->phoneGsm
+            ) = $this->unserialized($serialized, array('allowed_classes' => false));
     }
 
     /**
@@ -844,5 +843,9 @@ class Member implements UserInterface
         }
 
         return $this;
+    }
+
+    private function unserialized(array $serialized, array $array)
+    {
     }
 }

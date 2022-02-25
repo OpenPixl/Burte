@@ -48,9 +48,15 @@ class ProductType extends AbstractType
                 },
 
             ])
-            ->add('productCategory', ChoiceType::class, [
-                'placeholder' => 'Choisir une catégorie',
-               ])
+            ->add('productCategory', EntityType::class, [
+                'placeholder' => 'Choisir une nature',
+                'class' => ProductCategory::class,
+                'choice_label' => 'name',
+                'query_builder' => function (ProductNatureRepository $productNatureRepository) {
+                    return $productNatureRepository->createQueryBuilder('pc')->orderBy('pc.name', 'ASC');
+                },
+
+            ])
             ->add('productUnit', EntityType::class, [
                 'placeholder' => 'Choisir une unité de tarif',
                 'required' => false,

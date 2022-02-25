@@ -83,14 +83,15 @@ header .dropdown-menu {
 /***-------- HEADER : Bloc Prez --------***/
 #bloc_prez {
   display: block;
-  padding-top: 8rem;
-  padding-bottom: 0.8rem;
-  width: 800px;
+  padding-top: 16rem;
+  padding-bottom: 2rem;
 }
 
 #bloc_prez #overlay_logo {
   background-color: rgba(228, 228, 228, 0.75);
   border-radius: 5px;
+  height: 191px;
+  width: 376px;
 }
 
 /* *-------- HEADER : bloc_production --------* */
@@ -147,7 +148,7 @@ header .dropdown-menu {
 @media (min-width:991px) {
   #bloc_production3 {
     margin-bottom: 2rem;
-    margin-top: 20rem;
+    margin-top: 10rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }

@@ -12,7 +12,6 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -27,6 +26,7 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add('name', TextType::class, [
                 'constraints' => new NotBlank(['message' => 'veuillez entrer un nom de produit.'])
             ])
@@ -46,16 +46,15 @@ class ProductType extends AbstractType
                 'query_builder' => function (ProductNatureRepository $productNatureRepository) {
                     return $productNatureRepository->createQueryBuilder('pn')->orderBy('pn.name', 'ASC');
                 },
-
             ])
-            ->add('productCategory', EntityType::class, [
-                'placeholder' => 'Choisir une nature',
+            ->add('productCategory',EntityType::class, [
+                'placeholder' => 'Choisir une categorie',
                 'class' => ProductCategory::class,
+                'disabled'=> true,
                 'choice_label' => 'name',
-                'query_builder' => function (ProductNatureRepository $productNatureRepository) {
-                    return $productNatureRepository->createQueryBuilder('pc')->orderBy('pc.name', 'ASC');
+                'query_builder' => function (ProductCategoryRepository $productCategoryRepository) {
+                    return $productCategoryRepository->createQueryBuilder('pc')->orderBy('pc.name', 'ASC');
                 },
-
             ])
             ->add('productUnit', EntityType::class, [
                 'placeholder' => 'Choisir une unité de tarif',
@@ -97,28 +96,31 @@ class ProductType extends AbstractType
                 ],
             ])
             ->add('isPersonalisable')
-            ->add('otherCategory', CollectionType::class, [
-            ])
+            ->add('otherCategory')
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
+                $nature = $event->getData()->getProductNature() ?? null;
+
+                if($nature)
+                {
+                    //dd($nature);
+                    $event->getForm()->remove('productCategory');
+                    $event->getForm()->add('productCategory',EntityType::class, [
+                        'placeholder' => 'Choisir une categorie',
+                        'class' => ProductCategory::class,
+                        'choice_label' => 'name',
+                        'query_builder' => function (ProductCategoryRepository $productCategoryRepository) use ($nature) {
+                            return $productCategoryRepository
+                                ->createQueryBuilder('pc')
+                                ->join('pc.Nature', 'pn')
+                                ->andWhere('pn.id = :nature')
+                                ->setParameter('nature', $nature)
+                                ->orderBy('pc.name', 'ASC');
+                        },
+                    ]);
+                }
+
+            })
         ;
-
-        $formModifier = function(FormInterface $form, ProductNature $productNature = null){
-            $category = (null === $productNature) ? [] : $productNature->getProductCategories();
-            $form->add('productCategory', EntityType::class, [
-                'class' => ProductCategory::class,
-                'choices' => $category,
-                'choice_label' => 'name',
-                'placeholder' => 'Choisir la category',
-                'label' => 'Catégorie'
-            ]);
-        };
-
-        $builder->get('productNature')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier){
-                $nature = $event->getForm()->getData();
-                $formModifier($event->getForm()->getParent(), $nature);
-            }
-        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

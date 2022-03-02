@@ -55,6 +55,8 @@ class ProductController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $natures = $this->getDoctrine()->getRepository(ProductNature::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
 
@@ -71,6 +73,8 @@ class ProductController extends AbstractController
         return $this->render('gestapp/product/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+            'natures' => $natures,
+            'categories' => $categories
         ]);
     }
 
@@ -100,7 +104,6 @@ class ProductController extends AbstractController
     {
         $natures = $this->getDoctrine()->getRepository(ProductNature::class)->findAll();
         $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
-
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 

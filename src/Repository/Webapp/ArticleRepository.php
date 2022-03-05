@@ -38,7 +38,9 @@ class ArticleRepository extends ServiceEntityRepository
     public function OneArticle($id)
     {
         return $this->createQueryBuilder('a')
-            ->select('
+            ->join('a.category', 'c')
+            ->join('a.linkPage', 'p')
+            ->addSelect('
                 a.id AS id,
                 a.isShowtitle AS isShowtitle,
                 a.title AS title,
@@ -53,8 +55,8 @@ class ArticleRepository extends ServiceEntityRepository
                 a.isShowdate AS isShowdate,
                 a.createdAt AS createdAt
                 ')
-            ->join('a.category', 'c')
-            ->join('a.linkPage', 'p')
+            //->andWhere('a.id = :id')
+            //->setParameter('id', $id)
             ->orderBy('a.id', 'ASC')
             ->getQuery()
             ->getResult()

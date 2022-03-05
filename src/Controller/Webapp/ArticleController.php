@@ -96,12 +96,21 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @Route("/webapp/article/del/{id}", name="op_webapp_article_del", methods={"POST"})
+     */
+    public function del(Request $request, Article $article){
+
+    }
+
+    /**
      * Affiche un seul article en Front
      * @Route("/webapp/article/one/{id}", name="op_webapp_article_one")
      */
     public function oneArticle($id) : Response
     {
         $article = $this->getDoctrine()->getRepository(Article::class)->OneArticle($id);
+
+        //dd($article);
 
         return $this->render('webapp/article/one.html.twig', [
             'articles' => $article,

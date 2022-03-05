@@ -2,6 +2,22 @@
 
 {% block title %}OpenGaia | Administration{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        window.onload = function(){
+            ClassicEditor
+                .create(document.querySelector('#page_description'), {
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment', 'code', 'CodeBlock', 'Underline', 'HtmlEmbed' ],
+                    height: 50
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     {{ include('webapp/page/include/_section_content_header.html.twig') }}

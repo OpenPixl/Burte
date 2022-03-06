@@ -25,16 +25,14 @@
             <div class="card-header">
                 {{parent.name|upper}}
             </div>
-                <ul class="list-group list-group-flush">
-
+            <ul class="list-group list-group-flush">
                 {% for categorie in categories|filter(categorie => categorie.parent == parent.name) %}
-                    <li class="list-group-item">
-                        <input type="checkbox" name="categories[]" id="cat{{ categorie.id }}" value="{{ categorie.id }}">
-                        <label for="cat{{ categorie.id }}">{{ categorie.name }}</label>
-                    </li>
-            {% endfor %}
-                </ul>
-
+                <li class="list-group-item">
+                    <input type="checkbox" name="categories[]" id="cat{{ categorie.id }}" value="{{ categorie.id }}">
+                    <label for="cat{{ categorie.id }}">{{ categorie.name }}</label>
+                </li>
+                {% endfor %}
+            </ul>
             {% endif %}
         </div>
         {% else %}

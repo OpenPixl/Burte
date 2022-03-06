@@ -30,14 +30,14 @@
             <a class="btn d-inline-flex align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#components-collapse" aria-expanded="false" aria-current="false">
                 {{ nature.name }}
             </a>
-
+            {% for categorie in categories|filter(categorie => categorie.nature == nature.name) %}
             <div class="collapse" id="components-collapse" style="">
-                {% for categorie in categories|filter(categorie => categorie.nature == nature.name) %}
                 <ul class="list-unstyled fw-normal pb-1 small">
-                    {{ categorie.name }}
+                    <input type="checkbox" name="categories[]" id="cat{{ categorie.id }}" value="{{ categorie.id }}">
+                    <label for="cat{{ categorie.id }}">{{ categorie.name }}</label>
                 </ul>
-                {% endfor %}
             </div>
+            {% endfor %}
         </li>
         {% endfor %}
     </ul>

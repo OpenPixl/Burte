@@ -18,13 +18,13 @@
                     {% if article.isReadMore == 1 %}
                         <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
                         <p class="text-center"><a href="">Lire la suite ...</a></p>
-                    {% else %}
+                    {% else article.isReadMore == 0 %}
                         <p class="text-center">{{ article.content|raw }}</p>
                     {% endif %}
                 </div>
                 {% if article.isLink %}
                 <div class="col-12">
-                    <a class="btn btn-light" href="/page/{{ article.linkPage|lower }}">{{article.linktext}}</a>
+                    <a class="btn btn-lg btn-light btn-bluelight" href="/page/{{ article.linkPage|lower }}">{{article.linktext}}</a>
                 </div>
                 {% endif %}
             </div>
@@ -37,7 +37,7 @@
                         {{ article.content|raw }}
                     {% endif %}
                     {% if article.isLink %}
-                        <a class="btn btn-light" href="/page/{{ article.linkPage|lower }}">{{article.linktext}}</a>
+                        <a class="btn btn-lg btn-light btn-bluelight" href="/page/{{ article.linkPage|lower }}">{{article.linktext}}</a>
                     {% endif %}
                 </div>
                 <div class="col-3">
@@ -86,6 +86,9 @@
                             <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
                         {% else %}
                             <p class="text-center">{{ article.content|raw }}</p>
+                        {% endif %}
+                        {% if article.isLink %}
+                            <a class="btn btn-lg btn-light btn-bluelight" href="/page/{{ article.linkPage|lower }}">{{article.linktext}}</a>
                         {% endif %}
                     </div>
                 </div>

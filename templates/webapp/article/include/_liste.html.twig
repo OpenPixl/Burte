@@ -2,9 +2,9 @@
     <table class="table align-middle">
     <thead>
     <tr>
-        <th>Id</th>
-        <th>titre</th>
-        <th>Description</th>
+        <th></th>
+        <th>Titre</th>
+        <th>Slug</th>
         <th>Catégorie</th>
         <th>Création</th>
         <th>Modification</th>
@@ -14,9 +14,9 @@
     <tbody>
     {% for article in articles %}
         <tr>
-            <td>{{ article.id }}</td>
-            <td><strong>{{ article.title }}</strong><br><small>{{ article.slug }}</small></td>
-            <td>{{ article.description }}</td>
+            <td><input class="form-check-input" name="" id="" type="checkbox"></td>
+            <td><strong>{{ article.title }}</strong><br></td>
+            <td><small>{{ article.slug }}</small></td>
             <td>{{ article.category }}</td>
             <td>{{ article.createdAt ? article.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
             <td>{{ article.updatedAt ? article.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>

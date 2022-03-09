@@ -15,22 +15,17 @@
         adressCart.style.display="none";
 
         btnNextStep.onclick = function () {
-            if (adressCart.style.display !== "none") {
-                adressCart.style.display = "none";
-                listCart.style.display = "block";
-            } else {
-                adressCart.style.display = "block";
-                listCart.style.display = "none";
-            }
-        };
+            adressCart.style.display = "block";
+            listCart.style.display = "none";
+            btnPreviousStep.removeAttribute("disabled")
+            btnNextStep.setAttribute("disabled", true)
+        }
+
         btnPreviousStep.onclick = function () {
-            if (listCart.style.display !== "none") {
-                listCart.style.display = "none";
-                adressCart.style.display = "block";
-            } else {
-                listCart.style.display = "block";
-                adressCart.style.display = "none";
-            }
+            listCart.style.display = "block";
+            adressCart.style.display = "none";
+            btnPreviousStep.setAttribute("disabled", true)
+            btnNextStep.removeAttribute("disabled")
         };
 
         // Construction de la fonction "onClickBtnIncrement" : incrémentation d'un produit
@@ -147,8 +142,11 @@
         </div>
         {% if items %}
         <div class="mb-5 d-flex justify-content-around">
-            <button id="previousStep" class="btn btn-sm btn-outline-secondary"> << Etape Précedente</button>
+            <button id="previousStep" class="btn btn-sm btn-outline-secondary" disabled> << Etape Précedente</button>
             <button id="nextStep" class="btn btn-sm btn-outline-secondary">Etape Suivante >> </button>
+            {% if app.user %}
+            <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
+            {% endif %}
         </div>
         {% endif %}
     </div>

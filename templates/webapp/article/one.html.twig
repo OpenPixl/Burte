@@ -18,7 +18,7 @@
                     {% if article.isReadMore == 1 %}
                         <p class="text-center">{{ article.content|u.truncate(600, ' ...')|raw }}</p>
                         <p class="text-center"><a href="">Lire la suite ...</a></p>
-                    {% else article.isReadMore == 0 %}
+                    {% else %}
                         <p class="text-center">{{ article.content|raw }}</p>
                     {% endif %}
                 </div>

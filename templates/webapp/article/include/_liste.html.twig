@@ -15,7 +15,7 @@
     {% for article in articles %}
         <tr>
             <td><input class="form-check-input" name="" id="" type="checkbox"></td>
-            <td><strong>{{ article.title }}</strong><br></td>
+            <td><a href="{{ path('op_webapp_article_edit', {'id': article.id}) }}"><strong>{{ article.title }}</strong></a></td>
             <td><small>{{ article.slug }}</small></td>
             <td>{{ article.category }}</td>
             <td>{{ article.createdAt ? article.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>

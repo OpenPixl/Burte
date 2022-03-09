@@ -116,6 +116,10 @@
             <div class="col-6">
                 {# formulaire coordonnées user #}
                 <h3>Adresse de facturation :</h3>
+                <p>
+                    Cette adresse sera utilisée pour l'édition de la facture.<br>
+                    Cette dernière sera disponible dès réception du paiement et livraison de vos cartes dans votre espace personnel.
+                </p>
                 <div class="row mb-1 mt-1 g-1 align-items-center">
                     <label for="staticEmail" class="col-sm-3">Destinataire :</label>
                     <div class="col-3">
@@ -156,6 +160,10 @@
 
             <div class="col-6">
                 <h3>Adresse de livraison :</h3>
+                <p>
+                    Cette adresse sera utilisée pour l'envoie de vos produit par la poste.<br>
+                    Pour ce faire livré ailleur, n'hésitez pas à modifier l'adresse et de préciser un contact téléphonique.
+                </p>
                 {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm')}) }}
                 <div class="row mb-1 mt-1 g-1">
                     <div class="col-3">
@@ -198,7 +206,6 @@
                     </div>
                 </div>
                 {{ form_widget(confirmationForm) }}
-                <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
                 {{ form_end(confirmationForm) }}
             </div>
         </div>

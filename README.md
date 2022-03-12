@@ -79,7 +79,7 @@ Pour assurer votre développement futur depuis un IDE, il vous faut créer un co
   chown username:username -R .
 ```
 
-*L'application devrait être accessible à cette adresse : [http://127.0.0.1:8001](http://127.0.0.1:8001)*
+*L'application devrait être accessible à cette adresse : [http://127.0.0.1](http://127.0.0.1)*
 
 ##### II. B déploiement d'un projet Symfony existant depuis votre dépot Git.
 

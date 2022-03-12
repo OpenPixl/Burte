@@ -75,8 +75,8 @@ Utilisez la commande du _CLI Symfony_ pour créer votre nouveau projet.
 Pour assurer votre développement futur depuis un IDE, il vous faut créer un compte _user_ dans votre conteneur. Ce dernier sera identique à votre session Linux et et nous lui donnerons les droits d'accès dans ce conteneur.
 
 ```bash
-  adduser username
-  chown username:username -R .
+adduser username
+chown username:username -R .
 ```
 
 *L'application devrait être accessible à cette adresse : [http://127.0.0.1](http://127.0.0.1)*

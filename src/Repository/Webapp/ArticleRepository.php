@@ -55,8 +55,8 @@ class ArticleRepository extends ServiceEntityRepository
                 a.isShowdate AS isShowdate,
                 a.createdAt AS createdAt
                 ')
-            //->andWhere('a.id = :id')
-            //->setParameter('id', $id)
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $id)
             ->orderBy('a.id', 'ASC')
             ->getQuery()
             ->getResult()

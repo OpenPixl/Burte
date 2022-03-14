@@ -52,6 +52,40 @@ class ProductRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * @param $filter
+     * @return float|int|mixed|string
+     */
+    public function ListFilterscategory($filter)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.productNature', 'n')
+            ->leftJoin('p.producer', 'pr')
+            ->leftJoin('pr.structure', 's')
+            ->addSelect('
+                p.id AS id,
+                p.name AS name, 
+                p.description AS description,
+                p.details,
+                p.price,
+                p.quantity,
+                p.productName AS productName,
+                p.ref AS ref,
+                p.isDisponible,
+                p.isStar,
+                p.isOnLine,
+                p.format,
+                s.name AS producer,
+                n.name AS nameNature,
+                s.logoStructureName AS logoStructureName
+            ')
+            ->andWhere('p.ProductCategory = :cat')
+            ->setParameter(':cat', $filter)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

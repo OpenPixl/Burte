@@ -304,14 +304,52 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/gestapp/product/oneCat/filtercategory", name="op_gestapp_products_filtercategory", methods={"GET","POST"})
+     * @Route("/gestapp/product/oneCat/filtercategories", name="op_gestapp_products_filtercategories", methods={"GET","POST"})
      */
-    public function filtercategory(Request $request, ProductRepository $productRepository,PaginatorInterface $paginator): Response
+    public function filtercategories(Request $request, ProductRepository $productRepository,PaginatorInterface $paginator): Response
     {
         $filters = $request->get("categories");
         $page = $request->get('page');
 
         $data = $productRepository->ListFilterscategories($filters);
+
+        $products = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            8 /*limit per page*/
+        );
+        if(!$page){
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Ok",
+                'liste' => $this->renderView('gestapp/product/include/_product.html.twig', [
+                    'products' => $products,
+                    'page' => $request->query->getInt('page', 1),
+                ])
+            ], 200);
+        }else{
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Ok",
+                'liste' => $this->renderView('gestapp/product/include/_product.html.twig', [
+                    'products' => $products,
+                    'page' => $request->query->getInt('page', $page),
+                ])
+            ], 200);
+        }
+    }
+
+    /**
+     * @Route("/gestapp/product/oneCat/filtercategory", name="op_gestapp_products_filtercategory", methods={"GET","POST"})
+     */
+    public function filtercategory(Request $request, ProductRepository $productRepository,PaginatorInterface $paginator): Response
+    {
+        //dd($request->get('category'));
+        $filter = $request->get("category");
+        $page = $request->get('page');
+
+        $data = $productRepository->ListFilterscategory($filter);
+        //dd($data);
 
         $products = $paginator->paginate(
             $data, /* query NOT result */

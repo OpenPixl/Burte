@@ -30,14 +30,16 @@ document.querySelectorAll('#filters input').forEach(input => {
 // Construction de la fonction lorsque l'utilisateur
 function onClickPaginator(event){
     event.preventDefault();
-    var urlCour = document.location.href;
-    const url = this.href;
-    alert(url + "/" + urlCour);
+    const urlPaginator = this.href
+    const urlParams = urlPaginator.split('?')[1]
+    const Params = new URLSearchParams(urlParams);
+    const page = Params.get('page')
+    const url = '/gestapp/product/oneCat/filtercategory'
     const cat = document.getElementById('listonecatproduct').dataset.natorcat;
     const idcat = document.getElementById('listonecatproduct').dataset.name;
 
     axios
-        .get(url + "?" + cat +"=" + idcat )
+        .get(url + "?" + cat +"=" + idcat + "&page=" + page )
         .then(response => {
             // rafraichissement du tableau
             const liste = document.getElementById('liste').innerHTML = response.data.liste;

@@ -4,7 +4,6 @@ namespace App\Controller\Gestapp\Purchase;
 
 use App\Entity\Gestapp\Purchase;
 use App\Repository\Gestapp\PurchaseRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Admin\Member;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,88 +54,61 @@ class PurchasesListController extends abstractController
     }
 
     /**
-     * @return void
      * Function pour faire évoluer l'etat de paiement de la commande par le client
-     * @Route("/opadmin/purchases/updateStatePaid/{id}/{status}", name="op_admin_purchases_updateStatePaid")
+     * @Route("/opadmin/purchases/updateStatusPaid/{id}/{status}", name="op_admin_purchases_updateStatePaid")
      */
-    public function updateStatePaid(Purchase $purchase, $status, EntityManagerInterface $em)
+    public function updateStatePaid(Purchase $purchase, $status, MailerInterface $mailer)
     {
+        dd($purchase);
+    }
+
+    /**
+     * Fonction de progression sur la commande, suivi des produits à réaliser à la main, et de l'envoi de la commande par la poste.
+     * @Route("/opadmin/purchases/updateStatusPurchase/{id}/{status}", name="op_admin_purchases_updateStatePurchase")
+     */
+    public function updateStatusPurchase(Purchase $purchase, $status, MailerInterface $mailer)
+    {
+        //dd($purchase);
+        // récupération des variables
         $numPurchase = $purchase->getNumPurchase();
         $member = $purchase->getCustomer();
         $emailMember = $member->getEmail();
         $fnMember = $member->getFirstName();
         $lsMember = $member->getLastName();
 
-        if($status = "CANCELLED"){
-            $purchase->setStatus($status);
-            $em->flush();
-            // Envoi du mail de nouvelle recomandation au membre recommandé
-            $email = (new TemplatedEmail())
-                ->from('postmaster@openpixl.fr')
-                ->to($emailMember)
-                //->cc('cc@example.com')
-                //->bcc('bcc@example.com')
-                //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
-                ->subject('Cartes de prières - Commande ' . $numPurchase . 'test')
-                //->text('Sending emails is fun again!')
-                ->htmlTemplate('email/updatePurchaseState.html.twig')
-                ->context([
-                    'author' => 'Soeur Marie',
-                    'commande' => $numPurchase,
-                    'prenomDestin' => $fnMember,
-                    'nomDestin' => $lsMember,
-                ]);
-            $mailer->send($email);
-        }
+        // modification de l'entité en cours
+        $purchase->setStatus($status);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($purchase);
+        $entityManager->flush();
+        //dd($purchase);
+        $purchases = $this->getDoctrine()->getManager()->getRepository(Purchase::class)->findAll();
+        //dd($purchases);
+        // Envoi du mail de nouvelle recommandation au membre recommandé
+        $email = (new TemplatedEmail())
+            ->from('postmaster@openpixl.fr')
+            ->to($emailMember)
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Cartes de prières - Commande ' . $numPurchase . 'test')
+            //->text('Sending emails is fun again!')
+            ->htmlTemplate('email/updatePurchaseState.html.twig')
+            ->context([
+                'author' => 'Soeur Marie',
+                'commande' => $numPurchase,
+                'prenomDestin' => $fnMember,
+                'nomDestin' => $lsMember,
+            ]);
+        $mailer->send($email);
+
         return $this->json([
             'code'          => 200,
             'message'       => "La commande a été correctement modifié.",
-            'liste'         => $this->renderView('gestapp/product/include/_liste.html.twig', [
-                'purchases' => $purchases
-            ])
-        ], 200);
-
-    }
-
-    /**
-     * @return void
-     * Fonction de progression sur la commande, suivi des produits à réaliser à la main, et de l'envoi de la commande par la poste.
-     * @Route("/opadmin/purchases/updateStatePurchase/{id}/{status}", name="op_admin_purchases_updateStatePurchase")
-     */
-    public function updateStatePurchase(Purchase $purchase)
-    {
-        $numPurchase = $purchase->getNumPurchase();
-        $member = $purchase->getCustomer();
-        dd($member);
-
-        if($status = "CANCELLED"){
-            $purchase->setStatus($status);
-            $em->flush();
-            // Envoi du mail de nouvelle recomandation au membre recommandé
-            $email = (new TemplatedEmail())
-                ->from('postmaster@openpixl.fr')
-                ->to($email)
-                //->cc('cc@example.com')
-                //->bcc('bcc@example.com')
-                //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
-                ->subject('Cartes de prières - Commande ' . $purchase['numPurchase']. 'test')
-                //->text('Sending emails is fun again!')
-                ->htmlTemplate('email/updatePurchaseState.html.twig')
-                ->context([
-                    'author' => $author,
-                    'titleRecom' => $titleRecom,
-                    'prenomDestin' => $firstNameDesti,
-                    'nomDestin' => $lastNameDesti,
-                ]);
-            $mailer->send($email);
-        }
-        return $this->json([
-            'code'          => 200,
-            'message'       => "La commande a été correctement modifié.",
-            'liste'         => $this->renderView('gestapp/product/include/_liste.html.twig', [
-                'purchases' => $purchases
+            'liste'         => $this->renderView('gestapp/purchase/include/_liste.html.twig', [
+                'purchases' => $purchases,
+                'hide' => 0
             ])
         ], 200);
     }

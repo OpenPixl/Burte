@@ -66,10 +66,10 @@
                 const valueSelect = this.value
                 const form = this.parentNode
                 const id = form.children.namedItem('idpurchase').value
-                const url = '/opadmin/purchases/updateStatePurchase/' + id + '/' + valueSelect
+                const url = '/opadmin/purchases/updateStatusPurchase/' + id + '/' + valueSelect
                 console.log(url);
                 axios
-                    .post(url)
+                    .get(url)
                     .then(function(response)
                         {
                             // recupération de la liste pour actualisation de la div

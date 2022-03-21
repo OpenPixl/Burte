@@ -44,12 +44,19 @@
                 <td>{{p.total}} €</td>
                 <td>
                     {% if p.status == 'PENDING' %}En attente{% endif %}
-                    {% if p.status == 'DELIVERED' %}En cours de Livraison{% endif %}
                     {% if p.status == 'PREPARED' %}En cours de préparation{% endif %}
+                    {% if p.status == 'FINALISED' %}Cartes finalisée{% endif %}
+                    {% if p.status == 'DELIVERED' %}En cours de Livraison{% endif %}
                     {% if p.status == 'CANCELLED' %}Annulé{% endif %}
                 </td>
                 {% if hide == 0 %}
-                <td>{{ p.statuspaid }}</td>
+                <td>
+                    <select id="recostate" class="form-select form-select-sm" aria-label="Default select example">
+                        <option value="InProgress" {% if p.statuspaid == 'PENDING' %}selected{% endif %}>En attente du paiement</option>
+                        <option value="Valid" {% if p.statuspaid == 'PAID' %}selected{% endif %}>Paiement reçu</option>
+                        <option value="Avort" {% if p.statuspaid == 'CANCELLED' %}selected{% endif %}>Annulé</option>
+                    </select>
+                </td>
                 {% endif %}
                 {% if hide == 0 %}
                 <td>

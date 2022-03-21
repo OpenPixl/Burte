@@ -8,7 +8,7 @@
                 <img src="{{ vich_uploader_asset(product)|imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
             {% endif %}
             <div class="card-body">
-                <h5 class="card-title"><a href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}">{{ product.name }}</a></h5>
+                <h5 class="card-title"><a href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}">{{ product.name }} - {{product.ref}}</a></h5>
                 <div class="d-flex justify-content-between">
                     <p><span class="badge bg-primary">{{ product.productNature }}</span></p>
                     {# <p><span class="badge bg-primary">{{ product.category }}</span></p> #}

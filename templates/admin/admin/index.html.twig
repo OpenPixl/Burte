@@ -136,10 +136,11 @@
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="card">
                 <div class="card-body">
+                    <h5 class="mb-3">Commandes</h5>  
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Receipt" type="button" role="tab" aria-controls="Receipt" aria-selected="true">
-                                RE&#xc7;UES
+                                En attente
                             </button>
                         </li>
                         <li class="nav-item">
@@ -150,7 +151,7 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="Receipt" role="tabpanel" aria-labelledby="home-tab">
-                            {{ render(controller('App\\Controller\\Gestapp\\Purchase\\PurchasesListController::byUserReceipt', {'hide':1})) }}
+                            {{ render(controller('App\\Controller\\Gestapp\\Purchase\\PurchasesListController::byUserReceiptNewPurchases', {'hide':1})) }}
                         </div>
                         <div class="tab-pane" id="Send" role="tabpanel" aria-labelledby="home-tab">
                             {{ render(controller('App\\Controller\\Gestapp\\Purchase\\PurchasesListController::byUserSend', {'hide':1} )) }}

@@ -24,12 +24,14 @@ class PurchaseRepository extends ServiceEntityRepository
      * @return int|mixed|string
      * Liste les recommandation reçues
      */
-    public function findByUserReceipt($user)
+    public function findByUserReceiptNew($user)
     {
         return $this->createQueryBuilder('r')
             ->join('r.customer', 'm')
             ->andWhere('m.id = :id')
+            ->andWhere('r.status = :status')
             ->setParameter('id', $user)
+            ->setParameter('status', 'PENDING')
             ->orderBy('r.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()

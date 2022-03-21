@@ -42,6 +42,9 @@
                 </td>
                 {% endif %}
                 <td>{{p.total}} €</td>
+
+                {# Affiche l'état de la commande sur le frontOffice et non dans la partie admin #}
+                {% if app.request.attributes.get('_route') == 'op_webapp_purchases_index' %}
                 <td>
                     {% if p.status == 'PENDING' %}En attente{% endif %}
                     {% if p.status == 'PREPARED' %}En cours de préparation{% endif %}
@@ -49,12 +52,29 @@
                     {% if p.status == 'DELIVERED' %}En cours de Livraison{% endif %}
                     {% if p.status == 'CANCELLED' %}Annulé{% endif %}
                 </td>
+                {% else %}
+                {# Affiche le select seulement dans l'espace admin #}
+                <td>
+                    <form id="purchase">
+                    <input id="idpurchase" name="idpurchase" type="hidden" value="{{p.id}}">
+                    <select id="statusPurchases" class="form-select form-select-sm statusPurchases" aria-label="Default select example">
+                        <option value="PENDING" {% if p.status == 'PENDING' %}selected{% endif %}>En attente</option>
+                        <option value="PREPARED" {% if p.status == 'PREPARED' %}selected{% endif %}>En cours de préparation</option>
+                        <option value="FINALISED" {% if p.status == 'FINALISED' %}selected{% endif %}>Cartes finalisées</option>
+                        <option value="DELIVERED" {% if p.status == 'DELIVERED' %}selected{% endif %}>En cours de Livraison</option>
+                        <option value="CANCELLED" {% if p.status == 'CANCELLED' %}selected{% endif %}>Annulé</option>
+                    </select>
+                    </form>
+                    
+                </td>
+                {% endif %}
+                
                 {% if hide == 0 %}
                 <td>
-                    <select id="recostate" class="form-select form-select-sm" aria-label="Default select example">
-                        <option value="InProgress" {% if p.statuspaid == 'PENDING' %}selected{% endif %}>En attente du paiement</option>
-                        <option value="Valid" {% if p.statuspaid == 'PAID' %}selected{% endif %}>Paiement reçu</option>
-                        <option value="Avort" {% if p.statuspaid == 'CANCELLED' %}selected{% endif %}>Annulé</option>
+                    <select id="statePaid" class="form-select form-select-sm" aria-label="Default select example">
+                        <option value="PENDING" {% if p.statuspaid == 'PENDING' %}selected{% endif %}>En attente du paiement</option>
+                        <option value="PAID" {% if p.statuspaid == 'PAID' %}selected{% endif %}>Paiement reçu</option>
+                        <option value="CANCELLED" {% if p.statuspaid == 'CANCELLED' %}selected{% endif %}>Annulé</option>
                     </select>
                 </td>
                 {% endif %}

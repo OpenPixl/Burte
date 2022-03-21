@@ -60,6 +60,50 @@
                     })
             }
 
+            // fonction de mise à jour du select
+            function onClickUpdateStatusPurchases(event)
+            {
+                const valueSelect = this.value
+                const form = this.parentNode
+                const id = form.children.namedItem('idpurchase').value
+                const url = '/opadmin/purchases/updateStatePurchase/' + id + '/' + valueSelect
+                console.log(url);
+                axios
+                    .post(url)
+                    .then(function(response)
+                        {
+                            // recupération de la liste pour actualisation de la div
+                            const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                            // initialisation du toaster
+                            var option = {
+                                animation : true,
+                                autohide: true,
+                                delay : 3000,
+                            };
+                            var toastHTMLElement = document.getElementById("toaster");
+                            var message = response.data.message;
+                            var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                            toastBody.textContent = message;
+                            var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                            toastElement.show();
+                            // rechargement des events
+
+                        }
+                    )
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
+            // Ajout d'un event sur Bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelPurchase)
+            })
+
+            // Ajout d'un event sur Bouton de suppression de la ligne en cours
+            document.querySelectorAll('select.statusPurchases').forEach(function(link){
+                link.addEventListener('change', onClickUpdateStatusPurchases)
+            })
             // Ajout d'un event sur Bouton de suppression de la ligne en cours
             document.querySelectorAll('a.js-data-suppr').forEach(function(link){
                 link.addEventListener('click', onClickDelPurchase)

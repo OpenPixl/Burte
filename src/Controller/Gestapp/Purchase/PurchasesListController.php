@@ -7,8 +7,10 @@ use App\Repository\Gestapp\PurchaseRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Admin\Member;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 
 class PurchasesListController extends abstractController
 {
@@ -31,13 +33,20 @@ class PurchasesListController extends abstractController
      * @Route("/opadmin/purchases/", name="op_admin_purchases_index")
      * @IsGranted("ROLE_USER", message="Vous devez être connecté pour accéder à l'administration")
      */
-    public function listAdmin()
+    public function listAdmin(PurchaseRepository $purchaseRepository, Request $request, PaginatorInterface $paginator)
     {
         /** @var Member */
         $member = $this->getUser();
 
+        $data = $purchaseRepository->findBy(array('customer'=> $member));
+        $purchases = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            300
+        );
+
         return $this->render('gestapp/purchase/list.html.twig',[
-            'purchases'=> $member->getPurchases(),
+            'purchases'=> $purchases,
             'hide' => 0
         ]);
     }

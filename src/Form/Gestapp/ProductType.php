@@ -51,6 +51,7 @@ class ProductType extends AbstractType
                 'placeholder' => 'Choisir une categorie',
                 'class' => ProductCategory::class,
                 'disabled'=> true,
+                'required' => false,
                 'choice_label' => 'name',
                 'query_builder' => function (ProductCategoryRepository $productCategoryRepository) {
                     return $productCategoryRepository->createQueryBuilder('pc')->orderBy('pc.name', 'ASC');

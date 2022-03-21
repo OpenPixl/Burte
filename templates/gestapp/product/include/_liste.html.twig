@@ -1,5 +1,5 @@
 
-{% for product in products %}
+{% for product in products|sort((a,b) => a.name <=> b.name) %}
     <div class="col-6 col-md-2">
         <div class="card">
             {% if product.productName is null %}

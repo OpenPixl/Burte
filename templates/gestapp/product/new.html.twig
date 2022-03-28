@@ -91,6 +91,11 @@
                     })
             }
 
+            function changeCategory(){
+                const idnat = document.querySelector('.selectNat').value
+                console.log(idnat)
+            }
+
             // déclaration de l'event sur js-add-unit
             document.querySelectorAll('a.js-add-unit').forEach(function(link){
                 link.addEventListener('click', onClickaddUnit)
@@ -105,6 +110,9 @@
             document.querySelectorAll('a.js-add-category').forEach(function(link){
                 link.addEventListener('click', onClickaddCategory)
             })
+
+            // déclaration de l'envent sur selectCat pour changer les catégories dynamiquement
+            document.querySelector('.selectNat').addEventListener('change', changeCategory)
 
             ClassicEditor
                 .create(document.querySelector('#product_description'), {

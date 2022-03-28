@@ -2,3 +2,5 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         cartService: "@App\\Cart\\CartService"
+    paths:
+        'public/images': images

@@ -2,10 +2,11 @@
 <div class="card-body">
     <div class="row">
         <div class="col-6">
-            <h5>Description</h5>
+            <h5>Le produit</h5>
             <hr>
             <div class="card text-dark bg-light">
                 <div class="card-body">
+                    <h6>Détails du produit</h6>
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-2">
                             {{ form_label(form.name, 'Nom', {'label_attr': {'class':'form-label'}}) }}
@@ -33,96 +34,118 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-
-
-            <div class="row mb-1 mt-1 g-1">
-                <div class="col-2">
-                    {{ form_label(form.productNature, 'Nature', {'label_attr': {'class':'form-label'}}) }}
-                </div>
-                <div class="col-3">
-                    {{ form_widget(form.productNature, {'attr': {'class': 'form-select form-select-sm'}}) }}
-                </div>
-                <div class="col-1">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductNature"><i class="bi bi-plus-circle"></i></button>
-                </div>
-                <div class="col-2">
-                    {{ form_label(form.productCategory, 'Catégorie', {'label_attr': {'class':'form-label'}}) }}
-                </div>
-                <div class="col-3">
-                    {{ form_widget(form.productCategory, {'attr': {'class': 'form-select form-select-sm'}}) }}
-                </div>
-                <div class="col-1">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductCategory"><i class="bi bi-plus-circle"></i></button>
-                </div>
-            </div>
-            <div class="row mb-1 mt-1 g-1">
-                <div class="col-2">
-                    {{ form_label(form.format, 'format', {'label_attr': {'class':'form-label'}}) }}
-                </div>
-                <div class="col-10">
-                    {{ form_widget(form.format, {'attr': {'class': 'form-select form-select-sm'}}) }}
-                </div>
-            </div>
-
-            <div class="row mb-1 mt-1 g-1">
-                <div class="col-2">
-                    {{ form_label(form.details, 'Détails', {'label_attr': {'class':'form-label'}}) }}
-                </div>
-                <div class="col-10">
-                    {{ form_widget(form.details, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-            </div>
-            <div class="row mb-1 mt-1 g-1">
-                <div class="col-2">
-                    {{ form_label(form.price, 'Prix', {'label_attr': {'class':'form-label'}}) }}
-                </div>
-                <div class="col-2">
-                    {{ form_widget(form.price, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-                <div class="col-3">
-                    {{ form_widget(form.productUnit, {'attr': {'class': 'form-select form-select-sm'}}) }}
-                </div>
-                <div class="col-1 d-flex align-items-center">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductUnit"><i class="bi bi-plus-circle"></i></button>
-                </div>
-                <div class="col-4">
-                    {{ form_widget(form.tva, {'attr': {'class': 'form-select form-select-sm'}}) }}
-                </div>
-            </div>
-            <div class="row mb-1 mt-1 g-1">
-                <div class="col-2">
-                    {{ form_label(form.producer, 'Producteur', {'label_attr': {'class':'form-label'}}) }}
-                </div>
-                <div class="col-6">
-                    {{ form_widget(form.producer, {'attr': {'class': 'form-select form-select-sm'}}) }}
-                </div>
-            </div>
-            <div class="row mb-1 mt-1 g-1">
-                <div class="col-6">
-                    <fieldset>
-                        <div class="form-check form-switch">
-                            {{ form_widget(form.isDisponible, {'attr': {'class': 'form-check-input'}}) }}
-                            {{ form_label(form.isDisponible, 'Le produit est diponible à la vente', {'label_attr': {'class':'form-check-label'}}) }}
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-2">
+                            {{ form_label(form.details, 'Détails', {'label_attr': {'class':'form-label'}}) }}
                         </div>
-                    </fieldset>
-                </div>
-                <div class="col-6">
-                    <fieldset>
-                        <div class="form-check form-switch">
-                            {{ form_widget(form.isPersonalisable, {'attr': {'class': 'form-check-input'}}) }}
-                            {{ form_label(form.isPersonalisable, 'Le produit est personnalisable', {'label_attr': {'class':'form-check-label'}}) }}
+                        <div class="col-10">
+                            {{ form_widget(form.details, {'attr': {'class': 'form-control form-control-sm'}}) }}
                         </div>
-                    </fieldset>
+                    </div>
+
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-2">
+                            {{ form_label(form.producer, 'Producteur', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_widget(form.producer, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row mb-1 mt-1 g-1">
-                <div class="col-2">
-                    {{ form_label(form.quantity, 'Quantité disponible', {'label_attr': {'class':'form-label'}}) }}
+            <div class="card text-dark bg-light">
+                <div class="card-body">
+                    <h6>Options du produit</h6>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-2">
+                            {{ form_label(form.productNature, 'Nature', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-3">
+                            {{ form_widget(form.productNature, {'attr': {'class': 'form-select form-select-sm selectNat'}}) }}
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductNature"><i class="bi bi-plus-circle"></i></button>
+                        </div>
+                        <div class="col-2">
+                            {{ form_label(form.productCategory, 'Catégorie', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-3">
+                            {{ form_widget(form.productCategory, {'attr': {'class': 'form-select form-select-sm selectCat'}}) }}
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductCategory"><i class="bi bi-plus-circle"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-2">
+                            {{ form_label(form.format, 'format', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-3">
+                            {{ form_widget(form.format, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-2">
+                            {{ form_label(form.price, 'Prix', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-2">
+                            {{ form_widget(form.price, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                        </div>
+                        <div class="col-3">
+                            {{ form_widget(form.productUnit, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                        </div>
+                        <div class="col-1 d-flex align-items-center">
+                            <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductUnit"><i class="bi bi-plus-circle"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-2">
+                            {{ form_label(form.tva, 'Taux de TVA', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-4">
+                            {{ form_widget(form.tva, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-2"></div>
+                        <div class="col-6">
+                            <fieldset>
+                                <div class="form-check form-switch">
+                                    {{ form_widget(form.isDisponible, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(form.isDisponible, 'Le produit est diponible à la vente', {'label_attr': {'class':'form-check-label'}}) }}
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-2"></div>
+                        <div class="col-6">
+                            <fieldset>
+                                <div class="form-check form-switch">
+                                    {{ form_widget(form.isPersonalisable, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(form.isPersonalisable, 'Le produit est personnalisable', {'label_attr': {'class':'form-check-label'}}) }}
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-3">
-                    {{ form_widget(form.quantity, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom du produit'}}) }}
+            </div>
+            <div class="card text-dark bg-light">
+                <div class="card-body">
+                    <h6>Autres informations</h6>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-3">
+                            {{ form_label(form.quantity, 'Quantité disponible', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-2">
+                            {{ form_widget(form.quantity, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'0'}}) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

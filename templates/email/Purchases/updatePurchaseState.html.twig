@@ -1,0 +1,40 @@
+{% apply inline_css(source('@styles/email.css')) %}
+<body>
+<header>
+    <div>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{{ email.image('@images/home_front/LOGO-fondblanc.png') }}" alt="logo-cartesdeprières" class="d-inline-block align-text-top">                Cartes de prières
+                </a>
+            </div>
+        </nav>
+    </div>
+</header>
+<main>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h4>Soeur Marie de Cartes de prières.</h4>
+                <p>Suivi de votre commande : {{ commande }}</p>
+            </div>
+        </div>
+
+    </section>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <p>Madame / Monsieur {{ prenomDestin }} {{ prenomDestin }}</p>
+                <p>Votre commande ...</p>
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+    <div>
+        <div><p>Carte de prière - &copy;2022</p></div>
+        <div>Soeur Marie - Maria Bambina - 65 Lourdes</div>
+    </div>
+</footer>
+</body>
+{% endapply %}

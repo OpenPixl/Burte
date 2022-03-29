@@ -4,3 +4,5 @@ twig:
         cartService: "@App\\Cart\\CartService"
     paths:
         'public/images': images
+        'assets/styles/css': styles
+

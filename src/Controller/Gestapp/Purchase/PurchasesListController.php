@@ -54,21 +54,11 @@ class PurchasesListController extends abstractController
     }
 
     /**
-     * Function pour faire évoluer l'etat de paiement de la commande par le client
+     * Fonction pour faire évoluer l'etat de paiement de la commande par le client
      * @Route("/opadmin/purchases/updateStatusPaid/{id}/{status}", name="op_admin_purchases_updateStatePaid")
      */
-    public function updateStatePaid(Purchase $purchase, $status, MailerInterface $mailer)
+    public function updateStatePaidPurchase(Purchase $purchase, $status, MailerInterface $mailer)
     {
-        dd($purchase);
-    }
-
-    /**
-     * Fonction de progression sur la commande, suivi des produits à réaliser à la main, et de l'envoi de la commande par la poste.
-     * @Route("/opadmin/purchases/updateStatusPurchase/{id}/{status}", name="op_admin_purchases_updateStatePurchase")
-     */
-    public function updateStatusPurchase(Purchase $purchase, $status, MailerInterface $mailer)
-    {
-        //dd($purchase);
         // récupération des variables
         $numPurchase = $purchase->getNumPurchase();
         $member = $purchase->getCustomer();
@@ -81,9 +71,63 @@ class PurchasesListController extends abstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($purchase);
         $entityManager->flush();
-        //dd($purchase);
+
+        // récupération de la liste de commandes pour son actualisation
         $purchases = $this->getDoctrine()->getManager()->getRepository(Purchase::class)->findAll();
-        //dd($purchases);
+
+        // Envoi du mail de confirmation des fonds perçus pour la réalisation de la commande
+        $email = (new TemplatedEmail())
+            ->from('postmaster@openpixl.fr')
+            ->to($emailMember)
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Cartes de prières - Commande ' . $numPurchase . 'test')
+            //->text('Sending emails is fun again!')
+            ->htmlTemplate('email/Purchases/updatePurchaseState.html.twig')
+            ->context([
+                'author' => 'Soeur Marie',
+                'commande' => $numPurchase,
+                'prenomDestin' => $fnMember,
+                'nomDestin' => $lsMember,
+            ]);
+        $mailer->send($email);
+
+        // renvoie JSON à la page
+        return $this->json([
+            'code'          => 200,
+            'message'       => "La commande a été correctement modifié.",
+            'liste'         => $this->renderView('gestapp/purchase/include/_liste.html.twig', [
+                'purchases' => $purchases,
+                'hide' => 0
+            ])
+        ], 200);
+
+    }
+
+    /**
+     * Fonction de progression sur la commande, suivi des produits à réaliser à la main, et de l'envoi de la commande par la poste.
+     * @Route("/opadmin/purchases/updateStatusPurchase/{id}/{status}", name="op_admin_purchases_updateStatePurchase")
+     */
+    public function updateStatusPurchase(Purchase $purchase, $status, MailerInterface $mailer)
+    {
+        // récupération des variables
+        $numPurchase = $purchase->getNumPurchase();
+        $member = $purchase->getCustomer();
+        $emailMember = $member->getEmail();
+        $fnMember = $member->getFirstName();
+        $lsMember = $member->getLastName();
+
+        // modification de l'entité en cours
+        $purchase->setStatuspaid($status);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($purchase);
+        $entityManager->flush();
+
+        // récupération de la liste de commandes pour son actualisation
+        $purchases = $this->getDoctrine()->getManager()->getRepository(Purchase::class)->findAll();
+
         // Envoi du mail de nouvelle recommandation au membre recommandé
         $email = (new TemplatedEmail())
             ->from('postmaster@openpixl.fr')
@@ -94,7 +138,7 @@ class PurchasesListController extends abstractController
             //->priority(Email::PRIORITY_HIGH)
             ->subject('Cartes de prières - Commande ' . $numPurchase . 'test')
             //->text('Sending emails is fun again!')
-            ->htmlTemplate('email/updatePurchaseState.html.twig')
+            ->htmlTemplate('email/Purchases/updatePurchasePaidState.html.twig')
             ->context([
                 'author' => 'Soeur Marie',
                 'commande' => $numPurchase,
@@ -103,6 +147,7 @@ class PurchasesListController extends abstractController
             ]);
         $mailer->send($email);
 
+        // renvoie JSON à la page
         return $this->json([
             'code'          => 200,
             'message'       => "La commande a été correctement modifié.",

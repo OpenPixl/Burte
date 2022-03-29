@@ -29,6 +29,8 @@ document.querySelectorAll('#filters input').forEach(input => {
 function onClickPage(event){
     event.preventDefault();
     const url = this.href;
+
+    console.log(url)
     axios
         .get(url)
         .then(response => {
@@ -41,7 +43,7 @@ function onClickPage(event){
         })
 }
 
-// Ajout d'un event sur Bouton de suppression dans la fenêtre modale
+// Ajout d'un event sur le lien de pagination
 document.querySelectorAll('a.page-link').forEach(function(link){
     link.addEventListener('click', onClickPage)
 })

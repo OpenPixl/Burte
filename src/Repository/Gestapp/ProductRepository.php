@@ -116,7 +116,7 @@ class ProductRepository extends ServiceEntityRepository
     */
 
     /**
-    * Liste les produits selon une nature.
+    * Liste les produits selon une nature (id).
     * @return Product[] Returns an array of Product objects
     */
     public function oneNature($idnat)
@@ -153,6 +153,46 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * Liste les produits selon une nature name.
+     * @return Product[] Returns an array of Product objects
+     */
+    public function oneNatureName($nature)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.producer', 'pr')
+            ->leftJoin('pr.structure', 's')
+            ->leftJoin('p.productNature', 'n')
+            ->leftJoin('p.productUnit', 'pu')
+            ->Select('
+                p.id AS id,
+                p.name AS name, 
+                p.description AS description,
+                p.details,
+                p.price,
+                pu.name AS productUnit,
+                p.quantity,
+                p.productName AS productName,
+                n.id AS idNature,
+                p.ref AS ref,
+                n.name AS nameNature,
+                p.isDisponible,
+                p.isStar,
+                p.isOnLine,
+                s.name AS producer,
+                p.format,
+                s.logoStructureName AS logoStructureName
+                 ')
+            ->andWhere('n.name = :nat')
+            ->andWhere('p.isOnLine = :isOnLine')
+            ->setParameter('nat', $nature)
+            ->setParameter('isOnLine', 1)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     /**

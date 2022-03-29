@@ -30,7 +30,7 @@ class PageController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        // OPn déclare les variablezs utiles à la méthode
+        // OPn déclare les variables utiles à la méthode
         $member = $this->getUser();
 
         // on alimente une nouvelle page -> l'objet

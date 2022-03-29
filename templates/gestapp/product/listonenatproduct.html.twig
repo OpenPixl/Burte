@@ -1,4 +1,4 @@
-<div class="row" id="{{ natorcat }}_{{ nat }}">
+<div class="row" id="listNatOrCatProduct">
     <div class="col-12 col-md-3">
     {#
     Le code javascript pour la mise en marche du script se trouve sur le fichier :
@@ -6,7 +6,7 @@
     #}
     {{ include('gestapp/product/include/_filtersnature.html.twig') }}
     </div>
-    <div class="col-12 col-md-9" id="liste">
+    <div class="col-12 col-md-9" id="liste"data-type="{{ natorcat }}" data-name="{{ nat }}">
         {{ include('gestapp/product/include/_product.html.twig') }}
     </div>
 </div>

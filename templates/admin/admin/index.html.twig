@@ -105,28 +105,20 @@
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl2">
-            <div class="card border-primary">
+            <div class="card border-info bg-info">
                 <div class="card-body">
-                    <h3>{{ events|length }} Evènements</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
-            <div class="card border-primary">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div><h3>{{ events|length }} Annonces</h3></div>
-                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#Add"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl2">
-            <div class="card border-primary">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div><h3>{{ messages|length }} Messages</h3></div>
-                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#Add"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="avatar-lg rounded-circle bg-soft-light">
+                                <i class="bi bi-calendar-event avatar-title"></i>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-end">
+                                <h2 class="text-white mt-2">{{ events|length }}</h2>
+                                <p class="text-white mb-0">Evènements</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

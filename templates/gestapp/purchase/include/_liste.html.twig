@@ -70,11 +70,14 @@
                 
                 {% if hide == 0 %}
                 <td>
-                    <select id="statePaid" class="form-select form-select-sm" aria-label="Default select example">
-                        <option value="PENDING" {% if p.statuspaid == 'PENDING' %}selected{% endif %}>En attente du paiement</option>
-                        <option value="PAID" {% if p.statuspaid == 'PAID' %}selected{% endif %}>Paiement reçu</option>
-                        <option value="CANCELLED" {% if p.statuspaid == 'CANCELLED' %}selected{% endif %}>Annulé</option>
-                    </select>
+                    <form id="purchasepaid">
+                        <input id="idpurchasepaid" name="idpurchase" type="hidden" value="{{p.id}}">
+                        <select id="statePaid" class="form-select form-select-sm statusPaidPurchases" aria-label="Default select example">
+                            <option value="PENDING" {% if p.statuspaid == 'PENDING' %}selected{% endif %}>En attente du paiement</option>
+                            <option value="PAID" {% if p.statuspaid == 'PAID' %}selected{% endif %}>Paiement reçu</option>
+                            <option value="CANCELLED" {% if p.statuspaid == 'CANCELLED' %}selected{% endif %}>Annulé</option>
+                        </select>
+                    </form>
                 </td>
                 {% endif %}
                 {% if hide == 0 %}

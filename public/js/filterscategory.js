@@ -1,8 +1,6 @@
-
 const FiltersForms = document.getElementById('filters');
 document.querySelectorAll('#filters input').forEach(input => {
     input.addEventListener('change', () => {
-        console.log('Ok')
         // j'intercepte les clics et ses données.
         const Form = new FormData(FiltersForms);
         // construction de la "QueryString"
@@ -31,15 +29,15 @@ document.querySelectorAll('#filters input').forEach(input => {
 function onClickPaginator(event){
     event.preventDefault();
     const urlPaginator = this.href
-    const urlParams = urlPaginator.split('?')[1]
+    const urlParams = urlPaginator.split('?')[0]
     const Params = new URLSearchParams(urlParams);
     const page = Params.get('page')
-    const url = '/gestapp/product/oneCat/filtercategory'
-    const cat = document.getElementById('listonecatproduct').dataset.natorcat;
-    const idcat = document.getElementById('listonecatproduct').dataset.name;
-
+    const url1 = '/gestapp/product/oneCat/filtercategory'
+    const cat = document.getElementById('listonecatproduct').dataset.natorcat
+    const idcat = document.getElementById('listonecatproduct').dataset.name
+    console.log(urlParams)
     axios
-        .get(url + "?" + cat +"=" + idcat + "&page=" + page )
+        .get(url1 + "?" + cat +"=" + idcat + "&page=" + page )
         .then(response => {
             // rafraichissement du tableau
             const liste = document.getElementById('liste').innerHTML = response.data.liste;
@@ -50,7 +48,7 @@ function onClickPaginator(event){
         })
 }
 
-// Ajout d'un event sur Bouton de suppression dans la fenêtre modale
+// Ajout d'un event sur le lien de pagination
 document.querySelectorAll('a.page-link').forEach(function(link){
     link.addEventListener('click', onClickPaginator)
 })

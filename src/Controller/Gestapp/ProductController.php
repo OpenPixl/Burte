@@ -210,6 +210,8 @@ class ProductController extends AbstractController
         ]);
     }
 
+
+
     /**
      * Espace E-Commerce : Liste les produits sur les natures
      * @Route("/gestapp/product/oneNat/{idnat}", name="op_gestapp_product_onecat", methods={"POST"})
@@ -236,6 +238,7 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Espace E-Commerce : Renvoie les produits filtrés par nature
      * @Route("/gestapp/product/oneNat/filternature", name="op_gestapp_products_filternature", methods={"GET","POST"})
      */
     public function filternature(Request $request, ProductRepository $productRepository,PaginatorInterface $paginator): Response
@@ -313,6 +316,60 @@ class ProductController extends AbstractController
 
         $data = $productRepository->ListFilterscategories($filters);
 
+        $products = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            8 /*limit per page*/
+        );
+        if(!$page){
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Ok",
+                'liste' => $this->renderView('gestapp/product/include/_product.html.twig', [
+                    'products' => $products,
+                    'page' => $request->query->getInt('page', 1),
+                ])
+            ], 200);
+        }else{
+            return $this->json([
+                'code'      => 200,
+                'message'   => "Ok",
+                'liste' => $this->renderView('gestapp/product/include/_product.html.twig', [
+                    'products' => $products,
+                    'page' => $request->query->getInt('page', $page),
+                ])
+            ], 200);
+        }
+    }
+
+    /**
+     * Espace E-Commerce : Renvoie les produits filtrés par catégories selon la nature.
+     * @Route("/gestapp/product/filterwebapp", name="op_gestapp_products_filterwebapp", methods={"GET","POST"})
+     */
+    public function filterWebapp(Request $request, ProductRepository $productRepository,PaginatorInterface $paginator): Response
+    {
+        // on récupère les éléments nécessaires à la filtration et le renvoie des données en JSON
+        $filters = $request->get("categories");
+        $idcat = $request->get('category');
+        $nature = $request->get('nature');
+        $page = $request->get('page');
+
+        if($filters){
+            $data = $productRepository->ListFilterscategories($filters);
+        }else{
+            if($nature){
+                $data = $this->getDoctrine()->getRepository(Product::class)->oneNatureName($nature);
+            }
+            else{
+                $childs = $this->getDoctrine()->getRepository(ProductCategory::class)->findChilds($idcat);
+                if (!$childs){
+                    $data = $this->getDoctrine()->getRepository(Product::class)->oneCategory($idcat);
+                }
+                else{
+                    $data = $this->getDoctrine()->getRepository(Product::class)->childCategory($childs);
+                }
+            }
+        }
         $products = $paginator->paginate(
             $data, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/

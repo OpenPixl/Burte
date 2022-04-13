@@ -1,53 +1,80 @@
-# OpenPixl - Stack Docker
+# OpenPixl - Projet Cartes de Prières - Soeur Marie
 <small>pour la production de site Symfony5 et Symfony6</small>
 
-**Pour du DEV ou du PROD**
+### AVANT LA PROCEDURE DE DEPLOIEMENT DU PROJET
 
-Construit à partir de l'image php8:apache et largement inspiré du dépot de [@yoanbernabeu](https://github.com/yoanbernabeu).  
-Merci à lui pour son travail.
+#### 1. PRÉPARER LES CONTENEURS "DOCKER"
 
-A venir prochainemement :
-- [ ] Ajout du port https,
+##### 1.1 Cloner la Stack
+Cloner la stack dans votre dossier de dev
 
-### AVANT LA PROCEDURE
-Cloner le projet dans votre dossier de dev ou de prod
 ```bash
-  git@github.com:Corwin40/StackSymfony.git
+git clone git@github.com:Corwin40/StackSymfony.git
 ```
-Le fichier _docker-compose.yaml_ s'appuie sur un fichier _.env_ contenant vos futures variables nécessaire : à la base de donnée, aux differents ports attribués à vos conteneurs, ...
-Créez ce fichier avec les commandes suivantes :
 
-```
-  cd StackSymfony
-  nano .env
+##### 1.2 Préparation des variables
+Le fichier _docker-compose.yaml_ s'appuie sur un fichier _.env_ contenant l"nesemble des variables nécessaire : 
+- à la base de donnée, 
+- aux differents ports attribués à vos conteneurs, 
+- ...  
+
+Créez ce fichier avec les commandes suivantes depuis votre terminal:
+
+```bash
+cd StackSymfony
+rn StackSymfony SoeurMarie
+nano .env
 ```
 Puis copier/coller le contenu suivant.
 
 ```
 # Variable Project
-PROJECT="nom_project"
+PROJECT=soeurmarie
+PROJECT_IP=22
+RESTART=no
 
 # Variables Mariadb
 PMA_HOST=db
-MARIA_ROOT_PASSWORD="votre_mot_de_passe"
-MARIADB_USER="votre_nom_user"
-MARIADB_PASSWORD="votre_password_user"
-MARIADB_DBNAME="votre_nom_db"
+MARIA_ROOT_PASSWORD=Corwin_40280
+MARIADB_USER=SoeurMarie
+MARIADB_PASSWORD=M2022Lourdes65
+MARIADB_DBNAME=sm_dbsf5
 
 # Variables Serveur apache php
 HTTP_HOST_PORT=80
+HTTP_HOST_PORTDEV=8001
+HTTPS_HOST_PORT=443
+MARIA_HOST_PORT=3307
 ```
 
-### PROCEDURE DE DEPLOIEMENT
+##### 1.3 Personnalisation du fichier _vhost.conf_
+Pour finaliser la configuration de la stack, pensez à adapter le fichier _"vhosts.cnf"_ situé dans le dossier "php". Vous devez modifier les lignes suivantes par votre nom de projet.
 
-#### I. Docker-compose
+Ligne 4
+```bash
+DocumentRoot /var/www/html/soeurmarie_sf5/public
+```
+Ligne 7
+```bash
+<Directory /var/www/html/soeurmarie_sf5/public>
+```
+Ligne24
+```bash
+<Directory /var/www/html/soeurmarie_sf5/public/bundles>
+```
+
+
+#### 1.4. Docker-compose
 Lancer docker-compose avec la commande suivante.  
-La commande _build_ va construire l'image de votre serveur www contenant apache, php8, composer, symfony et yarn. Ainsi que l'ensemble des extensions nécessaire à _PHP_ et les _frameworks_ actuels. 
+La commande _build_ va construire l'image de votre serveur www contenant apache, php8, composer, symfony et yarn. Ainsi que l'ensemble des extensions nécessaire à _PHP_ et les _frameworks_ actuels.
 
 ```bash
   docker-compose build
   docker-compose up -d
 ```
+
+### PROCEDURE DE DEPLOIEMENT
+
 #### II. déploiement du projet
 
 ##### II. A déploiement d'un nouveau projet Symfony pour développement

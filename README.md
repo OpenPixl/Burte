@@ -21,8 +21,8 @@ Le fichier _docker-compose.yaml_ s'appuie sur un fichier _.env_ contenant l"nese
 Créez ce fichier avec les commandes suivantes depuis votre terminal:
 
 ```bash
-cd StackSymfony
-rn StackSymfony SoeurMarie
+mv StackSymfony SoeurMarie
+cd SoeurMarie
 nano .env
 ```
 Puis copier/coller le contenu suivant.

@@ -22,7 +22,26 @@ ol, ul, dl {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
-.card > .card-footer p {
+//*** ------------- Product card in admin ---------------- ***//
+#product .card {
+	border: 1px solid #9ACAF4;
+}
+#product .card > .card-body {
+	min-height: 210px;
+	max-height: 210px;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+}
+
+#product .card-footer:last-child {
+	border-radius: 0 0 0 0;
+}
+#product .card > .card-footer {
+	background-color: #9ACAF4;
+	border-top: 1px solid #9ACAF4;
+}
+
+#product .card > .card-footer p {
 	margin-bottom: 0;
 }
 

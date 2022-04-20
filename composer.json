@@ -4,7 +4,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -16,6 +16,7 @@
         "doctrine/orm": "^2.8",
         "erusev/parsedown": "^1.7",
         "knplabs/knp-paginator-bundle": "^5.6",
+        "knplabs/knp-snappy-bundle": "^1.6",
         "liip/imagine-bundle": "^2.6",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",

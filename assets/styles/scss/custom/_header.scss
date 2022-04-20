@@ -151,22 +151,33 @@ header .dropdown-menu {
     margin-top: 10rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  #bloc_production3 .col-lg-3,
+  #bloc_production3 .col-md-3,
+  #bloc_production3 .col-sm-12
+  {
+    text-align: center;
   }
 
   #bloc_production3 .btn {
     border-color: #ffffff !important;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.3rem;
+    font-size: 2rem;
     width: 100%;
+    height:130%;
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
     border-radius: 0px 0 0 0px;
-    font-weight: 700;
+    font-weight: 500;
     background-color: transparent;
     margin-bottom: 0.2rem;
     margin-top: 0;
+    display: inline-block;
   }
 }
 

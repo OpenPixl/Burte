@@ -18,7 +18,7 @@
             <th>Etat</th>
             {% endif %}
             {% if hide == 0 %}
-            <th></th>
+            <th>Actions</th>
             {% endif %}
         </tr>
         </thead>
@@ -82,6 +82,8 @@
                 {% endif %}
                 {% if hide == 0 %}
                 <td>
+                    <a href="{{ path('op_gestapp_purchases_onepurchase', {'commande': p.numPurchase}) }}" type="button">Supprimer</a>
+
                     <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ p.id }}">Supprimer</a>
                 </td>
                 {% endif %}

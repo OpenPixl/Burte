@@ -95,6 +95,36 @@ class PurchaseRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param $user
+     * @return int|mixed|string
+     * Liste les recommandation reçues
+     */
+    public function onePurchase($commande)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.customer', 'm')
+            ->addSelect('
+                p.firstName AS firstNameL,
+                p.lastName AS lastNameL,
+                p.address AS addressL,
+                p.complement AS complementL,
+                p.zipcode AS zipcodeL,
+                p.city AS cityL,
+                m.firstName AS firstNameF,
+                m.lastName AS lastNameF,
+                m.adress1 AS addressF,
+                m.Adress2 AS complementF,
+                m.zipcode AS zipcodeF,
+                m.city AS cityF
+            ')
+            ->andWhere('p.numPurchase = :numPurchase')
+            ->setParameter('numPurchase', $commande)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Purchase[] Returns an array of Purchase objects
     //  */

@@ -4,6 +4,7 @@ namespace App\Controller\Gestapp\Purchase;
 
 use App\Entity\Gestapp\Purchase;
 use App\Repository\Gestapp\PurchaseRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Admin\Member;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,9 +14,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
+use Knp\Snappy\Pdf;
+use Twig\Environment;
 
 class PurchasesListController extends abstractController
 {
+    private Environment $twig;
+    private Pdf $pdf;
+
+    public function __construct(Environment $twig, Pdf $pdf)
+    {
+        $this->twig = $twig;
+        $this->pdf = $pdf;
+    }
+
     /**
      * @Route("/webapp/purchases/", name="op_webapp_purchases_index")
      * @IsGranted("ROLE_USER", message="Vous devez être connecté pour accéder à vos commandes")
@@ -183,6 +195,30 @@ class PurchasesListController extends abstractController
         return $this->render('gestapp/purchase/byuserSend.html.twig', [
             'purchases' => $purchases,
             'hide' => $hide
+        ]);
+    }
+
+    /**
+     * Voir la commande du client en Pdf
+     * @Route("/op_gestapp/purchases/onePuchase/{commande}", name="op_gestapp_purchases_onepurchase", methods={"GET"})
+     */
+    public function onePurchase($commande, PurchaseRepository $purchaseRepository, Pdf $knpSnappyPdf) : Response
+    {
+        $purchase = $purchaseRepository->onePurchase($commande);
+
+        //$html = $this->twig->render('pdf/purchases/onePurchaseFromCustomer.html.twig', array(
+        //    'purchase'  => $purchase
+        //));
+        //$this->pdf->setTimeout(120);
+        //$this->pdf->setOption('enable-local-file-access', true);
+
+        //return new PdfResponse(
+        //    $knpSnappyPdf->getOutputFromHtml($html),
+        //    'filesss.pdf'
+        //);
+
+        return $this->render('pdf/purchases/onePurchaseFromCustomer.html.twig', [
+            'purchase'=>$purchase
         ]);
     }
 }

@@ -14,7 +14,7 @@
                     {# <p><span class="badge bg-primary">{{ product.category }}</span></p> #}
                 </div>
                 {% autoescape %}
-                <p class="card-text">{{ product.description|u.truncate(100, ' ...')|raw}}</p>
+                <p class="card-text">{{ product.description|u.truncate(70, ' ...')|raw}}</p>
                 {% endautoescape %}
                 <p class="card-subtitle">{{ product.price }} € / {{ product.productUnit }}</p>
             </div>

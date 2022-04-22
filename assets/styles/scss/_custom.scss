@@ -10,13 +10,17 @@ body {
 
 main h1, main h2, main h3{
   font-family: 'Tangerine', cursive;
-  margin-top: .2rem;
   color: #142864;
   font-size: 3rem;
 }
 
 main{
-  margin-top: 1rem;
+  margin-top: 0;
+}
+
+section{
+  padding-top: .5rem;
+  padding-bottom: .5rem;
 }
 
 #section_title{

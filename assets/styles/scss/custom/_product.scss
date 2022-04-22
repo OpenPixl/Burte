@@ -23,7 +23,7 @@
   margin-top: 0.2rem;
   color: $sm-primary-color;
   font-size: 2rem;
-  line-height: 1.4;
+  line-height: 1;
 }
 
 #productCard .product-subtitle {
@@ -35,7 +35,7 @@
 
 #productCard .btn-outline-sm{
   color: $sm-secondary-color;
-  border-color: $sm-secondary-color;
+  border-color: $sm-secondary-color !important;
   font-size: 0.6rem;
 }
 
@@ -46,8 +46,22 @@
   font-size: 0.6rem;
 }
 
-/*** Effets de style sur la page d'un produit ***/
+/*** Effets de style sur la pages des cartes - bleu léger- ***/
+#Calligraphies .btn-outline-sm{
+  color: $sm-secondary-color !important;
+  border-color: $sm-secondary-color !important;
+  font-size: 0.6rem;
+}
 
+#Calligraphies .btn-outline-sm:hover{
+  background-color: $sm-secondary-color;
+  color: #FFFFFF;
+  border-color: $sm-secondary-color;
+  font-size: 0.6rem;
+}
+
+
+/*** Effets de style sur la page d'un produit ***/
 #productCard #count{
   padding: 0.4rem 0.2rem;
   //background-color: #ffe4c4;

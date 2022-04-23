@@ -1,9 +1,20 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/css/foundation.min.css" crossorigin="anonymous">
-    </head>
-    <body>
-    <div class="container">
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{asset('css/print.min.css')}}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div>
+        <button class="btn btn-primary" id="printButton">
+            Print
+        </button>
+    </div>
+    <div id="printFacture" class="container">
         <div class="row gutters">
             <div class="col-2">
                 <img src="{{ absolute_url(asset('images/home_front/LOGO-fondblanc.png')) }}" alt="" class="img-fluid">
@@ -20,17 +31,24 @@
                     <div class="invoice-header">
                         <!-- Row start -->
                         <div class="row gutters">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <address class="text-right">
+                                    Maria Bambina<br>
+                                    Marie THIBAULT<br>
+                                    8 rue du midi<br>
+                                    65100 LOURDES
+                                </address>
+                            </div>
+                        </div>
+                        <div class="row gutters">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                <a href="index.html" class="invoice-logo">
-                                    Bootdey.com
-                                </a>
+
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                <address class="text-right">
-                                    Maxwell admin Inc, 45 NorthWest Street.<br>
-                                    Sunrise Blvd, San Francisco.<br>
-                                    00000 00000
-                                </address>
+                                <h5>FACTURE n° 001</h5>
                             </div>
                         </div>
                         <!-- Row end -->
@@ -39,11 +57,11 @@
                             <div class="col-4">
                                 <div class="card">
                                     <div class="card-header">
-                                        <p><strong>Adresse de facturation</strong></p>
+                                        <p class="mb-0"> <strong>Adresse de facturation</strong></p>
                                     </div>
                                     <div class="card-body">
                                         <div class="invoice-details">
-                                            <address>
+                                            <address class="mb-0">
                                                 <strong>{{ purchase.firstNameF }} {{ purchase.lastNameF }}</strong><br>
                                                 {{ purchase.addressF }}<br>
                                                 {% if purchase.complementF %}
@@ -58,11 +76,11 @@
                             <div class="col-4">
                                 <div class="card">
                                     <div class="card-header">
-                                        <p><strong>Adresse de livraison</strong></p>
+                                        <p class="mb-0"><strong>Adresse de livraison</strong></p>
                                     </div>
                                     <div class="card-body">
                                         <div class="invoice-details">
-                                            <address>
+                                            <address class="mb-0">
                                                 <strong>{{ purchase.firstNameL }} {{ purchase.lastNameL }}</strong><br>
                                                 {{ purchase.addressL }}<br>
                                                 {% if purchase.complementL %}
@@ -85,8 +103,8 @@
                             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                                 <div class="invoice-details">
                                     <div class="invoice-num">
-                                        <div>Invoice - #009</div>
-                                        <div>January 10th 2020</div>
+                                        <div><b>Commande :</b> #{{purchase.numPurchase}}</div>
+                                        <div><b>Date de Facturation :</b> {{"now"|date("m/d/Y")}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -101,69 +119,35 @@
                                 <div class="row gutters">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="table-responsive">
+
                                             <table class="table custom-table m-0">
                                                 <thead>
                                                 <tr>
-                                                    <th>Items</th>
-                                                    <th>Product ID</th>
-                                                    <th>Quantity</th>
-                                                    <th>Sub Total</th>
+                                                    <th>Produit</th>
+                                                    <th>Prix</th>
+                                                    <th>Quantité</th>
+                                                    <th>Somme</th>
                                                 </tr>
                                                 </thead>
+
                                                 <tbody>
-                                                <tr>
-                                                    <td>
-                                                        Wordpress Template
-                                                        <p class="m-0 text-muted">
-                                                            Reference site about Lorem Ipsum, giving information on its origins.
-                                                        </p>
-                                                    </td>
-                                                    <td>#50000981</td>
-                                                    <td>9</td>
-                                                    <td>$5000.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Maxwell Admin Template
-                                                        <p class="m-0 text-muted">
-                                                            As well as a random Lipsum generator.
-                                                        </p>
-                                                    </td>
-                                                    <td>#50000126</td>
-                                                    <td>5</td>
-                                                    <td>$100.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Unify Admin Template
-                                                        <p class="m-0 text-muted">
-                                                            Lorem ipsum has become the industry standard.
-                                                        </p>
-                                                    </td>
-                                                    <td>#50000821</td>
-                                                    <td>6</td>
-                                                    <td>$49.99</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>&nbsp;</td>
-                                                    <td colspan="2">
-                                                        <p>
-                                                            Subtotal<br>
-                                                            Shipping &amp; Handling<br>
-                                                            Tax<br>
-                                                        </p>
-                                                        <h5 class="text-success"><strong>Grand Total</strong></h5>
-                                                    </td>
-                                                    <td>
-                                                        <p>
-                                                            $5000.00<br>
-                                                            $100.00<br>
-                                                            $49.00<br>
-                                                        </p>
-                                                        <h5 class="text-success"><strong>$5150.99</strong></h5>
-                                                    </td>
-                                                </tr>
+                                                    {% for i in items %}
+                                                    <tr>
+                                                        <td>{{i.productName}}</td>
+                                                        <td>{{i.productPrice}}</td>
+                                                        <td>{{i.productQty}}</td>
+                                                        <td>{{i.totalItem}} €</td>
+                                                    </tr>
+                                                    {% endfor %}
                                                 </tbody>
+                                                <tfooter>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><strong>Total facture</strong></td>
+                                                        <td><strong>{{ purchase.total }} €</strong></td>
+                                                    </tr>
+                                                </tfooter>
                                             </table>
                                         </div>
                                     </div>
@@ -189,7 +173,7 @@
             </div>
         </div>
     </div>
-    </body>
-</html>
+
+{% endblock %} 
 
 

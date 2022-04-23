@@ -111,6 +111,8 @@ class PurchaseRepository extends ServiceEntityRepository
                 p.complement AS complementL,
                 p.zipcode AS zipcodeL,
                 p.city AS cityL,
+                p.numPurchase AS numPurchase,
+                p.total AS total,
                 m.firstName AS firstNameF,
                 m.lastName AS lastNameF,
                 m.adress1 AS addressF,

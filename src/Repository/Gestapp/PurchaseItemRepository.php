@@ -19,6 +19,24 @@ class PurchaseItemRepository extends ServiceEntityRepository
         parent::__construct($registry, PurchaseItem::class);
     }
 
+    /**
+     * @param $value
+     * @return float|int|mixed|string
+     * Liste les élements composant une facture
+     */
+    public function itemsPurchase($num)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.purchase', 'p')
+            ->andWhere('i.purchase = :item')
+            ->setParameter('item', $num)
+            ->orderBy('i.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
     // /**
     //  * @return PurchaseItem[] Returns an array of PurchaseItem objects
     //  */

@@ -3,6 +3,7 @@
 namespace App\Controller\Gestapp\Purchase;
 
 use App\Entity\Gestapp\Purchase;
+use App\Repository\Gestapp\PurchaseItemRepository;
 use App\Repository\Gestapp\PurchaseRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -202,9 +203,14 @@ class PurchasesListController extends abstractController
      * Voir la commande du client en Pdf
      * @Route("/op_gestapp/purchases/onePuchase/{commande}", name="op_gestapp_purchases_onepurchase", methods={"GET"})
      */
-    public function onePurchase($commande, PurchaseRepository $purchaseRepository, Pdf $knpSnappyPdf) : Response
+    public function onePurchase($commande, PurchaseRepository $purchaseRepository, PurchaseItemRepository $purchaseItemRepository,Pdf $knpSnappyPdf) : Response
     {
         $purchase = $purchaseRepository->onePurchase($commande);
+        $purchase2 = $purchaseRepository->findOneBy(array('numPurchase' => $commande));
+        $num = $purchase2->getId();
+        //dd($idpurchase);
+        $items = $purchaseItemRepository->itemsPurchase($num);
+        //dd($items);
 
         //$html = $this->twig->render('pdf/purchases/onePurchaseFromCustomer.html.twig', array(
         //    'purchase'  => $purchase
@@ -218,7 +224,8 @@ class PurchasesListController extends abstractController
         //);
 
         return $this->render('pdf/purchases/onePurchaseFromCustomer.html.twig', [
-            'purchase'=>$purchase
+            'purchase'=>$purchase,
+            'items' => $items
         ]);
     }
 }

@@ -212,20 +212,21 @@ class PurchasesListController extends abstractController
         $items = $purchaseItemRepository->itemsPurchase($num);
         //dd($items);
 
-        //$html = $this->twig->render('pdf/purchases/onePurchaseFromCustomer.html.twig', array(
-        //    'purchase'  => $purchase
-        //));
+        $html = $this->twig->render('pdf/purchases/onePurchaseFromCustomer.html.twig', array(
+            'purchase'  => $purchase,
+            'items' => $items
+        ));
         //$this->pdf->setTimeout(120);
         //$this->pdf->setOption('enable-local-file-access', true);
 
-        //return new PdfResponse(
-        //    $knpSnappyPdf->getOutputFromHtml($html),
-        //    'filesss.pdf'
-        //);
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html),
+            'filesss.pdf'
+        );
 
-        return $this->render('pdf/purchases/onePurchaseFromCustomer.html.twig', [
-            'purchase'=>$purchase,
-            'items' => $items
-        ]);
+        //return $this->render('pdf/purchases/onePurchaseFromCustomer.html.twig', [
+        //    'purchase'=>$purchase,
+        //    'items' => $items
+        //]);
     }
 }

@@ -1,179 +1,172 @@
-{% extends "base.html.twig" %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{asset('css/print.min.css')}}">
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
-
-{% block content %}
-    <div>
-        <button class="btn btn-primary" id="printButton">
-            Print
-        </button>
-    </div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
     <div id="printFacture" class="container">
-        <div class="row gutters">
-            <div class="col-2">
-                <img src="{{ absolute_url(asset('images/home_front/LOGO-fondblanc.png')) }}" alt="" class="img-fluid">
-            </div>
-            <div class="col-10">
-
-            </div>
+    <div class="row gutters">
+        <div class="col-2">
+            {# <img src="{{ asset('images/home_front/LOGO-fondblanc.png') }}" alt="" class="img-fluid"> #}
         </div>
-        <div class="row gutters">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="col-10">
 
-                <div class="invoice-container">
-                    {# entête de facture #}
-                    <div class="invoice-header">
-                        <!-- Row start -->
-                        <div class="row gutters">
-                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+        </div>
+    </div>
+    <div class="row gutters">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <address class="text-right">
-                                    Maria Bambina<br>
-                                    Marie THIBAULT<br>
-                                    8 rue du midi<br>
-                                    65100 LOURDES
-                                </address>
-                            </div>
+            <div class="invoice-container">
+                {# entête de facture #}
+                <div class="invoice-header">
+                    <!-- Row start -->
+                    <div class="row gutters">
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+
                         </div>
-                        <div class="row gutters">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <h5>FACTURE n° 001</h5>
-                            </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <address class="text-right">
+                                Maria Bambina<br>
+                                Marie THIBAULT<br>
+                                8 rue du midi<br>
+                                65100 LOURDES
+                            </address>
                         </div>
-                        <!-- Row end -->
-                        <!-- Row start -->
-                        <div class="row gutters">
-                            <div class="col-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <p class="mb-0"> <strong>Adresse de facturation</strong></p>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="invoice-details">
-                                            <address class="mb-0">
-                                                <strong>{{ purchase.firstNameF }} {{ purchase.lastNameF }}</strong><br>
-                                                {{ purchase.addressF }}<br>
-                                                {% if purchase.complementF %}
+                    </div>
+                    <div class="row gutters">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <h5>FACTURE n° 001</h5>
+                        </div>
+                    </div>
+                    <!-- Row end -->
+                    <!-- Row start -->
+                    <div class="row gutters">
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <p class="mb-0"> <strong>Adresse de facturation</strong></p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="invoice-details">
+                                        <address class="mb-0">
+                                            <strong>{{ purchase.firstNameF }} {{ purchase.lastNameF }}</strong><br>
+                                            {{ purchase.addressF }}<br>
+                                            {% if purchase.complementF %}
                                                 {{ purchase.complementF }}<br>
-                                                {% endif %}
-                                                {{ purchase.zipcodeF }} {{ purchase.cityF }}
-                                            </address>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <p class="mb-0"><strong>Adresse de livraison</strong></p>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="invoice-details">
-                                            <address class="mb-0">
-                                                <strong>{{ purchase.firstNameL }} {{ purchase.lastNameL }}</strong><br>
-                                                {{ purchase.addressL }}<br>
-                                                {% if purchase.complementL %}
-                                                    {{ purchase.complementL }}<br>
-                                                {% endif %}
-                                                {{ purchase.zipcodeL }} {{ purchase.cityL }}
-                                            </address>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4"></div>
-                        </div>
-                        <!-- Row end -->
-                        <!-- Row start -->
-                        <div class="row gutters">
-                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                                <div class="invoice-details">
-                                    <div class="invoice-num">
-                                        <div><b>Commande :</b> #{{purchase.numPurchase}}</div>
-                                        <div><b>Date de Facturation :</b> {{"now"|date("m/d/Y")}}</div>
+                                            {% endif %}
+                                            {{ purchase.zipcodeF }} {{ purchase.cityF }}
+                                        </address>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Row end -->
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <p class="mb-0"><strong>Adresse de livraison</strong></p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="invoice-details">
+                                        <address class="mb-0">
+                                            <strong>{{ purchase.firstNameL }} {{ purchase.lastNameL }}</strong><br>
+                                            {{ purchase.addressL }}<br>
+                                            {% if purchase.complementL %}
+                                                {{ purchase.complementL }}<br>
+                                            {% endif %}
+                                            {{ purchase.zipcodeL }} {{ purchase.cityL }}
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4"></div>
                     </div>
-                    {# Corps de facture #}
-                    <div class="invoice-body">
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <!-- Row start -->
-                                <div class="row gutters">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="table-responsive">
+                    <!-- Row end -->
+                    <!-- Row start -->
+                    <div class="row gutters">
+                        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
 
-                                            <table class="table custom-table m-0">
-                                                <thead>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                            <div class="invoice-details">
+                                <div class="invoice-num">
+                                    <div><b>Commande :</b> #{{purchase.numPurchase}}</div>
+                                    <div><b>Date de Facturation :</b> {{"now"|date("m/d/Y")}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row end -->
+                </div>
+                {# Corps de facture #}
+                <div class="invoice-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Row start -->
+                            <div class="row gutters">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive">
+
+                                        <table class="table custom-table m-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Produit</th>
+                                                <th>Prix</th>
+                                                <th>Quantité</th>
+                                                <th>Somme</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for i in items %}
                                                 <tr>
-                                                    <th>Produit</th>
-                                                    <th>Prix</th>
-                                                    <th>Quantité</th>
-                                                    <th>Somme</th>
+                                                    <td>{{i.productName}}</td>
+                                                    <td>{{i.productPrice}}</td>
+                                                    <td>{{i.productQty}}</td>
+                                                    <td>{{i.totalItem}} €</td>
                                                 </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    {% for i in items %}
-                                                    <tr>
-                                                        <td>{{i.productName}}</td>
-                                                        <td>{{i.productPrice}}</td>
-                                                        <td>{{i.productQty}}</td>
-                                                        <td>{{i.totalItem}} €</td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                                <tfooter>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td><strong>Total facture</strong></td>
-                                                        <td><strong>{{ purchase.total }} €</strong></td>
-                                                    </tr>
-                                                </tfooter>
-                                            </table>
-                                        </div>
+                                            {% endfor %}
+                                            </tbody>
+                                            <tfooter>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><strong>Total facture</strong></td>
+                                                    <td><strong>{{ purchase.total }} €</strong></td>
+                                                </tr>
+                                            </tfooter>
+                                        </table>
                                     </div>
                                 </div>
-                                <!-- Row end -->
                             </div>
-                        </div>
-                    </div>
-                    {# Pied de facture #}
-                    <div class="invoice-footer">
-                        <div class="row">
-                            <div class="col-12">
-                                <hr>
-                                <p class="text-center">
-                                    Cartes de Prières - Maria Bambina - 8, rue du midi
-                                </p>
-                            </div>
+                            <!-- Row end -->
                         </div>
                     </div>
                 </div>
-
-
+                {# Pied de facture #}
+                <div class="invoice-footer">
+                    <div class="row">
+                        <div class="col-12">
+                            <hr>
+                            <p class="text-center">
+                                Cartes de Prières - Maria Bambina - 8, rue du midi
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </div>
+</div>
+</body>
 
-{% endblock %} 
 
 

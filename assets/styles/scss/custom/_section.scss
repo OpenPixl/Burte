@@ -38,5 +38,9 @@
 }
 
 #Sanctuaires{
-  background-color: linear-gradient($sm-bluebridge, 20% ,#fff);
+  background-image: linear-gradient($sm-bluebridge,20%,#fff);
+}
+
+#Artisanats{
+  background-image: linear-gradient(#fff,20%,$sm-bluebridge);
 }

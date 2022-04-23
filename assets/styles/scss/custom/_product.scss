@@ -40,7 +40,7 @@
 }
 
 #productCard .btn-outline-sm:hover{
-  background-color: $sm-secondary-color;
+  background-color: $sm-secondary-color !important;
   color: #FFFFFF;
   border-color: $sm-secondary-color;
   font-size: 0.6rem;

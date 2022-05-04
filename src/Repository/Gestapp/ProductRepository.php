@@ -126,6 +126,7 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('pr.structure', 's')
             ->leftJoin('p.productNature', 'n')
             ->leftJoin('p.productUnit', 'pu')
+            ->leftJoin('p.format', 'pf')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -142,7 +143,7 @@ class ProductRepository extends ServiceEntityRepository
                 p.isStar,
                 p.isOnLine,
                 s.name AS producer,
-                p.format,
+                pf.name AS format,
                 s.logoStructureName AS logoStructureName
                  ')
             ->andWhere('n.id = :idnat')
@@ -207,6 +208,7 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.ProductCategory', 'c')
             ->leftJoin('p.productUnit', 'pu')
             ->leftJoin('p.productNature', 'n')
+            ->leftJoin('p.format', 'pf')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -224,7 +226,7 @@ class ProductRepository extends ServiceEntityRepository
                 p.isStar,
                 p.isOnLine,
                 s.name AS producer,
-                p.format,
+                pf.name AS format,
                 s.logoStructureName AS logoStructureName
                  ')
             ->andWhere('c.id = :idcat')
@@ -283,6 +285,7 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.ProductCategory', 'c')
             ->leftJoin('p.productUnit', 'pu')
             ->leftJoin('p.productNature', 'n')
+            ->leftJoin('p.format', 'pf')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -300,7 +303,7 @@ class ProductRepository extends ServiceEntityRepository
                 p.isStar,
                 p.isOnLine,
                 s.name AS producer,
-                p.format,
+                pf.name AS format,
                 s.logoStructureName AS logoStructureName
                  ')
             ->andWhere('c.id in (:childs)')

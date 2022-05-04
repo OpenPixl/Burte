@@ -1,8 +1,22 @@
 {% if items %}
     {% set qtyItems = 0 %}
+    {% set qtyPrice = 0 %}
+    {% set sstotalnatures = 0 %}
+    {% set weight = 0 %}
+    {% set fp1 = 1.43 %}
+    {% set fp2 = 2.86 %}
+    {% set fp3 = 5.26 %}
+    {% set fp4 = 7.89 %}
+    {% set fp5 = 11.44 %}
+
     {% if items %}
-        {% for i in items %}
+        {% for i in items|filter(items => items.product.productNature == 'Aquarelle' or items.product.productNature == 'Calligraphie' or items.product.productNature == 'Sanctuaire') %}
             {% set qtyItems = qtyItems + i.qty %}
+            {% set qtyPrice = i.qty * i.product.price %}
+            {% set sstotalnatures = sstotalnatures + qtyPrice %}
+        {% endfor %}
+        {% for i in items %}
+            {% set weight = qtyItems * i.product.format.weight %}
         {% endfor %}
     {% endif %}
     <section id="listCart">
@@ -59,8 +73,8 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="4">Total</td>
-                <td colspan="2">{{ total|number_format(2, ',', ' ')}} €</td>
+                <th colspan="4">Total sans remise</th>
+                <th colspan="2">{{ total|number_format(2, ',', ' ')}} €</th>
             </tr>
             <tr>
                 <td colspan="3">
@@ -76,21 +90,22 @@
                 <td colspan="3">
                     {{ qtyItems }} cartes
                 </td>
-                {% elseif qtyItems >= 50 and qtyItems <= 99 %}{% set reductotal = total*0.1 %}
+                {% elseif qtyItems >= 50 and qtyItems <= 99 %}
+                    {% set reductotal = sstotalnatures*0.1 %}
                 <td>
                     {{ qtyItems }} cartes
                 </td>
                 <td colspan="3">
                     - {{ reductotal|number_format(2, ',', ' ') }} €
                 </td>
-                {% elseif qtyItems >= 100 and qtyItems <= 149 %}{% set reductotal = total*0.15 %}
+                {% elseif qtyItems >= 100 and qtyItems <= 149 %}{% set reductotal = sstotalnatures*0.15 %}
                 <td>
                     {{ qtyItems }} cartes
                 </td>
                 <td colspan="3">
                     - {{ reductotal|number_format(2, ',', ' ') }} €
                 </td>
-                {% elseif qtyItems >= 150 and qtyItems <= 199 %}{% set reductotal = total*0.20 %}
+                {% elseif qtyItems >= 150 and qtyItems <= 199 %}{% set reductotal = sstotalnatures*0.20 %}
                 <td>
                     {{ qtyItems }} cartes
                 </td>
@@ -99,10 +114,36 @@
                 </td>
                 {% endif %}
             </tr>
+            {% if qtyItems > 50 %}
+            <tr>
+                {% set totalremise = total - reductotal %}
+                <th colspan="4">Total avec remise</th>
+                <th colspan="2">{{ totalremise|number_format(2, ',', ' ')}} €</th>
+            </tr>
+            {% endif %}
+            {% if weight %}
             <tr>
                 <td colspan="4">Frais de port</td>
-                <td colspan="2"></td>
+                <td colspan="2">
+                    {% if weight <= 20 %}
+                    {{ weight }} g - {{ fp1 }}€
+                    {% elseif weight > 20 and weight <= 100 %}
+                    {{ weight }} g - {{ fp2 }}€
+                    {% elseif weight > 100 and weight <= 250 %}
+                    {{ weight }} g - {{ fp3 }}€
+                    {% elseif weight > 250 and weight <= 500 %}
+                    {{ weight }} g - {{ fp4 }}€
+                    {% elseif weight > 500 and weight <= 3000 %}
+                    {{ weight }} g - {{ fp5 }}€
+                    {% endif %}
+                </td>
             </tr>
+            <tr>
+                {% set totalFP = totalremise + reductotal %}
+                <th colspan="4">Total avec remise</th>
+                <th colspan="2">{{ totalFP|number_format(2, ',', ' ')}} €</th>
+            </tr>
+            {% endif %}
             </tfoot>
         </table>
 

@@ -146,32 +146,33 @@ section{
 
 /***---------- FOOTER ----------***/
 footer{
-  border-top:solid 2px $sm-primary-color;
+  border-top:solid 1px #077dc2;
 }
 footer h1,
 footer h2,
 footer h3 {
   font-family: 'Tangerine', cursive;
-  color: #ffffff;
-  border-bottom: 1px solid #ffffff;
+  color: #222222;
+  border-bottom: 1px solid #222222;
   padding-top: 1rem;
 }
 /***---------- FOOTER : footer-top ----------***/
 #footer_top {
-  background-color: #077dc2;
+  background-color: #ffffff;
 }
 
 #footer_top p {
-  color: #ffffff;
+  color: #222222;
   font-size:0.8rem;
 }
 
+
 #footer_top a {
-  color: #ffffff;
+  color: #222222;
 }
 
 #footer_top a:hover {
-  color: #142864;
+  color: #333333;
 }
 /***---------- FOOTER : footer-bottom ----------***/
 #footer_bottom {

@@ -4,6 +4,7 @@ namespace App\Form\Gestapp;
 
 use App\Entity\Gestapp\Product;
 use App\Entity\Gestapp\ProductCategory;
+use App\Entity\Gestapp\productFormat;
 use App\Entity\Gestapp\ProductNature;
 use App\Repository\Gestapp\ProductCategoryRepository;
 use App\Repository\GestApp\ProductNatureRepository;
@@ -89,12 +90,13 @@ class ProductType extends AbstractType
                     'TVA 0%' => '0',
                 ],
             ])
-            ->add('format', ChoiceType::class, [
-                'choices'  => [
-                    'Carte 10*15' => "card10-15",
-                    'Carte double' => 'card_double',
-                    'Autres' => 'other',
-                ],
+            ->add('format', EntityType::class, [
+                'class' => ProductFormat::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->orderBy('p.id', 'ASC');
+                },
+                'choice_label' => 'name',
             ])
             ->add('isPersonalisable')
             ->add('otherCategory')

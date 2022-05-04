@@ -55,6 +55,9 @@ class PageType extends AbstractType
                     return $pageRepository->createQueryBuilder('p')->orderBy('p.name', 'ASC');
                 }
             ])
+            ->add('attrId')
+            ->add('attrName')
+            ->add('attrClass')
         ;
     }
 

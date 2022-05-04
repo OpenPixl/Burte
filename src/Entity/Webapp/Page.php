@@ -84,8 +84,6 @@ class Page
      */
     private $isMenu;
 
-
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -105,6 +103,21 @@ class Page
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dispublishAt;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $attrId;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $attrName;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $attrClass;
 
     /**
      * @ORM\OneToMany(targetEntity=Section::class, mappedBy="page", orphanRemoval=true)
@@ -468,6 +481,40 @@ class Page
     {
         $this->parameter = $parameter;
 
+        return $this;
+    }
+
+    public function getAttrId(): ?string
+    {
+        return $this->attrId;
+    }
+
+    public function setAttrId(string $attrId): self
+    {
+        $this->attrId = $attrId;
+
+        return $this;
+    }
+
+    public function getAttrName(): ?string
+    {
+        return $this->attrName;
+    }
+
+    public function setAttrName(?string $attrName): self
+    {
+        $this->attrName = $attrName;
+        return $this;
+    }
+
+    public function getAttrClass(): ?string
+    {
+        return $this->attrClass;
+    }
+
+    public function setAttrClass(?string $attrClass): self
+    {
+        $this->attrClass = $attrClass;
         return $this;
     }
 }

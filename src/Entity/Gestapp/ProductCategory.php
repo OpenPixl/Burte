@@ -49,7 +49,6 @@ class ProductCategory
 
     /**
      * @ORM\ManyToOne(targetEntity=ProductNature::class, inversedBy="productCategories")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $Nature;
 

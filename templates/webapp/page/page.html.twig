@@ -17,24 +17,26 @@
 {% block content %}
     {% if page is empty %}
     {% else %}
-        <header id="page-title">
-            <div class="container">
-            {% if page.isTitle == 1 %}
-                <div class="row">
-                    <div class="col">
-                        <h1 class="title">{{ page.name }}</h1>
-                    </div>
+        <div id="{{ page.attrId }}">
+            <header id="page-title">
+                <div class="container">
+                    {% if page.isTitle == 1 %}
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="title">{{ page.name }}</h1>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if page.isDescription == 1 %}
+                        <div class="row">
+                            <div class="col">
+                                <p>{{ page.description }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-            {% if page.isDescription == 1 %}
-                <div class="row">
-                    <div class="col">
-                        <p>{{ page.description }}</p>
-                    </div>
-                </div>
-            {% endif %}
-            </div>
-        </header>
-        {{ render(controller('App\\Controller\\Webapp\\SectionController::frontbypage', {'id' : page.id})) }}
+            </header>
+            {{ render(controller('App\\Controller\\Webapp\\SectionController::frontbypage', {'id' : page.id})) }}
+        </div>
     {% endif %}
 {% endblock %}

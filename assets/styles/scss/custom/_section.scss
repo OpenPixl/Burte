@@ -1,7 +1,5 @@
 //*** ------------- section accueil Calligraphies ---------------- ***//
-#Calligraphies{
-  background-color: $sm-bluebridge;
-}
+
 
 .op-section .btn {
   border-color: $sm-primary-color !important;
@@ -37,10 +35,23 @@
   width: 100%;
 }
 
+#SoeurMarie_back{
+  background-image: linear-gradient($sm-bluebridge,20%,#fff);
+}
+
+
+#Calligraphies{
+  background-image: linear-gradient($sm-bluebridge,20%,#fff);
+}
+
+#Aquarelles{
+  background-image: linear-gradient($sm-bluebridge,20%,#fff);
+}
+
 #Sanctuaires{
   background-image: linear-gradient($sm-bluebridge,20%,#fff);
 }
 
 #Artisanats{
-  background-image: linear-gradient(#fff,20%,$sm-bluebridge);
+  background-image: linear-gradient($sm-bluebridge,20%,#fff);
 }

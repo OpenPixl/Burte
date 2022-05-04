@@ -106,11 +106,6 @@ class Product
     private $purchaseItems;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $format;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $isPersonalisable = false;
@@ -157,6 +152,11 @@ class Product
      * @ORM\ManyToMany(targetEntity=ProductCategory::class, inversedBy="otherProducts")
      */
     private $otherCategory;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=productFormat::class)
+     */
+    private $format;
 
     public function __construct()
     {
@@ -465,18 +465,6 @@ class Product
         return $this;
     }
 
-    public function getFormat(): ?string
-    {
-        return $this->format;
-    }
-
-    public function setFormat(?string $format): self
-    {
-        $this->format = $format;
-
-        return $this;
-    }
-
     public function getTva(): ?float
     {
         return $this->tva;
@@ -551,6 +539,18 @@ class Product
     public function removeOtherCategory(ProductCategory $otherCategory): self
     {
         $this->otherCategory->removeElement($otherCategory);
+
+        return $this;
+    }
+
+    public function getFormat(): ?productFormat
+    {
+        return $this->format;
+    }
+
+    public function setFormat(?productFormat $format): self
+    {
+        $this->format = $format;
 
         return $this;
     }

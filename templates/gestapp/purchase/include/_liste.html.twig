@@ -82,7 +82,7 @@
                 {% endif %}
                 {% if hide == 0 %}
                 <td>
-                    <a href="{{ path('op_gestapp_purchases_onepurchase', {'commande': p.numPurchase}) }}" type="button">Supprimer</a>
+                    <a href="{{ path('op_gestapp_purchases_onepurchase', {'commande': p.numPurchase}) }}" type="button"><i class="fa-regular fa-credit-card"></i> Imprimer la facture</a>
 
                     <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ p.id }}">Supprimer</a>
                 </td>

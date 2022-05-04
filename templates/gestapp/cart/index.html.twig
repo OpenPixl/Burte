@@ -99,56 +99,56 @@
 </script>
 {% endblock %}
 
-
 {% block content %}
+<div id="SoeurMarie_back">
+    <header id="page-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between">
+                    <div>
+                        <h1>Votre panier</h1>
+                    </div>
+                    <div>
+                        {#
+                        <ul class="header__breadcrumb header__breadcrumb--basket header__breadcrumb--short">
+                            <li class="header__breadcrumb-item header__breadcrumb-item--short header__breadcrumb-item--active">
+                                <a><span>1<span class="header__breadcrumb-label">produits</span></span></a>
+                            </li>
 
-<header id="page-title">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 d-flex justify-content-between">
-                <div>
-                    <h1>Votre panier</h1>
+                            <li class="header__breadcrumb-item header__breadcrumb-item--short">
+                                <a><span>2<span class="header__breadcrumb-label">Coordonnées</span></span></a>
+                            </li>
+
+                            <li class="header__breadcrumb-item header__breadcrumb-item--short">
+                                <a><span>3<span class="header__breadcrumb-label">Livraison et Paiement</span></span></a>
+                            </li>
+                        </ul>
+                        #}
+                    </div>
+
                 </div>
-                <div>
-                    {#
-                    <ul class="header__breadcrumb header__breadcrumb--basket header__breadcrumb--short">
-                        <li class="header__breadcrumb-item header__breadcrumb-item--short header__breadcrumb-item--active">
-                            <a><span>1<span class="header__breadcrumb-label">produits</span></span></a>
-                        </li>
-
-                        <li class="header__breadcrumb-item header__breadcrumb-item--short">
-                            <a><span>2<span class="header__breadcrumb-label">Coordonnées</span></span></a>
-                        </li>
-
-                        <li class="header__breadcrumb-item header__breadcrumb-item--short">
-                            <a><span>3<span class="header__breadcrumb-label">Livraison et Paiement</span></span></a>
-                        </li>
-                    </ul>
-                    #}
-                </div>
-
             </div>
         </div>
-    </div>
-</header>
-<section id="page-content" class="op-section">
-    <div class="container">
-        <div id="alertMessage">
-            {% include 'include/_alert.html.twig' with [{'app.flashes': app.flashes}] %}
-            {% include 'include/_alert.html.twig' %}
-        </div>
-        <div id="liste">
-            {{ include('gestapp/cart/include/_liste.html.twig')}}
-        </div>
-        {% if items %}
-        <div class="mb-5 d-flex justify-content-around">
-            <button id="previousStep" class="btn btn-sm btn-outline-secondary" disabled> << Etape Précedente</button>
-            <button id="nextStep" class="btn btn-sm btn-outline-secondary">Etape Suivante >> </button>
-            {% if app.user %}
-            <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
+    </header>
+    <section id="page-content" class="op-section">
+        <div class="container">
+            <div id="alertMessage">
+                {% include 'include/_alert.html.twig' with [{'app.flashes': app.flashes}] %}
+                {% include 'include/_alert.html.twig' %}
+            </div>
+            <div id="liste">
+                {{ include('gestapp/cart/include/_liste.html.twig')}}
+            </div>
+            {% if items %}
+                <div class="mb-5 d-flex justify-content-around">
+                    <button id="previousStep" class="btn btn-sm btn-outline-secondary" disabled> << Etape Précedente</button>
+                    <button id="nextStep" class="btn btn-sm btn-outline-secondary">Etape Suivante >> </button>
+                    {% if app.user %}
+                        <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
+                    {% endif %}
+                </div>
             {% endif %}
         </div>
-        {% endif %}
-    </div>
-</section>
+    </section>
+</div>
 {% endblock %}

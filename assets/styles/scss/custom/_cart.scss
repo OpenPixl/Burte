@@ -1,3 +1,4 @@
+//*** ------------- Fixe les règles contenue sur les pages panier et Commandes ---------------- ***//
 #listCart table
 {
   font-size: 0.8rem;
@@ -5,4 +6,8 @@
 
 #listCart table .opgrey{
   color: #989898;
+}
+
+#purchase-content table td ul{
+  margin-bottom: 0;
 }

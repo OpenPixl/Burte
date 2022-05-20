@@ -8,6 +8,7 @@
     {% set fp3 = 5.26 %}
     {% set fp4 = 7.89 %}
     {% set fp5 = 11.44 %}
+    {% set colis = 0 %}
 
     {% if items %}
         {% for i in items|filter(items => items.product.productNature == 'Aquarelle' or items.product.productNature == 'Calligraphie' or items.product.productNature == 'Sanctuaire') %}
@@ -18,6 +19,7 @@
         {% for i in items %}
             {% set weight = qtyItems * i.product.format.weight %}
         {% endfor %}
+        {% if weight <= 20 %}{% set colis = weight + 6 %}{% elseif %}{% set colis = weight + 12 %}{% endif %}
     {% endif %}
     <section id="listCart">
         <table class="table align-middle">
@@ -125,16 +127,16 @@
             <tr>
                 <td colspan="4">Frais de port</td>
                 <td colspan="2">
-                    {% if weight <= 20 %}
-                    {{ weight }} g - {{ fp1 }}€
-                    {% elseif weight > 20 and weight <= 100 %}
-                    {{ weight }} g - {{ fp2 }}€
-                    {% elseif weight > 100 and weight <= 250 %}
-                    {{ weight }} g - {{ fp3 }}€
-                    {% elseif weight > 250 and weight <= 500 %}
-                    {{ weight }} g - {{ fp4 }}€
-                    {% elseif weight > 500 and weight <= 3000 %}
-                    {{ weight }} g - {{ fp5 }}€
+                    {% if colis <= 20 %}
+                    {{ colis }} g - {{ fp1 }}€
+                    {% elseif colis > 20 and colis <= 100 %}
+                    {{ colis }} g - {{ fp2 }}€
+                    {% elseif colis > 100 and colis <= 250 %}
+                    {{ colis }} g - {{ fp3 }}€
+                    {% elseif colis > 250 and colis <= 500 %}
+                    {{ colis }} g - {{ fp4 }}€
+                    {% elseif colis > 500 and colis <= 3000 %}
+                    {{ colis }} g - {{ fp5 }}€
                     {% endif %}
                 </td>
             </tr>

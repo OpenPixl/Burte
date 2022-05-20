@@ -27,6 +27,7 @@ class ProductRepository extends ServiceEntityRepository
                 ->leftJoin('p.productNature', 'n')
                 ->leftJoin('p.producer', 'pr')
                 ->leftJoin('pr.structure', 's')
+                ->leftJoin('p.format', 'f')
                 ->addSelect('
                     p.id AS id,
                     p.name AS name, 
@@ -39,7 +40,7 @@ class ProductRepository extends ServiceEntityRepository
                     p.isDisponible,
                     p.isStar,
                     p.isOnLine,
-                    p.format,
+                    f.id AS format,
                     s.name AS producer,
                     n.name AS nameNature,
                     s.logoStructureName AS logoStructureName
@@ -62,6 +63,7 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.productNature', 'n')
             ->leftJoin('p.producer', 'pr')
             ->leftJoin('pr.structure', 's')
+            ->leftJoin('p.format', 'f')
             ->addSelect('
                 p.id AS id,
                 p.name AS name, 
@@ -74,7 +76,7 @@ class ProductRepository extends ServiceEntityRepository
                 p.isDisponible,
                 p.isStar,
                 p.isOnLine,
-                p.format,
+                f.id AS format,
                 s.name AS producer,
                 n.name AS nameNature,
                 s.logoStructureName AS logoStructureName

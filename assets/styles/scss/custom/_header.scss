@@ -103,7 +103,7 @@ header .dropdown-menu {
     padding-bottom: 0.5rem;
   }
 
-  #bloc_production3 .btn {
+  #bloc_production3 .btn-outline-smprimary {
     border-color: #ffffff !important;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
@@ -128,7 +128,7 @@ header .dropdown-menu {
     padding-bottom: 0.5rem;
   }
 
-  #bloc_production3 .btn {
+  #bloc_production3 .btn-outline-smprimary {
     border-color: #ffffff !important;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
@@ -162,7 +162,7 @@ header .dropdown-menu {
     text-align: center;
   }
 
-  #bloc_production3 .btn {
+  #bloc_production3 .btn-outline-smprimary {
     border-color: #ffffff !important;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
@@ -181,7 +181,7 @@ header .dropdown-menu {
   }
 }
 
-#bloc_production3 .btn::before {
+#bloc_production3 .btn-outline-smprimary::before {
   content: '';
   position: absolute;
   height: 100%;
@@ -193,10 +193,10 @@ header .dropdown-menu {
   background-color: $sm-primary-color;
 }
 
-#bloc_production3 .btn:hover {
+#bloc_production3 .btn-outline-smprimary:hover {
   color: #ffffff;
 }
 
-#bloc_production3 .btn:hover::before {
+#bloc_production3 .btn-outline-smprimary:hover::before {
   width: 100%;
 }

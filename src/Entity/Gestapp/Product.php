@@ -149,20 +149,21 @@ class Product
     private $productCustomizes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=ProductCategory::class, inversedBy="otherProducts")
+     * @ORM\ManyToMany(targetEntity=productFormat::class)
      */
-    private $otherCategory;
+    private $formats;
 
     /**
-     * @ORM\ManyToOne(targetEntity=productFormat::class)
+     * @ORM\ManyToMany(targetEntity=ProductCategory::class)
      */
-    private $format;
+    private $otherCategory;
 
     public function __construct()
     {
         $this->purchaseItems = new ArrayCollection();
         $this->productCustomizes = new ArrayCollection();
         $this->otherCategory = new ArrayCollection();
+        $this->formats = new ArrayCollection();
     }
 
     /**
@@ -520,7 +521,31 @@ class Product
     }
 
     /**
-     * @return Collection|ProductCategory[]
+     * @return Collection<int, productFormat>
+     */
+    public function getFormats(): Collection
+    {
+        return $this->formats;
+    }
+
+    public function addFormats(productFormat $formats): self
+    {
+        if (!$this->formats->contains($formats)) {
+            $this->formats[] = $formats;
+        }
+
+        return $this;
+    }
+
+    public function removeFormats(productFormat $formats): self
+    {
+        $this->formats->removeElement($formats);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductCategory>
      */
     public function getOtherCategory(): Collection
     {
@@ -539,18 +564,6 @@ class Product
     public function removeOtherCategory(ProductCategory $otherCategory): self
     {
         $this->otherCategory->removeElement($otherCategory);
-
-        return $this;
-    }
-
-    public function getFormat(): ?productFormat
-    {
-        return $this->format;
-    }
-
-    public function setFormat(?productFormat $format): self
-    {
-        $this->format = $format;
 
         return $this;
     }

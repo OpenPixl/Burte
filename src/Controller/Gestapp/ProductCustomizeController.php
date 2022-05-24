@@ -19,17 +19,31 @@ class ProductCustomizeController extends AbstractController
      */
     public function new(Request $request, Product $product, EntityManagerInterface $em)
     {
-        $name = $request->get('nameCustomer');
-        $session = $request->getSession()->get('name_uuid');
-
-        //dd($session);
-
+        // récupération des données du formaulaire ProductCustomize et intégration dans la table
+        $data = json_decode($request->getContent(), true);
+        //dd($data);
+        if(isset($data['format'])){
+            $format = $data['format'];
+        }
+        if(isset($data['sessid'])){
+            $sessid = $data['sessid'];
+        }
+        if(isset($data['name'])){
+            $name = $data['name'];
+        }else{$name = null;}
+        // Alimentation de la table
         $productCustomize = new ProductCustomize();
-        $productCustomize->setName($name);
-        $productCustomize->setUuid($session);
-        $productCustomize->setProduct($product);
+        if(!$name){
+            $productCustomize->setFormat($format);
+            $productCustomize->setUuid($sessid);
+            $productCustomize->setProduct($product);
+        }else{
+            $productCustomize->setName($name);
+            $productCustomize->setFormat($format);
+            $productCustomize->setUuid($sessid);
+            $productCustomize->setProduct($product);
+        }
 
-        //dd($productCustomize);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($productCustomize);

@@ -196,31 +196,4 @@ class ProductCategory
 
         return $this;
     }
-
-    /**
-     * @return Collection|Product[]
-     */
-    public function getOtherProducts(): Collection
-    {
-        return $this->otherProducts;
-    }
-
-    public function addOtherProduct(Product $otherProduct): self
-    {
-        if (!$this->otherProducts->contains($otherProduct)) {
-            $this->otherProducts[] = $otherProduct;
-            $otherProduct->addOtherCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOtherProduct(Product $otherProduct): self
-    {
-        if ($this->otherProducts->removeElement($otherProduct)) {
-            $otherProduct->removeOtherCategory($this);
-        }
-
-        return $this;
-    }
 }

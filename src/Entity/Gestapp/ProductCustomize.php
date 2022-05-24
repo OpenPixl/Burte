@@ -33,6 +33,11 @@ class ProductCustomize
      */
     private $product;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=productFormat::class)
+     */
+    private $format;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,18 @@ class ProductCustomize
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getFormat(): ?productFormat
+    {
+        return $this->format;
+    }
+
+    public function setFormat(?productFormat $format): self
+    {
+        $this->format = $format;
 
         return $this;
     }

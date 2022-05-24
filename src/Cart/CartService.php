@@ -82,7 +82,7 @@ class CartService
             $product = $this->productRepository->find($id);
             if(!$product)
             {
-                continue;                                           // ne force pas la boucle suir l'incrémentation du produit mais passe à l'item suivnat
+                continue;                                           // ne force pas la boucle sur l'incrémentation du produit mais passe à l'item suivnat
             }
             $total += $product->getPrice()*$qty;
         }

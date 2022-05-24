@@ -12,7 +12,9 @@ use App\Entity\Gestapp\ProductUnit;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -90,16 +92,20 @@ class ProductType extends AbstractType
                     'TVA 0%' => '0',
                 ],
             ])
-            ->add('format', EntityType::class, [
-                'class' => ProductFormat::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('p')
-                        ->orderBy('p.id', 'ASC');
-                },
-                'choice_label' => 'name',
-            ])
             ->add('isPersonalisable')
-            ->add('otherCategory')
+            ->add('otherCategory',EntityType::class, [
+                'class' => ProductCategory::class,
+                'multiple' => true,
+                'required' => false,
+
+            ])
+            ->add('formats',EntityType::class, [
+                'class' => productFormat::class,
+                'multiple' => true,
+                'choice_attr' => ChoiceList::attr($this, function (?productFormat $formats) {
+                    return $formats ? ['data-data' => $formats->getName()] : [];
+                }),
+            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
                 $nature = $event->getData()->getProductNature() ?? null;
 

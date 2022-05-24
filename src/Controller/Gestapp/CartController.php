@@ -30,6 +30,7 @@ class CartController extends AbstractController
      */
     public function cart($id, Request $request): Response
     {
+        // Récupération de l'objet produit
         $product = $this->productRepository->find($id);
 
         // teste si le produit existe dans la liste de produit.
@@ -43,8 +44,7 @@ class CartController extends AbstractController
 
         if($request->query->get('returnToCart')){
             return $this->redirectToRoute('op_webapp_cart_showcartjson');
-        }
-        elseif ($request->query->get('showproduct')){
+        }elseif ($request->query->get('showproduct')){
             return $this->redirectToRoute('op_gestapp_cart_showcartcount',[
                 'id' => $id
             ]);

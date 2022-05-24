@@ -7,6 +7,19 @@
     <script type="text/javascript">
         window.onload = function(){
 
+            //Construction de la fonction d'envoie du produit dans le panier
+            function BtnAddCart(event){
+                event.preventDefault()
+                const url = this.href
+                const url2 = document.getElementById('CustomizeProduct').action
+                const formdata = new FormData(document.getElementById('CustomizeProduct'))
+                const data =  JSON.stringify(Object.fromEntries(formdata));
+                axios
+                    .post(url2, data)
+
+
+            }
+
             // Construction de la fonction "onClickBtnIncrement" : incrémentation d'un produit
             function onClickBtnIncrement(event){
                 event.preventDefault();
@@ -61,14 +74,13 @@
                         alertBody.textContent = message;
                         var alertElement = new bootstrap.Alert(alertHTMLElement);
                         alertElement.show();
-
                     });
             }
 
-            // Construcutiojn de la fonction onClickCustomize - ajout d'un prénom sur un produit
-            function onClickCustomize(event){
-                event.preventDefault();
-            }
+            // Appel de la fonction d'incrémentation d'un produit
+            document.querySelectorAll('a.jsonAddCart').forEach(function (link){
+                link.addEventListener('click', BtnAddCart);
+            })
 
             // Appel de la fonction d'incrémentation d'un produit
             document.querySelectorAll('a.js-increment').forEach(function (link){
@@ -80,55 +92,79 @@
                 link.addEventListener('click', onClickBtnDecrement);
             })
 
-            // appel de la fonction pour personnaliser le prénom d'une carte
-            document.querySelectorAll('a.js-customize').foreach(function (link){
-                link.addEventListener('click', onClickCustomize);
-            })
         }
     </script>
 {% endblock %}
 
 {% block content %}
-    <header id="page-title">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h1>{{ product.name }} - Réf : {{ product.ref }}</h1>
+    <div id="SoeurMarie_back">
+        <header id="page-title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>{{ product.name }} - Réf : {{ product.ref }}</h1>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
-    <section id="page-content" class="op-section-product">
-        <div id="productCard" class="container">
-            {% include 'include/_alert.html.twig' with app.flashes %}
-            <div class="row">
-                <div id="product-img" class="col-md-4 col-12">
-                    <div class="mb-1">
-                        {% if product.productName is null %}
-                            <img class="img-fluid" src="{{ asset('images/jpg/Fond_product.jpg') }}" alt="image_replace">
-                        {% else %}
-                            <img class="card-img-top" src="{{ vich_uploader_asset(product) | imagine_filter('product_image_card') }}" alt="{{ product.productName }}">
-                        {% endif %}
-                    </div>
+        </header>
+        <section id="page-content" class="op-section-product">
+            <div id="productCard" class="container">
+                {% include 'include/_alert.html.twig' with app.flashes %}
+                <div class="row">
+                    <div id="product-img" class="col-md-4 col-12">
+                        <div class="mb-1">
+                            {% if product.productName is null %}
+                                <img class="img-fluid" src="{{ asset('images/jpg/Fond_product.jpg') }}" alt="image_replace">
+                            {% else %}
+                                <img class="card-img-top" src="{{ vich_uploader_asset(product) | imagine_filter('product_image_card') }}" alt="{{ product.productName }}">
+                            {% endif %}
+                        </div>
 
-                </div>
-                <div id="product-info" class="col-12 col-md-8">
-                    <div id="content" class="mb-2">
-                        <p><strong>Informations</strong></p>
-                        {{ product.description|raw }}
-                        <p><strong>Détails :</strong></p>
-                        {{ product.details|raw }}
                     </div>
-                    <div id="options" class="mb-2">
-                        <hr>
-                        <b>{{ product.price|number_format(2, ',', ' ') }} € / {{ product.productUnit }}</b>
-                        <p>Ce produit est disponible : {{ product.isDisponible ? 'Oui' : 'Non' }}</p>
-                    </div>
-                    <div id="count" class="mb-2">
-                        {{ include('gestapp/product/include/_count.html.twig') }}
+                    <div id="product-info" class="col-12 col-md-8">
+                        <div id="content" class="mb-2">
+                            <p><strong>Informations</strong></p>
+                            {{ product.description|raw }}
+                            <p><strong>Détails :</strong></p>
+                            {{ product.details|raw }}
+                            <p class="mt-2 mb-2">
+                                <strong>Format disponible :</strong>
+                            </p>
+                            <table class="table table-light table-hover table-sm">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>largeur</th>
+                                    <th>hauteur</th>
+                                    <th>Poids</th>
+                                </tr>
+                                </thead>
+                                {% for f in product.formats %}
+                                <tr>
+                                    <td>{{ f.name }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{ f.weight }} g</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <div id="options" class="mb-2">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p><b>{{ product.price|number_format(2, ',', ' ') }} €</b></p>
+                                </div>
+                                <div class="col-8">
+                                    <p class="text-end">Ce produit est disponible : {{ product.isDisponible ? '<i class="bi bi-check2-circle text-success"></i>' : '<i class="bi bi-x-circle text-error"></i>' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="count" class="mb-2">
+                            {{ include('gestapp/product/include/_count.html.twig') }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 {% endblock %}

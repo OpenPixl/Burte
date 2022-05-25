@@ -21,10 +21,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class ProductController extends AbstractController
 {
+    protected $productRepository;
     protected $cartService;
 
-    public function __construct(CartService $cartService)
+    public function __construct(ProductRepository $productRepository, CartService $cartService)
     {
+        $this->productRepository = $productRepository;
         $this->cartService = $cartService;
     }
 
@@ -87,6 +89,7 @@ class ProductController extends AbstractController
     public function show(Product $product, Request $request): Response
     {
         $detailedCart = $this->cartService->getDetailedCartItem();
+        $session = $request->getSession()->get('name_uuid');
 
         $session = $request->getSession()->get('name_uuid');
 

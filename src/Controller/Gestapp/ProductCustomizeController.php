@@ -4,6 +4,7 @@ namespace App\Controller\Gestapp;
 
 use App\Entity\Gestapp\Product;
 use App\Entity\Gestapp\ProductCustomize;
+use App\Entity\Gestapp\productFormat;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,15 +23,14 @@ class ProductCustomizeController extends AbstractController
         // récupération des données du formaulaire ProductCustomize et intégration dans la table
         $data = json_decode($request->getContent(), true);
         //dd($data);
-        if(isset($data['format'])){
-            $format = $data['format'];
-        }
-        if(isset($data['sessid'])){
-            $sessid = $data['sessid'];
-        }
+        $idformat = $data['format'];
+        $sessid = $data['sessid'];
         if(isset($data['name'])){
             $name = $data['name'];
         }else{$name = null;}
+
+        $format = $em->getRepository(productFormat::class)->find($idformat);
+
         // Alimentation de la table
         $productCustomize = new ProductCustomize();
         if(!$name){
@@ -51,7 +51,7 @@ class ProductCustomizeController extends AbstractController
 
         return $this->json([
             'code' => 200,
-            'message'=> "Le produit a été personnalisé."
+            'message'=> "Les informations sur le produit ont été correctement."
         ], 200);
 
     }

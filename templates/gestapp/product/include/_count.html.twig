@@ -1,6 +1,6 @@
-{# Bloc dynamique - Ajout au panier et personnalisation #}
+{# Bloc dynamique - Ajout du produit au panier et personnalisation#}
 {% if app.session.get('cart') is not null %}
-
+    {# le panier existe et on afifche les informations concnernant le produit sélectionné #}
     {% for i in items|filter(i => i.product.id == product.id) %}
         {% if i.product.formats|length > 1 %}
             <div class="row">
@@ -12,6 +12,7 @@
         <div class="row justify-content-between align-items-center">
             <div class="col-9">
                 <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_new', {'id':i.product.id}) }}">
+                    {{dump(customize)}}
                     <div class="row g-1 align-items-center">
                         <label for="name" class="col-sm-3 col-form-label">Personnalisation :</label>
                         <div class="col-sm-3">
@@ -39,6 +40,7 @@
             </div>
         </div>
     {% else %}
+        {# Le panier est présent mais le produit n'est plus incrédenté #}
         {% if product.formats|length > 1 %}
         <div class="row">
             <div class="col-12">
@@ -51,6 +53,7 @@
                 <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_new', {'id':product.id}) }}">
                     <div class="row g-1 align-items-center">
                         <label for="name" class="col-sm-3 col-form-label">Personnalisation :</label>
+
                         <div class="col-sm-3">
                             <select class="form-select form-select-sm" name="format" id="format">
                                 {% for f in product.formats %}

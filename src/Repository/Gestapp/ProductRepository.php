@@ -27,7 +27,6 @@ class ProductRepository extends ServiceEntityRepository
                 ->leftJoin('p.productNature', 'n')
                 ->leftJoin('p.producer', 'pr')
                 ->leftJoin('pr.structure', 's')
-                ->leftJoin('p.formats', 'f')
                 ->addSelect('
                     p.id AS id,
                     p.name AS name, 
@@ -40,7 +39,6 @@ class ProductRepository extends ServiceEntityRepository
                     p.isDisponible,
                     p.isStar,
                     p.isOnLine,
-                    f.id AS format,
                     s.name AS producer,
                     n.name AS nameNature,
                     s.logoStructureName AS logoStructureName
@@ -63,7 +61,6 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.productNature', 'n')
             ->leftJoin('p.producer', 'pr')
             ->leftJoin('pr.structure', 's')
-            ->leftJoin('p.formats', 'pf')
             ->addSelect('
                 p.id AS id,
                 p.name AS name, 
@@ -76,7 +73,6 @@ class ProductRepository extends ServiceEntityRepository
                 p.isDisponible,
                 p.isStar,
                 p.isOnLine,
-                pf.name AS format,
                 s.name AS producer,
                 n.name AS nameNature,
                 s.logoStructureName AS logoStructureName
@@ -128,7 +124,6 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('pr.structure', 's')
             ->leftJoin('p.productNature', 'n')
             ->leftJoin('p.productUnit', 'pu')
-            ->leftJoin('p.formats', 'pf')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -145,7 +140,6 @@ class ProductRepository extends ServiceEntityRepository
                 p.isStar,
                 p.isOnLine,
                 s.name AS producer,
-                pf.name AS formats,
                 s.logoStructureName AS logoStructureName
                  ')
             ->andWhere('n.id = :idnat')
@@ -169,7 +163,6 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('pr.structure', 's')
             ->leftJoin('p.productNature', 'n')
             ->leftJoin('p.productUnit', 'pu')
-            ->leftJoin('p.formats', 'pf')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -186,7 +179,6 @@ class ProductRepository extends ServiceEntityRepository
                 p.isStar,
                 p.isOnLine,
                 s.name AS producer,
-                pf.name AS formats,
                 s.logoStructureName AS logoStructureName
                  ')
             ->andWhere('n.name = :nat')
@@ -211,7 +203,6 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.ProductCategory', 'c')
             ->leftJoin('p.productUnit', 'pu')
             ->leftJoin('p.productNature', 'n')
-            ->leftJoin('p.formats', 'pf')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -229,7 +220,6 @@ class ProductRepository extends ServiceEntityRepository
                 p.isStar,
                 p.isOnLine,
                 s.name AS producer,
-                pf.name AS formats,
                 s.logoStructureName AS logoStructureName
                  ')
             ->andWhere('c.id = :idcat')
@@ -288,7 +278,6 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.ProductCategory', 'c')
             ->leftJoin('p.productUnit', 'pu')
             ->leftJoin('p.productNature', 'n')
-            ->leftJoin('p.formats', 'pf')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
@@ -306,7 +295,6 @@ class ProductRepository extends ServiceEntityRepository
                 p.isStar,
                 p.isOnLine,
                 s.name AS producer,
-                pf.name AS formats,
                 s.logoStructureName AS logoStructureName
                  ')
             ->andWhere('c.id in (:childs)')

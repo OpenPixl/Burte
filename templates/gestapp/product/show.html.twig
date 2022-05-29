@@ -19,6 +19,7 @@
                 axios
                     .post(url)
                     .then(function(response) {
+                        const count = document.getElementById('count').innerHTML=response.data.count;
                         // mise en place des évènements sur la page
                         document.querySelectorAll('a.jsonAddCart').forEach(function (link) {
                             link.addEventListener('click', BtnAddCart);

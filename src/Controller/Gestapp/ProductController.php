@@ -5,11 +5,13 @@ namespace App\Controller\Gestapp;
 use App\Cart\CartService;
 use App\Entity\Gestapp\Product;
 use App\Entity\Gestapp\ProductCategory;
+use App\Entity\Gestapp\ProductCustomize;
 use App\Entity\Gestapp\ProductNature;
 use App\Form\Gestapp\ProductType;
 use App\Repository\Gestapp\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,18 +88,44 @@ class ProductController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function show(Product $product, Request $request): Response
+    public function show(Product $product, Request $request, EntityManagerInterface $em): Response
     {
         $detailedCart = $this->cartService->getDetailedCartItem();
         $session = $request->getSession()->get('name_uuid');
-
-        $session = $request->getSession()->get('name_uuid');
+        $productCustomize = $em->getRepository(ProductCustomize::class)->findBy(array('product' => $product->getId()));
 
         return $this->render('gestapp/product/show.html.twig', [
             'product' => $product,
             'items' => $detailedCart,
-            'session' => $session
+            'session' => $session,
+            'customize' => $productCustomize
         ]);
+    }
+
+    /**
+     * @Route("/webbapp/product/showjson/{id}", name="op_gestapp_product_showjson", methods={"GET"})
+     * @param Product $product
+     * @param Request $request
+     * @return Response
+     */
+    public function showjson(Product $product, Request $request, EntityManagerInterface $em): Response
+    {
+        $detailedCart = $this->cartService->getDetailedCartItem();
+
+        $session = $request->getSession()->get('name_uuid');
+        // Récupération des personnalisations du produit
+        $productCustomize = $em->getRepository(ProductCustomize::class)->findBy(array('product' => $product->getId()));
+        // Retourne une réponse en json
+        return $this->json([
+            'code'          => 200,
+            'message'       => "Le produit a été correctement ajouté.",
+            'count'         => $this->renderView('gestapp/product/include/_count.html.twig', [
+                'items' => $detailedCart,
+                'product' => $product,
+                'session' => $session,
+                'customize' => $productCustomize
+            ])
+        ], 200);
     }
 
     /**

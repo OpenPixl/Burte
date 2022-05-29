@@ -51,7 +51,7 @@ class ProductCustomizeController extends AbstractController
 
         return $this->json([
             'code' => 200,
-            'message'=> "Les informations sur le produit ont été correctement."
+            'message'=> "Les informations sur le produit ont été correctement.",
         ], 200);
 
     }

@@ -18,7 +18,11 @@
         {% endfor %}
         {% for i in items %}
             {% for f in i.product.formats %}
-                {% set weight = qtyItems * f.weight %}
+                {% for c in listCustoms %}
+                    {% if f.id == c.format.id %}
+                        {% set weight = qtyItems * f.weight %}
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
         {% endfor %}
         {% if weight <= 20 %}
@@ -60,8 +64,8 @@
                             <div class="col-6">
                                 <select class="form-select form-select-sm" name="format" id="format">
                                 {% for f in i.product.formats %}
-                                    {% for c in customizes %}
-                                    <option value="{{ f.id }}" {% if f.id == c.format.id %}selected="selected"{% endif %}>{{ f.name }}</option>
+                                    {% for c in listCustoms %}
+                                    <option value="{{ f.id }}" {% if f.id == c.format.id %}selected="selected"{% endif %}>{{ f.name }} - {{f.weight}}</option>
                                     {% endfor %}
                                 {% endfor %}
                                 </select>
@@ -77,11 +81,11 @@
                         </form>
                         {% else %}
                         <form action="">
-                            <label for="format">Format</label>
+                            <label for="format">Format choisi</label>
                             <select class="form-select form-select-sm" name="format" id="format">
                                 {% for f in i.product.formats %}
-                                    {% for c in customizes %}
-                                        <option value="{{ f.id }}" {% if f.id == c.format.id %}selected="selected"{% endif %}>{{ f.name }}</option>
+                                    {% for c in listCustoms %}
+                                        <option value="{{ f.id }}" {% if f.id == c.format.id %}selected="selected"{% endif %}>{{ f.name }} - {{f.weight}}g</option>
                                     {% endfor %}
                                 {% endfor %}
                             </select>

@@ -56,7 +56,9 @@ class PurchaseConfirmationController extends AbstractController
 
         /** @var Purchase */
         $purchase = $form->getData();
-        //dd($purchase);
+        //dd($this->cartService->getTotal());
+
+
         $purchase
             ->setCustomer($user)
             ->setNumPurchase($uuid)

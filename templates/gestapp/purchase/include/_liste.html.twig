@@ -4,7 +4,6 @@
         <tr>
             <th></th>
             <th>Commande</th>
-            <th>Client</th>
             {% if hide == 0 %}
             <th>Adresse de livraison</th>
             {% endif %}
@@ -27,7 +26,6 @@
             <tr>
                 <th>{{p.id}}</th>
                 <td>{{p.numPurchase}}</td>
-                <td>{{ p.firstName }} {{ p.lastName }}</td>
                 {% if hide == 0 %}
                 <td>{{p.address}}<br>{{p.zipcode}} {{p.city}}</td>
                 {% endif %}
@@ -82,9 +80,9 @@
                 {% endif %}
                 {% if hide == 0 %}
                 <td>
-                    <a href="{{ path('op_gestapp_purchases_onepurchase', {'commande': p.numPurchase}) }}" type="button"><i class="fa-regular fa-credit-card"></i> Imprimer la facture</a>
-
-                    <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ p.id }}">Supprimer</a>
+                    <a href="{{ path('op_gestapp_purchases_onepurchase', {'commande': p.numPurchase}) }}" type="button"><i class="bi bi-printer"></i></a>
+                    |
+                    <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ p.id }}"><i class="bi bi-trash"></i></a>
                 </td>
                 {% endif %}
 

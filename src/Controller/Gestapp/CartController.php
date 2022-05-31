@@ -173,12 +173,18 @@ class CartController extends AbstractController
      * Supprime un produit du panier
      * @Route("/webapp/cart/del/{id}", name="op_webapp_cart_delete", requirements={"id":"\d+"})
      */
-    public function deleteProduct($id, ProductRepository $productRepository, CartService $cartService)
+    public function deleteProduct($id, ProductRepository $productRepository, CartService $cartService, EntityManagerInterface $em)
     {
         $product = $productRepository->find($id);
 
         if(!$product){
-            throw $this->createNotFoundException("LE produit $id n'existe pas et ne peut pas être supprimé !");
+            throw $this->createNotFoundException("Le produit $id n'existe pas et ne peut pas être supprimé !");
+        }
+
+        $listcustoms = $em->getRepository(ProductCustomize::class)->findBy(array('product'=>$id));
+        foreach ($listcustoms as $custom){
+            $em->remove($custom);
+            $em->flush();
         }
 
         $this->cartService->remove($id);

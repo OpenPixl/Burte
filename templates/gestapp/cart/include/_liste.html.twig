@@ -180,8 +180,6 @@
             {% endif %}
             </tfoot>
         </table>
-
-
     </section>
 
     {% if app.user %}
@@ -239,7 +237,7 @@
                     Cette adresse sera utilisée pour l'envoie de vos produit par la poste.<br>
                     Pour ce faire livré ailleur, n'hésitez pas à modifier l'adresse et de préciser un contact téléphonique.
                 </p>
-                {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm')}) }}
+                {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm'), 'attr': {'id': 'cart_confirmation'}}) }}
                 <div class="row mb-1 mt-1 g-1">
                     <div class="col-3">
                         {{ form_label(confirmationForm.firstName, 'Destinataire :', {'label_attr': {'class':'form-label'}}) }}
@@ -277,10 +275,13 @@
                         {{ form_label(confirmationForm.phoneContact, "Contact téléphonique en cas d'abscence :", {'label_attr': {'class':'form-label'}}) }}
                     </div>
                     <div class="col-3">
-                        {{ form_widget(confirmationForm.phoneContact, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom'}}) }}
+                        {{ form_widget(confirmationForm.phoneContact, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'00.00.00.00.00'}}) }}
                     </div>
                 </div>
                 {{ form_widget(confirmationForm) }}
+                {% if app.user %}
+                    <button type="submit" class="btn btn-sm btn-success" >Je confirme</button>
+                {% endif %}
                 {{ form_end(confirmationForm) }}
             </div>
         </div>

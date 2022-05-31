@@ -3,6 +3,7 @@
 namespace App\Controller\Gestapp\Purchase;
 
 use App\Cart\CartService;
+use App\Entity\Gestapp\ProductCustomize;
 use App\Entity\Gestapp\Purchase;
 use App\Entity\Gestapp\PurchaseItem;
 use App\Form\Gestapp\CartConfirmationType;
@@ -28,11 +29,12 @@ class PurchaseConfirmationController extends AbstractController
         $this->em = $em;
         $this->requestStack = $requestStack;
     }
+
     /**
      * @Route("webapp/purchase/confirm", name="op_webapp_purchase_confirm")
      * @IsGranted("ROLE_USER", message="Vous devez être inscrit sur la plateforme pour confirmer votre commande")
      */
-    public function confirm(Request $request)
+    public function confirm(Request $request, EntityManagerInterface $em)
     {
         $form = $this->createForm(CartConfirmationType::class);
         $form->handleRequest($request);
@@ -64,6 +66,12 @@ class PurchaseConfirmationController extends AbstractController
         $this->em->persist($purchase);
 
         foreach($this->cartService->getDetailedCartItem() as $cartItem){
+            //récupération des personnalisation du produit
+            $product = $cartItem->product;
+            $listCustom = $em->getRepository(ProductCustomize::class)->findOneBy(array('product'=>$product), array( 'id'=>'DESC'));
+
+            $format = $listCustom->getFormat();
+
             $purchaseItem = new PurchaseItem;
             $purchaseItem
                 ->setPurchase($purchase)
@@ -72,6 +80,7 @@ class PurchaseConfirmationController extends AbstractController
                 ->setProductQty($cartItem->qty)
                 ->setProductPrice($cartItem->product->getPrice())
                 ->setTotalItem($cartItem->getTotal())
+                ->setFormat($listCustom->getFormat())
             ;
             $this->em->persist($purchaseItem);
         }

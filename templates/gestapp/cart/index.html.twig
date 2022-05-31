@@ -28,6 +28,15 @@
             btnNextStep.removeAttribute("disabled")
         };
 
+        // Construction de la fonction de confirmation de la commande
+        function BtnConfPurchase(event){
+            event.preventDefault()
+            const url = document.getElementById('cart_confirmation').action
+            const formdata = new FormData(document.getElementById('cart_confirmation'))
+            const data =  JSON.stringify(Object.fromEntries(formdata));
+            axios.post(url, data)
+        }
+
         // Construction de la fonction "onClickBtnIncrement" : incrémentation d'un produit
         function onClickBtnIncrement(event){
             event.preventDefault();
@@ -95,6 +104,12 @@
         document.querySelectorAll('a.js-decrement').forEach(function (link){
             link.addEventListener('click', onClickBtnDecrement);
         })
+
+        // Création de l'évènemeznt pour la confirmation de la commande
+        document.querySelectorAll('a.confPurchase').forEach(function (link){
+            link.addEventListener('click', BtnConfPurchase);
+        })
+
     }
 </script>
 {% endblock %}
@@ -144,7 +159,7 @@
                     <button id="previousStep" class="btn btn-sm btn-outline-secondary" disabled> << Etape Précedente</button>
                     <button id="nextStep" class="btn btn-sm btn-outline-secondary">Etape Suivante >> </button>
                     {% if app.user %}
-                        <button type="submit" class="btn btn-sm btn-success">Je confirme</button>
+                        <a type="submit" class="btn btn-sm btn-success confPurchase" >Je confirme</a>
                     {% endif %}
                 </div>
             {% endif %}

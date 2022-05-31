@@ -49,6 +49,16 @@ class PurchaseItem
      */
     private $totalItem;
 
+    /**
+     * @ORM\Column(type="string", length=120, nullable=true)
+     */
+    private $CustomerName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=productFormat::class)
+     */
+    private $format;
+
 
     public function getId(): ?int
     {
@@ -123,6 +133,30 @@ class PurchaseItem
     public function setTotalItem(float $totalItem): self
     {
         $this->totalItem = $totalItem;
+
+        return $this;
+    }
+
+    public function getCustomerName(): ?string
+    {
+        return $this->CustomerName;
+    }
+
+    public function setCustomerName(?string $CustomerName): self
+    {
+        $this->CustomerName = $CustomerName;
+
+        return $this;
+    }
+
+    public function getFormat(): ?productFormat
+    {
+        return $this->format;
+    }
+
+    public function setFormat(?productFormat $format): self
+    {
+        $this->format = $format;
 
         return $this;
     }

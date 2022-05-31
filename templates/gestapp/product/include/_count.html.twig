@@ -12,14 +12,15 @@
         <div class="row justify-content-between align-items-center">
             <div class="col-9">
                 <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_new', {'id':i.product.id}) }}">
-                    {{dump(customize)}}
                     <div class="row g-1 align-items-center">
                         <label for="name" class="col-sm-3 col-form-label">Personnalisation :</label>
                         <div class="col-sm-3">
                             <select class="form-select form-select-sm" name="format" id="format">
-                                {% for f in i.product.formats %}
-                                    <option value="{{ f.id }}">{{ f.name }}</option>
+                            {% for f in i.product.formats %}
+                                {% for c in customizes %}
+                                <option value="{{ f.id }}" {% if f.id == c.format.id %}selected="selected"{%endif%}>{{ f.name }}</option>
                                 {% endfor %}
+                            {% endfor %}
                             </select>
                         </div>
                         {% if i.product.isPersonalisable == 1 %}
@@ -53,7 +54,6 @@
                 <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_new', {'id':product.id}) }}">
                     <div class="row g-1 align-items-center">
                         <label for="name" class="col-sm-3 col-form-label">Personnalisation :</label>
-
                         <div class="col-sm-3">
                             <select class="form-select form-select-sm" name="format" id="format">
                                 {% for f in product.formats %}

@@ -98,7 +98,7 @@ class ProductController extends AbstractController
             'product' => $product,
             'items' => $detailedCart,
             'session' => $session,
-            'customize' => $productCustomize
+            'customizes' => $productCustomize
         ]);
     }
 
@@ -123,7 +123,7 @@ class ProductController extends AbstractController
                 'items' => $detailedCart,
                 'product' => $product,
                 'session' => $session,
-                'customize' => $productCustomize
+                'customizes' => $productCustomize
             ])
         ], 200);
     }

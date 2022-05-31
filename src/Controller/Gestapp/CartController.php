@@ -6,6 +6,7 @@ use App\Cart\CartService;
 use App\Entity\Gestapp\ProductCustomize;
 use App\Form\Gestapp\CartConfirmationType;
 use App\Repository\Gestapp\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,7 +61,7 @@ class CartController extends AbstractController
      * Liste les produits inclus dans le panier
      * @Route("/webapp/cart/show", name="op_webapp_cart_showcart")
      */
-    public function showCart(Request $request)
+    public function showCart(Request $request, EntityManagerInterface $em)
     {
         $user = $this->getUser();
         /** Pour l'ajout de la livraison **/
@@ -68,7 +69,7 @@ class CartController extends AbstractController
 
         //Récupération de l'id de session et des personnalisation
         $session = $request->getSession()->get('name_uuid');
-        $listProductCustomizes = $this->getDoctrine()->getRepository(ProductCustomize::class)->findBy(array('uuid' => $session));
+        $listProductCustomizes = $em->getRepository(ProductCustomize::class)->findBy(array('uuid' => $session));
         //dd($listProductCustomize);
 
         $detailedCart = $this->cartService->getDetailedCartItem();
@@ -118,11 +119,12 @@ class CartController extends AbstractController
      * Liste les produits inclus dans le panier
      * @Route("/webapp/cart/showcartcount/{id}", name="op_gestapp_cart_showcartcount")
      */
-    public function showcartcount($id, Request $request)
+    public function showcartcount($id, Request $request, EntityManagerInterface $em)
     {
         $detailedCart = $this->cartService->getDetailedCartItem();
         $product = $this->productRepository->find($id);
         $session = $request->getSession()->get('name_uuid');
+        $productCustomize = $em->getRepository(ProductCustomize::class)->findBy(array('product' => $product->getId()));
 
         // Retourne une réponse en json
         return $this->json([
@@ -131,7 +133,8 @@ class CartController extends AbstractController
             'count'         => $this->renderView('gestapp/product/include/_count.html.twig', [
                 'items' => $detailedCart,
                 'product' => $product,
-                'session' => $session
+                'session' => $session,
+                'customizes' => $productCustomize
             ])
         ], 200);
     }

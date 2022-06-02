@@ -51,7 +51,7 @@ class CartController extends AbstractController
             ]);
         }
 
-        return $this->redirectToRoute('op_gestapp_product_showjson', [
+        return $this->redirectToRoute('op_gestapp_product_show', [
             'id' => $id
         ]);
     }

@@ -94,6 +94,12 @@ class ProductController extends AbstractController
         $session = $request->getSession()->get('name_uuid');
         $productCustomize = $em->getRepository(ProductCustomize::class)->findBy(array('product' => $product->getId()));
 
+        $lsformats = $product->getFormats();
+        $format = $lsformats[0];
+        dd($format);
+        $productCustomize->setFormat();
+        $em->flush();
+
         return $this->render('gestapp/product/show.html.twig', [
             'product' => $product,
             'items' => $detailedCart,

@@ -124,7 +124,7 @@ class CartController extends AbstractController
         $detailedCart = $this->cartService->getDetailedCartItem();
         $product = $this->productRepository->find($id);
         $session = $request->getSession()->get('name_uuid');
-        $productCustomize = $em->getRepository(ProductCustomize::class)->findBy(array('product' => $product->getId()));
+        $productCustomize = $em->getRepository(ProductCustomize::class)->findOneBy(array('product' => $product->getId()), array('id'=>'DESC'));
 
         // Retourne une réponse en json
         return $this->json([

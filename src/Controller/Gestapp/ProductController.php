@@ -90,21 +90,56 @@ class ProductController extends AbstractController
      */
     public function show(Product $product, Request $request, EntityManagerInterface $em): Response
     {
-        $detailedCart = $this->cartService->getDetailedCartItem();
         $session = $request->getSession()->get('name_uuid');
-        $productCustomize = $em->getRepository(ProductCustomize::class)->findBy(array('product' => $product->getId()));
+        // On teste si le panier existe en session
+        $cart = $request->getSession()->get('cart');
+        if($cart){
+            //dd($cart);
+            // récupération des items du panier
+            $detailedCart = $this->cartService->getDetailedCartItem();
+            //dd($detailedCart);
+            $productCustomize = $em->getRepository(ProductCustomize::class)->findOneBy(array('product' => $product->getId()), array('id'=>'DESC'));
+            // Dans le cas ou le panier existe et contient un produit
+            if(!$productCustomize){
+                $lsformats = $product->getFormats();
+                $format = $lsformats[0];
+                // création d'une personnalisation du produit
+                $productCustomize = new ProductCustomize();
+                $productCustomize->setUuid($session);
+                $productCustomize->setName('');
+                $productCustomize->setProduct($product);
+                $productCustomize->setFormat($format);
+                $em->persist($productCustomize);
+                $em->flush();
 
-        $lsformats = $product->getFormats();
-        $format = $lsformats[0];
-        dd($format);
-        $productCustomize->setFormat();
-        $em->flush();
+                dd($productCustomize);
+
+                return $this->render('gestapp/product/show.html.twig', [
+                    'product' => $product,
+                    'session' => $session,
+                    'items' => $detailedCart,
+                    'customizes' => $productCustomize
+                ]);
+
+            }
+
+
+            // On retourne la vue du produit avec les éléments du panier
+            return $this->render('gestapp/product/show.html.twig', [
+                'product' => $product,
+                'items' => $detailedCart,
+                'session' => $session,
+                'customizes' => $productCustomize
+            ]);
+        }
+
+        //dd($format);
+        //$productCustomize->setFormat();
+        //$em->flush();
 
         return $this->render('gestapp/product/show.html.twig', [
             'product' => $product,
-            'items' => $detailedCart,
-            'session' => $session,
-            'customizes' => $productCustomize
+            'session' => $session
         ]);
     }
 

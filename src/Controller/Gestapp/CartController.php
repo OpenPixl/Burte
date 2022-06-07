@@ -69,6 +69,7 @@ class CartController extends AbstractController
 
         //Récupération de l'id de session et des personnalisation
         $session = $request->getSession()->get('name_uuid');
+
         $listProductCustomizes = $em->getRepository(ProductCustomize::class)->findBy(array('uuid' => $session));
         //dd($listProductCustomize);
 
@@ -79,6 +80,7 @@ class CartController extends AbstractController
             'items' => $detailedCart,
             'total' => $total,
             'listCustoms' => $listProductCustomizes,
+            'session' => $session,
             'user' => $user,
             'confirmationForm' => $form->createView()
         ]);

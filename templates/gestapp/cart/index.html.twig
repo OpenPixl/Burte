@@ -28,6 +28,16 @@
             btnNextStep.removeAttribute("disabled")
         };
 
+        // Edition de la personnalisation d'un produit
+        function customEdit(){
+            let urlForm = document.getElementById('CustomizeProduct').action
+            let formdata = new FormData(document.getElementById('CustomizeProduct'))
+            let data =  JSON.stringify(Object.fromEntries(formdata));
+            axios
+                .post(urlForm, data)
+            document.getElementById("formatedit").addEventListener("change", customEdit);
+        }
+
         // Construction de la fonction de confirmation de la commande
         function BtnConfPurchase(event){
             event.preventDefault()
@@ -110,6 +120,8 @@
             link.addEventListener('click', BtnConfPurchase);
         })
 
+        // Edition d'une personnalisation produit sur "change" Select : formatedit
+        document.getElementById("formatedit").addEventListener("change", customEdit);
     }
 </script>
 {% endblock %}

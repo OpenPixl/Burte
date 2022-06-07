@@ -112,7 +112,7 @@ class ProductController extends AbstractController
                 $em->persist($productCustomize);
                 $em->flush();
 
-                dd($productCustomize);
+                //dd($productCustomize);
 
                 return $this->render('gestapp/product/show.html.twig', [
                     'product' => $product,

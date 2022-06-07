@@ -19,11 +19,12 @@ Ajout du produit au panier et personnalisation
 
     <div class="row justify-content-between align-items-center">
             <div class="col-9">
-                <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_new', {'id':i.product.id}) }}">
+                <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':i.product.id}) }}">
                     <div class="row g-1 align-items-center">
+
                         <label for="name" class="col-sm-3 col-form-label">Personnalisation :</label>
                         <div class="col-sm-3">
-                            <select class="form-select form-select-sm" name="format" id="format">
+                            <select class="form-select form-select-sm" name="format" id="formatedit">
                             {% for f in i.product.formats %}
                                 <option value="{{ f.id }}" {% if f.id == customizes.format.id %}selected="selected"{%endif%}>{{ f.name }}</option>
                             {% endfor %}
@@ -77,7 +78,7 @@ Ajout du produit au panier et personnalisation
                 </form>
             </div>
             <div class="col-3">
-                <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}" class="btn btn-sm btn-outline-sm jsonAddCart"><i class="bi bi-cart-plus"></i> Ajouter au panier</a>
+                <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}?showproduct=true" class="btn btn-sm btn-outline-sm jsonAddCart"><i class="bi bi-cart-plus"></i> Ajouter au panier</a>
             </div>
 
         </div>

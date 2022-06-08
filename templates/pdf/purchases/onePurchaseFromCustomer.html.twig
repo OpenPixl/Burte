@@ -7,25 +7,51 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+
+{% set qtyItems = 0 %}
+{% set qtyPrice = 0 %}
+{% set sstotalnatures = 0 %}
+{% set qtyWeight = 0 %}
+{% set fp1 = 1.43 %}
+{% set fp2 = 2.86 %}
+{% set fp3 = 5.26 %}
+{% set fp4 = 7.89 %}
+{% set fp5 = 11.44 %}
+{% set colis = 0 %}
+
+{% if items %}
+    {% for i in items|filter(items => items.product.productNature == 'Aquarelle' or items.product.productNature == 'Calligraphie' or items.product.productNature == 'Sanctuaire') %}
+        {% set qtyItems = qtyItems + i.productQty %}
+        {% set qtyPrice = i.productQty * i.productPrice %}
+        {% set sstotalnatures = sstotalnatures + qtyPrice %}
+        {% set qtyWeight = qtyWeight + (i.productQty * i.format.weight) %}
+    {% endfor %}
+
+    {% if qtyWeight <= 20 %}
+        {% set colis = qtyWeight + 6 %}
+    {% else %}
+        {% set colis = qtyWeight + 12 %}
+    {% endif %}
+{% endif %}
+
     <div id="printFacture" class="container">
-    <div class="row gutters">
-        <div class="col-2">
-            {# <img src="{{ asset('images/home_front/LOGO-fondblanc.png') }}" alt="" class="img-fluid"> #}
-        </div>
-        <div class="col-10">
+        <div id="printFactureHeader" class="row gutters">
+            <div class="col-2">
 
-        </div>
-    </div>
-    <div class="row gutters">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            </div>
+            <div class="col-10">
 
-            <div class="invoice-container">
+            </div>
+        </div>
+        <div id="printFactureMain" class="row gutters">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="invoice-container">
                 {# entête de facture #}
                 <div class="invoice-header">
                     <!-- Row start -->
                     <div class="row gutters">
                         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
-
+                            <img src="{{ absolute_url(asset('./images/home_front/fond_section_home.jpeg')) }}" alt="" class="img-fluid">
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <address class="text-right">
@@ -90,10 +116,10 @@
                     <!-- Row end -->
                     <!-- Row start -->
                     <div class="row gutters">
-                        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                        <div class="col-8">
 
                         </div>
-                        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                        <div class="col-4">
                             <div class="invoice-details">
                                 <div class="invoice-num">
                                     <div><b>Commande :</b> #{{purchase.numPurchase}}</div>
@@ -117,8 +143,9 @@
                                             <thead>
                                             <tr>
                                                 <th>Produit</th>
-                                                <th>Prix</th>
                                                 <th>Quantité</th>
+                                                <th>Prix</th>
+                                                <th>Poids</th>
                                                 <th>Somme</th>
                                             </tr>
                                             </thead>
@@ -126,10 +153,11 @@
                                             <tbody>
                                             {% for i in items %}
                                                 <tr>
-                                                    <td>{{i.productName}}</td>
-                                                    <td>{{i.productPrice}}</td>
-                                                    <td>{{i.productQty}}</td>
-                                                    <td>{{i.totalItem}} €</td>
+                                                    <td>{{ i.productName }}</td>
+                                                    <td>{{ i.productQty }}</td>
+                                                    <td>{{ i.productPrice }} €</td>
+                                                    <td>{{ i.format.weight }} g</td>
+                                                    <td>{{ i.totalItem }} €</td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
@@ -137,8 +165,84 @@
                                                 <tr>
                                                     <td></td>
                                                     <td></td>
-                                                    <td><strong>Total facture</strong></td>
-                                                    <td><strong>{{ purchase.total }} €</strong></td>
+                                                    <td>Total</td>
+                                                    <td></td>
+                                                    <td>{{ purchase.total }} €</td>
+                                                </tr>
+                                                {% if qtyItems <= 50 %}
+                                                    {% set reductotal = 0 %}
+                                                {% elseif qtyItems > 50 %}
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+
+                                                    {% if qtyItems >= 50 and qtyItems <= 99 %}
+                                                        {% set reductotal = sstotalnatures*0.1 %}
+                                                        <td>Remise (10%)</td>
+                                                        <td>
+                                                            {{ qtyItems }} cartes
+                                                        </td>
+                                                        <td>
+                                                            - {{ reductotal|number_format(2, ',', ' ') }} €
+                                                        </td>
+                                                    {% elseif qtyItems >= 100 and qtyItems <= 149 %}
+                                                        {% set reductotal = sstotalnatures*0.15 %}
+                                                        <td>Remise (15%)</td>
+                                                        <td>
+                                                            {{ qtyItems }} cartes
+                                                        </td>
+                                                        <td>
+                                                            - {{ reductotal|number_format(2, ',', ' ') }} €
+                                                        </td>
+                                                    {% elseif qtyItems >= 150 and qtyItems <= 199 %}
+                                                        {% set reductotal = sstotalnatures*0.20 %}
+                                                        <td>Remise (20%)</td>
+                                                        <td>
+                                                            {{ qtyItems }} cartes
+                                                        </td>
+                                                        <td>
+                                                            - {{ reductotal|number_format(2, ',', ' ') }} €
+                                                        </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% endif %}
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Frais de port</td>
+                                                    <td>poids: {{ colis }}g</td>
+                                                    <td>
+                                                        {% if colis <= 20 %}
+                                                            {{ fp1 }}€
+                                                        {% elseif colis > 20 and colis <= 100 %}
+                                                            {{ fp2 }}€
+                                                        {% elseif colis > 100 and colis <= 250 %}
+                                                            {{ fp3 }}€
+                                                        {% elseif colis > 250 and colis <= 500 %}
+                                                           {{ fp4 }}€
+                                                        {% elseif colis > 500 and colis <= 3000 %}
+                                                            {{ fp5 }}€
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>Total de la commande</th>
+                                                    <th></th>
+                                                    <th>
+                                                        {% if colis <= 20 %}
+                                                            {{ ( purchase.total - reductotal ) + fp1 }}€
+                                                        {% elseif colis > 20 and colis <= 100 %}
+                                                            {{ ( purchase.total - reductotal ) + fp2 }}€
+                                                        {% elseif colis > 100 and colis <= 250 %}
+                                                            {{ ( purchase.total - reductotal ) + fp3 }}€
+                                                        {% elseif colis > 250 and colis <= 500 %}
+                                                            {{ ( purchase.total - reductotal ) + fp4 }}€
+                                                        {% elseif colis > 500 and colis <= 3000 %}
+                                                            {{ ( purchase.total - reductotal ) + fp5 }}€
+                                                        {% endif %}
+                                                    </th>
                                                 </tr>
                                             </tfooter>
                                         </table>
@@ -161,11 +265,9 @@
                     </div>
                 </div>
             </div>
-
-
+            </div>
         </div>
     </div>
-</div>
 </body>
 
 

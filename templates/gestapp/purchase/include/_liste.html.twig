@@ -82,7 +82,7 @@
                 <td>
                     <a href="{{ path('op_gestapp_purchases_onepurchase', {'commande': p.numPurchase}) }}" type="button"><i class="bi bi-printer"></i></a>
                     |
-                    <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ p.id }}"><i class="bi bi-trash"></i></a>
+                    <a href="{{ path('op_gestapp_purchase_delete', {'id': p.id}) }}" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ p.id }}"><i class="bi bi-trash"></i></a>
                 </td>
                 {% endif %}
 

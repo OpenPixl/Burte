@@ -31,15 +31,13 @@ class PurchaseConfirmationController extends AbstractController
     }
 
     /**
-     * @Route("webapp/purchase/confirm", name="op_webapp_purchase_confirm")
+     * @Route("/webapp/purchase/confirm", name="op_webapp_purchase_confirm")
      * @IsGranted("ROLE_USER", message="Vous devez être inscrit sur la plateforme pour confirmer votre commande")
      */
     public function confirm(Request $request, EntityManagerInterface $em)
     {
         $form = $this->createForm(CartConfirmationType::class);
         $form->handleRequest($request);
-
-        $uuid = substr($this->requestStack->getSession()->get('name_uuid'), 0, 8);
 
         if(!$form->isSubmitted()) {
             $this->addFlash('warning', 'vous devez compléter le formulaire');
@@ -58,7 +56,7 @@ class PurchaseConfirmationController extends AbstractController
         $purchase = $form->getData();
         //dd($this->cartService->getTotal());
 
-
+        $uuid = substr($this->requestStack->getSession()->get('name_uuid'), 0, 8);
         $purchase
             ->setCustomer($user)
             ->setNumPurchase($uuid)
@@ -70,8 +68,11 @@ class PurchaseConfirmationController extends AbstractController
         foreach($this->cartService->getDetailedCartItem() as $cartItem){
             //récupération des personnalisation du produit
             $product = $cartItem->product;
-            $listCustom = $em->getRepository(ProductCustomize::class)->findOneBy(array('product'=>$product), array( 'id'=>'DESC'));
-
+            //dd($product);
+            $idproduct = $product->getId();
+            //dd($idproduct);
+            $listCustom = $em->getRepository(ProductCustomize::class)->findOneBy(array('product'=> $product), array('id'=>'DESC'));
+            //dd($listCustom);
             $format = $listCustom->getFormat();
 
             $purchaseItem = new PurchaseItem;
@@ -83,19 +84,27 @@ class PurchaseConfirmationController extends AbstractController
                 ->setProductPrice($cartItem->product->getPrice())
                 ->setTotalItem($cartItem->getTotal())
                 ->setFormat($listCustom->getFormat())
+                ->setCustomerName($listCustom->getName())
             ;
             $this->em->persist($purchaseItem);
+            $em->remove($listCustom);
         }
 
         $this->em->flush();
         $this->cartService->emptyCart();
-        $this->addFlash('success', "La commande est enrigistré");
+        $this->addFlash('success', "La commande est enregistré");
+
+        // Renouvellement de la session
+        $session = $this->get('session');
+        $session->migrate();
+
+
         return $this->redirectToRoute('op_webapp_purchases_index');
     }
 
     /**
      * @param Purchase $purchase
-     * @Route("gestapp/purchase/delete/{id}", name="op_gestapp_purchase_delete")
+     * @Route("/gestapp/purchase/delete/{id}", name="op_gestapp_purchase_delete")
      */
     public function deletePurchase(Purchase $purchase)
     {

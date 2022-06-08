@@ -45,15 +45,15 @@ class CartController extends AbstractController
 
         if($request->query->get('returnToCart')){
             return $this->redirectToRoute('op_webapp_cart_showcartjson');
-        }elseif ($request->query->get('showproduct')){
+        }elseif($request->query->get('showproduct')){
             return $this->redirectToRoute('op_gestapp_cart_showcartcount',[
                 'id' => $id
             ]);
+        }else{
+            return $this->redirectToRoute('op_gestapp_product_show', [
+                'id' => $id
+            ]);
         }
-
-        return $this->redirectToRoute('op_gestapp_product_show', [
-            'id' => $id
-        ]);
     }
 
 
@@ -90,14 +90,14 @@ class CartController extends AbstractController
      * Liste les produits inclus dans le panier
      * @Route("/webapp/cart/showjson", name="op_webapp_cart_showcartjson")
      */
-    public function showCartJson(Request $request)
+    public function showCartJson(Request $request, EntityManagerInterface $em)
     {
         $form = $this->createForm(CartConfirmationType::class);
 
         $user = $this->getUser();
         //Récupération de l'id de session et des personnalisation
         $session = $request->getSession()->get('name_uuid');
-        $listProductCustomizes = $this->getDoctrine()->getRepository(ProductCustomize::class)->findBy(array('uuid' => $session));
+        $listProductCustomizes = $em->getRepository(ProductCustomize::class)->findBy(array('uuid' => $session));
         //dd($listProductCustomize);
 
         $detailedCart = $this->cartService->getDetailedCartItem();
@@ -112,6 +112,7 @@ class CartController extends AbstractController
                 'total' => $total,
                 'listCustoms' => $listProductCustomizes,
                 'user' => $user,
+                'session' => $session,
                 'confirmationForm' => $form->createView()
             ])
         ], 200);

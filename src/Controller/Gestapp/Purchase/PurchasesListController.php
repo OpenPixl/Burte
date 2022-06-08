@@ -5,6 +5,7 @@ namespace App\Controller\Gestapp\Purchase;
 use App\Entity\Gestapp\Purchase;
 use App\Repository\Gestapp\PurchaseItemRepository;
 use App\Repository\Gestapp\PurchaseRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Admin\Member;
@@ -228,5 +229,26 @@ class PurchasesListController extends abstractController
         //    'purchase'=>$purchase,
         //    'items' => $items
         //]);
+    }
+
+    /**
+     * supprime la commande
+     * @Route("/op_gestapp/purchases/delete/{commande}", name="op_gestapp_purchases_delete", methods={"POST"})
+     */
+    public function delPurchase(Purchase $purchase, PurchaseRepository $purchaseRepository, PurchaseItemRepository $purchaseItemRepository, EntityManagerInterface $em) : Response
+    {
+        $member = $this->getUser();
+
+        $em->remove($purchase);
+        $em->flush();
+
+        return $this->json([
+            'code'          => 200,
+            'message'       => "La commande a été correctement supprimée.",
+            'count'         => $this->renderView('gestapp/purchase/index.html.twig', [
+                'purchases'=> $member->getPurchases(),
+                'hide' => 0,
+            ])
+        ], 200);
     }
 }

@@ -22,31 +22,26 @@ class ProductCustomizeController extends AbstractController
     {
         // récupération des données du formaulaire ProductCustomize et intégration dans la table
         $datanew = json_decode($request->getContent(), true);
-        //dd($data);
+        //dd($datanew);
         $idformat = $datanew['format'];
         $sessid = $datanew['sessid'];
-        $name = $datanew['name'];
 
         if(isset($datanew['name'])){
             $name = $datanew['name'];
-        }else{$name = null;}
+        }else{
+            $name = '';
+        }
 
         $format = $em->getRepository(productFormat::class)->find($idformat);
 
         // Alimentation de la table
         $productCustomize = new ProductCustomize();
-        if(!$name){
-            $productCustomize->setFormat($format);
-            $productCustomize->setUuid($sessid);
-            $productCustomize->setProduct($product);
-        }else{
-            $productCustomize->setName($name);
-            $productCustomize->setFormat($format);
-            $productCustomize->setUuid($sessid);
-            $productCustomize->setProduct($product);
-        }
 
-        $em = $this->getDoctrine()->getManager();
+        $productCustomize->setName($name);
+        $productCustomize->setFormat($format);
+        $productCustomize->setUuid($sessid);
+        $productCustomize->setProduct($product);
+
         $em->persist($productCustomize);
         $em->flush();
 
@@ -71,28 +66,25 @@ class ProductCustomizeController extends AbstractController
 
         if(isset($data['name'])){
             $name = $data['name'];
-        }else{$name = null;}
+        }else{
+            $name = '';
+        }
 
         $format = $em->getRepository(productFormat::class)->find($idformat);
 
         // Alimentation de la table
         $productCustomize = $em->getRepository(ProductCustomize::class)->findOneBy(array('product'=>$product->getId()), array('id'=>'DESC'));
 
-        if(!$name){
-            $productCustomize->setFormat($format);
-            $productCustomize->setUuid($sessid);
-            $productCustomize->setProduct($product);
-        }else{
-            $productCustomize->setName($name);
-            $productCustomize->setFormat($format);
-            $productCustomize->setUuid($sessid);
-            $productCustomize->setProduct($product);
-        }
+        $productCustomize->setFormat($format);
+        $productCustomize->setUuid($sessid);
+        $productCustomize->setProduct($product);
+        $productCustomize->setName($name);
+
         $em->flush();
 
         return $this->json([
             'code' => 200,
-            'message'=> "Les informations sur le produit ont été correctement.",
+            'message'=> "Les informations sur le produit ont été correctement modifiées.",
         ], 200);
     }
 }

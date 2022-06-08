@@ -56,7 +56,7 @@ class PurchaseConfirmationController extends AbstractController
         $purchase = $form->getData();
         //dd($this->cartService->getTotal());
 
-        $uuid = substr($this->requestStack->getSession()->get('name_uuid'), 0, 8);
+        $uuid = substr($this->requestStack->getSession()->getId(), 0, 8);
         $purchase
             ->setCustomer($user)
             ->setNumPurchase($uuid)
@@ -103,6 +103,7 @@ class PurchaseConfirmationController extends AbstractController
     }
 
     /**
+     * Supprime la commande sélectionnée en amont et rafraichi la page de l'utilisateur courant
      * @param Purchase $purchase
      * @Route("/gestapp/purchase/delete/{id}", name="op_gestapp_purchase_delete")
      */
@@ -111,7 +112,8 @@ class PurchaseConfirmationController extends AbstractController
         $this->em->remove($purchase);
         $this->em->flush();
 
-        $purchases =  $this->em->getRepository(Purchase::class)->findAll();
+        $user = $this->getUser();
+        $purchases =  $this->em->getRepository(Purchase::class)->findBy(array('customer'=>$user));
 
         return $this->json([
             'code'          => 200,

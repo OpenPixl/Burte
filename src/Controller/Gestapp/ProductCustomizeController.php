@@ -24,7 +24,8 @@ class ProductCustomizeController extends AbstractController
         $datanew = json_decode($request->getContent(), true);
         //dd($datanew);
         $idformat = $datanew['format'];
-        $sessid = $datanew['sessid'];
+        $sessid = $this->get('session')->getId();
+
 
         if(isset($datanew['name'])){
             $name = $datanew['name'];
@@ -62,7 +63,7 @@ class ProductCustomizeController extends AbstractController
         $data = json_decode($request->getContent(), true);
         //dd($data);
         $idformat = $data['format'];
-        $sessid = $data['sessid'];
+        $sessid = $this->get('session')->getId();
 
         if(isset($data['name'])){
             $name = $data['name'];

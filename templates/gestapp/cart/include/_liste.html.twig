@@ -11,9 +11,12 @@
     {% set colis = 0 %}
 
     {% if items %}
+        {# Sur chaque boucle on filtre les produits possédant une nature défini : aquarelle, calligraphie, sanctuaire #}
         {% for i in items|filter(items => items.product.productNature == 'Aquarelle' or items.product.productNature == 'Calligraphie' or items.product.productNature == 'Sanctuaire') %}
             {% set qtyItems = qtyItems + i.qty %}
-            {% set qtyPrice = i.qty * i.product.price %}
+            {% for l in listCustoms|filter(l => l.product.id == i.product.id) %}
+                {% set qtyPrice = i.qty * l.format.priceformat %}
+            {% endfor %}
             {% set sstotalnatures = sstotalnatures + qtyPrice %}
         {% endfor %}
         {% for i in items %}
@@ -67,7 +70,7 @@
                             <div class="col-8">
                                 <select class="form-select form-select-sm" name="format" id="formatedit">
                                     {% for f in i.product.formats %}
-                                        <option value="{{ f.id }}">{{ f.name }} - {{f.weight}}</option>
+                                        <option value="{{ f.id }}">{{ f.name }} - {{f.weight}}g</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -83,7 +86,11 @@
                             <input id="sessid" name="sessid" type="hidden" value="{{ session }}">
                         </form>
                     </td>
-                    <td>{{ i.product.price|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}</td>
+                    <td>
+                        {% for l in listCustoms|filter(l => l.product.id == i.product.id) %}
+                            {{ l.format.priceformat|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}
+                        {% endfor %}
+                    </td>
                     <td>
                         <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
                         {{ i.qty }}

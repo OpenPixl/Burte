@@ -37,6 +37,11 @@ class productFormat
      */
     private $weight;
 
+    /**
+     * @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
+     */
+    private $priceformat;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,5 +98,17 @@ class productFormat
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getPriceformat(): ?string
+    {
+        return $this->priceformat;
+    }
+
+    public function setPriceformat(?string $priceformat): self
+    {
+        $this->priceformat = $priceformat;
+
+        return $this;
     }
 }

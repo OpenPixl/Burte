@@ -149,15 +149,15 @@
                                 <thead>
                                 <tr>
                                     <th></th>
-                                    <th>largeur</th>
-                                    <th>hauteur</th>
+                                    <th>Prix</th>
+                                    <th></th>
                                     <th>Poids</th>
                                 </tr>
                                 </thead>
                                 {% for f in product.formats %}
                                 <tr>
                                     <td>{{ f.name }}</td>
-                                    <td></td>
+                                    <td>{{ f.priceformat}} €</td>
                                     <td></td>
                                     <td>{{ f.weight }} g</td>
                                 </tr>

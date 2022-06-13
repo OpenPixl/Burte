@@ -64,16 +64,16 @@ class PurchaseConfirmationController extends AbstractController
             ->setTotal($this->cartService->getTotal());
 
         $this->em->persist($purchase);
+        $total = 0;
 
         foreach($this->cartService->getDetailedCartItem() as $cartItem){
             //récupération des personnalisation du produit
             $product = $cartItem->product;
-            //dd($product);
-            $idproduct = $product->getId();
-            //dd($idproduct);
             $listCustom = $em->getRepository(ProductCustomize::class)->findOneBy(array('product'=> $product), array('id'=>'DESC'));
-            //dd($listCustom);
             $format = $listCustom->getFormat();
+            $priceformat = $listCustom->getFormat()->getPriceformat();
+
+            $total = $total + $priceformat;
 
             $purchaseItem = new PurchaseItem;
             $purchaseItem
@@ -81,9 +81,9 @@ class PurchaseConfirmationController extends AbstractController
                 ->setProduct($cartItem->product)
                 ->setProductName($cartItem->product->getName())
                 ->setProductQty($cartItem->qty)
-                ->setProductPrice($cartItem->product->getPrice())
+                ->setProductPrice($priceformat)
                 ->setTotalItem($cartItem->getTotal())
-                ->setFormat($listCustom->getFormat())
+                ->setFormat($format)
                 ->setCustomerName($listCustom->getName())
             ;
             $this->em->persist($purchaseItem);
@@ -93,6 +93,9 @@ class PurchaseConfirmationController extends AbstractController
         $this->em->flush();
         $this->cartService->emptyCart();
         $this->addFlash('success', "La commande est enregistré");
+
+        $purchase->setTotal($total);
+        $this->em->flush();
 
         // Renouvellement de la session
         $session = $this->get('session');

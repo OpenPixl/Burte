@@ -156,6 +156,8 @@ class CartController extends AbstractController
 
         $this->cartService->decrement($id);
 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+
         $this->addFlash('success', "Le produit a bien été diminué dans le panier.");
 
         if($request->query->get('returnToCart')){

@@ -172,10 +172,10 @@ class ProductController extends AbstractController
     /**
      * @Route("/gestapp/product/{id}/edit", name="op_gestapp_product_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Product $product): Response
+    public function edit(Request $request, Product $product, EntityManagerInterface $em): Response
     {
-        $natures = $this->getDoctrine()->getRepository(ProductNature::class)->findAll();
-        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
+        $natures = $em->getRepository(ProductNature::class)->findAll();
+        $categories = $em->getRepository(ProductCategory::class)->findAll();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 

@@ -15,10 +15,9 @@
         {# Sur chaque boucle on filtre les produits possédant une nature défini : aquarelle, calligraphie, sanctuaire #}
         {% for c in carts|filter(carts => carts.productNature == 'Aquarelle' or carts.productNature == 'Calligraphie' or carts.productNature == 'Sanctuaire') %}
             {% set qtyItems = qtyItems + c.productQty %}
-            {% set qtyPrice = c.productQty * c.customWeight %}
-            {% set sstotalnatures = sstotalnatures + qtyPrice %}
+            {% set qtyPricenature = c.productQty * c.customPrice %}
+            {% set sstotalnatures = sstotalnatures + qtyPricenature %}
         {% endfor %}
-
     {% endif %}
 
     <section id="listCart">
@@ -37,56 +36,51 @@
             {% set sstotal = 0 %}
             {% for c in carts %}
                 <tr style="background: rgb(249, 249, 251);">
-                    {% set totalproduct = 0 %}
-
-
+                    {% set qtyPrice = c.productQty * c.customPrice %}
+                    {% set sstotal = sstotal + qtyPrice %}
+                    {% set weight = c.productQty * c.customWeight %}
+                    {% set colis = colis + weight%}
                     {# préparation du prix par quantité du produit #}
                     <td>
-                        {# intégration de l'image au sein du panier {% if c.prod is null %}
+                        {# intégration de l'image au sein du panier #}
+                         {% if c.product is null %}
                             <img class="rounded" src="{{ asset('images/jpg/Fond_product.jpg') | imagine_filter('product_image_cart') }}" alt="fond_product">
                         {% else %}
-                            <img class="rounded" src="{{ vich_uploader_asset(i.product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_cart') }}" alt="{{ i.product.name }}">&nbsp;&nbsp;
-                        {% endif %}#}
+                            <img class="rounded" src="{{ vich_uploader_asset(c.product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_cart') }}" alt="{{ c.productName }}">&nbsp;&nbsp;
+                        {% endif %}
 
                         {# lien vers la fiche produit #}
                         <a class="text-start" href="{{ path('op_gestapp_product_show', {'id': c.productid}) }}">{{ c.productName }}</a> - réf : {{ c.productRef }}
                     </td>
                     <td>
-                        {#
+
                         <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':c.productid}) }}?cart=true" class="row row-cols g-1 align-items-center">
                             <div class="col-8">
-
                                 <select class="form-select form-select-sm" name="format" id="formatedit">
-                                {% for f in i.product.formats %}
+                                {% for f in c.product.formats %}
                                     <option value="{{ f.id }}">{{ f.name }} - {{f.weight}}g</option>
                                 {% endfor %}
-                            </select>
-
-
+                                </select>
                             </div>
 
-                            {% if i.product.isPersonalisable > 0 %}
+                            {% if c.productPerson > 0 %}
                             <div class="col-4">
-                                {% for l in listCustoms|filter(l => l.product.id == i.product.id) %}
-                                <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte" value="{{ l.name }}">
-                                {% else %}
-                                <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte">
-                                {% endfor %}
+                                <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte" value="{{ c.cus }}">
                             </div>
                             {% endif %}
                             <input id="sessid" name="sessid" type="hidden" value="{{ session }}">
                         </form>
-                        #}
+
                     </td>
                     <td>
-                        {{ c.customPrice|number_format(2, ',', ' ') }} € /
+                        {{ c.customPrice|number_format(2, ',', ' ') }} € /  {{ c.customFormat }}
                     </td>
                     <td>
                         <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': c.productId}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
                         {{ c.productQty }}
                         <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': c.productId}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
                     </td>
-                    <td>{{ totalproduct|number_format(2, ',', ' ') }} €</td>
+                    <td>{{ qtyPrice|number_format(2, ',', ' ') }} €</td>
                     <td><a href="{{ path('op_webapp_cart_delete', {'id': c.productId}) }}"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a></td>
                 </tr>
             {% endfor %}
@@ -168,23 +162,23 @@
                 </td>
                 <td>
                     {% if colis <= 20 %}
-                        {{ fp1 }}€
+                        {{ fp1|number_format(2, ',', ' ') }} €
                     {% elseif colis > 20 and colis <= 100 %}
-                        {{ fp2 }}€
+                        {{ fp2|number_format(2, ',', ' ') }} €
                     {% elseif colis > 100 and colis <= 250 %}
-                        {{ fp3 }}€
+                        {{ fp3|number_format(2, ',', ' ') }} €
                     {% elseif colis > 250 and colis <= 500 %}
-                        {{ fp4 }}€
+                        {{ fp4|number_format(2, ',', ' ') }} €
                     {% elseif colis > 500 and colis <= 3000 %}
-                       {{ fp5 }}€
+                       {{ fp5|number_format(2, ',', ' ') }} €
                     {% endif %}
                 </td>
                 <td></td>
             </tr>
             {% if qtyItems < 50 %}
             <tr>
-
-                <th colspan="3" class="text-end">Total de votre commande</th>
+                <th colspan="2"></th>
+                <th>Total de votre commande</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -192,10 +186,11 @@
             {% else %}
             <tr>
                 {% set totalFP = totalremise + reductotal %}
-                <th colspan="3" class="text-end">Total de votre commande</th>
-                <th></th>
+                <th colspan="2"></th>
+                <th>Total de votre commande</th>
                 <th></th>
                 <th>{{ totalFP|number_format(2, ',', ' ')}} €</th>
+                <th></th>
             </tr>
             {% endif %}
             {% endif %}

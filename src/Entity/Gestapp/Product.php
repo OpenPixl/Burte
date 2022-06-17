@@ -158,12 +158,18 @@ class Product
      */
     private $otherCategory;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="product")
+     */
+    private $carts;
+
     public function __construct()
     {
         $this->purchaseItems = new ArrayCollection();
         $this->productCustomizes = new ArrayCollection();
         $this->otherCategory = new ArrayCollection();
         $this->formats = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     /**
@@ -564,6 +570,36 @@ class Product
     public function removeOtherCategory(ProductCategory $otherCategory): self
     {
         $this->otherCategory->removeElement($otherCategory);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cart>
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
+            $cart->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getProduct() === $this) {
+                $cart->setProduct(null);
+            }
+        }
 
         return $this;
     }

@@ -88,10 +88,12 @@ class CartController extends AbstractController
             if(!$uuid){
                 $cart = new Cart();
                 $cart->setProductId($product->getId());
+                $cart->setProduct($product);
                 $cart->setProductName($product->getName());
                 $cart->setProductNature($product->getProductNature());
                 $cart->setproductCategory($product->getProductCategory());
                 $cart->setProductQty($d->qty);
+                $cart->setProductRef($product->getRef());
                 $cart->setCustomFormat($customization->getFormat()->getName());
                 $cart->setCustomName($customization->getName());
                 $cart->setCustomPrice($customization->getFormat()->getPriceformat());
@@ -105,10 +107,12 @@ class CartController extends AbstractController
                 {
                     $cart = new Cart();
                     $cart->setProductId($product->getId());
+                    $cart->setProduct($product);
                     $cart->setProductName($product->getName());
                     $cart->setProductNature($product->getProductNature());
                     $cart->setproductCategory($product->getProductCategory());
                     $cart->setProductQty($d->qty);
+                    $cart->setProductRef($product->getRef());
                     $cart->setCustomFormat($customization->getFormat()->getName());
                     $cart->setCustomName($customization->getName());
                     $cart->setCustomPrice($customization->getFormat()->getPriceformat());
@@ -162,10 +166,12 @@ class CartController extends AbstractController
             if(!$uuid){
                 $cart = new Cart();
                 $cart->setProductId($product->getId());
+                $cart->setProduct($product);
                 $cart->setProductName($product->getName());
                 $cart->setProductNature($product->getProductNature());
                 $cart->setproductCategory($product->getProductCategory());
                 $cart->setProductQty($d->qty);
+                $cart->setProductRef($product->getRef());
                 $cart->setCustomFormat($customization->getFormat()->getName());
                 $cart->setCustomName($customization->getName());
                 $cart->setCustomPrice($customization->getFormat()->getPriceformat());
@@ -179,10 +185,12 @@ class CartController extends AbstractController
                 {
                     $cart = new Cart();
                     $cart->setProductId($product->getId());
+                    $cart->setProduct($product);
                     $cart->setProductName($product->getName());
                     $cart->setProductNature($product->getProductNature());
                     $cart->setproductCategory($product->getProductCategory());
                     $cart->setProductQty($d->qty);
+                    $cart->setProductRef($product->getRef());
                     $cart->setCustomFormat($customization->getFormat()->getName());
                     $cart->setCustomName($customization->getName());
                     $cart->setCustomPrice($customization->getFormat()->getPriceformat());

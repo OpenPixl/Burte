@@ -78,6 +78,16 @@ class Cart
      */
     private $productRef;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $productPerson = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="carts")
+     */
+    private $product;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -223,6 +233,30 @@ class Cart
     public function setProductRef(?string $productRef): self
     {
         $this->productRef = $productRef;
+
+        return $this;
+    }
+
+    public function getProductPerson(): ?bool
+    {
+        return $this->productPerson;
+    }
+
+    public function setProductPerson(bool $productPerson): self
+    {
+        $this->productPerson = $productPerson;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

@@ -73,8 +73,6 @@ class PurchaseConfirmationController extends AbstractController
             $format = $listCustom->getFormat();
             $priceformat = $listCustom->getFormat()->getPriceformat();
 
-            $total = $total + $priceformat;
-
             $purchaseItem = new PurchaseItem;
             $purchaseItem
                 ->setPurchase($purchase)
@@ -82,12 +80,14 @@ class PurchaseConfirmationController extends AbstractController
                 ->setProductName($cartItem->product->getName())
                 ->setProductQty($cartItem->qty)
                 ->setProductPrice($priceformat)
-                ->setTotalItem($cartItem->getTotal())
+                ->setTotalItem($cartItem->qty*$priceformat)
                 ->setFormat($format)
                 ->setCustomerName($listCustom->getName())
             ;
             $this->em->persist($purchaseItem);
             $em->remove($listCustom);
+
+            $total = $total + $purchaseItem->getTotalItem();
         }
 
         $this->em->flush();

@@ -101,7 +101,6 @@ class PurchaseConfirmationController extends AbstractController
         $session = $this->get('session');
         $session->migrate();
 
-
         return $this->redirectToRoute('op_webapp_purchases_index');
     }
 

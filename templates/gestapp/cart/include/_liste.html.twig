@@ -1,42 +1,25 @@
-{% if items %}
+{% if carts %}
     {% set qtyItems = 0 %}
-    {% set qtyPrice = 0 %}
+
     {% set sstotalnatures = 0 %}
     {% set weight = 0 %}
-    {% set fp1 = 1.43 %}
-    {% set fp2 = 2.86 %}
-    {% set fp3 = 5.26 %}
-    {% set fp4 = 7.89 %}
-    {% set fp5 = 11.44 %}
+    {% set fp1 = 1.5 %}
+    {% set fp2 = 2.90 %}
+    {% set fp3 = 5.30 %}
+    {% set fp4 = 7.90 %}
+    {% set fp5 = 11.50 %}
     {% set colis = 0 %}
 
-    {% if items %}
+
+    {% if carts %}
         {# Sur chaque boucle on filtre les produits possédant une nature défini : aquarelle, calligraphie, sanctuaire #}
-        {% for i in items|filter(items => items.product.productNature == 'Aquarelle' or items.product.productNature == 'Calligraphie' or items.product.productNature == 'Sanctuaire') %}
-            {% set qtyItems = qtyItems + i.qty %}
-            {% for l in listCustoms|filter(l => l.product.id == i.product.id) %}
-                {% set qtyPrice = i.qty * l.format.priceformat %}
-            {% endfor %}
+        {% for c in carts|filter(carts => carts.productNature == 'Aquarelle' or carts.productNature == 'Calligraphie' or carts.productNature == 'Sanctuaire') %}
+            {% set qtyItems = qtyItems + c.productQty %}
+            {% set qtyPrice = c.productQty * c.customWeight %}
             {% set sstotalnatures = sstotalnatures + qtyPrice %}
         {% endfor %}
-        {% for i in items %}
-            {% for f in i.product.formats %}
-                {% for c in listCustoms %}
-                    {% if f.id == c.format.id %}
-                        {% set weight = qtyItems * f.weight %}
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
-        {% endfor %}
-        {% if weight <= 20 %}
-            {% set colis = weight + 6 %}
-        {% else %}
-            {% set colis = weight + 12 %}
-        {% endif %}
-    {% endif %}
 
-    {% for c in listCustoms %}
-    {% endfor %}
+    {% endif %}
 
     <section id="listCart">
         <table class="table align-middle">
@@ -51,29 +34,37 @@
             </tr>
             </thead>
             <tbody>
-            {% for i in items %}
+            {% set sstotal = 0 %}
+            {% for c in carts %}
                 <tr style="background: rgb(249, 249, 251);">
+                    {% set totalproduct = 0 %}
+
+
                     {# préparation du prix par quantité du produit #}
-                    {% set sstotal = i.qty * i.product.price %}
                     <td>
-                        {# intégration de l'image au sein du panier #}
-                        {% if i.product.productName is null %}
+                        {# intégration de l'image au sein du panier {% if c.prod is null %}
                             <img class="rounded" src="{{ asset('images/jpg/Fond_product.jpg') | imagine_filter('product_image_cart') }}" alt="fond_product">
                         {% else %}
                             <img class="rounded" src="{{ vich_uploader_asset(i.product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_cart') }}" alt="{{ i.product.name }}">&nbsp;&nbsp;
-                        {% endif %}
+                        {% endif %}#}
+
                         {# lien vers la fiche produit #}
-                        <a class="text-start" href="{{ path('op_gestapp_product_show', {'id': i.product.id}) }}">{{ i.product.name }}</a> - réf : {{ i.product.ref }}
+                        <a class="text-start" href="{{ path('op_gestapp_product_show', {'id': c.productid}) }}">{{ c.productName }}</a> - réf : {{ c.productRef }}
                     </td>
                     <td>
-                        <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':i.product.id}) }}?cart=true" class="row row-cols g-1 align-items-center">
+                        {#
+                        <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':c.productid}) }}?cart=true" class="row row-cols g-1 align-items-center">
                             <div class="col-8">
+
                                 <select class="form-select form-select-sm" name="format" id="formatedit">
-                                    {% for f in i.product.formats %}
-                                        <option value="{{ f.id }}">{{ f.name }} - {{f.weight}}g</option>
-                                    {% endfor %}
-                                </select>
+                                {% for f in i.product.formats %}
+                                    <option value="{{ f.id }}">{{ f.name }} - {{f.weight}}g</option>
+                                {% endfor %}
+                            </select>
+
+
                             </div>
+
                             {% if i.product.isPersonalisable > 0 %}
                             <div class="col-4">
                                 {% for l in listCustoms|filter(l => l.product.id == i.product.id) %}
@@ -85,29 +76,34 @@
                             {% endif %}
                             <input id="sessid" name="sessid" type="hidden" value="{{ session }}">
                         </form>
+                        #}
                     </td>
                     <td>
-                        {% for l in listCustoms|filter(l => l.product.id == i.product.id) %}
-                            {{ l.format.priceformat|number_format(2, ',', ' ') }} € / {{ i.product.productUnit }}
-                        {% endfor %}
+                        {{ c.customPrice|number_format(2, ',', ' ') }} € /
                     </td>
                     <td>
-                        <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
-                        {{ i.qty }}
-                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': i.product.id}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
+                        <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': c.productId}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
+                        {{ c.productQty }}
+                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': c.productId}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
                     </td>
-                    <td>{{ sstotal|number_format(2, ',', ' ') }} €</td>
-                    <td><a href="{{ path('op_webapp_cart_delete', {'id': i.product.id}) }}"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a></td>
+                    <td>{{ totalproduct|number_format(2, ',', ' ') }} €</td>
+                    <td><a href="{{ path('op_webapp_cart_delete', {'id': c.productId}) }}"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>
             <tfoot>
+            {# ligne de soustotal #}
             <tr>
-                <th colspan="4">Total sans remise</th>
-                <th colspan="2">{{ total|number_format(2, ',', ' ')}} €</th>
+                <th colspan="2"></th>
+                <th>Total des produits du panier</th>
+                <th></th>
+                <th>{{ sstotal|number_format(2, ',', ' ')}} €</th>
+                <th></th>
             </tr>
+            {# ligne des reductions sur catégories produits #}
             <tr>
-                <td colspan="3">
+                <th colspan="2"></th>
+                <td>
                     Offre de remise sur la quantité de carte :<br>
                     <span class="opgrey">
                     - 10% entre 50 et 99 cartes,<br>
@@ -117,15 +113,14 @@
                     </span>
                 </td>
                 {% if qtyItems < 50 %}
-                <td colspan="3">
-                    {{ qtyItems }} cartes
-                </td>
+                <td>{{ qtyItems }} cartes</td>
+                <td colspan="2"></td>
                 {% elseif qtyItems >= 50 and qtyItems <= 99 %}
-                    {% set reductotal = sstotalnatures*0.1 %}
+                {% set reductotal = sstotalnatures*0.1 %}
                 <td>
                     {{ qtyItems }} cartes
                 </td>
-                <td colspan="3">
+                <td colspan="2">
                     - {{ reductotal|number_format(2, ',', ' ') }} €
                 </td>
                 {% elseif qtyItems >= 100 and qtyItems <= 149 %}{% set reductotal = sstotalnatures*0.15 %}
@@ -146,33 +141,61 @@
             </tr>
             {% if qtyItems > 50 %}
             <tr>
-                {% set totalremise = total - reductotal %}
-                <th colspan="4">Total avec remise</th>
-                <th colspan="2">{{ totalremise|number_format(2, ',', ' ')}} €</th>
+                {% set totalremise = sstotal - reductotal %}
+                <th colspan="2"></th>
+                <th>Total avec remise</th>
+                <th></th>
+                <th>{{ totalremise|number_format(2, ',', ' ')}} €</th>
+                <th colspan="2"></th>
             </tr>
             {% endif %}
             {% if weight %}
             <tr>
-                <td colspan="4">Frais de port</td>
-                <td colspan="2">
+                <td colspan="2"></td>
+                <td>Frais de port</td>
+                <td>
                     {% if colis <= 20 %}
-                    {{ colis }} g - {{ fp1 }}€
+                    {{ colis }} g
                     {% elseif colis > 20 and colis <= 100 %}
-                    {{ colis }} g - {{ fp2 }}€
+                    {{ colis }} g
                     {% elseif colis > 100 and colis <= 250 %}
-                    {{ colis }} g - {{ fp3 }}€
+                    {{ colis }} g
                     {% elseif colis > 250 and colis <= 500 %}
-                    {{ colis }} g - {{ fp4 }}€
+                    {{ colis }} g
                     {% elseif colis > 500 and colis <= 3000 %}
-                    {{ colis }} g - {{ fp5 }}€
+                    {{ colis }} g
                     {% endif %}
                 </td>
+                <td>
+                    {% if colis <= 20 %}
+                        {{ fp1 }}€
+                    {% elseif colis > 20 and colis <= 100 %}
+                        {{ fp2 }}€
+                    {% elseif colis > 100 and colis <= 250 %}
+                        {{ fp3 }}€
+                    {% elseif colis > 250 and colis <= 500 %}
+                        {{ fp4 }}€
+                    {% elseif colis > 500 and colis <= 3000 %}
+                       {{ fp5 }}€
+                    {% endif %}
+                </td>
+                <td></td>
             </tr>
-            {% if qtyItems > 50 %}
+            {% if qtyItems < 50 %}
+            <tr>
+
+                <th colspan="3" class="text-end">Total de votre commande</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% else %}
             <tr>
                 {% set totalFP = totalremise + reductotal %}
-                <th colspan="4">Total avec remise</th>
-                <th colspan="2">{{ totalFP|number_format(2, ',', ' ')}} €</th>
+                <th colspan="3" class="text-end">Total de votre commande</th>
+                <th></th>
+                <th></th>
+                <th>{{ totalFP|number_format(2, ',', ' ')}} €</th>
             </tr>
             {% endif %}
             {% endif %}

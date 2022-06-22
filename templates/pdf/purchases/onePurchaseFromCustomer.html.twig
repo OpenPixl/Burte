@@ -12,11 +12,11 @@
 {% set qtyPrice = 0 %}
 {% set sstotalnatures = 0 %}
 {% set qtyWeight = 0 %}
-{% set fp1 = 1.43 %}
-{% set fp2 = 2.86 %}
-{% set fp3 = 5.26 %}
-{% set fp4 = 7.89 %}
-{% set fp5 = 11.44 %}
+{% set fp1 = 1.5 %}
+{% set fp2 = 2.90 %}
+{% set fp3 = 5.30 %}
+{% set fp4 = 7.90 %}
+{% set fp5 = 11.50 %}
 {% set colis = 0 %}
 
 {% if items %}
@@ -157,7 +157,7 @@
                                                     <td>{{ i.productQty }}</td>
                                                     <td>{{ i.productPrice }} €</td>
                                                     <td>{{ i.format.weight }} g</td>
-                                                    <td>{{ i.totalItem }} €</td>
+                                                    <td>{{ i.totalItem|number_format(2, ',', ' ') }} €</td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
@@ -167,7 +167,7 @@
                                                     <td></td>
                                                     <td>Total</td>
                                                     <td></td>
-                                                    <td>{{ purchase.total }} €</td>
+                                                    <td>{{ purchase.total|number_format(2, ',', ' ') }} €</td>
                                                 </tr>
                                                 {% if qtyItems <= 50 %}
                                                     {% set reductotal = 0 %}
@@ -213,15 +213,15 @@
                                                     <td>poids: {{ colis }}g</td>
                                                     <td>
                                                         {% if colis <= 20 %}
-                                                            {{ fp1 }}€
+                                                            {{ fp1|number_format(2, ',', ' ') }}€
                                                         {% elseif colis > 20 and colis <= 100 %}
-                                                            {{ fp2 }}€
+                                                            {{ fp2|number_format(2, ',', ' ') }}€
                                                         {% elseif colis > 100 and colis <= 250 %}
-                                                            {{ fp3 }}€
+                                                            {{ fp3|number_format(2, ',', ' ') }}€
                                                         {% elseif colis > 250 and colis <= 500 %}
-                                                           {{ fp4 }}€
+                                                           {{ fp4|number_format(2, ',', ' ') }}€
                                                         {% elseif colis > 500 and colis <= 3000 %}
-                                                            {{ fp5 }}€
+                                                            {{ fp5|number_format(2, ',', ' ') }}€
                                                         {% endif %}
                                                     </td>
                                                 </tr>
@@ -232,15 +232,15 @@
                                                     <th></th>
                                                     <th>
                                                         {% if colis <= 20 %}
-                                                            {{ ( purchase.total - reductotal ) + fp1 }}€
+                                                            {{ (( purchase.total - reductotal ) + fp1)|number_format(2, ',', ' ') }}€
                                                         {% elseif colis > 20 and colis <= 100 %}
-                                                            {{ ( purchase.total - reductotal ) + fp2 }}€
+                                                            {{ (( purchase.total - reductotal ) + fp2)|number_format(2, ',', ' ') }}€
                                                         {% elseif colis > 100 and colis <= 250 %}
-                                                            {{ ( purchase.total - reductotal ) + fp3 }}€
+                                                            {{ (( purchase.total - reductotal ) + fp3)|number_format(2, ',', ' ') }}€
                                                         {% elseif colis > 250 and colis <= 500 %}
-                                                            {{ ( purchase.total - reductotal ) + fp4 }}€
+                                                            {{ (( purchase.total - reductotal ) + fp4)|number_format(2, ',', ' ') }}€
                                                         {% elseif colis > 500 and colis <= 3000 %}
-                                                            {{ ( purchase.total - reductotal ) + fp5 }}€
+                                                            {{ (( purchase.total - reductotal ) + fp5)|number_format(2, ',', ' ') }}€
                                                         {% endif %}
                                                     </th>
                                                 </tr>

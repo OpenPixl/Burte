@@ -177,15 +177,36 @@
             </tr>
             {% if qtyItems < 50 %}
             <tr>
+                {% if colis <= 20 %}
+                    {% set totalFP = sstotal + fp1 %}
+                {% elseif colis > 20 and colis <= 100 %}
+                    {% set totalFP = sstotal + fp2 %}
+                {% elseif colis > 100 and colis <= 250 %}
+                    {% set totalFP = sstotal + fp3 %}
+                {% elseif colis > 250 and colis <= 500 %}
+                    {% set totalFP = sstotal + fp4 %}
+                {% elseif colis > 500 and colis <= 3000 %}
+                    {% set totalFP = sstotal + fp5 %}
+                {% endif %}
                 <th colspan="2"></th>
                 <th>Total de votre commande</th>
                 <th></th>
-                <th></th>
+                <th>{{totalFP|number_format(2, ',', ' ')}} €</th>
                 <th></th>
             </tr>
             {% else %}
             <tr>
-                {% set totalFP = totalremise + reductotal %}
+                {% if colis <= 20 %}
+                    {% set totalFP = totalremise + fp1 %}
+                {% elseif colis > 20 and colis <= 100 %}
+                    {% set totalFP = totalremise + fp2 %}
+                {% elseif colis > 100 and colis <= 250 %}
+                    {% set totalFP = totalremise + fp3 %}
+                {% elseif colis > 250 and colis <= 500 %}
+                    {% set totalFP = totalremise + fp4 %}
+                {% elseif colis > 500 and colis <= 3000 %}
+                    {% set totalFP = totalremise + fp5 %}
+                {% endif %}
                 <th colspan="2"></th>
                 <th>Total de votre commande</th>
                 <th></th>

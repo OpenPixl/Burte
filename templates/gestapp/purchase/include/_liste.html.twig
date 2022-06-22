@@ -34,12 +34,12 @@
                 <td>
                     {% for i in p.purchaseItems %}
                     <ul>
-                        <li>{{ i.productQty }} x {{ i.productName }} ({{ i.productPrice }}€) - {{ i.totalItem }}€</li>
+                        <li>{{ i.productQty }} x {{ i.productName }} ({{ i.productPrice|number_format(2, ',', ' ') }}€) - {{ i.totalItem|number_format(2, ',', ' ') }}€</li>
                     </ul>
                     {% endfor %}
                 </td>
                 {% endif %}
-                <td>{{p.total}} €</td>
+                <td>{{p.total|number_format(2, ',', ' ')}} €</td>
 
                 {# Affiche l'état de la commande sur le frontOffice et non dans la partie admin #}
                 {% if app.request.attributes.get('_route') == 'op_webapp_purchases_index' %}

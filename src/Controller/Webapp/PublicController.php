@@ -140,9 +140,13 @@ class PublicController extends AbstractController
      * @Route ("/webapp/public/dashboard/client", name="op_webapp_public_dashboard_client", methods={"GET"})
      */
     public function clientDashboard(){
+
+        $user = $this->getUser();
+
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
         return $this->render("webapp/public/clientdashboard.html.twig",[
             'parameter' => $parameter,
+            'user' => $user
         ]);
     }
 }

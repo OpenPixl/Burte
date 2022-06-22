@@ -8,5 +8,20 @@
 {% block title %}{{ parameter.nameSite }} - Espace Client{% endblock %}
 
 {% block content %}
+    <section class="container">
+        <h1>Bienvenue {{ user.firstname }} sur votre espace Client.</h1>
 
+        <div class="alert alert-info">
+            <p>Vous avez actuellement : {{ cartService.detailedCartItem|length }}
+                {% if cartService.detailedCartItem|length <= 1 %}
+                    produit
+                {% else %}
+                    produits
+                {% endif %}
+                dans votre panier. <br>
+                <a href="{{ path('op_webapp_cart_showcart')}}" class="btn btn-sm btn-primary">Accéder à votre panier</a>
+            </p>
+        </div>
+
+    </section>
 {% endblock %}

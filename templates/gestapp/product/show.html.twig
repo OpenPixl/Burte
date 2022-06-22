@@ -150,7 +150,7 @@
                                 <tr>
                                     <th></th>
                                     <th>Prix</th>
-                                    <th></th>
+                                    <th>Dimension</th>
                                     <th>Poids</th>
                                 </tr>
                                 </thead>
@@ -158,7 +158,7 @@
                                 <tr>
                                     <td>{{ f.name }}</td>
                                     <td>{{ f.priceformat}} €</td>
-                                    <td>{{ f.height }} / {{ f.length }}</td>
+                                    <td>{{ f.height|number_format(2, ',', ' ') }}cm / {{ f.length|number_format(2, ',', ' ') }}cm</td>
                                     <td>{{ f.weight }} g</td>
                                 </tr>
                                 {% endfor %}

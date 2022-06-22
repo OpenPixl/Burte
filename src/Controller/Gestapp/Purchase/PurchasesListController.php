@@ -54,7 +54,7 @@ class PurchasesListController extends abstractController
         /** @var Member */
         $member = $this->getUser();
 
-        $data = $purchaseRepository->findBy(array('customer'=> $member));
+        $data = $purchaseRepository->findAll();
         $purchases = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
@@ -179,7 +179,7 @@ class PurchasesListController extends abstractController
     public function byUserReceiptNewPurchases($hide, PurchaseRepository $purchaseRepository): Response
     {
         $user = $this->getUser();
-        $purchases = $this->getDoctrine()->getRepository(Purchase::class)->findByUserReceiptNew($user);
+        $purchases = $purchaseRepository->findBy(['status'=>'PENDING']);
         return $this->render('gestapp/purchase/byuserReceipt.html.twig', [
             'purchases' => $purchases,
             'hide' => $hide,

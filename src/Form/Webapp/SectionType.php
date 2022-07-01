@@ -41,7 +41,8 @@ class SectionType extends AbstractType
                     'ECOMMERCE' =>[
                         "Listes des produits" => "All_products",
                         "Une nature de produit" => "One_Nat_Product",
-                        "Une catégorie de produit" => "One_Cat_Product"
+                        "Une catégorie de produit" => "One_Cat_Product",
+                        "Les derniers produits d'une nature" => "Last_Product_Nat"
                     ],
                     'MEMBRES' => [
                         'membre' => 'Member',

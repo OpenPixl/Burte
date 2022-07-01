@@ -60,6 +60,8 @@ class PurchaseConfirmationController extends AbstractController
         $purchase
             ->setCustomer($user)
             ->setNumPurchase($uuid)
+            ->setStatus("PENDING")
+            ->setStatuspaid("PENDING")
             ->setPurchasedAt(new DateTime())
             ->setTotal($this->cartService->getTotal());
 

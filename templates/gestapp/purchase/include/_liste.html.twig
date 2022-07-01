@@ -2,19 +2,18 @@
     <table class="table">
         <thead>
         <tr>
-            <th></th>
             <th>Commande</th>
             {% if hide == 0 %}
             <th>Adresse de livraison</th>
             {% endif %}
-            <th>Dépot</th>
+            <th>Date de commande</th>
             {% if hide == 0 %}
             <th>Détails</th>
             {% endif %}
             <th>Total</th>
-            <th>Progression</th>
-            {% if hide == 0 %}
             <th>Etat</th>
+            {% if hide == 0 %}
+            <th>Progression</th>
             {% endif %}
             {% if hide == 0 %}
             <th>Actions</th>
@@ -24,7 +23,6 @@
         <tbody>
         {% for p in purchases %}
             <tr>
-                <th>{{p.id}}</th>
                 <td>{{p.numPurchase}}</td>
                 {% if hide == 0 %}
                 <td>{{p.address}}<br>{{p.zipcode}} {{p.city}}</td>
@@ -41,10 +39,31 @@
                 {% endif %}
                 <td>{{p.total|number_format(2, ',', ' ')}} €</td>
 
+                {% if hide == 0 %}
+                    {% if app.request.attributes.get('_route') == 'op_webapp_purchases_index' %}
+                        <td>
+                            {% if p.statuspaid == 'PENDING' %}En attente de paiement{% endif %}
+                            {% if p.status == 'PAID' %}Commande réglée{% endif %}
+                            {% if p.status == 'CANCELLED' %}Annulé{% endif %}
+                        </td>
+                    {% else %}
+                        <td>
+                            <form id="purchasepaid">
+                                <input id="idpurchasepaid" name="idpurchase" type="hidden" value="{{p.id}}">
+                                <select id="statePaid" class="form-select form-select-sm statusPaidPurchases" aria-label="Default select example">
+                                    <option value="PENDING" {% if p.statuspaid == 'PENDING' %}selected{% endif %}>En attente du paiement</option>
+                                    <option value="PAID" {% if p.statuspaid == 'PAID' %}selected{% endif %}>Paiement reçu</option>
+                                    <option value="CANCELLED" {% if p.statuspaid == 'CANCELLED' %}selected{% endif %}>Annulé</option>
+                                </select>
+                            </form>
+                        </td>
+                    {% endif %}
+                {% endif %}
+
                 {# Affiche l'état de la commande sur le frontOffice et non dans la partie admin #}
                 {% if app.request.attributes.get('_route') == 'op_webapp_purchases_index' %}
                 <td>
-                    {% if p.status == 'PENDING' %}En attente{% endif %}
+                    {% if p.status == 'PENDING' %}En attente de préparation{% endif %}
                     {% if p.status == 'PREPARED' %}En cours de préparation{% endif %}
                     {% if p.status == 'FINALISED' %}Cartes finalisée{% endif %}
                     {% if p.status == 'DELIVERED' %}En cours de Livraison{% endif %}
@@ -65,19 +84,7 @@
                     </form>
                 </td>
                 {% endif %}
-                
-                {% if hide == 0 %}
-                <td>
-                    <form id="purchasepaid">
-                        <input id="idpurchasepaid" name="idpurchase" type="hidden" value="{{p.id}}">
-                        <select id="statePaid" class="form-select form-select-sm statusPaidPurchases" aria-label="Default select example">
-                            <option value="PENDING" {% if p.statuspaid == 'PENDING' %}selected{% endif %}>En attente du paiement</option>
-                            <option value="PAID" {% if p.statuspaid == 'PAID' %}selected{% endif %}>Paiement reçu</option>
-                            <option value="CANCELLED" {% if p.statuspaid == 'CANCELLED' %}selected{% endif %}>Annulé</option>
-                        </select>
-                    </form>
-                </td>
-                {% endif %}
+
                 {% if hide == 0 %}
                 <td>
                     <a href="{{ path('op_gestapp_purchases_onepurchase', {'commande': p.numPurchase}) }}" type="button"><i class="bi bi-printer"></i></a>

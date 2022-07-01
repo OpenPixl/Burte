@@ -306,4 +306,20 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    /**
+     * Liste les derniers produits d'une nature.
+     * @return Product[] Returns an array of Product objects
+     */
+    public function lastProduct($idnat)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.productNature = :productNature')
+            ->setParameter('productNature', $idnat)
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

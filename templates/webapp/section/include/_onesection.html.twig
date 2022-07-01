@@ -75,6 +75,9 @@
                 {% elseif section.contentType == 'One_Cat_Product'%}
                     {# affiche les produits d'une nature #}
                     {{ render(controller('App\\Controller\\Gestapp\\ProductController::ListOneCatProduct', {'idcat':section.oneCatproduct})) }}
+                {% elseif section.contentType == 'Last_Product_Nat'%}
+                    {# affiche les produits d'une nature #}
+                    {{ render(controller('App\\Controller\\Gestapp\\ProductController::LastNatProduct', {'idnat':section.oneNatproduct})) }}
                 {% else %}
                 {% endif %}
             </div>

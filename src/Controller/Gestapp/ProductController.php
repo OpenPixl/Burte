@@ -538,4 +538,18 @@ class ProductController extends AbstractController
             ])
         ], 200);
     }
+
+    /**
+     * Affiche une section contenant les 3 dernières cartes de la nature de produit
+     * @Route("/gestapp/product/lastnatproduct/{idnat}", name="op_gestapp_product_del", methods={"POST"}, requirements={"id":"\d+"})
+     */
+    public function LastNatProduct($idnat, EntityManagerInterface $entityManager)
+    {
+        $products = $entityManager->getRepository(Product::class)->lastProduct($idnat);
+
+        return $this->render('gestapp/product/lastnatproduct.html.twig',[
+            'products' => $products,
+            'idnat' => $idnat
+        ]);
+    }
 }

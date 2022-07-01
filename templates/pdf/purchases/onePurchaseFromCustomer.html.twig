@@ -35,25 +35,18 @@
 {% endif %}
 
     <div id="printFacture" class="container">
-        <div id="printFactureHeader" class="row gutters">
-            <div class="col-2">
 
-            </div>
-            <div class="col-10">
-
-            </div>
-        </div>
         <div id="printFactureMain" class="row gutters">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="invoice-container">
                 {# entête de facture #}
                 <div class="invoice-header">
                     <!-- Row start -->
-                    <div class="row gutters">
-                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                            <img src="{{ absolute_url(asset('./images/home_front/fond_section_home.jpeg')) }}" alt="" class="img-fluid">
+                    <div style="display: inline-block;">
+                        <div>
+                            <img src="{{ absolute_url(asset('./images/home_front/LOGO-fondblanc.png')) }}" alt="" class="img-fluid">
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div style="float:left">
                             <address class="text-right">
                                 Maria Bambina<br>
                                 Marie THIBAULT<br>

@@ -136,7 +136,7 @@ class PublicController extends AbstractController
     }
 
     /**
-     * Affiche l'espace clientelle
+     * Affiche l'espace clientel
      * @Route ("/webapp/public/dashboard/client", name="op_webapp_public_dashboard_client", methods={"GET"})
      */
     public function clientDashboard(){

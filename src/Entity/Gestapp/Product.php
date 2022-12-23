@@ -149,16 +149,6 @@ class Product
     private $productCustomizes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=productFormat::class)
-     */
-    private $formats;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=ProductCategory::class)
-     */
-    private $otherCategory;
-
-    /**
      * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="product")
      */
     private $carts;
@@ -167,8 +157,6 @@ class Product
     {
         $this->purchaseItems = new ArrayCollection();
         $this->productCustomizes = new ArrayCollection();
-        $this->otherCategory = new ArrayCollection();
-        $this->formats = new ArrayCollection();
         $this->carts = new ArrayCollection();
     }
 
@@ -522,55 +510,6 @@ class Product
                 $productCustomize->setProduct(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, productFormat>
-     */
-    public function getFormats(): Collection
-    {
-        return $this->formats;
-    }
-
-    public function addFormats(productFormat $formats): self
-    {
-        if (!$this->formats->contains($formats)) {
-            $this->formats[] = $formats;
-        }
-
-        return $this;
-    }
-
-    public function removeFormats(productFormat $formats): self
-    {
-        $this->formats->removeElement($formats);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ProductCategory>
-     */
-    public function getOtherCategory(): Collection
-    {
-        return $this->otherCategory;
-    }
-
-    public function addOtherCategory(ProductCategory $otherCategory): self
-    {
-        if (!$this->otherCategory->contains($otherCategory)) {
-            $this->otherCategory[] = $otherCategory;
-        }
-
-        return $this;
-    }
-
-    public function removeOtherCategory(ProductCategory $otherCategory): self
-    {
-        $this->otherCategory->removeElement($otherCategory);
-
         return $this;
     }
 

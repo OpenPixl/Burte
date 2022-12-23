@@ -58,11 +58,6 @@ class ProductCategory
     private $parent;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="otherCategory")
-     */
-    private $otherProducts;
-
-    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist

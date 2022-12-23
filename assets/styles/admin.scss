@@ -8,9 +8,9 @@ $admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 
 @import "scss/bstable";
 
 //*** ------------- Import Variables of my theme ---------------- ***//
-@import "scss/body";
-@import "scss/content";
-@import "scss/header";
+@import "scss/admin/body";
+@import "scss/admin/content";
+@import "scss/admin/header";
 //*** ------------- Import Variables of icons ---------------- ***//
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~bootstrap-icons/font/bootstrap-icons.css';

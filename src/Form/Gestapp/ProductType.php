@@ -93,19 +93,6 @@ class ProductType extends AbstractType
                 ],
             ])
             ->add('isPersonalisable')
-            ->add('otherCategory',EntityType::class, [
-                'class' => ProductCategory::class,
-                'multiple' => true,
-                'required' => false,
-
-            ])
-            ->add('formats',EntityType::class, [
-                'class' => productFormat::class,
-                'multiple' => true,
-                'choice_attr' => ChoiceList::attr($this, function (?productFormat $formats) {
-                    return $formats ? ['data-data' => $formats->getName()] : [];
-                }),
-            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
                 $nature = $event->getData()->getProductNature() ?? null;
 
